@@ -19,7 +19,7 @@ class AppTheme extends ChangeNotifier {
     primaryColor: Pallets.primary,
     hintColor: Pallets.grey,
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: GoogleFonts.notoSans().fontFamily,
+    fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
     sliderTheme: const SliderThemeData(
       showValueIndicator: ShowValueIndicator.always,
     ),

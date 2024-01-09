@@ -37,10 +37,7 @@ class MentraApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              supportedLocales: const [
-                Locale('en'), // English
-                Locale('es'), // Spanish
-              ],
+              supportedLocales: S.delegate.supportedLocales,
 
               //
               theme: AppTheme.lightTheme,

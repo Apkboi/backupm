@@ -7,9 +7,9 @@ abstract class Pallets {
   static const primary = Color(0xFF1A6A73);
   static const secondary = Color(0xFFFAE19D);
   static const lightSecondary = Color(0xFFC7D69F);
-  static const subtle = Color(0xFF99BEB7);
+  static const turquoise1 = Color(0xFF99BEB7);
   static const subtleLight = Color(0xFFA6C9AE);
-  static const darkTextColor = Color(0xFF002C3C);
+  static const navy = Color(0xFF002C3C);
   static const neutral = Color(0xFFF2F2EF);
   static const lightPink = Color(0xFFF8E7F5);
   static const mildRed = Color(0xFFF4A88A);

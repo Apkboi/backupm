@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
+import 'package:mentra/features/authentication/onboarding/presentaion/screens/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
 final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
@@ -18,7 +20,12 @@ class CustomRoutes {
       GoRoute(
         path: '/splash',
         name: PageUrl.splash,
-        builder: (context, state) => Container(),
+        builder: (context, state) => const SplashPage(),
+      ),
+      GoRoute(
+        path: '/onBoardingPage',
+        name: PageUrl.onBoardingPage,
+        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: '/signUp',
