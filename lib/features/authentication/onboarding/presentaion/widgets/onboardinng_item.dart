@@ -28,7 +28,7 @@ class _OnboardingItemState extends State<OnboardingItem> {
           ),
       child: Container(
         decoration: const BoxDecoration(),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         // height: MediaQuery.of(context).size.height * 0.75,
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -42,28 +42,35 @@ class _OnboardingItemState extends State<OnboardingItem> {
               shape: BoxShape.rectangle,
               height: 1.sh,
               width: 1.sw,
-              borderRadius: BorderRadius.circular(10),
+              fit: BoxFit.fill,
+              // borderRadius: BorderRadius.circular(10),
               imageUrl: widget.img,
             ))),
-            35.verticalSpace,
-            TextView(
-                text: widget.header,
-                align: TextAlign.center,
-                style: GoogleFonts.fraunces(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.w600,
-                )),
-            const SizedBox(
-              height: 16,
-            ),
-            TextView(
-                text: widget.text,
-                align: TextAlign.center,
-                style:  TextStyle(
-                    fontSize: 14.sp,
-                    color: Pallets.grey,
-                    fontWeight: FontWeight.w500)),
+            // 35.verticalSpace,
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(children: [
+                TextView(
+                    text: widget.header,
+                    align: TextAlign.center,
+                    style: GoogleFonts.fraunces(
+                      color: Pallets.navy,
+                      fontSize: 32.sp,
+                      fontWeight: FontWeight.w600,
+                    )),
+                const SizedBox(
+                  height: 16,
+                ),
+                TextView(
+                    text: widget.text,
+                    align: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Pallets.grey,
+                        fontWeight: FontWeight.w500)),
+              ],),
+            )
+
             // SizedBox(
             //   height: 8,
             // ),

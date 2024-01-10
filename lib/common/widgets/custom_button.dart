@@ -9,6 +9,7 @@ class CustomButton extends StatefulWidget {
   final bool? isExpanded;
   final BorderRadius? borderRadius;
   final double? elevation;
+  final String? btnText;
 
   const CustomButton(
       {Key? key,
@@ -19,7 +20,8 @@ class CustomButton extends StatefulWidget {
       this.isExpanded = true,
       this.foregroundColor,
       this.borderRadius,
-      this.elevation})
+      this.elevation,
+      this.btnText})
       : super(key: key);
 
   @override
