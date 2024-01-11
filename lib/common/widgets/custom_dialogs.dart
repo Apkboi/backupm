@@ -42,19 +42,32 @@ class CustomDialogs {
     );
   }
 
-  static Future<T?> showBottomSheet<T>(BuildContext context, Widget child,
-      {Color? barrierColor}) {
+  static Future<T?> showBottomSheet<T>(
+    BuildContext context,
+    Widget child, {
+    Color? barrierColor,
+    BoxConstraints? constraints,
+    ShapeBorder? shape,
+  }) {
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,
         context: context,
         barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.3),
         useRootNavigator: true,
         isScrollControlled: true,
+        shape: shape,
+        constraints: constraints,
         builder: (context) {
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: child,
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: child,
+            ),
           );
         });
   }
@@ -142,11 +155,9 @@ class CustomDialogs {
 
     await showDialog(
       context: context,
-      builder: (BuildContext context) => Builder(
-        builder: (context) {
-          return dialog;
-        }
-      ),
+      builder: (BuildContext context) => Builder(builder: (context) {
+        return dialog;
+      }),
       barrierDismissible: true,
     );
   }

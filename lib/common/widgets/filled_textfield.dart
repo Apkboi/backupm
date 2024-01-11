@@ -4,6 +4,8 @@ import 'package:mentra/core/theme/pallets.dart';
 
 class FilledTextField extends StatefulWidget {
   final String hint;
+  final String? labelText;
+  final TextStyle? labelTextStyle;
   final Widget? suffix;
   final Widget? preffix;
   final FocusNode? focusNode;
@@ -55,7 +57,9 @@ class FilledTextField extends StatefulWidget {
       this.onSaved,
       this.hasBorder = true,
       this.radius = 10,
-      this.textColor})
+      this.textColor,
+      this.labelText,
+      this.labelTextStyle})
       : super(key: key);
 
   @override
@@ -66,8 +70,10 @@ class _FilledTextFieldState extends State<FilledTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: widget.contentPadding ?? const EdgeInsets.all(18),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.radius),
+          color: Pallets.white,
           boxShadow: widget.hasElevation!
               ? [
                   BoxShadow(
@@ -137,8 +143,10 @@ class _FilledTextFieldState extends State<FilledTextField> {
               prefixIconColor: Pallets.grey,
               suffixIconColor: Theme.of(context).colorScheme.primary,
               enabled: widget.enabled,
-              contentPadding: widget.contentPadding ?? const EdgeInsets.all(18),
+              contentPadding: EdgeInsets.zero,
               filled: true,
+              labelText: widget.labelText,
+              labelStyle: widget.labelTextStyle,
               hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
         ),
       ),

@@ -2,7 +2,9 @@ class PageUrl {
   ///AUTH
   static const splash = 'splash';
   static const signUp = 'signUp';
-  static const signIn = 'signIn';
+  static const signUpIntro = 'signUpIntro';
+  static const passcodeScreen = 'passcodeScreen';
+  static const login = 'login';
   static const selfieVerificationPage = 'selfieVerificationPage';
   static const otpPage = 'otpPage';
   static const passwordReset = 'passwordReset';

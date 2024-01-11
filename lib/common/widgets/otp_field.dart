@@ -4,7 +4,6 @@ import 'package:pinput/pinput.dart';
 
 import '../../core/theme/pallets.dart';
 
-
 class OtpField extends StatelessWidget {
   final void Function(String)? onCompleted;
   final void Function(String)? onChanged;
@@ -26,8 +25,9 @@ class OtpField extends StatelessWidget {
   }) : super(key: key);
 
   final defaultPinTheme = PinTheme(
-    width: 60.w,
-    height: 60,
+    width: 50.w,
+    height: 50.h,
+
     margin: EdgeInsets.symmetric(horizontal: 5.w),
     textStyle: TextStyle(
       fontSize: 24.sp,
@@ -39,9 +39,9 @@ class OtpField extends StatelessWidget {
     //   border: Border(bottom: BorderSide(width: 2,color: Colors.black)),
     // ),
     decoration: BoxDecoration(
-      // color: Pallets.black,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: Pallets.borderGrey),
+      color: Pallets.white,
+      borderRadius: BorderRadius.circular(12),
+      // border: Border.all(color: Pallets.borderGrey),
     ),
   );
 
@@ -53,9 +53,9 @@ class OtpField extends StatelessWidget {
         fontWeight: FontWeight.w600,
       ),
       decoration: BoxDecoration(
-        // color: Pallets.black,
+        color: Pallets.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Pallets.borderGrey),
+        // border: Border.all(color: Pallets.borderGrey),
       ),
     );
 

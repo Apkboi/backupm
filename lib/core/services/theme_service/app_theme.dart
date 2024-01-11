@@ -18,7 +18,7 @@ class AppTheme extends ChangeNotifier {
     brightness: Brightness.light,
     primaryColor: Pallets.primary,
     hintColor: Pallets.grey,
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: Pallets.bgLight,
     fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
     sliderTheme: const SliderThemeData(
       showValueIndicator: ShowValueIndicator.always,

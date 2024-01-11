@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/passcode_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
+import 'package:mentra/features/authentication/onboarding/presentaion/screens/signup_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/splash_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
@@ -33,9 +36,19 @@ class CustomRoutes {
         builder: (context, state) => Container(),
       ),
       GoRoute(
-        path: '/signIn',
-        name: PageUrl.signIn,
-        builder: (context, state) => Container(),
+        path: '/login',
+        name: PageUrl.login,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: '/signUpIntro',
+        name: PageUrl.signUpIntro,
+        builder: (context, state) => const SignupIntroScreen(),
+      ),
+      GoRoute(
+        path: '/passcodeScreen',
+        name: PageUrl.passcodeScreen,
+        builder: (context, state) => const PasscodeScreen(),
       ),
     ],
   );

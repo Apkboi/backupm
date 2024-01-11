@@ -5,7 +5,7 @@ abstract class Pallets {
   // App Colors
 
   static const primary = Color(0xFF1A6A73);
-  static const secondary = Color(0xFFFAE19D);
+  static const secondary = Color(0xFFFADE93);
   static const lightSecondary = Color(0xFFC7D69F);
   static const turquoise1 = Color(0xFF99BEB7);
   static const subtleLight = Color(0xFFA6C9AE);
@@ -29,6 +29,7 @@ abstract class Pallets {
   static const darkGrey = Color(0xff18191B);
   static const lightGrey = Color(0xffF8F8F9);
   static const buttonGrey = Color(0xffF2F2F3);
+  static const grey1 = Color(0xffE7E7E0);
   static const grey35 = Color(0xff55585E);
   static const grey60 = Color(0xff94989E);
   static const grey75 = Color(0xffBCBFC2);
@@ -40,6 +41,7 @@ abstract class Pallets {
   static const red = Colors.red;
   static const white = Colors.white;
   static const grey = Color(0xff6D6D6D);
+  static const bgLight = Color(0xfff7f7f7);
   static const chatTextFiledGrey = Color(0xffF7F7FC);
   static const searchGrey = Color(0xffF3F3F3);
   static const onboardingTextWhite = Color(0xfbF7F9FA);

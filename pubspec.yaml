@@ -156,6 +156,7 @@ flutter_icons:
   #  adaptive_icon_background: "#2C3489"
   remove_alpha_ios: true
 
+build_runner:
 flutter_gen:
   output: lib/gen/ # Optional (default: lib/gen/)
   line_length: 80 # Optional (default: 80)

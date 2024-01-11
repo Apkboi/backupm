@@ -42,7 +42,7 @@ class TextView extends StatelessWidget {
         text,
         key: textKey,
         style: style?.copyWith(inherit: true) ??
-            GoogleFonts.notoSans(
+            GoogleFonts.plusJakartaSans(
               color: color,
               decoration: decoration,
               fontWeight: fontWeight,

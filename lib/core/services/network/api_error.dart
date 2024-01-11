@@ -108,7 +108,7 @@ String _setCustomErrorMessage(Response error) {
   if (error.statusCode == 401) {
 
     CustomDialogs.error('Unauthorized');
-    CustomRoutes.goRouter.goNamed(PageUrl.signIn);
+    CustomRoutes.goRouter.goNamed(PageUrl.login);
 
     return 'Unauthorized';
   }

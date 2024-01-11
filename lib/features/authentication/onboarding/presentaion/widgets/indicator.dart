@@ -17,7 +17,7 @@ class _IndicatorState extends State<Indicator> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 10.h,
+      height: 6.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
@@ -26,7 +26,7 @@ class _IndicatorState extends State<Indicator> {
           padding: const EdgeInsets.symmetric( horizontal: 5),
           child: AnimatedContainer(
               // margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-              width: 10.w,
+              width: 6.w,
               duration: const Duration(milliseconds: 700),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
