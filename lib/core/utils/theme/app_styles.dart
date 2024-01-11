@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/core/theme/pallets.dart';
 
 class AppStyles {
   static InputDecoration filledTextFieldDecoration = InputDecoration(
@@ -11,10 +12,19 @@ class AppStyles {
   );
 
   static BoxDecoration cardDecoration = BoxDecoration(
-      color: Colors.white,
+      color: Pallets.navy,
       borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.grey.shade50.withOpacity(0.5), width: 4),
+      border: Border.all(color: Pallets.primary, width: 2),
       boxShadow: const [
-        BoxShadow(color: Colors.black12, offset: Offset(0, 10), blurRadius: 7)
+        BoxShadow(
+            color: Color(0xFF242628),
+            offset: Offset(0, 0),
+            blurRadius: 0,
+            spreadRadius: 1),
+        BoxShadow(
+            color: Color(0xFF242628),
+            offset: Offset(0, 1),
+            blurRadius: 2,
+            spreadRadius: 0),
       ]);
 }

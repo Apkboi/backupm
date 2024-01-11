@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:mentra/core/constants/package_exports.dart';
-import 'package:mentra/gen/assets.gen.dart';
+// import 'package:mentra/gen/assets.gen.dart';
 
 void main() => runApp(MyApp());
 
@@ -61,7 +61,7 @@ class _CarouselDemoState extends State<CarouselDemo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      Assets.images.pngs.onboarding2.path, // Replace with your image URL
+                     " Assets.images.pngs.onboarding2.path", // Replace with your image URL
                       height: 100.0,
                       fit: BoxFit.cover,
                       width: 1.sw,

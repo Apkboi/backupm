@@ -91,13 +91,12 @@ class _PinViewState extends State<PinView> {
                                     if (output.length < 4) {
                                       output += number.toString();
                                     }
-                                  }
-                                  else if (number == 11) {
+                                  } else if (number == 11) {
                                     widget.onDigitPressed(0);
                                     if (output.length < 4) {
                                       output += '0';
                                     }
-                                  } else if (number == 9) {
+                                  } else if (number == 10) {
                                     widget.onDelete();
                                     if (output.isNotEmpty) {
                                       output = output.substring(
