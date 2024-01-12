@@ -36,7 +36,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       onSaved: widget.onSaved,
       radius: 43,
       preffix: const Icon(Iconsax.search_normal4),
-      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+      contentPadding: const EdgeInsets.symmetric(vertical: 0),
       fillColor: Pallets.grey1,
     );
   }

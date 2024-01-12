@@ -1,24 +1,25 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
-import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
 
-class UsernamePage extends StatefulWidget {
-  const UsernamePage({super.key});
+class EmailVerificationScreen extends StatefulWidget {
+  const EmailVerificationScreen({super.key, required this.email});
+
+  final String email;
 
   @override
-  State<UsernamePage> createState() => _UsernamePageState();
+  State<EmailVerificationScreen> createState() =>
+      _EmailVerificationScreenState();
 }
 
-class _UsernamePageState extends State<UsernamePage> {
+class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -40,21 +41,20 @@ class _UsernamePageState extends State<UsernamePage> {
                         child: CustomBackButton()),
                     16.verticalSpace,
                     const MessageBox(message: [
-                      'Hello! I\'m Mentra, your personal guide to better mental health. 😊 ',
-                      "😊 Let's get to know each other better. What’s your name, please?"
+                      'Thank you! 📧 We\'ve sent a one-time verification code to [Email Address]. Please check your email and enter the code here.',
                     ], isSender: false),
                     Expanded(child: 0.verticalSpace),
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: FilledTextField(
-                        hint: "Type name..",
-                        validator:
-                            RequiredValidator(errorText: 'Enter your name')
-                                .call,
+                        hint: "Enter code",
                         hasElevation: false,
                         outline: false,
+                        validator:
+                            RequiredValidator(errorText: 'Enter code').call,
                         hasBorder: false,
+                        inputType: TextInputType.number,
                         suffix: InkWell(
                           onTap: () {
                             _goToNextScreen(context);
@@ -69,8 +69,8 @@ class _UsernamePageState extends State<UsernamePage> {
                         // onSaved: widget.onSaved,
                         radius: 43,
                         // preffix: const Icon(Iconsax.search_normal4),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 10),
+                        contentPadding:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                         fillColor: Pallets.white,
                       ),
                     )
@@ -85,9 +85,9 @@ class _UsernamePageState extends State<UsernamePage> {
   }
 
   void _goToNextScreen(BuildContext context) {
-    log('message');
+    // log('message');
     if (_formKey.currentState!.validate()) {
-      context.pushNamed(PageUrl.signupOptionScreen);
+      context.pushNamed(PageUrl.selectYearScreen);
     }
   }
 }

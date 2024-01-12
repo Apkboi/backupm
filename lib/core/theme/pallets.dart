@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 abstract class Pallets {
-
   // App Colors
 
   static const primary = Color(0xFF1A6A73);
@@ -14,13 +13,24 @@ abstract class Pallets {
   static const lightPink = Color(0xFFF8E7F5);
   static const mildRed = Color(0xFFF4A88A);
   static const mildOrange = Color(0xFFF9C16C);
+  static const lightTurquoise = Color(0xFFE3E6EA);
+  static const lighterPink = Color(0xFFFFE5F2);
+  static const orangePink = Color(0xFFE74E1A);
+  static const lightGreen = Color(0xFFEEF3F3);
+  static const mildGreen = Color(0xFF3D8F87);
+  static const lightOrange = Color(0xFFFFFBE5);
+  static const brown = Color(0xFFD49641);
+  static const lightBlue = Color(0xFFE4F3FF);
+  static const indigo = Color(0xFF1A5C81);
+
 
   static const primaryDark = Color(0xFF069D16);
-  static const lightBlue = Color(0xFF14B0D2);
   static const errorRed = Color(0xFFC62C2C);
   static const successGreen = Color(0xFF0F8345);
+
   // static const darkOrange = Color(0xFFEEB21A);
   static const transparentOrage = Color(0xFFFFF8EC);
+
   // static const secondary = Color(0xFFC1A269);
   static const secondaryDark = Color(0xFFA47A46);
   static const seconDaryLight = Color(0xFFF4EFE1);

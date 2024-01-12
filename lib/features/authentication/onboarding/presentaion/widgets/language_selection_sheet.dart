@@ -15,6 +15,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Pallets.bgLight,
       appBar: const CustomAppBar(
         bgColor: Pallets.bgLight,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -16,20 +17,26 @@ class PinView extends StatefulWidget {
       this.hasBiometric = false,
       required this.biometricAuthenticated,
       this.hasPinField = true,
-      required this.onOutput})
+      required this.onOutput,
+      this.lastIconWidget,
+      required this.onLastIconClicked})
       : super(key: key);
 
   final Function(int) onDigitPressed;
   final VoidCallback onDelete;
   final Function(String) onDone;
+  final VoidCallback onLastIconClicked;
   final Function(int) onOutput;
   final Function(bool) biometricAuthenticated;
   final PINController pinController;
   final bool? hasBiometric;
   final bool? hasPinField;
+  final Widget? lastIconWidget;
 
   @override
   State<PinView> createState() => _PinViewState();
+
+// void onLastIconClicked() {}
 }
 
 class _PinViewState extends State<PinView> {
@@ -48,6 +55,8 @@ class _PinViewState extends State<PinView> {
       listener: (context, state) {
         if (state is PINResetState) {
           output = '';
+          widget.onOutput(output.length - 1);
+          setState(() {});
         }
       },
       builder: (context, state) {
@@ -105,6 +114,7 @@ class _PinViewState extends State<PinView> {
                                   }
                                   setState(() {
                                     if (output.length == 4) {
+                                      logger.i('Done');
                                       widget.onDone(output);
                                     }
                                   });
@@ -155,9 +165,10 @@ class _PinViewState extends State<PinView> {
             return snapshot.data!
                 ? IconButton(
                     onPressed: () {
+                      widget.onLastIconClicked();
                       _authenticateWithBioMetric();
                     },
-                    icon:
+                    icon: widget.lastIconWidget ??
                         ImageWidget(imageUrl: Assets.images.svgs.biometricBtn))
                 : const SizedBox();
           }

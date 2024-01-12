@@ -11,7 +11,7 @@ class CustomNeumorphicButton extends StatelessWidget {
       this.fgColor = Pallets.white,
       this.expanded = true,
       this.child,
-       this.padding});
+      this.padding});
 
   final String? text;
   final Widget? child;

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:raycon_app/common/widgets/image_widget.dart';
-import 'package:raycon_app/core/constants/package_exports.dart';
-import 'package:raycon_app/core/theme/pallets.dart';
-import 'package:raycon_app/gen/assets.gen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class ReceiverMessageItem extends StatefulWidget {
   const ReceiverMessageItem({
     Key? key,
     required this.message,
+    this.child,
   }) : super(key: key);
-  final dynamic message;
+  final List<dynamic> message;
+  final Widget? child;
 
   @override
   State<ReceiverMessageItem> createState() => _ReceiverMessageItemState();
@@ -23,49 +24,46 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Padding(
-              padding:  EdgeInsets.only(top: 36.h,right: 10),
-              child: ImageWidget(imageUrl: Assets.images.svgs.logoSecondary,size: 36,),
+              padding: EdgeInsets.only(top: 36.h, right: 10),
+              child: ImageWidget(
+                imageUrl: Assets.images.svgs.google,
+                size: 36,
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
-              children: [
-                 Text(
-                  "Raycon",
-                  style: GoogleFonts.sora(color: Pallets.grey60, fontSize: 16),
-                ),
-                16.verticalSpace,
-
-                Container(
+              children: List.generate(
+                widget.message.length,
+                (index) => Container(
+                  margin: const EdgeInsets.only(bottom: 10),
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width / 2 + 40),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  decoration: const BoxDecoration(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          topLeft: Radius.circular(20)),
-                      color: Pallets.surfaceDark),
+                          bottomLeft: index.isEven
+                              ? Radius.zero
+                              : const Radius.circular(15),
+                          topRight: const Radius.circular(15),
+                          bottomRight: const Radius.circular(15),
+
+                          topLeft: !index.isEven
+                              ? Radius.zero
+                              : const Radius.circular(15)),
+                      color: Pallets.navy),
                   child: Text(
-                    widget.message,
-                    style: TextStyle(color: Pallets.white),
+                    widget.message.reversed.toList()[index],
+                    style: const TextStyle(color: Pallets.white),
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                const Text(
-                  "12:01 PM",
-                  style: TextStyle(color: Pallets.grey60, fontSize: 12),
-                )
-              ],
+              ),
             ),
           ],
         ),
-
       ],
     );
   }

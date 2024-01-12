@@ -1,24 +1,24 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
-import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
 
-class UsernamePage extends StatefulWidget {
-  const UsernamePage({super.key});
+class UserEmailScreen extends StatefulWidget {
+  const UserEmailScreen({super.key, required this.email});
+
+  final String email;
 
   @override
-  State<UsernamePage> createState() => _UsernamePageState();
+  State<UserEmailScreen> createState() => _UserEmailScreenState();
 }
 
-class _UsernamePageState extends State<UsernamePage> {
+class _UserEmailScreenState extends State<UserEmailScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -40,20 +40,20 @@ class _UsernamePageState extends State<UsernamePage> {
                         child: CustomBackButton()),
                     16.verticalSpace,
                     const MessageBox(message: [
-                      'Hello! I\'m Mentra, your personal guide to better mental health. 😊 ',
-                      "😊 Let's get to know each other better. What’s your name, please?"
+                      'Sweet choice! To make sure we\'re all set, we just need your email. Can you share it with us?',
                     ], isSender: false),
                     Expanded(child: 0.verticalSpace),
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: FilledTextField(
-                        hint: "Type name..",
-                        validator:
-                            RequiredValidator(errorText: 'Enter your name')
-                                .call,
+                        hint: "Type email here..",
                         hasElevation: false,
                         outline: false,
+                        validator: MultiValidator([
+                          RequiredValidator(errorText: 'Enter email'),
+                          EmailValidator(errorText: 'Invalid email')
+                        ]).call,
                         hasBorder: false,
                         suffix: InkWell(
                           onTap: () {
@@ -85,9 +85,9 @@ class _UsernamePageState extends State<UsernamePage> {
   }
 
   void _goToNextScreen(BuildContext context) {
-    log('message');
+    // log('message');
     if (_formKey.currentState!.validate()) {
-      context.pushNamed(PageUrl.signupOptionScreen);
+      context.pushNamed(PageUrl.emailVerificationScreen);
     }
   }
 }

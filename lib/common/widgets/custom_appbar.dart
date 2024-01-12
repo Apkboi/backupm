@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 
@@ -16,7 +17,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.bgColor,
       this.fgColor,
       this.height,
-      this.canGoBack = true});
+      this.canGoBack = true,
+      this.leadingWidth});
 
   final List<Widget>? actions;
   final Widget? leading;
@@ -27,31 +29,31 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? bgColor;
   final Color? fgColor;
   final double? height;
+  final double? leadingWidth;
   final bool? canGoBack;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: bgColor,
+      backgroundColor: bgColor ?? Colors.transparent,
       foregroundColor: fgColor,
       elevation: elevation ?? 0,
       centerTitle: true,
+      surfaceTintColor: bgColor ?? Colors.transparent,
       titleTextStyle: GoogleFonts.sora(
           fontWeight: FontWeight.w600,
           fontSize: 16,
           color: Theme.of(context).colorScheme.onBackground),
+      leadingWidth: leadingWidth,
       leading: canGoBack!
-          ? IconButton(
-              onPressed: () {
-                onBackPressed != null ? onBackPressed!() : context.pop(context);
-              },
-              icon: leading ??
-                  Icon(
-                    Iconsax.arrow_left_2,
-                    color:
-                        fgColor ?? Theme.of(context).colorScheme.onBackground,
-                  ),
-            )
+          ? leading ??
+              CustomBackButton(
+                onTap: () {
+                  onBackPressed != null
+                      ? onBackPressed!()
+                      : context.pop(context);
+                },
+              )
           : null,
       title: tittle ??
           TextView(

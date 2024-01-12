@@ -1,12 +1,12 @@
-const String heading1 = "Welcome to Raycon Environmental Services";
-const String heading2 = "Report Effortlessly";
-const String heading3 = "Sustainable Solutions, Visible Impact";
+const String heading1 = "Begin your journey to better mental well-being";
+const String heading2 = "Access resources for mindfulness and self-care";
+const String heading3 = "Get matched with a therapist tailored to your needs";
 const String body1 =
-    "Revolutionizing waste management for generators and Raycon. A seamless journey from generation to disposal, making your impact count";
+    "Your first step toward improved mental well-being starts here";
 const String body2 =
-    "Streamlined waste reporting - easy, transparent, and environmentally conscious. Your waste, your simplified responsibility.";
+    "Tap into a world of mindfulness and self-care with our offerings";
 const String body3 =
-    "Real-time reports, responsible disposal. Raycon empowers you to contribute to a cleaner future—one click at a time.";
+    "Get connected with a therapist who understands your specific needs";
 
 const registrationTittle = "Registration Acknowledged";
 const registrationSuccesMessage =

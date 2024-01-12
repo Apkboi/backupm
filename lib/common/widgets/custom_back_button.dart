@@ -25,7 +25,7 @@ class _CustomBackButtonState extends State<CustomBackButton> {
         }
       },
       child: CircleAvatar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         foregroundColor: Colors.transparent,
         radius: 23,
         child: Center(

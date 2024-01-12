@@ -127,14 +127,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           top: 60,
           child: CustomNeumorphicButton(
               onTap: () {
-                CustomDialogs.showBottomSheet(
-                    context, const LanguageSelectionSheet(),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    )),
-                    constraints: BoxConstraints(maxHeight: 0.9.sh));
+                context.pushNamed(PageUrl.menuScreen);
+                // CustomDialogs.showBottomSheet(
+                //     context, const LanguageSelectionSheet(),
+                //     shape: const RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.only(
+                //       topLeft: Radius.circular(16),
+                //       topRight: Radius.circular(16),
+                //     )),
+                //     constraints: BoxConstraints(maxHeight: 0.9.sh));
               },
               color: Pallets.primary,
               expanded: false,

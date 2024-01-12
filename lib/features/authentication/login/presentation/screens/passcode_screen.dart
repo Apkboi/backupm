@@ -74,7 +74,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                   hasPinField: false,
                   onDelete: () {},
                   onDone: (val) {
-                    // checkPin(val);
+                    checkPin(val);
                   },
                   hasBiometric: true,
                   pinController: _pinController,
@@ -93,6 +93,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                       activeCount = count;
                     });
                   },
+                  onLastIconClicked: () {},
                 ),
               ],
             ),

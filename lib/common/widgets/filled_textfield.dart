@@ -73,7 +73,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
       padding: widget.contentPadding ?? const EdgeInsets.all(18),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.radius),
-          color: Pallets.white,
+          color: widget.fillColor ?? Pallets.white,
           boxShadow: widget.hasElevation!
               ? [
                   BoxShadow(

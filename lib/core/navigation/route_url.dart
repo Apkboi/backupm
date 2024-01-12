@@ -4,27 +4,29 @@ class PageUrl {
   static const signUp = 'signUp';
   static const signUpIntro = 'signUpIntro';
   static const passcodeScreen = 'passcodeScreen';
+  static const onBoardingPage = 'onBoardingPage';
   static const login = 'login';
+  static const biometricAccess = 'biometricAccess';
+  static const notificationAccess = 'notificationAccess';
+  static const setPasscode = 'setPasscode';
+  static const emailVerificationScreen = 'emailVerificationScreen';
+  static const selectYearScreen = 'selectYearScreen';
+  static const signupOptionScreen = 'signupOptionScreen';
+  static const userEmailScreen = 'userEmailScreen';
+  static const userAvatarScreen = 'userAvatarScreen';
+  static const homeScreen = 'homeScreen';
+  static const menuScreen = 'menuScreen';
+
+
   static const selfieVerificationPage = 'selfieVerificationPage';
   static const otpPage = 'otpPage';
   static const passwordReset = 'passwordReset';
   static const passwordResetSuccess = 'passwordResetSuccess';
   static const forgotPassword = 'forgotPassword';
-  static const onBoardingPage = 'onBoardingPage';
+  static const usernameScreen = 'usernameScreen';
 
   static const home = 'home';
   static const dashboard = 'dashboard';
-  static const support = 'support';
-  static const history = 'history';
-  static const initiateWasteDisposal = 'initiateWasteDisposal';
-  static const disposalDetails = 'disposalDetails';
-  static const uploadManifest = 'uploadManifest';
-  static const invoice = 'invoice';
-
-  //SUPPORT
-  static const createSupportTicket = 'createSupportTicket';
-  static const supportChatHistory = 'supportChatHistory';
-  static const supportChat = 'supportChat';
 
   ///PROFILE
   static const editProfile = 'editProfile';

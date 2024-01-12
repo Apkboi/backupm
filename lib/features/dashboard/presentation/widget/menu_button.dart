@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-class SenderMessageBox extends StatelessWidget {
-  const SenderMessageBox({super.key});
+class MenuButton extends StatelessWidget {
+  const MenuButton({super.key});
 
   @override
   Widget build(BuildContext context) {
