@@ -11,39 +11,48 @@ class MenuItem extends StatelessWidget {
       required this.textColor,
       required this.bgColor,
       required this.image,
-      required this.text});
+      required this.text,
+      this.onTap});
 
   final Color textColor;
   final Color? bgColor;
   final String image;
   final String text;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(22),
-          color: bgColor ?? Pallets.white),
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextView(
-            text: text,
-            style: GoogleFonts.fraunces(
-              fontSize: 20.sp,
-              color: textColor,
-              fontWeight: FontWeight.w600,
+    return InkWell(
+      onTap: () {
+        if (onTap != null) {
+          onTap!();
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22),
+            color: bgColor ?? Pallets.white),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextView(
+              text: text,
+              style: GoogleFonts.fraunces(
+                fontSize: 20.sp,
+                color: textColor,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          16.verticalSpace,
-          ImageWidget(
-            imageUrl: image,
+            16.verticalSpace,
+            ImageWidget(
+              imageUrl: image,
               fit: BoxFit.fill,
-            height: 120.h,
-            width: 1.sw,
-          )
-        ],
+              height: 120.h,
+              width: 1.sw,
+            )
+          ],
+        ),
       ),
     );
   }

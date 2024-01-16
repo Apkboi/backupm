@@ -11,16 +11,17 @@ import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_
 import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/talk_to_mentra_message_box.dart';
+import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
-class TalkToMentraScreen extends StatefulWidget {
-  const TalkToMentraScreen({Key? key}) : super(key: key);
+class TherapistChatScreen extends StatefulWidget {
+  const TherapistChatScreen({Key? key}) : super(key: key);
 
   @override
-  State<TalkToMentraScreen> createState() => _TalkToMentraScreenState();
+  State<TherapistChatScreen> createState() => _TherapistChatScreenState();
 }
 
-class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
+class _TherapistChatScreenState extends State<TherapistChatScreen> {
   final List<String> messages = [
     'Hey Leila! I\'m Mentra, your friendly mental health buddy. ',
     "How's your day going?",
@@ -34,8 +35,18 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         // canGoBack: false,
-        leading: 0.horizontalSpace,
-        tittleText: 'Talk to Mentra',
+        // leading: 0.horizontalSpace,
+        tittleText: 'Nour Martin, Ph.D.',
+        actions: [
+          ImageWidget(
+            imageUrl: Assets.images.pngs.avatar2.path,
+            height: 50.h,
+            fit: BoxFit.cover,
+            shape: BoxShape.circle,
+            width: 50.w,
+          ),
+          20.horizontalSpace
+        ],
       ),
       body: Stack(
         children: [
@@ -49,7 +60,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
                 Expanded(
                     child: ListView.builder(
                   itemCount: messages.length,
-                  itemBuilder: (context, index) => TalkToMentraMessageBox(
+                  itemBuilder: (context, index) => TherapyMessageBox(
                     message: [messages[index]],
                     isSender: !index.isEven,
                   ),
@@ -71,6 +82,20 @@ class _InputBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        const Expanded(
+            child: FilledTextField(
+                hasBorder: false,
+                hasElevation: false,
+                // suffix: ImageWidget(
+                //   imageUrl: Assets.images.svgs.share,
+                //   height: 20,
+                //   width: 20,
+                // ),
+                fillColor: Pallets.white,
+                contentPadding: EdgeInsets.all(16),
+                radius: 45,
+                hint: 'Message')),
+        10.horizontalSpace,
         InkWell(
           onTap: () {
             _endSession(context);
@@ -79,25 +104,11 @@ class _InputBar extends StatelessWidget {
             backgroundColor: Pallets.white,
             radius: 24,
             child: Icon(
-              Icons.close,
-              color: Pallets.red,
+              Icons.message,
+              color: Pallets.primary,
             ),
           ),
         ),
-        10.horizontalSpace,
-        Expanded(
-            child: FilledTextField(
-                hasBorder: false,
-                hasElevation: false,
-                suffix: ImageWidget(
-                  imageUrl: Assets.images.svgs.share,
-                  height: 20,
-                  width: 20,
-                ),
-                fillColor: Pallets.white,
-                contentPadding: const EdgeInsets.all(16),
-                radius: 45,
-                hint: 'Message'))
       ],
     );
   }

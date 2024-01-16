@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
 class CustomTabbar extends StatefulWidget {
@@ -15,30 +17,31 @@ class _CustomTabbarState extends State<CustomTabbar> {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       decoration: BoxDecoration(
-        // color: AppColors.tertiaryColor,
+        color: Pallets.Grey1,
         borderRadius: BorderRadius.circular(50),
         // border: Border.all(color: Colors.grey.shade300, width: 10),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-          ),
-          BoxShadow(
-            color: Pallets.Grey1,
-            spreadRadius: -1.0,
-            blurRadius: 6.0,
-          ),
-        ],
+        // boxShadow: const [
+        //   BoxShadow(
+        //     color: Colors.black26,
+        //   ),
+        //   BoxShadow(
+        //     color: Pallets.Grey1,
+        //     spreadRadius: -1.0,
+        //     blurRadius: 6.0,
+        //   ),
+        // ],
       ),
       child: TabBar(
-          unselectedLabelColor: Pallets.Grey1,
+          unselectedLabelColor: Pallets.black,
+          labelColor: Pallets.black,
           indicator: BoxDecoration(
               color: Pallets.white, borderRadius: BorderRadius.circular(25)),
           padding: EdgeInsets.zero,
           tabs: widget.tabs,
-          labelStyle:
-              const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          labelStyle: GoogleFonts.plusJakartaSans(
+              fontSize: 16.sp, fontWeight: FontWeight.w600, color: Pallets.black)),
     );
   }
 }

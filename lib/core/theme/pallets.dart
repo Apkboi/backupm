@@ -4,7 +4,10 @@ abstract class Pallets {
   // App Colors
 
   static const primary = Color(0xFF1A6A73);
+  static const brandColor = Color(0xFF07271A);
   static const secondary = Color(0xFFFADE93);
+  static const milkColor = Color(0xFFFFD8A3);
+  static const bottomSheetColor = Color(0xFFf7f7f7);
   static const lightSecondary = Color(0xFFC7D69F);
   static const turquoise1 = Color(0xFF99BEB7);
   static const subtleLight = Color(0xFFA6C9AE);
@@ -24,6 +27,7 @@ abstract class Pallets {
   static const indigo = Color(0xFF1A5C81);
   static const yellowBase = Color(0xFFF2AE40);
   static const Grey1 = Color(0xFFE7E7E0);
+  static const pendingColor = Color(0xFFFFB300);
 
   static const primaryDark = Color(0xFF069D16);
   static const errorRed = Color(0xFFC62C2C);

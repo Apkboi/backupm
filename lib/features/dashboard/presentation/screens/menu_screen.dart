@@ -104,6 +104,9 @@ class _MenuScreenState extends State<MenuScreen> {
                             child: MenuItem(
                                 textColor: Pallets.orangePink,
                                 bgColor: Pallets.lighterPink,
+                                onTap: () {
+                                  context.pushNamed(PageUrl.therapyScreen);
+                                },
                                 image: Assets.images.pngs.pTherapy.path,
                                 text: "Professional Therapy")),
                         16.horizontalSpace,

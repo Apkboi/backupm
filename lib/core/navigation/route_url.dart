@@ -16,6 +16,10 @@ class PageUrl {
   static const userAvatarScreen = 'userAvatarScreen';
   static const homeScreen = 'homeScreen';
   static const menuScreen = 'menuScreen';
+  static const therapistProfile = 'therapistProfile';
+  static const therapyScreen = 'therapyScreen';
+  static const mentraChatScreen = 'mentraChatScreen';
+  static const therapistChatScreen = 'therapistChatScreen';
 
 
 

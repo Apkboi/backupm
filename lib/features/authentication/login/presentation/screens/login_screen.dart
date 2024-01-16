@@ -30,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     24.verticalSpace,
                     FilledTextField(
-                      labelText: 'Enter your email',
+                      hint: 'Enter your email',
                       fillColor: Pallets.white,
-                      hint: "",
+                      // hint: "",
                       controller: _emailController,
                       validator: MultiValidator([
                         EmailValidator(errorText: 'Enter a valid email.'),

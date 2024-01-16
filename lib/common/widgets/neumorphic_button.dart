@@ -11,7 +11,8 @@ class CustomNeumorphicButton extends StatelessWidget {
       this.fgColor = Pallets.white,
       this.expanded = true,
       this.child,
-      this.padding});
+      this.padding,
+      this.mainAxisAlignment = MainAxisAlignment.center});
 
   final String? text;
   final Widget? child;
@@ -20,64 +21,64 @@ class CustomNeumorphicButton extends StatelessWidget {
   final Color? fgColor;
   final bool? expanded;
   final EdgeInsetsGeometry? padding;
+  final MainAxisAlignment? mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: expanded! ? 1 : 0,
-          child: InkWell(
-            onTap: () {
-              onTap();
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(1),
-              child: Container(
-                decoration: ShapeDecoration(
-                  gradient: LinearGradient(
-                    begin: const Alignment(0.00, -1.00),
-                    end: const Alignment(0, 1),
-                    colors: [Colors.white60,
-                      color.withOpacity(0.9),
-                      color.withOpacity(0.9),
-                      color.withOpacity(0.9),
-                      color.withOpacity(0.9)
-                    ],
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(150),
-                      side: BorderSide(color: color)),
+    return InkWell(
+      onTap: () {
+        onTap();
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(1),
+        child: Container(
+          decoration: ShapeDecoration(
+            gradient: LinearGradient(
+              begin: const Alignment(0.00, -1.00),
+              end: const Alignment(0, 1),
+              colors: [
+                Colors.white60,
+                color.withOpacity(0.9),
+                color.withOpacity(0.9),
+                color.withOpacity(0.9),
+                color.withOpacity(0.9)
+              ],
+            ),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(150),
+                side: BorderSide(color: color)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(2),
+            child: Container(
+              decoration: ShapeDecoration(
+                color: color,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(150),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Container(
-                    decoration: ShapeDecoration(
-                      color: color,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(150),
-                      ),
+              ),
+              child: Padding(
+                padding: padding ??
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
+                child: Row(
+                  mainAxisAlignment: mainAxisAlignment!,
+                  mainAxisSize: expanded! ? MainAxisSize.max : MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: child ??
+                          Text(
+                            text ?? 'Button',
+                            style: TextStyle(
+                                color: fgColor, fontWeight: FontWeight.w600),
+                          ),
                     ),
-                    child: Padding(
-                      padding: padding ??
-                          const EdgeInsets.symmetric(
-                              vertical: 16.0, horizontal: 30),
-                      child: Center(
-                        child: child ??
-                            Text(
-                              text ?? 'Button',
-                              style: TextStyle(
-                                  color: fgColor, fontWeight: FontWeight.w600),
-                            ),
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

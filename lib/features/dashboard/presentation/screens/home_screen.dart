@@ -103,22 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           69.verticalSpace,
                           CustomNeumorphicButton(
                             onTap: () {
-                              // context.pushNamed(PageUrl.talkToMentraScreen);
-                              CustomDialogs.showCupertinoDialog(
-                                  context,
-                                  Container(
-                                    child: ListView.builder(
-                                        itemBuilder: (context, index) =>
-                                            InkWell(
-                                                onTap: () =>
-                                                    showCupertinoModalBottomSheet(
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return Container();
-                                                      },
-                                                    ),
-                                                child: Text('c askj'))),
-                                  ));
+                              context.pushNamed(PageUrl.talkToMentraScreen);
                             },
                             color: Pallets.secondary,
                             fgColor: Pallets.black,

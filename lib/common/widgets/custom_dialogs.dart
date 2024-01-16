@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:another_flushbar/flushbar.dart';
@@ -73,25 +73,22 @@ class CustomDialogs {
         });
   }
 
-  static Future<T?> showCupertinoDialog<T>(
+  static Future<T?> showCupertinoBottomSheet<T>(
     BuildContext context,
     Widget child, {
     Color? barrierColor,
     BoxConstraints? constraints,
     ShapeBorder? shape,
   }) {
-
-
-   return  mbs.showCupertinoModalBottomSheet(
+    return mbs.showCupertinoModalBottomSheet(
       expand: true,
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: true,
-      builder: (context) => Material(child: CupertinoPageScaffold(
-
-          child: child),),
+      builder: (context) => Material(
+        child: CupertinoPageScaffold(child: child),
+      ),
     );
-
 
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,

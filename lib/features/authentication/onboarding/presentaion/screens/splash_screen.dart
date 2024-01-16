@@ -83,7 +83,7 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _goToNextScreen() {
-    // context.pushReplacementNamed(PageUrl.onBoardingPage);
+    context.pushReplacementNamed(PageUrl.onBoardingPage);
     if (SessionManager.instance.isLoggedIn) {
       context.goNamed(PageUrl.homeScreen);
     } else {
