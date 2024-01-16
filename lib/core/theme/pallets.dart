@@ -22,11 +22,13 @@ abstract class Pallets {
   static const brown = Color(0xFFD49641);
   static const lightBlue = Color(0xFFE4F3FF);
   static const indigo = Color(0xFF1A5C81);
-
+  static const yellowBase = Color(0xFFF2AE40);
+  static const Grey1 = Color(0xFFE7E7E0);
 
   static const primaryDark = Color(0xFF069D16);
   static const errorRed = Color(0xFFC62C2C);
   static const successGreen = Color(0xFF0F8345);
+  static const ink = Color(0xFF737A86);
 
   // static const darkOrange = Color(0xFFEEB21A);
   static const transparentOrage = Color(0xFFFFF8EC);

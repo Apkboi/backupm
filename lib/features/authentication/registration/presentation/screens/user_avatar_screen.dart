@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/avatar_gridview.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
+import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 
 class UserAvatarScreen extends StatefulWidget {
   const UserAvatarScreen({super.key});
@@ -17,6 +20,8 @@ class UserAvatarScreen extends StatefulWidget {
 }
 
 class _UserAvatarScreenState extends State<UserAvatarScreen> {
+  String? selectedAvatar;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +47,7 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          MessageBox(message: [
+                          QuestionBox(message: [
                             'Thanks for sharing! Let\'s add a personal touch. Choose an avatar to represent yourself.',
                           ], isSender: false),
                         ],
@@ -62,7 +67,11 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                         SizedBox(
                           height: 0.4.sh,
                           child: AvatarGridView(
-                            onAvatarSelected: (p0) {},
+                            onAvatarSelected: (p0) {
+                              setState(() {
+                                selectedAvatar = p0;
+                              });
+                            },
                           ),
                         ),
                         Row(
@@ -73,7 +82,7 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                               flex: 1,
                               child: CustomNeumorphicButton(
                                   onTap: () {
-                                    context.pushNamed(PageUrl.setPasscode);
+                                    _goToNextScreen(context);
                                   },
                                   color: Pallets.primary,
                                   text: "Continue"),
@@ -90,5 +99,14 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
         ),
       ),
     );
+  }
+
+  void _goToNextScreen(BuildContext context) {
+    if (selectedAvatar != null) {
+      injector.get<RegistrationBloc>().updateFields(avatarPath: selectedAvatar);
+      context.pushNamed(PageUrl.setPasscode);
+    } else {
+      CustomDialogs.showToast('Please select an avatar');
+    }
   }
 }

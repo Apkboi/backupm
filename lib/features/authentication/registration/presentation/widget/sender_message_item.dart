@@ -33,7 +33,7 @@ class _SenderMessageItemState extends State<SenderMessageItem> {
           child: widget.child ??
               Text(
                 widget.message,
-                style: const TextStyle( fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
         ),
         const SizedBox(

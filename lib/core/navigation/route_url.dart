@@ -18,13 +18,14 @@ class PageUrl {
   static const menuScreen = 'menuScreen';
 
 
-  static const selfieVerificationPage = 'selfieVerificationPage';
+
+
+  static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';
   static const passwordReset = 'passwordReset';
   static const passwordResetSuccess = 'passwordResetSuccess';
   static const forgotPassword = 'forgotPassword';
   static const usernameScreen = 'usernameScreen';
-
   static const home = 'home';
   static const dashboard = 'dashboard';
 

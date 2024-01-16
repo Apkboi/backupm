@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -13,19 +14,18 @@ class AvatarGridView extends StatefulWidget {
 
 class _AvatarGridViewState extends State<AvatarGridView> {
   List<String> avatars = [
-    'avatar1',
-    'avatar2',
-    'avatar3',
-    'avatar3',
-    'avatar3',
-    'avatar3',
-    'avatar4',
-    'avatar5',
-    'avatar6',
-    'avatar6',
-    'avatar6',
-    'avatar6',
-    'avatar6',
+    Assets.images.pngs.avatar1.path,
+    Assets.images.pngs.avatar2.path,
+    Assets.images.pngs.avatar3.path,
+    Assets.images.pngs.avatar4.path,
+    Assets.images.pngs.avatar13.path,
+    Assets.images.pngs.avatar14.path,
+    Assets.images.pngs.avatar15.path,
+    Assets.images.pngs.avatar16.path,
+    Assets.images.pngs.avatar20.path,
+    Assets.images.pngs.avatar21.path,
+    Assets.images.pngs.avatar22.path,
+
     // Add more avatar names as needed
   ];
 
@@ -66,7 +66,8 @@ class _AvatarGridViewState extends State<AvatarGridView> {
               ),
             ),
             child: CircleAvatar(
-              backgroundImage: AssetImage(Assets.images.pngs.onboarding3.path), // Assuming avatars are named like 'avatar1.jpg', 'avatar2.jpg', etc.
+              // backgroundImage: AssetImage(Assets.images.pngs.avatar1.path,), // Assuming avatars are named like 'avatar1.jpg', 'avatar2.jpg', etc.
+              child: Image.asset(avatars[index]),
             ),
           ),
         );

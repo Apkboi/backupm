@@ -9,7 +9,15 @@ const String body3 =
     "Get connected with a therapist who understands your specific needs";
 
 const registrationTittle = "Registration Acknowledged";
+const reviewSubtext =
+    "Your feedback is important to us and helps improve our services.";
+const reviewTittle = "Hey Leila! 👋 How was your session with Mentra?";
+const sessionEndedMessage =
+    "Look out for a summary in your notifications. If you need to talk again, I'm here for you. Take care!";
+const endSessionMessage =
+    "It's been great talking with you. Remember, I'll clear our chat history for privacy, but I'll send a session summary to your notifications. Would you like to end the session or continue chatting?";
 const registrationSuccesMessage =
     "Thank you for submitting your registration. Your request has been received, and we'll review it promptly. Expect a response within 24 hours.";
 
-const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo';
+const lorem =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo';

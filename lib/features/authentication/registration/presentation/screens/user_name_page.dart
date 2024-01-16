@@ -7,9 +7,11 @@ import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
+import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 
 class UsernamePage extends StatefulWidget {
   const UsernamePage({super.key});
@@ -20,6 +22,8 @@ class UsernamePage extends StatefulWidget {
 
 class _UsernamePageState extends State<UsernamePage> {
   final _formKey = GlobalKey<FormState>();
+
+  final _nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +42,25 @@ class _UsernamePageState extends State<UsernamePage> {
                     const Align(
                         alignment: Alignment.topLeft,
                         child: CustomBackButton()),
-                    16.verticalSpace,
-                    const MessageBox(message: [
-                      'Hello! I\'m Mentra, your personal guide to better mental health. 😊 ',
-                      "😊 Let's get to know each other better. What’s your name, please?"
-                    ], isSender: false),
-                    Expanded(child: 0.verticalSpace),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          16.verticalSpace,
+                          const QuestionBox(message: [
+                            'Hello! I\'m Mentra, your personal guide to better mental health. 😊 ',
+                            "😊 Let's get to know each other better. What’s your name, please?"
+                          ], isSender: false),
+                          16.verticalSpace,
+                        ],
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: FilledTextField(
                         hint: "Type name..",
+                        controller: _nameController,
                         validator:
                             RequiredValidator(errorText: 'Enter your name')
                                 .call,
@@ -87,6 +99,7 @@ class _UsernamePageState extends State<UsernamePage> {
   void _goToNextScreen(BuildContext context) {
     log('message');
     if (_formKey.currentState!.validate()) {
+      injector.get<RegistrationBloc>().updateFields(name: _nameController.text);
       context.pushNamed(PageUrl.signupOptionScreen);
     }
   }

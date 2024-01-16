@@ -34,7 +34,7 @@ class _MenuScreenState extends State<MenuScreen> {
               CustomNeumorphicButton(
                 expanded: false,
                 onTap: () {
-                  context.pushNamed(PageUrl.homeScreen);
+                  context.goNamed(PageUrl.homeScreen);
                 },
                 color: Pallets.primary,
                 text: 'Home',
@@ -50,12 +50,12 @@ class _MenuScreenState extends State<MenuScreen> {
         actions: [
           CircleAvatar(
             backgroundColor: Pallets.white,
-            child: ImageWidget(imageUrl: Assets.images.svgs.arrowLeft),
+            child: ImageWidget(imageUrl: Assets.images.svgs.bell),
           ),
           10.horizontalSpace,
           CircleAvatar(
             backgroundColor: Pallets.white,
-            child: ImageWidget(imageUrl: Assets.images.svgs.arrowLeft),
+            child: ImageWidget(imageUrl: Assets.images.svgs.settings),
           ),
           16.horizontalSpace,
         ],
@@ -100,18 +100,18 @@ class _MenuScreenState extends State<MenuScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const Expanded(
+                        Expanded(
                             child: MenuItem(
                                 textColor: Pallets.orangePink,
                                 bgColor: Pallets.lighterPink,
-                                image: "image",
+                                image: Assets.images.pngs.pTherapy.path,
                                 text: "Professional Therapy")),
                         16.horizontalSpace,
-                        const Expanded(
+                        Expanded(
                             child: MenuItem(
                                 textColor: Pallets.mildGreen,
                                 bgColor: Pallets.lightGreen,
-                                image: "image",
+                                image: Assets.images.pngs.wLibrary.path,
                                 text: "Wellness Library")),
                       ],
                     ),
@@ -119,18 +119,18 @@ class _MenuScreenState extends State<MenuScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const Expanded(
+                        Expanded(
                             child: MenuItem(
                                 textColor: Pallets.brown,
                                 bgColor: Pallets.lightOrange,
-                                image: "image",
+                                image: Assets.images.pngs.summary.path,
                                 text: "Summaries")),
                         16.horizontalSpace,
-                        const Expanded(
+                        Expanded(
                             child: MenuItem(
                                 textColor: Pallets.indigo,
                                 bgColor: Pallets.lightBlue,
-                                image: "image",
+                                image: Assets.images.pngs.gJournal.path,
                                 text: "Guided Journal")),
                       ],
                     ),

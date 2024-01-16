@@ -25,7 +25,7 @@ class PinView extends StatefulWidget {
   final Function(int) onDigitPressed;
   final VoidCallback onDelete;
   final Function(String) onDone;
-  final VoidCallback onLastIconClicked;
+  final Function(String) onLastIconClicked;
   final Function(int) onOutput;
   final Function(bool) biometricAuthenticated;
   final PINController pinController;
@@ -165,7 +165,7 @@ class _PinViewState extends State<PinView> {
             return snapshot.data!
                 ? IconButton(
                     onPressed: () {
-                      widget.onLastIconClicked();
+                      widget.onLastIconClicked(output);
                       _authenticateWithBioMetric();
                     },
                     icon: widget.lastIconWidget ??

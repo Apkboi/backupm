@@ -29,12 +29,14 @@ class UrlConfig {
   static const String login = '/auth/login';
   static const String me = '/auth/me';
 
+  static const String loginPreview = "/auth/login/preview";
+
   static String getUser(String userId) => '/auth/user/$userId';
   static const String forgotPassword = '/auth/forgot-password';
-  static const String verifyOtp = '/auth/verify-otp';
+  static const String verifyOtp = '/auth/otp/verify';
   static const String register = '/auth/register';
   static const String oauthLogin = '/auth/oauth-login';
-  static const String resendOtp = '/auth/resend-otp';
+  static const String sendOtp = '/auth/register/steps';
 
   ///CONFIGS
   ///
@@ -46,8 +48,9 @@ class UrlConfig {
   static const String getAllRequests = '/waste-management/view-all';
   static const String acceptInvoice = '/waste-management/view-all';
   static const String uploadManifest = '/waste-management/view-all';
-  static String viewSingleRequest(String requestId) => '/waste-management/single/$requestId';
 
+  static String viewSingleRequest(String requestId) =>
+      '/waste-management/single/$requestId';
 
   ///ACCOUNT
   static const String updateProfile = '/account/update';
@@ -55,11 +58,9 @@ class UrlConfig {
   static const String updatePassword = '/general/account/change-password';
   static const String allowNotifications = 'general/account/allow-notification';
 
-
   static const String deleteAccount = 'general/account/deactivate';
   static const String updateOnlineStatus = '/user/update_if_online';
   static const String resetPassword = '/auth/reset-password';
-
 
   ///Chat
   static const String getChats = '/chats/list';

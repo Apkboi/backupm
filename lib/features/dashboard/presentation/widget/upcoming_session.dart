@@ -3,6 +3,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class UpcomingSession extends StatelessWidget {
   const UpcomingSession({super.key});
@@ -16,9 +17,10 @@ class UpcomingSession extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 44, vertical: 25),
       child: Column(
         children: [
-          const ImageWidget(
-            imageUrl: '',
+          ImageWidget(
+            imageUrl: Assets.images.pngs.calender.path,
             size: 50,
+            fit: BoxFit.fill,
             color: Pallets.primary,
           ),
           16.verticalSpace,

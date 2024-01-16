@@ -29,8 +29,9 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
             Padding(
               padding: EdgeInsets.only(top: 36.h, right: 10),
               child: ImageWidget(
-                imageUrl: Assets.images.svgs.google,
-                size: 36,
+                imageUrl: Assets.images.pngs.smallMentra.path,
+                fit: BoxFit.cover,
+                size: 40,
               ),
             ),
             Column(
@@ -50,7 +51,6 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
                               : const Radius.circular(15),
                           topRight: const Radius.circular(15),
                           bottomRight: const Radius.circular(15),
-
                           topLeft: !index.isEven
                               ? Radius.zero
                               : const Radius.circular(15)),

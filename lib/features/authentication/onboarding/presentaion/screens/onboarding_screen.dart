@@ -11,7 +11,6 @@ import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/signup_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/widgets/indicator.dart';
-import 'package:mentra/features/authentication/onboarding/presentaion/widgets/language_selection_sheet.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/widgets/onboardinng_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -112,6 +111,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       text: 'Login',
                       fgColor: Pallets.black,
                       onTap: () {
+                        SessionManager.instance.hasOnboarded = true;
                         context.pushNamed(PageUrl.login);
                       },
                     ),
@@ -127,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           top: 60,
           child: CustomNeumorphicButton(
               onTap: () {
-                context.pushNamed(PageUrl.menuScreen);
+                // context.pushNamed(PageUrl.menuScreen);
                 // CustomDialogs.showBottomSheet(
                 //     context, const LanguageSelectionSheet(),
                 //     shape: const RoundedRectangleBorder(

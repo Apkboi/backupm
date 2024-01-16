@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/receiver_message_item.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/sender_message_item.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/mentra_message_item.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/user_message_item.dart';
 
-class MessageBox extends StatefulWidget {
-  const MessageBox({
+class TalkToMentraMessageBox extends StatefulWidget {
+  const TalkToMentraMessageBox({
     Key? key,
     required this.message,
     required this.isSender,
@@ -14,12 +14,11 @@ class MessageBox extends StatefulWidget {
   final Widget? child;
   final bool isSender;
 
-
   @override
-  State<MessageBox> createState() => _MessageBoxState();
+  State<TalkToMentraMessageBox> createState() => _TalkToMentraMessageBoxState();
 }
 
-class _MessageBoxState extends State<MessageBox> {
+class _TalkToMentraMessageBoxState extends State<TalkToMentraMessageBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,11 +27,11 @@ class _MessageBoxState extends State<MessageBox> {
             widget.isSender ? Alignment.centerRight : Alignment.centerLeft,
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: widget.isSender
-            ? SenderMessageItem(
+            ? UserMessageItem(
                 message: widget.message,
                 child: widget.child,
               )
-            : ReceiverMessageItem(
+            : MentraMessageItem(
                 message: widget.message,
                 child: widget.child,
               ));

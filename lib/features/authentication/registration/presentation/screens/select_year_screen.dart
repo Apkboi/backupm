@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/date_selector_widget.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
+import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 
 class SelectYearScreen extends StatefulWidget {
   const SelectYearScreen({super.key});
@@ -18,6 +21,8 @@ class SelectYearScreen extends StatefulWidget {
 }
 
 class _SelectYearScreenState extends State<SelectYearScreen> {
+  int selectedYear = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +45,16 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const MessageBox(message: [
+                          const QuestionBox(message: [
                             'Bingo! 🚀 Your email\'s all verified now. How about sharing your birth year with us?',
                           ], isSender: false),
                           SizedBox(
-                              height: 200.h, child: const DateSelectorWidget()),
+                              height: 200.h,
+                              child: DateSelectorWidget(
+                                onYearSelected: (year) {
+                                  selectedYear = year;
+                                },
+                              )),
                         ],
                       ),
                     ),
@@ -58,7 +68,7 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
                           flex: 1,
                           child: CustomNeumorphicButton(
                               onTap: () {
-                                context.pushNamed(PageUrl.userAvatarScreen);
+                                _goToNextScreen(context);
                               },
                               color: Pallets.primary,
                               text: "Continue"),
@@ -73,5 +83,16 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
         ),
       ),
     );
+  }
+
+  void _goToNextScreen(BuildContext context) {
+    if (selectedYear == 0) {
+      CustomDialogs.showToast('Please select a date');
+    } else {
+      injector
+          .get<RegistrationBloc>()
+          .updateFields(birthYear: selectedYear.toString());
+      context.pushNamed(PageUrl.userAvatarScreen);
+    }
   }
 }

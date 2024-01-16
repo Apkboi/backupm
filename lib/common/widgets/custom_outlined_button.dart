@@ -7,19 +7,21 @@ class CustomOutlinedButton extends StatefulWidget {
   final Color? foreGroundColor;
   final Color? outlinedColr;
   final double? radius;
+  final double? outlineWidth;
   final EdgeInsetsGeometry? padding;
   final bool? isExpanded;
 
   const CustomOutlinedButton(
       {Key? key,
-        required this.child,
-        required this.onPressed,
-        this.bgColor,
-        this.foreGroundColor,
-        this.padding,
-        this.isExpanded = true,
-        this.outlinedColr,
-        this.radius})
+      required this.child,
+      required this.onPressed,
+      this.bgColor,
+      this.foreGroundColor,
+      this.padding,
+      this.isExpanded = true,
+      this.outlinedColr,
+      this.radius,
+      this.outlineWidth})
       : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(widget.radius ?? 10),
                   side: BorderSide(
+                    width: widget.outlineWidth ?? 1,
                     color: widget.outlinedColr ??
                         Theme.of(context).colorScheme.onBackground,
                   ),

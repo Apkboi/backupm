@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
 class SplashPage extends StatefulWidget {
@@ -82,16 +83,16 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _goToNextScreen() {
-    context.pushReplacementNamed(PageUrl.onBoardingPage);
-//   if (SessionManager.instance.isLoggedIn) {
-//     context.goNamed(PageUrl.home);
-//   } else {
-//     if (SessionManager.instance.hasOnboarded) {
-//       context.goNamed(PageUrl.signIn);
-//     } else {
-//       context.goNamed(PageUrl.onBoardingPage);
-//     }
-//     // context.pushReplacementNamed(PageUrl.onBoardingPage);
-//   }
+    // context.pushReplacementNamed(PageUrl.onBoardingPage);
+    if (SessionManager.instance.isLoggedIn) {
+      context.goNamed(PageUrl.homeScreen);
+    } else {
+      if (SessionManager.instance.hasOnboarded) {
+        context.goNamed(PageUrl.login);
+      } else {
+        context.goNamed(PageUrl.onBoardingPage);
+      }
+      // context.pushReplacementNamed(PageUrl.onBoardingPage);
+    }
   }
 }

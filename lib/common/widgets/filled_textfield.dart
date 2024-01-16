@@ -70,7 +70,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: widget.contentPadding ?? const EdgeInsets.all(18),
+      // padding: widget.contentPadding ?? const EdgeInsets.all(18),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.radius),
           color: widget.fillColor ?? Pallets.white,
@@ -117,7 +117,8 @@ class _FilledTextFieldState extends State<FilledTextField> {
                       borderSide: BorderSide.none,
                     ),
               hintText: widget.hint,
-              suffixIcon: widget.suffix,
+              // suffixIcon: widget.suffix,
+              suffix: widget.suffix,
               focusedBorder: widget.outline!
                   ? OutlineInputBorder(
                       gapPadding: 2,
@@ -143,10 +144,10 @@ class _FilledTextFieldState extends State<FilledTextField> {
               prefixIconColor: Pallets.grey,
               suffixIconColor: Theme.of(context).colorScheme.primary,
               enabled: widget.enabled,
-              contentPadding: EdgeInsets.zero,
+              contentPadding: widget.contentPadding ?? const EdgeInsets.all(18),
               filled: true,
-              labelText: widget.labelText,
-              labelStyle: widget.labelTextStyle,
+              // labelText: widget.labelText,
+              // labelStyle: widget.labelTextStyle,
               hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
         ),
       ),

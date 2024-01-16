@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.fgColor,
       this.height,
       this.canGoBack = true,
+      this.centerTile = true,
       this.leadingWidth});
 
   final List<Widget>? actions;
@@ -31,6 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? height;
   final double? leadingWidth;
   final bool? canGoBack;
+  final bool? centerTile;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: bgColor ?? Colors.transparent,
       foregroundColor: fgColor,
       elevation: elevation ?? 0,
-      centerTitle: true,
+      centerTitle: centerTile,
       surfaceTintColor: bgColor ?? Colors.transparent,
       titleTextStyle: GoogleFonts.sora(
           fontWeight: FontWeight.w600,

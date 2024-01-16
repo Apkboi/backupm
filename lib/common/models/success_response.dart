@@ -9,40 +9,40 @@ SuccessResponse successResponseFromJson(String str) => SuccessResponse.fromJson(
 String successResponseToJson(SuccessResponse data) => json.encode(data.toJson());
 
 class SuccessResponse {
-  final String msg;
+  final String message;
   final dynamic data;
   final bool success;
   final int code;
 
   SuccessResponse({
-    required this.msg,
+    required this.message,
     required this.data,
     required this.success,
     required this.code,
   });
 
   SuccessResponse copyWith({
-    String? msg,
+    String? message,
     dynamic data,
     bool? success,
     int? code,
   }) =>
       SuccessResponse(
-        msg: msg ?? this.msg,
+        message: message ?? this.message,
         data: data ?? this.data,
         success: success ?? this.success,
         code: code ?? this.code,
       );
 
   factory SuccessResponse.fromJson(Map<String, dynamic> json) => SuccessResponse(
-    msg: json["msg"],
+    message: json["message"],
     data: json["data"],
     success: json["success"],
     code: json["code"],
   );
 
   Map<String, dynamic> toJson() => {
-    "msg": msg,
+    "message": message,
     "data": data,
     "success": success,
     "code": code,

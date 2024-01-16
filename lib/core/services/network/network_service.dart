@@ -76,7 +76,9 @@ class NetworkService {
       switch (method) {
         case RequestMethod.post:
           response = await dio!.post(path,
-              queryParameters: params, data: data, options: _getOptions());
+              queryParameters: params,
+              data: data ?? formData,
+              options: _getOptions());
 
           break;
         case RequestMethod.get:
@@ -134,12 +136,9 @@ class NetworkService {
         return response;
       } else {
         if (response.data['errors'] != null) {
-
           logger.i(response.data.toString());
           var apiError = ApiError.fromResponse(response);
           return Future.error(apiError);
-
-
         } else {
           return response;
         }
@@ -171,7 +170,6 @@ class NetworkService {
 
       return Future.error(apiError, stackTrace);
     }
-
   }
 
   _getOptions() {

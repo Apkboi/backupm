@@ -3,7 +3,9 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
 class DateSelectorWidget extends StatefulWidget {
-  const DateSelectorWidget({super.key});
+  const DateSelectorWidget({super.key, required this.onYearSelected});
+
+  final Function(int year) onYearSelected;
 
   @override
   _SelectableYearsListState createState() => _SelectableYearsListState();
@@ -26,6 +28,7 @@ class _SelectableYearsListState extends State<DateSelectorWidget> {
             setState(() {
               selectedYear = year;
             });
+            widget.onYearSelected(selectedYear);
           },
           child: Align(
             alignment: Alignment.centerRight,
@@ -37,8 +40,9 @@ class _SelectableYearsListState extends State<DateSelectorWidget> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   // shape: BoxShape.circle,
-                  color:
-                      isSelected ? Pallets.lightSecondary : Pallets.lightTurquoise,
+                  color: isSelected
+                      ? Pallets.lightSecondary
+                      : Pallets.lightTurquoise,
                 ),
                 child: Center(
                   child: Text(

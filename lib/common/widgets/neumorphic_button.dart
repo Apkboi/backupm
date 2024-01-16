@@ -38,7 +38,12 @@ class CustomNeumorphicButton extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: const Alignment(0.00, -1.00),
                     end: const Alignment(0, 1),
-                    colors: [color.withOpacity(0.3), color.withOpacity(0.9)],
+                    colors: [Colors.white60,
+                      color.withOpacity(0.9),
+                      color.withOpacity(0.9),
+                      color.withOpacity(0.9),
+                      color.withOpacity(0.9)
+                    ],
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(150),

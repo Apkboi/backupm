@@ -17,6 +17,7 @@ import 'package:mentra/features/authentication/registration/presentation/screens
 import 'package:mentra/features/authentication/registration/presentation/screens/user_name_page.dart';
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
+import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
 final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
@@ -117,6 +118,16 @@ class CustomRoutes {
         path: '/menuScreen',
         name: PageUrl.menuScreen,
         builder: (context, state) => const MenuScreen(),
+      ),
+      GoRoute(
+        path: '/talkToMentraScreen',
+        name: PageUrl.talkToMentraScreen,
+        builder: (context, state) => const TalkToMentraScreen(),
+      ),
+      GoRoute(
+        path: '/therapistProfile',
+        name: PageUrl,
+        builder: (context, state) => const TalkToMentraScreen(),
       ),
     ],
   );

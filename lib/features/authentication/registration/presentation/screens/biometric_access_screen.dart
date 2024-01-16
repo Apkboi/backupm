@@ -9,9 +9,11 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
+import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BiometricAccessScreen extends StatefulWidget {
   const BiometricAccessScreen({super.key});
@@ -40,7 +42,7 @@ class _BiometricAccessScreenState extends State<BiometricAccessScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const MessageBox(message: [
+                        const QuestionBox(message: [
                           'Perfect match! 👍 Fancy enabling biometrics or Face ID for a smoother experience?',
                         ], isSender: false),
                         Align(
@@ -57,7 +59,10 @@ class _BiometricAccessScreenState extends State<BiometricAccessScreen> {
                               style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w600, fontSize: 14.sp),
                             ),
-                            onPressed: () {},
+                            onPressed: () async{
+                              await PermissionHandlerService().requestPermission(Permission.camera);
+                              context.pushNamed(PageUrl.notificationAccess);
+                            },
                           ),
                         ),
                         16.verticalSpace,
@@ -92,4 +97,5 @@ class _BiometricAccessScreenState extends State<BiometricAccessScreen> {
       ),
     );
   }
+
 }

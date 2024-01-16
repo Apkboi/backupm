@@ -36,10 +36,12 @@ class MenuItem extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          2.verticalSpace,
+          16.verticalSpace,
           ImageWidget(
             imageUrl: image,
-            height: 120,
+              fit: BoxFit.fill,
+            height: 120.h,
+            width: 1.sw,
           )
         ],
       ),

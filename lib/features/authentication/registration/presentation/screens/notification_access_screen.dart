@@ -8,7 +8,10 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/message_box.dart';
+import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../../../../../core/services/permission_handler/permission_handler_service.dart';
 
 class NotificationAccessScreen extends StatefulWidget {
   const NotificationAccessScreen({super.key});
@@ -38,7 +41,7 @@ class _NotificationAccessScreenState extends State<NotificationAccessScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const MessageBox(message: [
+                        const QuestionBox(message: [
                           'Cool beans! 😎 We\'re almost there. Can we send you friendly notifications to brighten your day?',
                         ], isSender: false),
                         Align(
@@ -55,7 +58,10 @@ class _NotificationAccessScreenState extends State<NotificationAccessScreen> {
                               style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w600, fontSize: 14.sp),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await PermissionHandlerService().requestPermission(Permission.notification);
+                              context.goNamed(PageUrl.homeScreen);
+                            },
                           ),
                         ),
                         16.verticalSpace,

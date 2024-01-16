@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' ;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:fluttertoast/fluttertoast.dart' as toast;
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mbs;
 import 'package:overlay_support/overlay_support.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -49,6 +50,49 @@ class CustomDialogs {
     BoxConstraints? constraints,
     ShapeBorder? shape,
   }) {
+    return showModalBottomSheet<T>(
+        backgroundColor: Colors.transparent,
+        context: context,
+        barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.3),
+        useRootNavigator: true,
+        isScrollControlled: true,
+        shape: shape,
+        constraints: constraints,
+        builder: (context) {
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: child,
+            ),
+          );
+        });
+  }
+
+  static Future<T?> showCupertinoDialog<T>(
+    BuildContext context,
+    Widget child, {
+    Color? barrierColor,
+    BoxConstraints? constraints,
+    ShapeBorder? shape,
+  }) {
+
+
+   return  mbs.showCupertinoModalBottomSheet(
+      expand: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      builder: (context) => Material(child: CupertinoPageScaffold(
+
+          child: child),),
+    );
+
+
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,
         context: context,
@@ -362,7 +406,7 @@ class CustomDialogs {
 
     // show a notification at top of screen.
     showSimpleNotification(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 3),
       Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -372,7 +416,7 @@ class CustomDialogs {
         ),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.cancel,
               size: 24.0,
               color: Pallets.red,
