@@ -43,7 +43,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
               Expanded(
                 flex: 1,
                 child: PageView(
-
+                  padEnds: true,
                   controller: PageController(viewportFraction: 0.8),
                   children: const [
                     PlanDetailsItem(),

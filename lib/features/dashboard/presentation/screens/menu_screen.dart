@@ -8,7 +8,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
-import 'package:mentra/features/dashboard/presentation/widget/upcoming_session.dart';
+import 'package:mentra/features/dashboard/presentation/widget/unlock_premium_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -48,7 +48,6 @@ class _MenuScreenState extends State<MenuScreen> {
         tittleText: '',
         leadingWidth: 75,
         height: 80,
-
         actions: [
           CircleAvatar(
             backgroundColor: Pallets.white,
@@ -83,14 +82,15 @@ class _MenuScreenState extends State<MenuScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     20.verticalSpace,
-                    const TextView(
-                      text: 'Upcoming Session',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Pallets.primary,
-                    ),
-                    24.verticalSpace,
-                    const UpcomingSession(),
+                    // const TextView(
+                    //   text: 'Upcoming Session',
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.w600,
+                    //   color: Pallets.primary,
+                    // ),
+                    // 24.verticalSpace,
+                    // const UpcomingSession(),
+                    const UnlockPremiumWidget(),
                     48.verticalSpace,
                     const TextView(
                       text: 'Your Journey',

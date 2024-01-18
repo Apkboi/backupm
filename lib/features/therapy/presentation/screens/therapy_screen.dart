@@ -109,7 +109,9 @@ class _TherapyScreenState extends State<TherapyScreen> {
                       text: 'Change Therapist',
                       fontWeight: FontWeight.w600,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(PageUrl.therapistProfile);
+                    },
                   )
                 ],
               ),

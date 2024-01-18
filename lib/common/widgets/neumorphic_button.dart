@@ -70,8 +70,9 @@ class CustomNeumorphicButton extends StatelessWidget {
                       child: child ??
                           Text(
                             text ?? 'Button',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: fgColor, fontWeight: FontWeight.w600),
+                                color: fgColor, fontWeight: FontWeight.w600,),
                           ),
                     ),
                   ],

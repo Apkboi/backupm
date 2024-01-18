@@ -18,79 +18,92 @@ class PlanDetailsItem extends StatefulWidget {
 class _PlanDetailsItemState extends State<PlanDetailsItem> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  width: 1.sw,
-                  // color: Pallets.grey,
-                  decoration: ShapeDecoration(
-                      // color: Pallets.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 20,
-                        sigmaY: 20,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextView(
-                              text: 'Essential',
-                              style: GoogleFonts.fraunces(
-                                  color: Pallets.primary,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            5.verticalSpace,
-                            const TextView(
-                                text: '79 AED/month',
-                                fontSize: 18,
-                                color: Pallets.lightSecondary,
-                                fontWeight: FontWeight.w500),
-                            10.verticalSpace,
-                            const TextView(
-                                text:
-                                    'Upgrade to our Essential Plan for enhanced features and a more robust experience.',
-                                color: Pallets.navy,
-                                fontWeight: FontWeight.w500),
-                            10.verticalSpace,
-                            ...List.generate(2, (index) => const PlanFeature()),
-                          ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    width: 1.sw,
+                    // color: Pallets.grey,
+                    decoration: ShapeDecoration(
+                        // color: Pallets.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20))),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 20,
+                          sigmaY: 20,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 16),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextView(
+                                text: 'Essential',
+                                style: GoogleFonts.fraunces(
+                                    color: Pallets.primary,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              5.verticalSpace,
+                              const TextView(
+                                  text: '79 AED/month',
+                                  fontSize: 18,
+                                  color: Pallets.lightSecondary,
+                                  fontWeight: FontWeight.w500),
+                              10.verticalSpace,
+                              const TextView(
+                                  text:
+                                      'Upgrade to our Essential Plan for enhanced features and a more robust experience.',
+                                  color: Pallets.navy,
+                                  fontWeight: FontWeight.w500),
+                              10.verticalSpace,
+                              ...List.generate(
+                                  2, (index) => const PlanFeature()),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Column(
-          children: [
-            CustomOutlinedButton(
-              radius: 100,
-              bgColor: Pallets.white,
-              outlinedColr: Pallets.primary,
-              padding: const EdgeInsets.all(16),
-              child: const Text('Subscribe Monthly\n(AED 79/month)'),
-              onPressed: () {},
-            ),
-            10.verticalSpace,
-            CustomNeumorphicButton(onTap: () {}, color: Pallets.primary),
-            21.verticalSpace
-          ],
-        )
-      ],
+          Column(
+            children: [
+              CustomOutlinedButton(
+                radius: 100,
+                bgColor: Pallets.white,
+                outlinedColr: Pallets.primary,
+                padding: const EdgeInsets.all(12),
+                child: const TextView(
+                  align: TextAlign.center,
+                  text: 'Subscribe Monthly\n(AED 79/month)',
+                  fontWeight: FontWeight.w600,
+                ),
+                onPressed: () {},
+              ),
+              16.verticalSpace,
+              CustomNeumorphicButton(
+                onTap: () {},
+                color: Pallets.primary,
+                padding: const EdgeInsets.all(12),
+                text: "Subscribe Annually\n(AED 760/year, Save 20%)",
+              ),
+              21.verticalSpace
+            ],
+          )
+        ],
+      ),
     );
   }
 }

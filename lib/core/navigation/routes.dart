@@ -21,7 +21,7 @@ import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_s
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
-import 'package:mentra/features/therapy/presentation/screens/therapist_profile.dart';
+import 'package:mentra/features/therapy/presentation/screens/therapist_profile_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');

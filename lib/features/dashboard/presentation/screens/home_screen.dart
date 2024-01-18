@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -12,7 +11,6 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../core/navigation/route_url.dart';
 
@@ -50,8 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CustomNeumorphicButton(
             onTap: () {},
             color: Pallets.primary,
-            padding: EdgeInsets.all(10),
-            
+            padding: const EdgeInsets.all(10),
             text: 'SOS',
           ),
         ),
@@ -105,8 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           69.verticalSpace,
                           CustomNeumorphicButton(
                             onTap: () {
-                              // context.pushNamed(PageUrl.talkToMentraScreen);
-                              context.pushNamed(PageUrl.selectPlanScreen);
+                              context.pushNamed(PageUrl.talkToMentraScreen);
+                              // context.pushNamed(PageUrl.selectPlanScreen);
                             },
                             color: Pallets.secondary,
                             fgColor: Pallets.black,
