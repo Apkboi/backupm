@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         tittleText: 'Mentra',
+        height: 80,
         leadingWidth: 75,
         actions: [
           InkWell(
@@ -49,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CustomNeumorphicButton(
             onTap: () {},
             color: Pallets.primary,
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.all(10),
+            
             text: 'SOS',
           ),
         ),
@@ -103,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           69.verticalSpace,
                           CustomNeumorphicButton(
                             onTap: () {
-                              context.pushNamed(PageUrl.talkToMentraScreen);
+                              // context.pushNamed(PageUrl.talkToMentraScreen);
+                              context.pushNamed(PageUrl.selectPlanScreen);
                             },
                             color: Pallets.secondary,
                             fgColor: Pallets.black,

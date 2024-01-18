@@ -18,9 +18,10 @@ import 'package:mentra/features/authentication/registration/presentation/screens
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
+import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
+import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_profile.dart';
-import 'package:mentra/features/therapy/presentation/screens/therapy_chat_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
@@ -143,15 +144,21 @@ class CustomRoutes {
         name: PageUrl.therapyScreen,
         builder: (context, state) => const TherapyScreen(),
       ),
-      // GoRoute(
-      //   path: '/mentraChatScreen',
-      //   name: PageUrl.mentraChatScreen,
-      //   builder: (context, state) => const TherapyChatScreen(),
-      // ),
+      GoRoute(
+        path: '/summariesScreen',
+        name: PageUrl.summariesScreen,
+        builder: (context, state) => const SummariesScreen(),
+      ),
+
       GoRoute(
         path: '/therapistChatScreen',
         name: PageUrl.therapistChatScreen,
         builder: (context, state) => const TherapistChatScreen(),
+      ),
+      GoRoute(
+        path: '/selectPlanScreen',
+        name: PageUrl.selectPlanScreen,
+        builder: (context, state) => const SelectPlanScreen(),
       ),
     ],
   );

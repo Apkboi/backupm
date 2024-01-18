@@ -16,6 +16,7 @@ class ImageWidget extends StatefulWidget {
   final BorderRadius? borderRadius;
   final double? size;
   final Color? color;
+  final VoidCallback? onTap;
   final bool? canPreview;
 
   final ImageWidgetType imageType;
@@ -33,6 +34,7 @@ class ImageWidget extends StatefulWidget {
     required this.imageUrl,
     this.imageType = ImageWidgetType.asset,
     this.canPreview = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -70,6 +72,9 @@ class _ImageWidgetState extends State<ImageWidget> {
                     imageType: ImageType.network,
                   ),
                 );
+              }
+              if (widget.onTap != null) {
+                widget.onTap!();
               }
             },
             child: CachedNetworkImage(

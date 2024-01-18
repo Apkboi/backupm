@@ -32,7 +32,9 @@ class CustomNeumorphicButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(1),
         child: Container(
+
           decoration: ShapeDecoration(
+
             gradient: LinearGradient(
               begin: const Alignment(0.00, -1.00),
               end: const Alignment(0, 1),

@@ -87,12 +87,12 @@ class _SplashPageState extends State<SplashPage>
     if (SessionManager.instance.isLoggedIn) {
       context.goNamed(PageUrl.homeScreen);
     } else {
-      if (SessionManager.instance.hasOnboarded) {
-        context.goNamed(PageUrl.login);
-      } else {
-        context.goNamed(PageUrl.onBoardingPage);
-      }
-      // context.pushReplacementNamed(PageUrl.onBoardingPage);
+      // if (SessionManager.instance.hasOnboarded) {
+      //   context.goNamed(PageUrl.login);
+      // } else {
+      //   context.goNamed(PageUrl.onBoardingPage);
+      // }
+      context.pushReplacementNamed(PageUrl.onBoardingPage);
     }
   }
 }

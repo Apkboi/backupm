@@ -22,38 +22,58 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (onTap != null) {
-          onTap!();
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            color: bgColor ?? Pallets.white),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextView(
-              text: text,
-              style: GoogleFonts.fraunces(
-                fontSize: 20.sp,
-                color: textColor,
-                fontWeight: FontWeight.w600,
+    return Stack(
+      children: [
+        Container(
+          height: 230.h,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(22),
+              color: bgColor ?? Pallets.white),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextView(
+                text: text,
+                style: GoogleFonts.fraunces(
+                  fontSize: 20.sp,
+                  color: textColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            16.verticalSpace,
-            ImageWidget(
-              imageUrl: image,
-              fit: BoxFit.fill,
-              height: 120.h,
-              width: 1.sw,
-            )
-          ],
+              16.verticalSpace,
+              Expanded(
+                child: ImageWidget(
+                  imageUrl: image,
+                  onTap: () {
+                    if (onTap != null) {
+                      onTap!();
+                    }
+                  },
+                  canPreview: false,
+                  fit: BoxFit.fill,
+                  height: 120.h,
+                  width: 1.sw,
+                ),
+              )
+            ],
+          ),
         ),
-      ),
+        InkWell(
+          onTap: () {
+            if (onTap != null) {
+              onTap!();
+            }
+          },
+          child: Center(
+            child: Container(
+              height: 150,
+              width: 150,
+              
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

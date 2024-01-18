@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
@@ -63,22 +64,24 @@ class SessionScheduledDialog extends StatelessWidget {
                   color: Pallets.primary,
                 ),
                 10.verticalSpace,
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageWidget(imageUrl: ''),
-                    TextView(
+                    ImageWidget(imageUrl: Assets.images.svgs.icCalender),
+                    10.horizontalSpace,
+                    const TextView(
                       text: ' Saturday, 02 December 2023',
                       fontWeight: FontWeight.w600,
                     ),
                   ],
                 ),
                 10.verticalSpace,
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageWidget(imageUrl: ''),
-                    TextView(
+                    ImageWidget(imageUrl: Assets.images.svgs.icClock),
+                    10.horizontalSpace,
+                    const TextView(
                       text: ' 9:00 am',
                       fontWeight: FontWeight.w600,
                     ),
@@ -89,7 +92,9 @@ class SessionScheduledDialog extends StatelessWidget {
           ),
           16.verticalSpace,
           CustomNeumorphicButton(
-            onTap: () {},
+            onTap: () {
+              context.pop();
+            },
             color: Pallets.primary,
             text: 'Done',
           )

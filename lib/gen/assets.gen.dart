@@ -13,6 +13,7 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   $AssetsImagesPngsGen get pngs => const $AssetsImagesPngsGen();
+
   $AssetsImagesSvgsGen get svgs => const $AssetsImagesSvgsGen();
 }
 
@@ -62,8 +63,6 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/avatar2.png
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/images/pngs/avatar2.png');
-
-
 
   /// File path: assets/images/pngs/background.png
   AssetGenImage get background =>
@@ -197,6 +196,12 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/home_bg.svg
   String get homeBg => 'assets/images/svgs/home_bg.svg';
 
+  /// File path: assets/images/svgs/ic_calender.svg
+  String get icCalender => 'assets/images/svgs/ic_calender.svg';
+
+  /// File path: assets/images/svgs/ic_clock.svg
+  String get icClock => 'assets/images/svgs/ic_clock.svg';
+
   /// File path: assets/images/svgs/insights.svg
   String get insights => 'assets/images/svgs/insights.svg';
 
@@ -205,6 +210,9 @@ class $AssetsImagesSvgsGen {
 
   /// File path: assets/images/svgs/menu_icon.svg
   String get menuIcon => 'assets/images/svgs/menu_icon.svg';
+
+  /// File path: assets/images/svgs/message_icon.svg
+  String get messageIcon => 'assets/images/svgs/message_icon.svg';
 
   /// File path: assets/images/svgs/onboarding1.svg
   String get onboarding1 => 'assets/images/svgs/onboarding1.svg';
@@ -246,9 +254,12 @@ class $AssetsImagesSvgsGen {
         gJournal,
         google,
         homeBg,
+        icCalender,
+        icClock,
         insights,
         mentra,
         menuIcon,
+        messageIcon,
         onboarding1,
         pTherapy,
         settings,

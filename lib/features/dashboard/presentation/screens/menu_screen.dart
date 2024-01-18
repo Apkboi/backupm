@@ -47,6 +47,8 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: CustomAppBar(
         tittleText: '',
         leadingWidth: 75,
+        height: 80,
+
         actions: [
           CircleAvatar(
             backgroundColor: Pallets.white,
@@ -124,6 +126,9 @@ class _MenuScreenState extends State<MenuScreen> {
                       children: [
                         Expanded(
                             child: MenuItem(
+                                onTap: () {
+                                  context.pushNamed(PageUrl.summariesScreen);
+                                },
                                 textColor: Pallets.brown,
                                 bgColor: Pallets.lightOrange,
                                 image: Assets.images.pngs.summary.path,

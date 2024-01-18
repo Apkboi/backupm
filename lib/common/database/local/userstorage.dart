@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:mentra/core/services/data/session_manager.dart';
+import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 // import 'package:mentra/features/authentication/signup/data/models/signup_response.dart';
 
 class UserStorage {
@@ -14,12 +15,12 @@ class UserStorage {
   }
 
   // Retrieve user data from SharedPreferences
-  Future<dynamic?> getUser() async {
+  Future<MentraUser?> getUser() async {
     final userJson = SessionManager.instance.usersData;
     if (userJson != null) {
-      return (userJson as Map<String, dynamic>);
+      return MentraUser.fromJson(userJson as Map<String, dynamic>);
     }
-    return null; // Return null if user data doesn't exist
+    return null; /// Return null if user data doesn't exist
   }
 
   // Clear user data from SharedPreferences

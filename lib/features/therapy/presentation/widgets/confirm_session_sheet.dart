@@ -9,6 +9,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_scheduled_dialog.dart';
+import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ConfirmSessionSheet extends StatefulWidget {
@@ -58,23 +59,28 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                       borderRadius: BorderRadius.circular(17)),
                   child: Row(
                     children: [
-                      const Expanded(
+                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                ImageWidget(imageUrl: ''),
-                                TextView(
+                                ImageWidget(imageUrl: Assets.images.svgs.icCalender),
+                                10.horizontalSpace,
+
+                                const     TextView(
                                   text: ' Saturday, 02 December 2023',
                                   fontWeight: FontWeight.w600,
                                 ),
                               ],
                             ),
+                            10.verticalSpace,
+
                             Row(
                               children: [
-                                ImageWidget(imageUrl: ''),
-                                TextView(
+                                ImageWidget(imageUrl: Assets.images.svgs.icClock),
+                                10.horizontalSpace,
+                                const TextView(
                                   text: ' 9:00 am',
                                   fontWeight: FontWeight.w600,
                                 ),

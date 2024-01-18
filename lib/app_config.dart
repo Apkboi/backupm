@@ -11,6 +11,8 @@ import 'core/services/firebase/notifiactions.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 
+import 'features/account/presentation/user_bloc/user_bloc.dart';
+
 enum Flavor { dev, staging, prod }
 
 class AppConfig {
@@ -46,7 +48,7 @@ class AppConfig {
   }
 
   Future setup() async {
-    // injector.get<UserBloc>().add(GetUserEvent());
+    injector.get<UserBloc>().add(GetUserEvent());
   }
 
   Future<void> initCore() async {

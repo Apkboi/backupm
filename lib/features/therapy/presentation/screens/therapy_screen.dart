@@ -13,7 +13,6 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
-import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -42,7 +41,7 @@ class _TherapyScreenState extends State<TherapyScreen> {
         actions: [
           InkWell(
             onTap: () {
-              context.pushNamed(PageUrl.menuScreen);
+              context.goNamed(PageUrl.menuScreen);
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
@@ -107,7 +106,7 @@ class _TherapyScreenState extends State<TherapyScreen> {
                     radius: 100,
                     outlinedColr: Pallets.primary,
                     child: const TextView(
-                      text: 'Therapist Profile',
+                      text: 'Change Therapist',
                       fontWeight: FontWeight.w600,
                     ),
                     onPressed: () {},

@@ -36,41 +36,45 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: bgColor ?? Colors.transparent,
-      foregroundColor: fgColor,
-      elevation: elevation ?? 0,
-      centerTitle: centerTile,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AppBar(
+        backgroundColor: bgColor ?? Colors.transparent,
+        foregroundColor: fgColor,
+        toolbarHeight: height,
+        elevation: elevation ?? 0,
+        centerTitle: centerTile,
 
-      surfaceTintColor: bgColor ?? Colors.transparent,
-      titleTextStyle: GoogleFonts.sora(
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-          color: Theme.of(context).colorScheme.onBackground),
-      leadingWidth: leadingWidth,
-      leading: canGoBack!
-          ? leading ??
-              CustomBackButton(
-                onTap: () {
-                  onBackPressed != null
-                      ? onBackPressed!()
-                      : context.pop(context);
-                },
-              )
-          : null,
-      title: tittle ??
-          TextView(
-            text: tittleText ?? 'My Appbar',
-            fontSize: 16,
+        surfaceTintColor: bgColor ?? Colors.transparent,
+        titleTextStyle: GoogleFonts.sora(
             fontWeight: FontWeight.w600,
-            style: GoogleFonts.plusJakartaSans(
-                // fontSize: 16,
-                color: fgColor),
-          ),
-      actions: actions,
+            fontSize: 16,
+            color: Theme.of(context).colorScheme.onBackground),
+        leadingWidth: leadingWidth,
+        leading: canGoBack!
+            ? leading ??
+            CustomBackButton(
+              onTap: () {
+                onBackPressed != null
+                    ? onBackPressed!()
+                    : context.pop(context);
+              },
+            )
+            : null,
+        title: tittle ??
+            TextView(
+              text: tittleText ?? 'My Appbar',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              style: GoogleFonts.plusJakartaSans(
+                  // fontSize: 16,
+                  color: fgColor),
+            ),
+        actions: actions,
+      ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(height ?? kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(height ?? 60);
 }

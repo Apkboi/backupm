@@ -81,8 +81,8 @@ class _UsernamePageState extends State<UsernamePage> {
                         // onSaved: widget.onSaved,
                         radius: 43,
                         // preffix: const Icon(Iconsax.search_normal4),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 10),
+                        // contentPadding: const EdgeInsets.symmetric(
+                        //     vertical: 4, horizontal: 10),
                         fillColor: Pallets.white,
                       ),
                     )

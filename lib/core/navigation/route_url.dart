@@ -20,6 +20,8 @@ class PageUrl {
   static const therapyScreen = 'therapyScreen';
   static const mentraChatScreen = 'mentraChatScreen';
   static const therapistChatScreen = 'therapistChatScreen';
+  static const summariesScreen = 'summariesScreen';
+  static const selectPlanScreen = 'selectPlanScreen';
 
 
 

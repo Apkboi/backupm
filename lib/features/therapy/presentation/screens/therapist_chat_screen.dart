@@ -10,7 +10,6 @@ import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialo
 import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/talk_to_mentra_message_box.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -98,66 +97,14 @@ class _InputBar extends StatelessWidget {
         10.horizontalSpace,
         InkWell(
           onTap: () {
-            _endSession(context);
+            // _endSession(context);
           },
-          child: const CircleAvatar(
-            backgroundColor: Pallets.white,
-            radius: 24,
-            child: Icon(
-              Icons.message,
-              color: Pallets.primary,
-            ),
-          ),
-        ),
+          child: CircleAvatar(
+              backgroundColor: Pallets.white,
+              radius: 24,
+              child: ImageWidget(imageUrl: Assets.images.svgs.messageIcon)),
+        )
       ],
     );
-  }
-
-  void _endSession(BuildContext context) async {
-    final bool? sessionEnded =
-        await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
-            constraints: BoxConstraints(maxHeight: 0.9.sh));
-
-    if (sessionEnded ?? false) {
-      final bool? writeReview = await CustomDialogs.showBottomSheet(
-          context, const SessionEndedSheet(),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          )),
-          constraints: BoxConstraints(maxHeight: 0.9.sh));
-
-      if (writeReview ?? false) {
-        final bool? wroteFeedback =
-            await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                )),
-                constraints: BoxConstraints(maxHeight: 0.9.sh));
-
-        if (wroteFeedback ?? false) {
-          await CustomDialogs.showBottomSheet(
-              context, const FeedbackSuccessDialog(),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              )),
-              constraints: BoxConstraints(maxHeight: 0.9.sh));
-          context.pop();
-        }
-        context.pop();
-      } else {
-        context.pop();
-      }
-    }
   }
 }
