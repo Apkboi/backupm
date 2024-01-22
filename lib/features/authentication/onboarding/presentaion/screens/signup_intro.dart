@@ -51,7 +51,7 @@ class _SignupIntroScreenState extends State<SignupIntroScreen> {
             InkWell(
               onTap: () {
                 injector.get<RegistrationBloc>().updateFields(role: 'User');
-                context.goNamed(PageUrl.usernameScreen);
+                context.pushNamed(PageUrl.usernameScreen);
               },
               child: Container(
                 decoration: BoxDecoration(

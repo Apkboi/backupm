@@ -32,7 +32,15 @@
 	<key>NSCameraUsageDescription</key>
     <string>Mentra will use this feature to let you add your card, upload documents, scan QR codes or take a selfie.</string>
     <key>NSFaceIDUsageDescription</key>
-    	<string>Biometric authentication for accessing the application</string>
+    <string>Biometric authentication for accessing the application</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+   	<string>Mentra will like to get the device location</string>
+   	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Mentra will like to get the device location</string>
+   	<key>NSMicrophoneUsageDescription</key>
+   	<string>Can I use the mic please?</string>
+   	<key>NSPhotoLibraryUsageDescription</key>
+   	<string>Can I use the PhotoLibrary please? Only for capturing your profile picture</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
