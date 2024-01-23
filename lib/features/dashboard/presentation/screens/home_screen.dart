@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: CustomAppBar(
         tittleText: 'Mentra',
         height: 80,
-        leadingWidth: 75,
+        leadingWidth: 100,
         actions: [
           InkWell(
             onTap: () {

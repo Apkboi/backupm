@@ -56,6 +56,18 @@ class $AssetsImagesPngsGen {
   AssetGenImage get avatar4 =>
       const AssetGenImage('assets/images/pngs/Avatar-4.png');
 
+  /// File path: assets/images/pngs/anxiety.png
+  AssetGenImage get anxiety =>
+      const AssetGenImage('assets/images/pngs/anxiety.png');
+
+  /// File path: assets/images/pngs/article.png
+  AssetGenImage get article =>
+      const AssetGenImage('assets/images/pngs/article.png');
+
+  /// File path: assets/images/pngs/article_image.png
+  AssetGenImage get articleImage =>
+      const AssetGenImage('assets/images/pngs/article_image.png');
+
   /// File path: assets/images/pngs/avatar1.png
   AssetGenImage get avatar1 =>
       const AssetGenImage('assets/images/pngs/avatar1.png');
@@ -108,6 +120,14 @@ class $AssetsImagesPngsGen {
   AssetGenImage get pTherapy =>
       const AssetGenImage('assets/images/pngs/p_therapy.png');
 
+  /// File path: assets/images/pngs/productivity.png
+  AssetGenImage get productivity =>
+      const AssetGenImage('assets/images/pngs/productivity.png');
+
+  /// File path: assets/images/pngs/sleep.png
+  AssetGenImage get sleep =>
+      const AssetGenImage('assets/images/pngs/sleep.png');
+
   /// File path: assets/images/pngs/small_mentra.png
   AssetGenImage get smallMentra =>
       const AssetGenImage('assets/images/pngs/small_mentra.png');
@@ -115,6 +135,10 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/summary.png
   AssetGenImage get summary =>
       const AssetGenImage('assets/images/pngs/summary.png');
+
+  /// File path: assets/images/pngs/video_thumbail.png
+  AssetGenImage get videoThumbail =>
+      const AssetGenImage('assets/images/pngs/video_thumbail.png');
 
   /// File path: assets/images/pngs/w_library.png
   AssetGenImage get wLibrary =>
@@ -131,6 +155,9 @@ class $AssetsImagesPngsGen {
         avatar22,
         avatar3,
         avatar4,
+        anxiety,
+        article,
+        articleImage,
         avatar1,
         avatar2,
         avatar3,
@@ -145,14 +172,20 @@ class $AssetsImagesPngsGen {
         onboarding2,
         onboarding3,
         pTherapy,
+        productivity,
+        sleep,
         smallMentra,
         summary,
+        videoThumbail,
         wLibrary
       ];
 }
 
 class $AssetsImagesSvgsGen {
   const $AssetsImagesSvgsGen();
+
+  /// File path: assets/images/svgs/anviety.svg
+  String get anviety => 'assets/images/svgs/anviety.svg';
 
   /// File path: assets/images/svgs/apple.svg
   String get apple => 'assets/images/svgs/apple.svg';
@@ -169,6 +202,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/backspace.svg
   String get backspace => 'assets/images/svgs/backspace.svg';
 
+  /// File path: assets/images/svgs/backward15.svg
+  String get backward15 => 'assets/images/svgs/backward15.svg';
+
   /// File path: assets/images/svgs/bell.svg
   String get bell => 'assets/images/svgs/bell.svg';
 
@@ -183,6 +219,9 @@ class $AssetsImagesSvgsGen {
 
   /// File path: assets/images/svgs/combined_shape.svg
   String get combinedShape => 'assets/images/svgs/combined_shape.svg';
+
+  /// File path: assets/images/svgs/forward.svg
+  String get forward => 'assets/images/svgs/forward.svg';
 
   /// File path: assets/images/svgs/forward_button.svg
   String get forwardButton => 'assets/images/svgs/forward_button.svg';
@@ -240,16 +279,19 @@ class $AssetsImagesSvgsGen {
 
   /// List of all assets
   List<String> get values => [
+        anviety,
         apple,
         arrowLeft,
         avatar1,
         background,
         backspace,
+        backward15,
         bell,
         biometricBtn,
         brain,
         calender,
         combinedShape,
+        forward,
         forwardButton,
         gJournal,
         google,

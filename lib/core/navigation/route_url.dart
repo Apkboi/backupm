@@ -22,9 +22,11 @@ class PageUrl {
   static const therapistChatScreen = 'therapistChatScreen';
   static const summariesScreen = 'summariesScreen';
   static const selectPlanScreen = 'selectPlanScreen';
-
-
-
+  static const wellnessLibraryScreen = 'wellnessLibraryScreen';
+  static const articleDetailsScreen = 'articleDetailsScreen';
+  static const videoPlayerScreen = 'videoPlayerScreen';
+  static const allArticlesScreen = 'allArticlesScreen';
+  static const videoArticleScreen = 'videoArticleScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

@@ -46,7 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
       appBar: CustomAppBar(
         tittleText: '',
-        leadingWidth: 75,
+        leadingWidth: 100,
         height: 80,
         actions: [
           CircleAvatar(
@@ -75,7 +75,7 @@ class _MenuScreenState extends State<MenuScreen> {
           const AppBg(),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -114,6 +114,10 @@ class _MenuScreenState extends State<MenuScreen> {
                         16.horizontalSpace,
                         Expanded(
                             child: MenuItem(
+                                onTap: () {
+                                  context
+                                      .pushNamed(PageUrl.wellnessLibraryScreen);
+                                },
                                 textColor: Pallets.mildGreen,
                                 bgColor: Pallets.lightGreen,
                                 image: Assets.images.pngs.wLibrary.path,

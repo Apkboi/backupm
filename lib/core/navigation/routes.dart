@@ -17,6 +17,11 @@ import 'package:mentra/features/authentication/registration/presentation/screens
 import 'package:mentra/features/authentication/registration/presentation/screens/user_name_page.dart';
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
+import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
+import 'package:mentra/features/library/presentation/screens/article_details_screen.dart';
+import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
+import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
+import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
@@ -159,6 +164,31 @@ class CustomRoutes {
         path: '/selectPlanScreen',
         name: PageUrl.selectPlanScreen,
         builder: (context, state) => const SelectPlanScreen(),
+      ),
+      GoRoute(
+        path: '/videoPlayerScreen',
+        name: PageUrl.videoPlayerScreen,
+        builder: (context, state) => const VideoPlayerScreen(),
+      ),
+      GoRoute(
+        path: '/articleDetailsScreen',
+        name: PageUrl.articleDetailsScreen,
+        builder: (context, state) => const ArticleDetailsScreen(),
+      ),
+      GoRoute(
+        path: '/wellnessLibraryScreen',
+        name: PageUrl.wellnessLibraryScreen,
+        builder: (context, state) => const WellnessLibraryScreen(),
+      ),
+      GoRoute(
+        path: '/allArticlesScreen',
+        name: PageUrl.allArticlesScreen,
+        builder: (context, state) => const AllArticlesScreen(),
+      ),
+      GoRoute(
+        path: '/videoArticleScreen',
+        name: PageUrl.videoArticleScreen,
+        builder: (context, state) => const VideoArticleScreen(),
       ),
     ],
   );

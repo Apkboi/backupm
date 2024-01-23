@@ -29,6 +29,7 @@ abstract class Pallets {
   static const Grey1 = Color(0xFFE7E7E0);
   static const pendingColor = Color(0xFFFFB300);
   static const summaryIndicator = Color(0xFFFFA940);
+  static const videoButtonColor = Color(0xFFF9C16C);
 
   static const primaryDark = Color(0xFF069D16);
   static const errorRed = Color(0xFFC62C2C);

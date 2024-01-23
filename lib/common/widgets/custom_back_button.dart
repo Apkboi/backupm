@@ -4,9 +4,10 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class CustomBackButton extends StatefulWidget {
-  const CustomBackButton({super.key, this.icon, this.onTap});
+  const CustomBackButton({super.key, this.icon, this.onTap, this.size});
 
   final Widget? icon;
+  final double? size;
   final VoidCallback? onTap;
 
   @override
@@ -27,7 +28,7 @@ class _CustomBackButtonState extends State<CustomBackButton> {
       child: CircleAvatar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.transparent,
-        radius: 23,
+        radius: widget.size ?? 23,
         child: Center(
           child: widget.icon ??
               ImageWidget(imageUrl: Assets.images.svgs.arrowLeft),
