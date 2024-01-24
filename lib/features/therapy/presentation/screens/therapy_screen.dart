@@ -13,6 +13,7 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -75,8 +76,13 @@ class _TherapyScreenState extends State<TherapyScreen> {
                   8.verticalSpace,
                   CustomNeumorphicButton(
                     onTap: () {
-                      CustomDialogs.showCupertinoBottomSheet(
-                          context, const SelectDateSheet());
+                      CustomDialogs.showCupertinoBottomSheet(context,
+                          SelectDateSheet(
+                        onSelected: (DateTime onSelected) {
+                          CustomDialogs.showCupertinoBottomSheet(
+                              context, const SelectTimeSheet());
+                        },
+                      ));
                     },
                     fgColor: Pallets.white,
                     color: Pallets.primary,

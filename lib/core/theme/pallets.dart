@@ -14,6 +14,7 @@ abstract class Pallets {
   static const navy = Color(0xFF002C3C);
   static const neutral = Color(0xFFF2F2EF);
   static const lightPink = Color(0xFFF8E7F5);
+  static const pink = Color(0xFFDA4B51);
   static const mildRed = Color(0xFFF4A88A);
   static const mildOrange = Color(0xFFF9C16C);
   static const lightTurquoise = Color(0xFFE3E6EA);
@@ -25,16 +26,22 @@ abstract class Pallets {
   static const brown = Color(0xFFD49641);
   static const lightBlue = Color(0xFFE4F3FF);
   static const indigo = Color(0xFF1A5C81);
+  static const trackColor = Color(0xFF47557E);
+  static const indigo100 = Color(0xFF8E97FD);
   static const yellowBase = Color(0xFFF2AE40);
   static const Grey1 = Color(0xFFE7E7E0);
   static const pendingColor = Color(0xFFFFB300);
   static const summaryIndicator = Color(0xFFFFA940);
   static const videoButtonColor = Color(0xFFF9C16C);
+  static const buttonBlack = Color(0xFF242628);
+  static const skyBlue = Color(0xFF0666EB);
 
   static const primaryDark = Color(0xFF069D16);
   static const errorRed = Color(0xFFC62C2C);
   static const successGreen = Color(0xFF0F8345);
   static const ink = Color(0xFF737A86);
+  static const grey200 = Color(0xffE4E5E7);
+
 
   // static const darkOrange = Color(0xFFEEB21A);
   static const transparentOrage = Color(0xFFFFF8EC);
@@ -55,8 +62,9 @@ abstract class Pallets {
   static const grey95 = Color(0xffE4E5E7);
   static const primaryLight = Color(0xFFE2ECE4);
   static const maybeBlack = Color(0xFF101010);
+  static const red = Color(0xFFE15B2D);
   static const black = Colors.black;
-  static const red = Colors.red;
+  // static const red = Colors.red;
   static const white = Colors.white;
   static const grey = Color(0xff6D6D6D);
   static const bgLight = Color(0xfff7f7f7);

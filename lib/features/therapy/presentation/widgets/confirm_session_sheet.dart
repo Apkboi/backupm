@@ -7,6 +7,7 @@ import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/theme/app_styles.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_scheduled_dialog.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -102,9 +103,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                 ),
                 16.verticalSpace,
                 Container(
-                  decoration: BoxDecoration(
-                      color: Pallets.white,
-                      borderRadius: BorderRadius.circular(17)),
+                  decoration:AppStyles.customFilledTextFieldBoxDecoration,
                   padding: const EdgeInsets.all(16),
                   child: const Row(
                     children: [
@@ -131,15 +130,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                 16.verticalSpace,
                 Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: ShapeDecoration(
-                      color: Pallets.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                          side: BorderSide(
-                              color: Colors.grey.withOpacity(
-                                0.3,
-                              ),
-                              width: 0.8))),
+                  decoration: AppStyles.customBorderedTextFieldBoxDecoration,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

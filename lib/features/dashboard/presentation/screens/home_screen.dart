@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomNeumorphicButton(
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(PageUrl.emergencySosScreen);
+            },
             color: Pallets.primary,
             padding: const EdgeInsets.all(10),
             text: 'SOS',

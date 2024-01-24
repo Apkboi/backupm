@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/extensions/context_extension.dart';
-import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SelectDateSheet extends StatefulWidget {
-  const SelectDateSheet({super.key});
+  const SelectDateSheet({super.key, this.tittle, required this.onSelected});
+
+  final String? tittle;
+
+  final Function(DateTime onSelected) onSelected;
 
   @override
   State<SelectDateSheet> createState() => _SelectDateSheetState();
 }
 
 class _SelectDateSheetState extends State<SelectDateSheet> {
+  DateTime selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -42,7 +46,7 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
               ),
               16.verticalSpace,
               TextView(
-                text: 'Select date',
+                text: widget.tittle ?? 'Select date',
                 style: GoogleFonts.fraunces(
                     color: Pallets.navy,
                     fontSize: 32.sp,
@@ -57,18 +61,22 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                           onPrimary: Pallets.black),
                       primaryColor: Pallets.secondary),
                   child: CalendarDatePicker(
+
                     initialDate: DateTime.now(),
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2050),
-                    onDateChanged: (value) {},
+                    onDateChanged: (value) {
+                      setState(() {
+                        selectedDate = value;
+                      });
+                    },
                   ),
                 ),
               ),
               CustomNeumorphicButton(
                   text: 'Continue',
                   onTap: () {
-                    CustomDialogs.showCupertinoBottomSheet(
-                        context, const SelectTimeSheet());
+                    widget.onSelected(selectedDate);
                   },
                   color: Pallets.primary),
               20.verticalSpace

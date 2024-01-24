@@ -19,7 +19,8 @@ class PinView extends StatefulWidget {
       this.hasPinField = true,
       required this.onOutput,
       this.lastIconWidget,
-      required this.onLastIconClicked})
+      required this.onLastIconClicked,
+      this.aspectRatio})
       : super(key: key);
 
   final Function(int) onDigitPressed;
@@ -31,6 +32,7 @@ class PinView extends StatefulWidget {
   final PINController pinController;
   final bool? hasBiometric;
   final bool? hasPinField;
+  final double? aspectRatio;
   final Widget? lastIconWidget;
 
   @override
@@ -70,7 +72,7 @@ class _PinViewState extends State<PinView> {
                 : 0.verticalSpace,
             widget.hasPinField! ? 40.verticalSpace : 0.verticalSpace,
             GridView.count(
-                childAspectRatio: 1.5,
+                childAspectRatio: widget.aspectRatio ?? 1.5,
                 padding: EdgeInsets.zero,
                 // padding: const EdgeInsets.only(horizontal: 18,b: 6),
                 // crossAxisSpacing: 10,

@@ -15,6 +15,7 @@ import 'package:mentra/features/authentication/registration/presentation/screens
 import 'package:mentra/features/authentication/registration/presentation/screens/user_avatar_screen.dart';
 import 'package:mentra/features/authentication/registration/presentation/screens/user_email_screen.dart';
 import 'package:mentra/features/authentication/registration/presentation/screens/user_name_page.dart';
+import 'package:mentra/features/dashboard/presentation/screens/emergency_sos_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
 import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
@@ -23,6 +24,12 @@ import 'package:mentra/features/library/presentation/screens/video_article_scree
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/change_passcode_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/delete_account_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/edit_avatar_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/edit_profile_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/security_privacy_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/settings_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
@@ -189,6 +196,41 @@ class CustomRoutes {
         path: '/videoArticleScreen',
         name: PageUrl.videoArticleScreen,
         builder: (context, state) => const VideoArticleScreen(),
+      ),
+      GoRoute(
+        path: '/settingsScreen',
+        name: PageUrl.settingsScreen,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/editProfileScreen',
+        name: PageUrl.editProfileScreen,
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: '/deleteAccountScreen',
+        name: PageUrl.deleteAccountScreen,
+        builder: (context, state) => const DeleteAccountScreen(),
+      ),
+      GoRoute(
+        path: '/editAvatarScreen',
+        name: PageUrl.editAvatarScreen,
+        builder: (context, state) => const EditAvatarScreen(),
+      ),
+      GoRoute(
+        path: '/securityPrivacyScreen',
+        name: PageUrl.securityPrivacyScreen,
+        builder: (context, state) => const SecurityPrivacyScreen(),
+      ),
+      GoRoute(
+        path: '/changePasscodeScreen',
+        name: PageUrl.changePasscodeScreen,
+        builder: (context, state) => const ChangePasscodeScreen(),
+      ),
+      GoRoute(
+        path: '/emergencySosScreen',
+        name: PageUrl.emergencySosScreen,
+        builder: (context, state) => const EmergencySosScreen(),
       ),
     ],
   );

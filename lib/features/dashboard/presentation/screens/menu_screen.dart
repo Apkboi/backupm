@@ -54,16 +54,23 @@ class _MenuScreenState extends State<MenuScreen> {
             child: ImageWidget(imageUrl: Assets.images.svgs.bell),
           ),
           10.horizontalSpace,
-          CircleAvatar(
-            backgroundColor: Pallets.white,
-            child: ImageWidget(imageUrl: Assets.images.svgs.settings),
+          InkWell(
+            onTap: () {
+              context.pushNamed(PageUrl.settingsScreen);
+            },
+            child: CircleAvatar(
+              backgroundColor: Pallets.white,
+              child: ImageWidget(imageUrl: Assets.images.svgs.settings),
+            ),
           ),
           16.horizontalSpace,
         ],
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CustomNeumorphicButton(
-            onTap: () {},
+            onTap: () {
+              context.pushNamed(PageUrl.emergencySosScreen);
+            },
             color: Pallets.primary,
             padding: EdgeInsets.zero,
             text: 'SOS',

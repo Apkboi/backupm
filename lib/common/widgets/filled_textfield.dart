@@ -7,6 +7,7 @@ class FilledTextField extends StatefulWidget {
   final String? labelText;
   final TextStyle? labelTextStyle;
   final Widget? suffix;
+  final Widget? suffixIcon;
   final Widget? preffix;
   final FocusNode? focusNode;
   final int? maxLine;
@@ -59,7 +60,8 @@ class FilledTextField extends StatefulWidget {
       this.radius = 10,
       this.textColor,
       this.labelText,
-      this.labelTextStyle})
+      this.labelTextStyle,
+      this.suffixIcon})
       : super(key: key);
 
   @override
@@ -117,7 +119,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
                       borderSide: BorderSide.none,
                     ),
               hintText: widget.hint,
-              // suffixIcon: widget.suffix,
+              suffixIcon: widget.suffixIcon,
               suffix: widget.suffix,
               focusedBorder: widget.outline!
                   ? OutlineInputBorder(
@@ -146,6 +148,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
               enabled: widget.enabled,
               contentPadding: widget.contentPadding ?? const EdgeInsets.all(18),
               filled: true,
+
               // labelText: widget.labelText,
               // labelStyle: widget.labelTextStyle,
               hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13)),

@@ -27,6 +27,13 @@ class PageUrl {
   static const videoPlayerScreen = 'videoPlayerScreen';
   static const allArticlesScreen = 'allArticlesScreen';
   static const videoArticleScreen = 'videoArticleScreen';
+  static const settingsScreen = 'settingsScreen';
+  static const editProfileScreen = 'editProfileScreen';
+  static const editAvatarScreen = 'editAvatarScreen';
+  static const deleteAccountScreen = 'deleteAccountScreen';
+  static const securityPrivacyScreen = 'securityPrivacyScreen';
+  static const changePasscodeScreen = 'changePasscodeScreen';
+  static const emergencySosScreen = 'emergencySosScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';
