@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class SettingsGroup1 extends StatelessWidget {
   const SettingsGroup1({super.key});
@@ -17,6 +19,7 @@ class SettingsGroup1 extends StatelessWidget {
       child: Column(
         children: [
           SettingListTile(
+            leadingIconUrl: Assets.images.svgs.bellFilled,
             tittle: 'Notifications',
             trailingWidget: CupertinoSwitch(
               value: true,
@@ -25,17 +28,32 @@ class SettingsGroup1 extends StatelessWidget {
           ),
           24.verticalSpace,
           SettingListTile(
+            leadingIconUrl: Assets.images.svgs.lockOpen,
             tittle: 'Security & privacy',
             onTap: () {
               context.pushNamed(PageUrl.securityPrivacyScreen);
             },
           ),
           24.verticalSpace,
-          const SettingListTile(tittle: 'Preferences'),
+          SettingListTile(
+              leadingWidget: Row(
+                children: [
+                  5.horizontalSpace,
+                  ImageWidget(
+                    imageUrl: Assets.images.svgs.bulb,
+                    fit: BoxFit.fill,
+                  ),
+                ],
+              ),
+              leadingIconUrl: Assets.images.svgs.bulb,
+              tittle: 'Preferences'),
           24.verticalSpace,
-          const SettingListTile(tittle: 'Give feedback'),
+          SettingListTile(
+              leadingIconUrl: Assets.images.svgs.star, tittle: 'Give feedback'),
           24.verticalSpace,
-          const SettingListTile(tittle: 'Support'),
+          SettingListTile(
+              leadingIconUrl: Assets.images.svgs.supportIcon,
+              tittle: 'Support'),
         ],
       ),
     ));

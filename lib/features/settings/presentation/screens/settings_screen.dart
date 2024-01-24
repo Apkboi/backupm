@@ -103,6 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Padding(
                         padding: const EdgeInsets.all(17),
                         child: SettingListTile(
+                          leadingIconUrl: Assets.images.svgs.subscription,
                           tittle: 'Subscription',
                           trailingWidget: Row(
                             children: [
@@ -130,6 +131,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           child: Padding(
                         padding: const EdgeInsets.all(17),
                         child: SettingListTile(
+                          leadingIconUrl: Assets.images.svgs.logout,
+
                           tittle: 'Logout',
                           onTap: () {
                             SessionManager.instance.logOut();

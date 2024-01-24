@@ -208,17 +208,26 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/bell.svg
   String get bell => 'assets/images/svgs/bell.svg';
 
+  /// File path: assets/images/svgs/bell_filled.svg
+  String get bellFilled => 'assets/images/svgs/bell_filled.svg';
+
   /// File path: assets/images/svgs/biometric_btn.svg
   String get biometricBtn => 'assets/images/svgs/biometric_btn.svg';
 
   /// File path: assets/images/svgs/brain.svg
   String get brain => 'assets/images/svgs/brain.svg';
 
+  /// File path: assets/images/svgs/bulb.svg
+  String get bulb => 'assets/images/svgs/bulb.svg';
+
   /// File path: assets/images/svgs/calender.svg
   String get calender => 'assets/images/svgs/calender.svg';
 
   /// File path: assets/images/svgs/combined_shape.svg
   String get combinedShape => 'assets/images/svgs/combined_shape.svg';
+
+  /// File path: assets/images/svgs/facebook.svg
+  String get facebook => 'assets/images/svgs/facebook.svg';
 
   /// File path: assets/images/svgs/forward.svg
   String get forward => 'assets/images/svgs/forward.svg';
@@ -244,6 +253,15 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/insights.svg
   String get insights => 'assets/images/svgs/insights.svg';
 
+  /// File path: assets/images/svgs/instagram.svg
+  String get instagram => 'assets/images/svgs/instagram.svg';
+
+  /// File path: assets/images/svgs/lock_open.svg
+  String get lockOpen => 'assets/images/svgs/lock_open.svg';
+
+  /// File path: assets/images/svgs/logout.svg
+  String get logout => 'assets/images/svgs/logout.svg';
+
   /// File path: assets/images/svgs/mentra.svg
   String get mentra => 'assets/images/svgs/mentra.svg';
 
@@ -265,11 +283,29 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/share.svg
   String get share => 'assets/images/svgs/share.svg';
 
+  /// File path: assets/images/svgs/share_filled.svg
+  String get shareFilled => 'assets/images/svgs/share_filled.svg';
+
+  /// File path: assets/images/svgs/star.svg
+  String get star => 'assets/images/svgs/star.svg';
+
+  /// File path: assets/images/svgs/subscription.svg
+  String get subscription => 'assets/images/svgs/subscription.svg';
+
   /// File path: assets/images/svgs/success.svg
   String get success => 'assets/images/svgs/success.svg';
 
   /// File path: assets/images/svgs/summaries.svg
   String get summaries => 'assets/images/svgs/summaries.svg';
+
+  /// File path: assets/images/svgs/supportIcon.svg
+  String get supportIcon => 'assets/images/svgs/supportIcon.svg';
+
+  /// File path: assets/images/svgs/tiktox.svg
+  String get tiktox => 'assets/images/svgs/tiktox.svg';
+
+  /// File path: assets/images/svgs/twitter.svg
+  String get twitter => 'assets/images/svgs/twitter.svg';
 
   /// File path: assets/images/svgs/user_emoji.svg
   String get userEmoji => 'assets/images/svgs/user_emoji.svg';
@@ -287,10 +323,13 @@ class $AssetsImagesSvgsGen {
         backspace,
         backward15,
         bell,
+        bellFilled,
         biometricBtn,
         brain,
+        bulb,
         calender,
         combinedShape,
+        facebook,
         forward,
         forwardButton,
         gJournal,
@@ -299,6 +338,9 @@ class $AssetsImagesSvgsGen {
         icCalender,
         icClock,
         insights,
+        instagram,
+        lockOpen,
+        logout,
         mentra,
         menuIcon,
         messageIcon,
@@ -306,8 +348,14 @@ class $AssetsImagesSvgsGen {
         pTherapy,
         settings,
         share,
+        shareFilled,
+        star,
+        subscription,
         success,
         summaries,
+        supportIcon,
+        tiktox,
+        twitter,
         userEmoji,
         wLibrary
       ];

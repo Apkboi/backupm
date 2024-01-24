@@ -26,7 +26,8 @@ class SettingListTile extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          leadingWidget ?? ImageWidget(imageUrl: leadingIconUrl ?? ''),
+
+          leadingWidget ?? ImageWidget(imageUrl: leadingIconUrl ?? '',fit: BoxFit.fill,),
           17.horizontalSpace,
           Expanded(
             child: TextView(
