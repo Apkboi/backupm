@@ -73,7 +73,7 @@ class TimeUtil {
     return timeago.format(fifteenAgo);
   }
 
-  static String formatFromDate(DateTime date) {
+  static String  formatFromDate(DateTime date) {
     return DateFormat.yMMMMd().format(date);
   }
 

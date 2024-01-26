@@ -5,15 +5,19 @@ import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class TherapyDetailsSheet extends StatefulWidget {
-  const TherapyDetailsSheet({super.key});
+  const TherapyDetailsSheet({super.key, required this.session});
+
+  final TherapySession session;
 
   @override
   State<TherapyDetailsSheet> createState() => _TherapyDetailsSheetState();
@@ -41,21 +45,22 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                 ),
               ),
               ImageWidget(
-                imageUrl: Assets.images.svgs.avatar1,
+                imageUrl: widget.session.therapist.user.avatar,
                 height: 64.h,
                 width: 64.w,
+                borderRadius: BorderRadius.circular(30),
               ),
               6.verticalSpace,
               TextView(
-                text: 'Building Self-\nConfidence',
+                text:  widget.session.focus,
                 style: GoogleFonts.fraunces(
                     color: Pallets.navy,
                     fontSize: 32.sp,
                     fontWeight: FontWeight.w600),
               ),
               8.verticalSpace,
-              const TextView(
-                  text: 'Session with Nour Martin, Ph.D.',
+               TextView(
+                  text: 'Session with ${widget.session.therapist.user.name}',
                   color: Pallets.brandColor,
                   fontWeight: FontWeight.w600),
               17.verticalSpace,
@@ -91,15 +96,15 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                     color: Pallets.white,
                     borderRadius: BorderRadius.circular(18)),
                 padding: const EdgeInsets.all(18),
-                child: const Row(
+                child:  Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextView(
+                    const TextView(
                       text: 'Status',
                       color: Pallets.ink,
                     ),
                     TextView(
-                      text: 'Awaiting',
+                      text: widget.session.status,
                       color: Pallets.mildOrange,
                     ),
                   ],
@@ -113,29 +118,29 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                 padding: const EdgeInsets.all(18),
                 child: Column(
                   children: [
-                    const Row(
+                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextView(
+                        const  TextView(
                           text: 'Date',
                           color: Pallets.ink,
                         ),
                         TextView(
-                          text: 'December 5, 2023',
+                          text: TimeUtil.formatDate(widget.session.startsAt.toIso8601String()),
                           // color: Pallets.mildOrange,
                         ),
                       ],
                     ),
                     16.verticalSpace,
-                    const Row(
+                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextView(
+                        const TextView(
                           text: 'Time',
                           color: Pallets.ink,
                         ),
                         TextView(
-                          text: '3:00 PM',
+                          text:TimeUtil.formatTime(widget.session.startsAt),
                           // color: Pallets.mildOrange,
                         ),
                       ],
@@ -145,6 +150,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               ),
               16.verticalSpace,
               Container(
+                width: 1.sw,
                 decoration: BoxDecoration(
                     color: Pallets.white,
                     borderRadius: BorderRadius.circular(18)),
@@ -157,9 +163,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
-                    const TextView(
-                      text:
-                          'Working on self-esteem issues that have been affecting my social interactions.',
+                     TextView(
+                      text: widget.session.note,
                     ),
                   ],
                 ),

@@ -4,6 +4,9 @@ import '_utils.dart';
 
 extension StringExtension on String {
 
+
+
+
   Color toColor() {
     String hexCode = replaceAll('#', '');
 

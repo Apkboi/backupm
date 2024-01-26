@@ -87,7 +87,7 @@ class TherapySession {
   final int duration;
   final DateTime startsAt;
   final dynamic endsAt;
-  final String note;
+  final dynamic note;
   final String status;
   final DateTime createdAt;
   final DateTime updatedAt;

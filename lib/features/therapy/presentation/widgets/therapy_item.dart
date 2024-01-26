@@ -18,8 +18,9 @@ class TherapyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+
         CustomDialogs.showCupertinoBottomSheet(
-            context, const TherapyDetailsSheet());
+            context,  TherapyDetailsSheet(session: session,));
       },
       child: Container(
         padding: const EdgeInsets.all(16),

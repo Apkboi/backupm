@@ -81,13 +81,7 @@ class _TherapyScreenState extends State<TherapyScreen> {
                   8.verticalSpace,
                   CustomNeumorphicButton(
                     onTap: () {
-                      CustomDialogs.showCupertinoBottomSheet(context,
-                          SelectDateSheet(
-                        onSelected: (DateTime onSelected) {
-                          CustomDialogs.showCupertinoBottomSheet(
-                              context, const SelectTimeSheet());
-                        },
-                      ));
+                      _scheduleTherapy(context);
                     },
                     fgColor: Pallets.white,
                     color: Pallets.primary,
@@ -132,6 +126,19 @@ class _TherapyScreenState extends State<TherapyScreen> {
         ],
       ),
     );
+  }
+
+  void _scheduleTherapy(BuildContext context) {
+    injector.get<TherapyBloc>().currentSessionFlow = SessionFlow.schedule;
+    CustomDialogs.showCupertinoBottomSheet(context, SelectDateSheet(
+      onSelected: (DateTime selectedDate) {
+
+        injector.get<TherapyBloc>().updatePayload(date: selectedDate);
+
+        CustomDialogs.showCupertinoBottomSheet(
+            context,  SelectTimeSheet(date: selectedDate,));
+      },
+    ));
   }
 }
 
@@ -182,12 +189,12 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
         if (state is GetUpcomingSessionsSuccessState) {
           if (state.response.data.data.isNotEmpty) {
             return RefreshIndicator(
-              onRefresh: () async{
+              onRefresh: () async {
                 therapyBloc.add(GetUpcomingSessionsEvent());
               },
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount:state.response.data.data.length ,
+                itemCount: state.response.data.data.length,
                 padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) => TherapyItem(
                   session: state.response.data.data[index],
@@ -241,7 +248,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
         if (state is GetSessionsHistoryLoadingState) {
           return Center(
             child: CustomDialogs.getLoading(
-          size: 50,
+              size: 50,
             ),
           );
         }
@@ -252,7 +259,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
             retryTextColor: Pallets.navy,
             title: state.error,
             onTap: () {
-          therapyBloc.add(GetSessionHistoryEvent());
+              therapyBloc.add(GetSessionHistoryEvent());
             },
           );
         }
@@ -260,12 +267,12 @@ class _TherapyHistoryState extends State<TherapyHistory>
         if (state is GetSessionsHistorySuccessState) {
           if (state.response.data.data.isNotEmpty) {
             return RefreshIndicator(
-              onRefresh: () async{
+              onRefresh: () async {
                 therapyBloc.add(GetSessionHistoryEvent());
               },
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount:state.response.data.data.length ,
+                itemCount: state.response.data.data.length,
                 padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) => TherapyItem(
                   session: state.response.data.data[index],

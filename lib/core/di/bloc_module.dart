@@ -5,6 +5,7 @@ import 'package:mentra/features/authentication/login/presentation/bloc/login_blo
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
+import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 
 void setup(GetIt getIt) {
   getIt.registerLazySingleton<RegistrationBloc>(
@@ -13,4 +14,6 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<UserBloc>(() => UserBloc());
   getIt.registerLazySingleton<UserPreferenceCubit>(() => UserPreferenceCubit());
   getIt.registerLazySingleton<DashboardBloc>(() => DashboardBloc(injector.get()));
+  getIt.registerLazySingleton<TherapyBloc>(() => TherapyBloc(injector.get()));
+
 }

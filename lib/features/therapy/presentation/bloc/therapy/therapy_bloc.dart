@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
 import 'package:mentra/features/therapy/presentation/data/models/fetch_dates_response.dart';
+import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
 import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/dormain/repository/therapy_repository.dart';
 
@@ -25,7 +26,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<CreateSessionEvent>(_mapCreateSessionEventToState);
   }
 
-  CreateSessionPayload _createSessionsPayload = CreateSessionPayload.empty();
+  CreateSessionPayload createSessionsPayload = CreateSessionPayload.empty();
   SessionFlow currentSessionFlow = SessionFlow.none;
 
   Future<void> _mapGetUpcomingSessionsEventToState(
@@ -67,7 +68,17 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
   }
 
   FutureOr<void> _mapGetTimeSlotsEventToState(
-      GetTimeSlotsEvent event, Emitter<TherapyState> emit) {}
+      GetTimeSlotsEvent event, Emitter<TherapyState> emit) async{
+
+    emit(GetTimeSlotsoadingState());
+    try {
+      final sessions = await _therapyRepository.getAvailableTimeSlots(event.date);
+      emit(GetTimeSlotsSuccessState(response: sessions));
+    } catch (e) {
+      emit(GetTimeSlotsFailureState(error: e.toString()));
+    }
+
+  }
 
   FutureOr<void> _mapCreateSessionEventToState(
       CreateSessionEvent event, Emitter<TherapyState> emit) {}
@@ -80,16 +91,16 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     String? focus,
     String? note,
   }) {
-    _createSessionsPayload = _createSessionsPayload.copyWith(
-      date: date ?? _createSessionsPayload.date,
-      time: time ?? _createSessionsPayload.time,
-      focus: focus ?? _createSessionsPayload.focus,
-      note: note ?? _createSessionsPayload.note,
+    createSessionsPayload = createSessionsPayload.copyWith(
+      date: date ?? createSessionsPayload.date,
+      time: time ?? createSessionsPayload.time,
+      focus: focus ?? createSessionsPayload.focus,
+      note: note ?? createSessionsPayload.note,
     );
   }
 
   // Method to clear fields in the payload
   void clearPayload() {
-    _createSessionsPayload = CreateSessionPayload.empty();
+    createSessionsPayload = CreateSessionPayload.empty();
   }
 }

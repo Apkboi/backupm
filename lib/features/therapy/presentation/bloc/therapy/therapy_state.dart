@@ -33,6 +33,29 @@ class  GetAvailableDatesSuccessState extends TherapyState {
 }
 
 
+class GetTimeSlotsoadingState extends TherapyState {
+  @override
+  List<Object?> get props => [];
+}
+
+class  GetTimeSlotsFailureState extends TherapyState {
+  final String error;
+
+  GetTimeSlotsFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class GetTimeSlotsSuccessState extends TherapyState {
+  final FetchTimeSlotsResponse response;
+
+  const GetTimeSlotsSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
 
 class GetUpcomingSessionsLoadingState extends TherapyState {
   @override

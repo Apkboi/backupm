@@ -20,7 +20,7 @@ class TherapyRepositoryImpl extends TherapyRepository {
   @override
   Future<dynamic> getAvailableTimeSlots(String date) async {
     final response = await _networkService.call(
-        UrlConfig.sessionTimeSlots, RequestMethod.get,
+        UrlConfig.sessionTimeSlots, RequestMethod.post,
         data: {"date": date});
 
     return response.data;
