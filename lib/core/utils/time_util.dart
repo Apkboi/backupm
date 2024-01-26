@@ -76,4 +76,36 @@ class TimeUtil {
   static String formatFromDate(DateTime date) {
     return DateFormat.yMMMMd().format(date);
   }
+
+
+
+
+ static  String formartToDayTime(DateTime dateTime) {
+    DateTime now = DateTime.now();
+    DateTime yesterday = now.subtract(const Duration(days: 1));
+    DateTime tomorrow = now.add(const Duration(days: 1));
+
+    if (isSameDay(dateTime, now)) {
+      return 'Today, at ${formatTime(dateTime)}';
+    } else if (isSameDay(dateTime, yesterday)) {
+      return 'Yesterday, at ${formatTime(dateTime)}';
+    } else if (isSameDay(dateTime, tomorrow)) {
+      return 'Tomorrow, at ${formatTime(dateTime)}';
+    } else {
+      return '${formatDay(dateTime)}, at ${formatTime(dateTime)}';
+    }
+  }
+
+ static String formatDay(DateTime dateTime) {
+    return DateFormat('EEEE').format(dateTime);
+  }
+
+ static String formatTime(DateTime dateTime) {
+    return DateFormat.jm().format(dateTime);
+  }
+
+ static bool isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+  }
+
 }

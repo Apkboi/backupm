@@ -2,16 +2,16 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/authentication/onboarding/presentaion/screens/signup_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/widgets/indicator.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/widgets/onboardinng_item.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Column(
           children: [
             SizedBox(
-              height: 0.72.sh,
+              height: 0.73.sh,
               child: CarouselSlider(
                   // controller: _pageController,
                   options: CarouselOptions(
@@ -80,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Expanded(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -94,14 +94,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: Pallets.primary,
                       text: 'Create an Account',
                       onTap: () {
-                        CustomDialogs.showBottomSheet(
-                            context, const SignupIntroScreen(),
-                            shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            )),
-                            constraints: BoxConstraints(maxHeight: 0.9.sh));
+                        injector.get<RegistrationBloc>().updateFields(role: 'User');
+                        context.pushNamed(PageUrl.usernameScreen);
+                        // CustomDialogs.showBottomSheet(
+                        //     context, const SignupIntroScreen(),
+                        //     shape: const RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.only(
+                        //       topLeft: Radius.circular(16),
+                        //       topRight: Radius.circular(16),
+                        //     )),
+                        //     constraints: BoxConstraints(maxHeight: 0.9.sh));
                         // context.pushNamed(PageUrl.signUpIntro);
                       },
                     ),
@@ -123,8 +125,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         Positioned(
           // alignment: Alignment.topRight,
-          right: 20,
-          top: 60,
+          right: 20.w,
+          top: 50.h,
           child: CustomNeumorphicButton(
               onTap: () {
                 // context.pushNamed(PageUrl.menuScreen);

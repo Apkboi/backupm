@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/passcode_screen.dart';
@@ -30,6 +31,7 @@ import 'package:mentra/features/settings/presentation/screens/edit_avatar_screen
 import 'package:mentra/features/settings/presentation/screens/edit_profile_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/security_privacy_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/settings_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
@@ -180,7 +182,10 @@ class CustomRoutes {
       GoRoute(
         path: '/articleDetailsScreen',
         name: PageUrl.articleDetailsScreen,
-        builder: (context, state) => const ArticleDetailsScreen(),
+        builder: (context, state) => ArticleDetailsScreen(
+          categoryJson:
+              state.uri.queryParameters[PathParam.libraryCategory] ?? "",
+        ),
       ),
       GoRoute(
         path: '/wellnessLibraryScreen',
@@ -190,7 +195,10 @@ class CustomRoutes {
       GoRoute(
         path: '/allArticlesScreen',
         name: PageUrl.allArticlesScreen,
-        builder: (context, state) => const AllArticlesScreen(),
+        builder: (context, state) =>  AllArticlesScreen(
+          categoryJson:
+          state.uri.queryParameters[PathParam.libraryCategory] ?? "",
+        ),
       ),
       GoRoute(
         path: '/videoArticleScreen',
@@ -231,6 +239,11 @@ class CustomRoutes {
         path: '/emergencySosScreen',
         name: PageUrl.emergencySosScreen,
         builder: (context, state) => const EmergencySosScreen(),
+      ),
+      GoRoute(
+        path: '/userPreferenceScreen',
+        name: PageUrl.userPreferenceScreen,
+        builder: (context, state) => const UserPreferenceScreen(),
       ),
     ],
   );

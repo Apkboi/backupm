@@ -8,7 +8,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
-import 'package:mentra/features/dashboard/presentation/widget/unlock_premium_widget.dart';
+import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -97,7 +97,8 @@ class _MenuScreenState extends State<MenuScreen> {
                     // ),
                     // 24.verticalSpace,
                     // const UpcomingSession(),
-                    const UnlockPremiumWidget(),
+                    // const UnlockPremiumWidget(),
+                    const NewUserPrompt(),
                     48.verticalSpace,
                     const TextView(
                       text: 'Your Journey',

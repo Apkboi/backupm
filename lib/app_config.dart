@@ -12,6 +12,7 @@ import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 
 import 'features/account/presentation/user_bloc/user_bloc.dart';
+import 'features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 
 enum Flavor { dev, staging, prod }
 
@@ -49,6 +50,7 @@ class AppConfig {
 
   Future setup() async {
     injector.get<UserBloc>().add(GetUserEvent());
+    injector.get<DashboardBloc>().add(GetConversationStarterEvent());
   }
 
   Future<void> initCore() async {

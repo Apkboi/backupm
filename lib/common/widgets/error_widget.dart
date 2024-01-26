@@ -8,6 +8,8 @@ class AppPromptWidget extends StatelessWidget {
   final String? imagePath;
   final bool? isSvgResource;
   final bool? canTryAgain;
+  final Color? textColor;
+  final Color? retryTextColor;
 
   const AppPromptWidget({
     Key? key,
@@ -18,6 +20,8 @@ class AppPromptWidget extends StatelessWidget {
     this.isSvgResource = false,
     this.canTryAgain = true,
     this.retryText = 'Try again',
+    this.textColor,
+    this.retryTextColor,
   }) : super(key: key);
 
   @override
@@ -28,6 +32,7 @@ class AppPromptWidget extends StatelessWidget {
           child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          if(imagePath!= null)
           Image.asset(
             imagePath ?? "assets/pngs/sorry.png",
             height: 150,
@@ -44,7 +49,8 @@ class AppPromptWidget extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onBackground),
+                      color: textColor ??
+                          Theme.of(context).colorScheme.onBackground),
                 ),
                 const SizedBox(
                   height: 10,
@@ -57,7 +63,7 @@ class AppPromptWidget extends StatelessWidget {
                 Text(
                   message!,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.blueGrey),
+                  style: TextStyle(color: textColor ?? Colors.blueGrey),
                 ),
                 // const SizedBox(
                 //   height: 16,
@@ -73,9 +79,11 @@ class AppPromptWidget extends StatelessWidget {
                 OutlinedButton(
                   onPressed: onTap,
                   style: OutlinedButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.secondary,
+                      foregroundColor: retryTextColor ??
+                          Theme.of(context).colorScheme.secondary,
                       side: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: retryTextColor ??
+                            Theme.of(context).colorScheme.primary,
                       ),
                       shape: RoundedRectangleBorder(
                           side: const BorderSide(color: Colors.blue, width: 2),

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
-import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/custom_tabbar.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
+import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -71,7 +76,7 @@ class _TherapyScreenState extends State<TherapyScreen> {
                   ]),
                   const Expanded(
                       child: TabBarView(
-                          physics: BouncingScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
                           children: [UpcomingTherapy(), TherapyHistory()])),
                   8.verticalSpace,
                   CustomNeumorphicButton(
@@ -105,20 +110,21 @@ class _TherapyScreenState extends State<TherapyScreen> {
                     ),
                   ),
                   10.verticalSpace,
-                  CustomOutlinedButton(
-                    bgColor: Colors.white,
-                    padding: const EdgeInsets.all(20),
-                    outlineWidth: 1.5,
-                    radius: 100,
-                    outlinedColr: Pallets.primary,
-                    child: const TextView(
-                      text: 'Change Therapist',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    onPressed: () {
-                      context.pushNamed(PageUrl.therapistProfile);
-                    },
-                  )
+
+                  // CustomOutlinedButton(
+                  //   bgColor: Colors.white,
+                  //   padding: const EdgeInsets.all(20),
+                  //   outlineWidth: 1.5,
+                  //   radius: 100,
+                  //   outlinedColr: Pallets.primary,
+                  //   child: const TextView(
+                  //     text: 'Change Therapist',
+                  //     fontWeight: FontWeight.w600,
+                  //   ),
+                  //   onPressed: () {
+                  //     context.pushNamed(PageUrl.therapistProfile);
+                  //   },
+                  // )
                 ],
               ),
             ),
@@ -136,15 +142,76 @@ class UpcomingTherapy extends StatefulWidget {
   State<UpcomingTherapy> createState() => _UpcomingTherapyState();
 }
 
-class _UpcomingTherapyState extends State<UpcomingTherapy> {
+class _UpcomingTherapyState extends State<UpcomingTherapy>
+    with AutomaticKeepAliveClientMixin {
+  final TherapyBloc therapyBloc = TherapyBloc(injector.get());
+
+  @override
+  void initState() {
+    therapyBloc.add(GetUpcomingSessionsEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 10),
-      itemBuilder: (context, index) => const TherapyItem(),
+    super.build(context);
+    return BlocConsumer<TherapyBloc, TherapyState>(
+      bloc: therapyBloc,
+      listener: _listenToTherapyBloc,
+      builder: (context, state) {
+        if (state is GetUpcomingSessionsLoadingState) {
+          return Expanded(
+              child: Center(
+            child: CustomDialogs.getLoading(
+              size: 50,
+            ),
+          ));
+        }
+
+        if (state is GetUpcomingSessionsFailureState) {
+          return Expanded(
+              child: AppPromptWidget(
+            textColor: Pallets.navy,
+            retryTextColor: Pallets.navy,
+            onTap: () {
+              therapyBloc.add(GetUpcomingSessionsEvent());
+            },
+          ));
+        }
+
+        if (state is GetUpcomingSessionsSuccessState) {
+          if (state.response.data.data.isNotEmpty) {
+            return RefreshIndicator(
+              onRefresh: () async{
+                therapyBloc.add(GetUpcomingSessionsEvent());
+              },
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount:state.response.data.data.length ,
+                padding: const EdgeInsets.only(top: 10),
+                itemBuilder: (context, index) => TherapyItem(
+                  session: state.response.data.data[index],
+                ),
+              ),
+            );
+          } else {
+            return const AppEmptyState(
+              tittle: 'No session history.',
+              subtittle:
+                  "You have no previous session history. start by booking a session with a therapist",
+            );
+          }
+        }
+
+        return Container();
+      },
     );
   }
+
+  void _listenToTherapyBloc(BuildContext context, TherapyState state) {}
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class TherapyHistory extends StatefulWidget {
@@ -154,16 +221,78 @@ class TherapyHistory extends StatefulWidget {
   State<TherapyHistory> createState() => _TherapyHistoryState();
 }
 
-class _TherapyHistoryState extends State<TherapyHistory> {
+class _TherapyHistoryState extends State<TherapyHistory>
+    with AutomaticKeepAliveClientMixin {
+  final TherapyBloc therapyBloc = TherapyBloc(injector.get());
+
+  @override
+  void initState() {
+    therapyBloc.add(GetSessionHistoryEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // return const Column(children: [
-    //
-    //   TherapyEmptyState()]);
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 10),
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, index) => const TherapyItem(),
+    super.build(context);
+    return BlocConsumer<TherapyBloc, TherapyState>(
+      bloc: therapyBloc,
+      listener: _listenToTherapyBloc,
+      builder: (context, state) {
+        if (state is GetSessionsHistoryLoadingState) {
+          return Center(
+            child: CustomDialogs.getLoading(
+          size: 50,
+            ),
+          );
+        }
+
+        if (state is GetSessionsHistoryFailureState) {
+          return AppPromptWidget(
+            textColor: Pallets.navy,
+            retryTextColor: Pallets.navy,
+            title: state.error,
+            onTap: () {
+          therapyBloc.add(GetSessionHistoryEvent());
+            },
+          );
+        }
+
+        if (state is GetSessionsHistorySuccessState) {
+          if (state.response.data.data.isNotEmpty) {
+            return RefreshIndicator(
+              onRefresh: () async{
+                therapyBloc.add(GetSessionHistoryEvent());
+              },
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount:state.response.data.data.length ,
+                padding: const EdgeInsets.only(top: 10),
+                itemBuilder: (context, index) => TherapyItem(
+                  session: state.response.data.data[index],
+                ),
+              ),
+            );
+          } else {
+            return Column(
+              children: [
+                16.verticalSpace,
+                const AppEmptyState(
+                  tittle: 'No session history.',
+                  subtittle:
+                      "You have no previous session history. start by booking a session with a therapist",
+                ),
+              ],
+            );
+          }
+        }
+
+        return Container();
+      },
     );
   }
+
+  void _listenToTherapyBloc(BuildContext context, TherapyState state) {}
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -87,7 +87,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
 Future<String> getAbsolutePath(String assetPath) async {
   // final ByteData data = await rootBundle.load(assetPath);
-  ByteData bytes = await rootBundle.load(assetPath);
+  // ByteData bytes = await rootBundle.load(assetPath);
   final tempDir = await getApplicationDocumentsDirectory();
   final tempFile = File('${tempDir.path}/avatar.png');
 
@@ -101,5 +101,6 @@ Future<String> getAbsolutePath(String assetPath) async {
   // double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
   // logger.i(fileSizeInMB);
   // tempFile.writeAsBytes(bytes.buffer.asUint8List());
+
   return tempFile.path;
 }

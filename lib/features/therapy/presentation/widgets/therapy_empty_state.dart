@@ -5,8 +5,11 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
-class TherapyEmptyState extends StatelessWidget {
-  const TherapyEmptyState({super.key});
+class AppEmptyState extends StatelessWidget {
+  const AppEmptyState({super.key, this.tittle, this.subtittle});
+
+  final String? tittle;
+  final String? subtittle;
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +21,22 @@ class TherapyEmptyState extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           ImageWidget(imageUrl: Assets.images.svgs.success),
           15.verticalSpace,
-          const TextView(
-            text: "Your Favorites Space Awaits",
+          TextView(
+            text: tittle ?? "Your Favorites Space Awaits",
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Pallets.primary,
           ),
           5.verticalSpace,
-          const TextView(
-            text: "Looks like you haven't added any favorites yet.",
+          TextView(
+            text:
+                subtittle ?? "Looks like you haven't added any favorites yet.",
             fontSize: 14,
+            align: TextAlign.center,
             fontWeight: FontWeight.w500,
           )
         ],

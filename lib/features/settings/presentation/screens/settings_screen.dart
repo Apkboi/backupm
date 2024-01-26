@@ -67,7 +67,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Center(
                         child: ImageWidget(
                           size: 80,
@@ -104,6 +103,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         padding: const EdgeInsets.all(17),
                         child: SettingListTile(
                           leadingIconUrl: Assets.images.svgs.subscription,
+                          onTap: () {
+                            context.pushNamed(PageUrl.selectPlanScreen);
+                          },
                           tittle: 'Subscription',
                           trailingWidget: Row(
                             children: [
@@ -127,12 +129,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       16.verticalSpace,
                       const SettingsGroup3(),
                       16.verticalSpace,
-                       GlassContainer(
+                      GlassContainer(
                           child: Padding(
                         padding: const EdgeInsets.all(17),
                         child: SettingListTile(
                           leadingIconUrl: Assets.images.svgs.logout,
-
                           tittle: 'Logout',
                           onTap: () {
                             SessionManager.instance.logOut();

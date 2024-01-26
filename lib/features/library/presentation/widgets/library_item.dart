@@ -1,34 +1,34 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/path_params.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/string_extension.dart';
+import 'package:mentra/features/library/data/models/get_library_categories_response.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class LibraryItem extends StatelessWidget {
-  const LibraryItem(
-      {Key? key,
-      required this.bgColor,
-      required this.text,
-      required this.image,
-      this.onTap})
-      : super(key: key);
-  final Color bgColor;
-  final String text;
-  final String image;
-  final VoidCallback? onTap;
+  const LibraryItem({Key? key, required this.category}) : super(key: key);
+
+  final LibraryCategory category;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (onTap != null) {
-          onTap!();
-        }
+        context.pushNamed(PageUrl.allArticlesScreen, queryParameters: {
+          PathParam.libraryCategory: jsonEncode(category.toJson()),
+        });
       },
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(17), color: bgColor),
+            borderRadius: BorderRadius.circular(17),
+            color: category.backgroundColor.toColor()),
         child: Padding(
           padding: const EdgeInsets.all(17),
           child: Row(
@@ -38,7 +38,7 @@ class LibraryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextView(
-                      text: text,
+                      text: category.name,
                       style: GoogleFonts.fraunces(
                           color: Pallets.white,
                           fontSize: 24.sp,
@@ -48,7 +48,13 @@ class LibraryItem extends StatelessWidget {
                         style: TextButton.styleFrom(
                             foregroundColor: Pallets.white,
                             padding: EdgeInsets.zero),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(PageUrl.allArticlesScreen,
+                              queryParameters: {
+                                PathParam.libraryCategory:
+                                    jsonEncode(category.toJson()),
+                              });
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -69,7 +75,8 @@ class LibraryItem extends StatelessWidget {
                 ),
               ),
               ImageWidget(
-                imageUrl: image,
+                imageUrl: Assets.images.pngs.sleep.path,
+                // imageUrl: category.image.url,
                 width: 120.w,
                 height: 120.h,
                 fit: BoxFit.fill,

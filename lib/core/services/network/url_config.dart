@@ -31,6 +31,12 @@ class UrlConfig {
 
   static const String loginPreview = "/auth/login/preview";
 
+  static const String getLibraryCoursesEndpoint = "/wellness-library/courses/list";
+
+  static const String getLibraryCategoriesEndpoint = "/wellness-library/categories/list";
+
+  static const String getConversationStarterEndpoint = "/user/conversation-starter/get";
+
   static String getUser(String userId) => '/auth/user/$userId';
   static const String forgotPassword = '/auth/forgot-password';
   static const String verifyOtp = '/auth/otp/verify';
@@ -62,9 +68,16 @@ class UrlConfig {
   static const String updateOnlineStatus = '/user/update_if_online';
   static const String resetPassword = '/auth/reset-password';
 
-  ///Chat
-  static const String getChats = '/chats/list';
-  static const String initiateChat = 'chats/initiate';
+/// Therapy
+  static const String upcomingSessions = '/user/session/schedule/upcoming';
+  static const String sessionHistory = '/user/session/schedule/history';
+  static const String sessionTimeSlots = '/user/session/schedule/fetch-timeslots';
+  static const String createSession = '/user/session/schedule/create';
+  static const String fetchDates = '/user/session/schedule/fetch-dates';
+  static const String cancelSession = '/user/session/schedule/cancel';
+  static const String rescheduleSession = '/user/session/schedule/reschedule';
+  static const String matchTherapist = '/user/session/therapist/match';
+  static const String selectTherapist = '/user/session/therapist/select';
 
 //  NOtification
   static const String getNotifications = '/notifications/list';

@@ -34,6 +34,7 @@ class PageUrl {
   static const securityPrivacyScreen = 'securityPrivacyScreen';
   static const changePasscodeScreen = 'changePasscodeScreen';
   static const emergencySosScreen = 'emergencySosScreen';
+  static const userPreferenceScreen = 'userPreferenceScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

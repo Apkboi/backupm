@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/custom_tabbar.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/library/presentation/widgets/article_item.dart';
+import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/library/presentation/widgets/library_item.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
-
 
 class WellnessLibraryScreen extends StatefulWidget {
   const WellnessLibraryScreen({Key? key}) : super(key: key);
@@ -21,7 +25,15 @@ class WellnessLibraryScreen extends StatefulWidget {
   State<WellnessLibraryScreen> createState() => _WellnessLibraryScreenState();
 }
 
+final bloc = WellnessLibraryBloc(injector.get());
+
 class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
+  @override
+  void initState() {
+    bloc.add(GetLibraryCategoriesEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,12 +79,10 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
                     Tab(text: "Favorites"),
                   ]),
                   20.verticalSpace,
-
                   const Expanded(
                       child: TabBarView(
                           physics: BouncingScrollPhysics(),
                           children: [DiscoverContents(), FavoriteContents()])),
-
                   8.verticalSpace,
                 ],
               ),
@@ -91,42 +101,62 @@ class DiscoverContents extends StatefulWidget {
   State<DiscoverContents> createState() => _DiscoverContentsState();
 }
 
-class _DiscoverContentsState extends State<DiscoverContents> {
+class _DiscoverContentsState extends State<DiscoverContents>
+    with AutomaticKeepAliveClientMixin {
+  final bloc = WellnessLibraryBloc(injector.get());
+
+  @override
+  void initState() {
+    bloc.add(GetLibraryCategoriesEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.only(top: 10),
-      children: [
-        LibraryItem(
-          onTap: () {
-            context.pushNamed(PageUrl.allArticlesScreen);
-          },
-          bgColor: Pallets.mildRed,
-          text: 'Managing\nAnxiety',
-          image: Assets.images.pngs.anxiety.path,
-        ),
-        10.verticalSpace,
-        LibraryItem(
-          onTap: () {
-            context.pushNamed(PageUrl.allArticlesScreen);
-          },
-          bgColor: Pallets.subtleLight,
-          text: 'Improve Sleep',
-          image: Assets.images.pngs.sleep.path,
-        ),
-        10.verticalSpace,
-        LibraryItem(
-          onTap: () {
-            context.pushNamed(PageUrl.allArticlesScreen);
-          },
-          bgColor: Pallets.mildOrange,
-          text: 'Improve Productivity',
-          image: Assets.images.pngs.productivity.path,
-        ),
-      ],
+    return BlocConsumer<WellnessLibraryBloc, WellnessLibraryState>(
+      bloc: bloc,
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is GetLibraryCategoriesLoadingState) {
+          return Center(
+            child: CustomDialogs.getLoading(size: 50, color: Pallets.primary),
+          );
+        }
+
+        if (state is GetLibraryCategoriesFailureState) {
+          return AppPromptWidget(
+            retryTextColor: Pallets.navy,
+            textColor: Pallets.navy,
+            onTap: () {
+              bloc.add(GetLibraryCategoriesEvent());
+            },
+          );
+        }
+
+        if (bloc.libraryCategories.isNotEmpty) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              bloc.add(GetLibraryCategoriesEvent());
+            },
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: bloc.libraryCategories.length,
+              itemBuilder: (context, index) {
+                return LibraryItem(
+                  category: bloc.libraryCategories[index],
+                );
+              },
+            ),
+          );
+        } else {
+          return const AppEmptyState();
+        }
+      },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class FavoriteContents extends StatefulWidget {
@@ -139,16 +169,14 @@ class FavoriteContents extends StatefulWidget {
 class _FavoriteContentsState extends State<FavoriteContents> {
   @override
   Widget build(BuildContext context) {
-    // return const Column(children: [
-    //
-    //   TherapyEmptyState()]);
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 10),
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, index) => const Padding(
-        padding: EdgeInsets.only(top: 10.0),
-        child: ArticleItem(),
-      ),
-    );
+    return const Column(children: [AppEmptyState()]);
+    // return ListView.builder(
+    //   padding: const EdgeInsets.only(top: 10),
+    //   physics: const BouncingScrollPhysics(),
+    //   itemBuilder: (context, index) => const Padding(
+    //     padding: EdgeInsets.only(top: 10.0),
+    //     child: ArticleItem(),
+    //   ),
+    // );
   }
 }

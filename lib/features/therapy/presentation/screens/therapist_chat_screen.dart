@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
+
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -58,12 +54,13 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) => TherapyMessageBox(
-                    message: [messages[index]],
-                    isSender: !index.isEven,
-                  ),
-                )),
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) =>
+                          TherapyMessageBox(
+                            message: [messages[index]],
+                            isSender: !index.isEven,
+                          ),
+                    )),
                 const _InputBar()
               ],
             ),

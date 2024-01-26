@@ -326,10 +326,10 @@ class CustomDialogs {
     // }
   }
 
-  static Widget getLoading({double size = 10.0}) => Container(
+  static Widget getLoading({double size = 10.0,Color? color}) => Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 10),
-        child: SpinKitDualRing(color: Pallets.primary, size: size),
+        child: SpinKitDualRing(color: color ??Pallets.primary, size: size),
       );
 
   static void showSnackBar(

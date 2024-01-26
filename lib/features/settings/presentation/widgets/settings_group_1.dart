@@ -36,6 +36,9 @@ class SettingsGroup1 extends StatelessWidget {
           ),
           24.verticalSpace,
           SettingListTile(
+              onTap: () {
+                context.pushNamed(PageUrl.userPreferenceScreen);
+              },
               leadingWidget: Row(
                 children: [
                   5.horizontalSpace,

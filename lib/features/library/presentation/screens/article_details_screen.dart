@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,16 +8,27 @@ import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/library/data/models/get_library_categories_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
-  const ArticleDetailsScreen({Key? key}) : super(key: key);
+  const ArticleDetailsScreen({Key? key, required this.categoryJson})
+      : super(key: key);
+  final String categoryJson;
 
   @override
   State<ArticleDetailsScreen> createState() => _ArticleDetailsScreenState();
 }
 
 class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
+  late LibraryCategory category;
+
+  @override
+  void initState() {
+    category = LibraryCategory.fromJson(jsonDecode(widget.categoryJson));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +79,8 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                       height: 6,
                       decoration: ShapeDecoration(
                         shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 1, color: Color(0xFF99BEB7)),
+                          side: const BorderSide(
+                              width: 1, color: Color(0xFF99BEB7)),
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),

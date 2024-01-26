@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
-
 import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -68,13 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -350.h,
+                        top: -310.h,
                         right: 0,
                         left: 0,
                         child: ImageWidget(
                           imageUrl: Assets.images.pngs.mentra.path,
-                          height: 350.h,
-                          fit: BoxFit.fill,
+                          height: 300.h,
+                          width: 254,
+                          fit: BoxFit.contain,
                         )),
                     Positioned(
                         top: -100,
@@ -83,36 +86,80 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       width: 1.sw,
                       padding: const EdgeInsets.all(16),
-                      decoration: const BoxDecoration(color: Pallets.primary),
-                      child: Column(
-                        children: [
-                          TextView(
-                              align: TextAlign.center,
-                              style: GoogleFonts.caveat(
-                                  color: Pallets.white,
-                                  fontSize: 38.sp,
-                                  fontWeight: FontWeight.w700),
-                              text:
-                                  "Hello ${injector.get<UserBloc>().appUser?.name}! I'm Mentra"),
-                          const TextView(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              align: TextAlign.center,
-                              color: Pallets.white,
-                              text:
-                                  "I'm here to help you on your journey to better mental well-being. What’s on your mind today?"),
-                          69.verticalSpace,
-                          CustomNeumorphicButton(
+                      decoration:
+                      const BoxDecoration(color: Pallets.primary),
+                      child: BlocConsumer<DashboardBloc, DashboardState>(
+                        bloc: injector.get(),
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          if (state is GetConversationStarterFailureState) {
+                            return SizedBox(
+                              height: 200,
+                              child: AppPromptWidget(
+                                retryTextColor: Pallets.white,
+                                textColor: Pallets.white,
+                                onTap: () {
+                                  injector
+                                      .get<DashboardBloc>()
+                                      .add(GetConversationStarterEvent());
+                                },
+                              ),
+                            );
+                          }
+                          if (state is GetConversationStarterLoadingState) {
+                            return SizedBox(
+                              height: 200,
+                              child: CustomDialogs.getLoading(
+                                  size: 30, color: Pallets.white),
+                            );
+                          }
+
+                          return InkWell(
                             onTap: () {
-                              context.pushNamed(PageUrl.talkToMentraScreen);
-                              // context.pushNamed(PageUrl.selectPlanScreen);
+                              injector
+                                  .get<DashboardBloc>()
+                                  .add(GetConversationStarterEvent());
                             },
-                            color: Pallets.secondary,
-                            fgColor: Pallets.black,
-                            text: "Talk to Mentra",
-                          ),
-                          50.verticalSpace
-                        ],
+                            child: Column(
+                              children: [
+                                TextView(
+                                    align: TextAlign.center,
+                                    style: GoogleFonts.caveat(
+                                        color: Pallets.white,
+                                        fontSize: 38.sp,
+                                        fontWeight: FontWeight.w700),
+                                    text: injector
+                                            .get<DashboardBloc>()
+                                            .conversationStarter
+                                            ?.data
+                                            .title ??
+                                        ''),
+                                TextView(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    align: TextAlign.center,
+                                    color: Pallets.white,
+                                    text: injector
+                                            .get<DashboardBloc>()
+                                            .conversationStarter
+                                            ?.data
+                                            .message ??
+                                        ''),
+                                69.verticalSpace,
+                                CustomNeumorphicButton(
+                                  onTap: () {
+                                    context.pushNamed(PageUrl.talkToMentraScreen);
+                                    // context.pushNamed(PageUrl.selectPlanScreen);
+                                  },
+                                  color: Pallets.secondary,
+                                  fgColor: Pallets.black,
+                                  text: "Talk to Mentra",
+                                ),
+                                50.verticalSpace
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

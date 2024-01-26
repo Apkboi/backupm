@@ -3,13 +3,16 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
-import 'package:mentra/gen/assets.gen.dart';
 
 class TherapyItem extends StatelessWidget {
-  const TherapyItem({super.key});
+  const TherapyItem({super.key, required this.session});
+
+  final TherapySession session;
 
   @override
   Widget build(BuildContext context) {
@@ -34,34 +37,36 @@ class TherapyItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TextView(
-                      text: 'Managing Anxiety',
+                    TextView(
+                      text: session.focus,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
                     8.verticalSpace,
-                    const TextView(
-                      text: 'Session with Nour Martin, Ph.D.',
+                    TextView(
+                      text: 'Session with ${session.therapist.user.name}.',
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
-                    const TextView(
-                      text: 'Today, at 4:00 PM',
+                    TextView(
+                      text: TimeUtil.formartToDayTime(session.startsAt),
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
-                    CustomNeumorphicButton(
-                        expanded: false,
-                        text: 'Join session',
-                        padding: const EdgeInsets.all(10),
-                        onTap: () {},
-                        color: Pallets.primary)
+                    if (session.status == 'Accepted')
+                      CustomNeumorphicButton(
+                          expanded: false,
+                          text: 'Join session',
+                          padding: const EdgeInsets.all(10),
+                          onTap: () {},
+                          color: Pallets.primary)
                   ],
                 ),
               ),
               ImageWidget(
-                imageUrl: Assets.images.svgs.avatar1,
+                imageUrl: session.therapist.user.avatar,
                 size: 45,
+                borderRadius: BorderRadius.circular(30),
               )
             ],
           ),

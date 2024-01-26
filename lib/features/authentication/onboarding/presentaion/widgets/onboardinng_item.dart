@@ -58,9 +58,7 @@ class _OnboardingItemState extends State<OnboardingItem> {
                       fontSize: 32.sp,
                       fontWeight: FontWeight.w600,
                     )),
-                const SizedBox(
-                  height: 16,
-                ),
+               10.h.verticalSpace,
                 TextView(
                     text: widget.text,
                     align: TextAlign.center,
