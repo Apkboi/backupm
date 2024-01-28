@@ -41,8 +41,8 @@ class FetchTimeSlotsResponse {
         message: json["message"],
         data: json["data"] is List
             ? []
-            : Map.from(json["data"])
-                .map((k, v) => MapEntry<String, TimeSlot>(k, TimeSlot.fromJson(v))),
+            : Map.from(json["data"]).map(
+                (k, v) => MapEntry<String, TimeSlot>(k, TimeSlot.fromJson(v))),
         success: json["success"],
         code: json["code"],
       );
@@ -54,6 +54,23 @@ class FetchTimeSlotsResponse {
         "success": success,
         "code": code,
       };
+
+  List<TimeSlot> getDataAsList() {
+    if (data is List) {
+      // If the data is already a list, return it
+      return List<TimeSlot>.from(data);
+
+    } else if (data is Map<String, TimeSlot>) {
+      // If the data is a map, convert it to a list of TimeSlot objects
+      return (data as Map<String, TimeSlot>)
+          .entries
+          .map((entry) => TimeSlot.fromJson(entry.value.toJson()))
+          .toList();
+    } else {
+      // Return an empty list if the data is not recognized
+      return [];
+    }
+  }
 }
 
 class TimeSlot {

@@ -5,11 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class SessionScheduledDialog extends StatelessWidget {
-  const SessionScheduledDialog({super.key});
+  const SessionScheduledDialog({
+    super.key,
+    required this.sessionDetails,
+  });
+
+  final SessionDetails sessionDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +63,8 @@ class SessionScheduledDialog extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
                 10.verticalSpace,
-                const TextView(
-                  text: 'Nour Martin, Ph.D.',
+                TextView(
+                  text: sessionDetails.therapist.user.name,
                   align: TextAlign.center,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -69,8 +76,9 @@ class SessionScheduledDialog extends StatelessWidget {
                   children: [
                     ImageWidget(imageUrl: Assets.images.svgs.icCalender),
                     10.horizontalSpace,
-                    const TextView(
-                      text: ' Saturday, 02 December 2023',
+                    TextView(
+                      text: TimeUtil.formatToFullDate(
+                          DateTime.parse(sessionDetails.startsAt)),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -82,7 +90,7 @@ class SessionScheduledDialog extends StatelessWidget {
                     ImageWidget(imageUrl: Assets.images.svgs.icClock),
                     10.horizontalSpace,
                     const TextView(
-                      text: ' 9:00 am',
+                      text: '9:00 am',
                       fontWeight: FontWeight.w600,
                     ),
                   ],

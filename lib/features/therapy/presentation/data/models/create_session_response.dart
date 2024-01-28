@@ -10,7 +10,7 @@ String createSessionResponseToJson(CreateSessionResponse data) => json.encode(da
 
 class CreateSessionResponse {
   final String message;
-  final Data data;
+  final SessionDetails data;
   final bool success;
   final int code;
 
@@ -23,7 +23,7 @@ class CreateSessionResponse {
 
   CreateSessionResponse copyWith({
     String? message,
-    Data? data,
+    SessionDetails? data,
     bool? success,
     int? code,
   }) =>
@@ -36,7 +36,7 @@ class CreateSessionResponse {
 
   factory CreateSessionResponse.fromJson(Map<String, dynamic> json) => CreateSessionResponse(
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data: SessionDetails.fromJson(json["data"]),
     success: json["success"],
     code: json["code"],
   );
@@ -49,7 +49,7 @@ class CreateSessionResponse {
   };
 }
 
-class Data {
+class SessionDetails {
   final int id;
   final User user;
   final DataTherapist therapist;
@@ -63,7 +63,7 @@ class Data {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Data({
+  SessionDetails({
     required this.id,
     required this.user,
     required this.therapist,
@@ -78,7 +78,7 @@ class Data {
     required this.updatedAt,
   });
 
-  Data copyWith({
+  SessionDetails copyWith({
     int? id,
     User? user,
     DataTherapist? therapist,
@@ -92,7 +92,7 @@ class Data {
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
-      Data(
+      SessionDetails(
         id: id ?? this.id,
         user: user ?? this.user,
         therapist: therapist ?? this.therapist,
@@ -107,7 +107,7 @@ class Data {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory SessionDetails.fromJson(Map<String, dynamic> json) => SessionDetails(
     id: json["id"],
     user: User.fromJson(json["user"]),
     therapist: DataTherapist.fromJson(json["therapist"]),

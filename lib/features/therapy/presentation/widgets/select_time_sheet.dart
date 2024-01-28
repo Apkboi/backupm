@@ -12,7 +12,6 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/extensions/date_extensions.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
-import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'confirm_session_sheet.dart';
@@ -27,6 +26,8 @@ class SelectTimeSheet extends StatefulWidget {
 }
 
 class _SelectTimeSheetState extends State<SelectTimeSheet> {
+  String? time;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -94,27 +95,45 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                   ),
                 ),
                 16.verticalSpace,
-                SelectableTimeSlots(widget.date.toCustomString),
+                SelectableTimeSlots(
+                  widget.date.toCustomString,
+                  onDateSelected: (String selectedTime) {
+                    setState(() {
+                      time = selectedTime;
+                    });
+                  },
+                ),
                 const Spacer(),
                 20.verticalSpace,
-                CustomNeumorphicButton(
-                    text: 'Continue',
-                    onTap: () {
-                      CustomDialogs.showCupertinoBottomSheet(
-                          context, const ConfirmSessionSheet());
-                    },
-                    color: Pallets.primary)
+                time != null
+                    ? CustomNeumorphicButton(
+                        text: 'Continue',
+                        onTap: () {
+                          _confirmSession(
+                              context: context, selectedTime: time!);
+                        },
+                        color: Pallets.primary)
+                    : 0.horizontalSpace,
               ],
             ),
           )),
     );
   }
+
+  void _confirmSession(
+      {required BuildContext context, required String selectedTime}) {
+    injector.get<TherapyBloc>().updatePayload(time: selectedTime);
+    CustomDialogs.showCupertinoBottomSheet(
+        context, const ConfirmSessionSheet());
+  }
 }
 
 class SelectableTimeSlots extends StatefulWidget {
   final String date;
+  final Function(String selectedTime) onDateSelected;
 
-  const SelectableTimeSlots(this.date, {super.key});
+  const SelectableTimeSlots(this.date,
+      {super.key, required this.onDateSelected});
 
   @override
   _SelectableTimeSlotsState createState() => _SelectableTimeSlotsState();
@@ -122,19 +141,6 @@ class SelectableTimeSlots extends StatefulWidget {
 
 class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
   int selectedSlot = -1; // Initially, no slot is selected
-
-  List<String> timeSlots = [
-    '9:00 AM',
-    '10:00 AM',
-    '11:00 AM',
-    '12:00 PM',
-    '1:00 PM',
-    '2:00 PM',
-    '3:00 PM',
-    '3:00 PM',
-    '3:00 PM',
-    // Add more time slots as needed
-  ];
 
   final therapyBloc = TherapyBloc(injector.get());
 
@@ -162,9 +168,7 @@ class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
           16.verticalSpace,
           BlocConsumer<TherapyBloc, TherapyState>(
             bloc: therapyBloc,
-            listener: (context, state) {
-
-            },
+            listener: (context, state) {},
             builder: (context, state) {
               if (state is GetTimeSlotsoadingState) {
                 return SizedBox(
@@ -176,44 +180,55 @@ class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
               }
 
               if (state is GetTimeSlotsSuccessState) {
-                return GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // Number of columns
-                      crossAxisSpacing: 8.0,
-                      mainAxisSpacing: 8.0,
-                      childAspectRatio: 3),
-                  itemCount: (state.response.data as Map<String, TimeSlot>).values.length,
-                  itemBuilder: (context, index) {
-                    bool isSelected = index == selectedSlot;
+                if (state.response.getDataAsList().isNotEmpty) {
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3, // Number of columns
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio: 3),
+                    itemCount: state.response.getDataAsList().length,
+                    itemBuilder: (context, index) {
+                      bool isSelected = index == selectedSlot;
 
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedSlot = isSelected ? -1 : index;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? Pallets.lightSecondary
-                              : Pallets.white,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: isSelected ? 0 : 0.9,
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedSlot = isSelected ? -1 : index;
+                          });
+
+                          widget.onDateSelected(
+                              state.response.getDataAsList()[index].startTime);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? Pallets.lightSecondary
+                                : Pallets.white,
+                            border: Border.all(
+                              color: Colors.black,
+                              width: isSelected ? 0 : 0.9,
+                            ),
+                            borderRadius: BorderRadius.circular(100),
                           ),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Center(
-                          child: Text(
-                            timeSlots[index],
-                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          child: Center(
+                            child: Text(
+                              state.response.getDataAsList()[index].startTime,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
+                      );
+                    },
+                  );
+                }
+                return SizedBox(
+                    height: 100.h,
+                    child: const Center(
+                        child: TextView(text: 'No available time slots')));
               }
 
               if (state is GetTimeSlotsFailureState) {

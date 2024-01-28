@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
+import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
 import 'package:mentra/features/therapy/presentation/data/models/fetch_dates_response.dart';
 import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
@@ -9,11 +10,13 @@ import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessio
 import 'package:mentra/features/therapy/presentation/dormain/repository/therapy_repository.dart';
 
 part 'therapy_state.dart';
-enum SessionFlow{
+
+enum SessionFlow {
   schedule,
   reSchedule,
   none,
 }
+
 // Bloc class
 class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
   final TherapyRepository _therapyRepository;
@@ -24,6 +27,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<GetAvailableDatesEvent>(_mapGetAvailableDatesEventToState);
     on<GetTimeSlotsEvent>(_mapGetTimeSlotsEventToState);
     on<CreateSessionEvent>(_mapCreateSessionEventToState);
+    on<RescheduleSessionEvent>(_mapRescheduleSessionEventToState);
   }
 
   CreateSessionPayload createSessionsPayload = CreateSessionPayload.empty();
@@ -42,11 +46,8 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     }
   }
 
-
-
   FutureOr<void> _mapGetSessionHistoryEventToState(
-      GetSessionHistoryEvent event, Emitter<TherapyState> emit)async {
-
+      GetSessionHistoryEvent event, Emitter<TherapyState> emit) async {
     emit(GetSessionsHistoryLoadingState());
     try {
       final response = await _therapyRepository.getSessionsHistory();
@@ -68,21 +69,39 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
   }
 
   FutureOr<void> _mapGetTimeSlotsEventToState(
-      GetTimeSlotsEvent event, Emitter<TherapyState> emit) async{
-
+      GetTimeSlotsEvent event, Emitter<TherapyState> emit) async {
     emit(GetTimeSlotsoadingState());
     try {
-      final sessions = await _therapyRepository.getAvailableTimeSlots(event.date);
+      final sessions =
+          await _therapyRepository.getAvailableTimeSlots(event.date);
       emit(GetTimeSlotsSuccessState(response: sessions));
     } catch (e) {
       emit(GetTimeSlotsFailureState(error: e.toString()));
     }
-
   }
 
   FutureOr<void> _mapCreateSessionEventToState(
-      CreateSessionEvent event, Emitter<TherapyState> emit) {}
+      CreateSessionEvent event, Emitter<TherapyState> emit) async {
+    emit(CreateSessionLoadingState());
+    try {
+      final response = await _therapyRepository.createSession(event.payload);
+      emit(CreateSessionSuccessState(response: response));
+    } catch (e) {
+      emit(CreateSessionFailureState(error: e.toString()));
+    }
+  }
 
+  FutureOr<void> _mapRescheduleSessionEventToState(
+      RescheduleSessionEvent event, Emitter<TherapyState> emit) async {
+    emit(RescheduleSessionLoadingState());
+    try {
+      final response =
+          await _therapyRepository.rescheduleSession(event.payload);
+      emit(RescheduleSessionSuccessState(response: response));
+    } catch (e) {
+      emit(RescheduleSessionFailureState(error: e.toString()));
+    }
+  }
 
   // Method to update fields in the payload
   void updatePayload({

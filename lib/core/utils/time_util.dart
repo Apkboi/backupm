@@ -77,6 +77,9 @@ class TimeUtil {
     return DateFormat.yMMMMd().format(date);
   }
 
+  static String formatToFullDate(DateTime dateTime) {
+    return DateFormat('EEEE, dd MMMM yyyy').format(dateTime);
+  }
 
 
 
@@ -107,5 +110,41 @@ class TimeUtil {
  static bool isSameDay(DateTime date1, DateTime date2) {
     return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
+
+
+
+
+  // String formatDateString(String dateString) {
+  //   DateTime dateTime = DateTime.parse(dateString);
+  //   DateTime now = DateTime.now();
+  //
+  //   if (isThisWeek(dateTime, now)) {
+  //     return 'This ${formatDay(dateTime)}, ${formatMonth(dateTime)} ${dateTime.day}, ${dateTime.year}';
+  //   } else {
+  //     return '${formatDay(dateTime)}, ${formatMonth(dateTime)} ${dateTime.day}, ${dateTime.year}';
+  //   }
+  // }
+  //
+  // String formatDay(DateTime dateTime) {
+  //   return DateFormat('EEEE').format(dateTime);
+  // }
+  //
+  // String formatMonth(DateTime dateTime) {
+  //   return DateFormat('MMMM').format(dateTime);
+  // }
+  //
+  // bool isThisWeek(DateTime date, DateTime now) {
+  //   int daysUntilTarget = date.difference(now).inDays;
+  //
+  //   // Check if the date is within the same week (next 6 days including today)
+  //   return daysUntilTarget >= 0 && daysUntilTarget < 7;
+  // }
+  //
+
+
+
+
+
+
 
 }

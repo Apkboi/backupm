@@ -1,6 +1,8 @@
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
+import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
+import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
 import 'package:mentra/features/therapy/presentation/data/models/fetch_dates_response.dart';
 import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
 import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
@@ -26,8 +28,8 @@ class TherapyRepositoryImpl extends TherapyRepository {
           UrlConfig.sessionTimeSlots, RequestMethod.post,
           data: {"date": date});
 
-      return FetchTimeSlotsResponse.fromJson(response.data) ;
-    }  catch (e,stack) {
+      return FetchTimeSlotsResponse.fromJson(response.data);
+    } catch (e, stack) {
       logger.e(e.toString());
       logger.e(stack.toString());
       rethrow;
@@ -52,29 +54,47 @@ class TherapyRepositoryImpl extends TherapyRepository {
   }
 
   @override
-  Future<dynamic> createSession(dynamic payload) async {
-    final response = await _networkService.call(
-        UrlConfig.createSession, RequestMethod.post,
-        data: payload.toJson());
+  Future<CreateSessionResponse> createSession(
+      CreateSessionPayload payload) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.createSession, RequestMethod.post,
+          data: payload.toJson());
 
-    return response.data;
+      return CreateSessionResponse.fromJson(response.data);
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
   }
 
   @override
-  Future<dynamic> rescheduleSession(dynamic payload) async {
-    final response = await _networkService.call(
-        UrlConfig.rescheduleSession, RequestMethod.post,
-        data: payload.toJson());
+  Future<CreateSessionResponse> rescheduleSession(
+      CreateSessionPayload payload) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.rescheduleSession, RequestMethod.post,
+          data: payload.toJson());
 
-    return response.data;
+      return response.data;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
   }
 
   @override
-  Future<dynamic> cancelSession(String sessionId, String note) async {
-    final response = await _networkService.call(
-        UrlConfig.cancelSession, RequestMethod.post,
-        data: {"sessionId": sessionId, "note": note});
+  Future<CreateSessionResponse> cancelSession(
+      String sessionId, String note) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.cancelSession, RequestMethod.post,
+          data: {"sessionId": sessionId, "note": note});
 
-    return response.data;
+      return response.data;
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
   }
 }
