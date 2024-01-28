@@ -7,25 +7,27 @@ import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/data/models/get_library_categories_response.dart';
+import 'package:mentra/features/library/data/models/library_courses_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {
-  const ArticleDetailsScreen({Key? key, required this.categoryJson})
+  const ArticleDetailsScreen({Key? key, required this.courseJson})
       : super(key: key);
-  final String categoryJson;
+  final String courseJson;
 
   @override
   State<ArticleDetailsScreen> createState() => _ArticleDetailsScreenState();
 }
 
 class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
-  late LibraryCategory category;
+  late LibraryCourse course;
 
   @override
   void initState() {
-    category = LibraryCategory.fromJson(jsonDecode(widget.categoryJson));
+    course = LibraryCourse.fromJson(jsonDecode(widget.courseJson));
     super.initState();
   }
 
@@ -34,6 +36,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
+        tittleText: course.title,
         actions: [
           const CircleAvatar(
             backgroundColor: Pallets.white,
@@ -53,81 +56,83 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                120.verticalSpace,
-                TextView(
-                  text: '5 Everyday Strategies to Reduce Anxiety',
-                  style: GoogleFonts.fraunces(
-                      fontSize: 32.sp, fontWeight: FontWeight.w600),
-                ),
-                20.verticalSpace,
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const TextView(
-                      text: 'Updated December 5, 2023',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    const SizedBox(width: 11),
-                    Container(
-                      width: 6,
-                      height: 6,
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(
-                              width: 1, color: Color(0xFF99BEB7)),
-                          borderRadius: BorderRadius.circular(5),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  120.verticalSpace,
+                  TextView(
+                    text: course.title,
+                    style: GoogleFonts.fraunces(
+                        fontSize: 32.sp, fontWeight: FontWeight.w600),
+                  ),
+                  20.verticalSpace,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextView(
+                        text:
+                            'Updated ${TimeUtil.formatDate(course.updatedAt.toIso8601String())}',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      const SizedBox(width: 11),
+                      Container(
+                        width: 6,
+                        height: 6,
+                        decoration: ShapeDecoration(
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                width: 1, color: Color(0xFF99BEB7)),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 11),
-                    const TextView(
-                      text: '4 Mins read',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ],
-                ),
-                24.verticalSpace,
-                ImageWidget(
-                  imageUrl: Assets.images.pngs.article.path,
-                  height: 213.h,
-                  // fit: BoxFit.cover,
-                  borderRadius: BorderRadius.circular(10),
-                  width: 1.sw,
-                ),
-                24.verticalSpace,
-                TextView(
-                  text: '1. Deep Breathing',
-                  style: GoogleFonts.fraunces(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                      const SizedBox(width: 11),
+                      const TextView(
+                        text: '4 Mins read',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ],
                   ),
-                ),
-                16.verticalSpace,
-                const TextView(
-                  text:
-                      'When anxiety hits, try deep breathing exercises. Inhale slowly for a count of four, hold for four, and exhale for four. This can help calm your nervous system.',
-                ),
-                29.verticalSpace,
-                TextView(
-                  text: '2. Mindfulness Meditation',
-                  style: GoogleFonts.fraunces(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                  24.verticalSpace,
+                  ImageWidget(
+                    imageUrl: Assets.images.pngs.article.path,
+                    height: 213.h,
+                    // fit: BoxFit.cover,
+                    borderRadius: BorderRadius.circular(10),
+                    width: 1.sw,
                   ),
-                ),
-                16.verticalSpace,
-                const TextView(
-                  text:
-                      'When anxiety hits, try deep breathing exercises. Inhale slowly for a count of four, hold for four, and exhale for four. This can help calm your nervous system.',
-                ),
-              ],
+                  24.verticalSpace,
+                  // TextView(
+                  //   text: '1. Deep Breathing',
+                  //   style: GoogleFonts.fraunces(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.w600,
+                  //   ),
+                  // ),
+                  // 16.verticalSpace,
+                  TextView(
+                    text: course.body,
+                  ),
+                  29.verticalSpace,
+                  // TextView(
+                  //   text: '2. Mindfulness Meditation',
+                  //   style: GoogleFonts.fraunces(
+                  //     fontSize: 20,
+                  //     fontWeight: FontWeight.w600,
+                  //   ),
+                  // ),
+                  // 16.verticalSpace,
+                  // const TextView(
+                  //   text:
+                  //       'When anxiety hits, try deep breathing exercises. Inhale slowly for a count of four, hold for four, and exhale for four. This can help calm your nervous system.',
+                  // ),
+                ],
+              ),
             ),
           ),
         ],

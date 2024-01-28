@@ -132,11 +132,13 @@ class _TherapyScreenState extends State<TherapyScreen> {
     injector.get<TherapyBloc>().currentSessionFlow = SessionFlow.schedule;
     CustomDialogs.showCupertinoBottomSheet(context, SelectDateSheet(
       onSelected: (DateTime selectedDate) {
-
         injector.get<TherapyBloc>().updatePayload(date: selectedDate);
 
         CustomDialogs.showCupertinoBottomSheet(
-            context,  SelectTimeSheet(date: selectedDate,));
+            context,
+            SelectTimeSheet(
+              date: selectedDate,
+            ));
       },
     ));
   }
@@ -202,10 +204,14 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
               ),
             );
           } else {
-            return const AppEmptyState(
-              tittle: 'No session history.',
-              subtittle:
-                  "You have no previous session history. start by booking a session with a therapist",
+            return Column(
+              children: [
+                const AppEmptyState(
+                  tittle: 'No session history.',
+                  subtittle:
+                      "You have no previous session history. start by booking a session with a therapist",
+                ),
+              ],
             );
           }
         }

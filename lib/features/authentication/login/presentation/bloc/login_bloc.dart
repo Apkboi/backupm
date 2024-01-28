@@ -31,7 +31,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       // Assuming loginUser returns the user details upon successful login
       AuthSuccessUsecase().execute(authResponse);
-      DashboardUsecase().execute();
 
       emit(LoginSuccessState(response: authResponse));
     } catch (e) {

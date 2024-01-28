@@ -68,7 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 26, vertical: 10),
                                 onTap: () {
-                                  context.pushNamed(PageUrl.editProfileScreen);
+                                  // context.pushNamed(PageUrl.editProfileScreen);
                                 },
                                 color: Pallets.buttonBlack,
                                 child: const TextView(

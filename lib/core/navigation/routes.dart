@@ -183,8 +183,7 @@ class CustomRoutes {
         path: '/articleDetailsScreen',
         name: PageUrl.articleDetailsScreen,
         builder: (context, state) => ArticleDetailsScreen(
-          categoryJson:
-              state.uri.queryParameters[PathParam.libraryCategory] ?? "",
+          courseJson: state.uri.queryParameters[PathParam.libraryCourse] ?? "",
         ),
       ),
       GoRoute(
@@ -195,9 +194,9 @@ class CustomRoutes {
       GoRoute(
         path: '/allArticlesScreen',
         name: PageUrl.allArticlesScreen,
-        builder: (context, state) =>  AllArticlesScreen(
+        builder: (context, state) => AllArticlesScreen(
           categoryJson:
-          state.uri.queryParameters[PathParam.libraryCategory] ?? "",
+              state.uri.queryParameters[PathParam.libraryCategory] ?? "",
         ),
       ),
       GoRoute(

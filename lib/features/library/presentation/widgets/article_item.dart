@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/path_params.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -15,7 +19,9 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // context.pushNamed(PageUrl.videoArticleScreen);
+        context.pushNamed(PageUrl.articleDetailsScreen, queryParameters: {
+          PathParam.libraryCourse: jsonEncode(course.toJson())
+        });
       },
       child: Container(
         decoration: BoxDecoration(
@@ -35,15 +41,15 @@ class ArticleItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     width: 126.w,
                   ),
-                  course.courseType == 'Video'
-                      ? const Center(
-                          child: Icon(
-                            Icons.play_arrow_rounded,
-                            size: 50,
-                            color: Pallets.white,
-                          ),
-                        )
-                      : 0.horizontalSpace
+                  // course.courseType == 'Video'
+                  //     ? const Center(
+                  //         child: Icon(
+                  //           Icons.play_arrow_rounded,
+                  //           size: 50,
+                  //           color: Pallets.white,
+                  //         ),
+                  //       )
+                  //     : 0.horizontalSpace
                 ],
               ),
             ),
@@ -57,8 +63,9 @@ class ArticleItem extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 2.verticalSpace,
-                TextView(
-                  text: course.courseType == 'text' ? 'Article' : 'Video',
+                const TextView(
+                  // text: course.courseType == 'text' ? 'Article' : 'Video',
+                  text:  'Article',
                   fontSize: 13,
                 ),
               ],

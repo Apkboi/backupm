@@ -12,6 +12,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/extensions/date_extensions.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
+import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'confirm_session_sheet.dart';
@@ -93,7 +94,7 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                   ),
                 ),
                 16.verticalSpace,
-                 SelectableTimeSlots(widget.date.toCustomString),
+                SelectableTimeSlots(widget.date.toCustomString),
                 const Spacer(),
                 20.verticalSpace,
                 CustomNeumorphicButton(
@@ -161,7 +162,9 @@ class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
           16.verticalSpace,
           BlocConsumer<TherapyBloc, TherapyState>(
             bloc: therapyBloc,
-            listener: (context, state) {},
+            listener: (context, state) {
+
+            },
             builder: (context, state) {
               if (state is GetTimeSlotsoadingState) {
                 return SizedBox(
@@ -180,7 +183,7 @@ class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,
                       childAspectRatio: 3),
-                  itemCount: timeSlots.length,
+                  itemCount: (state.response.data as Map<String, TimeSlot>).values.length,
                   itemBuilder: (context, index) {
                     bool isSelected = index == selectedSlot;
 

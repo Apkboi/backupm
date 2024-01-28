@@ -88,6 +88,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get calender =>
       const AssetGenImage('assets/images/pngs/calender.png');
 
+  /// File path: assets/images/pngs/empty_bascket.png
+  AssetGenImage get emptyBascket =>
+      const AssetGenImage('assets/images/pngs/empty_bascket.png');
+
   /// File path: assets/images/pngs/g_journal.png
   AssetGenImage get gJournal =>
       const AssetGenImage('assets/images/pngs/g_journal.png');
@@ -164,6 +168,7 @@ class $AssetsImagesPngsGen {
         background,
         brain,
         calender,
+        emptyBascket,
         gJournal,
         homeBg,
         insight,

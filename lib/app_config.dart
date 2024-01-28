@@ -50,7 +50,7 @@ class AppConfig {
 
   Future setup() async {
     injector.get<UserBloc>().add(GetUserEvent());
-    injector.get<DashboardBloc>().add(GetConversationStarterEvent());
+    // injector.get<DashboardBloc>().add(GetConversationStarterEvent());
   }
 
   Future<void> initCore() async {

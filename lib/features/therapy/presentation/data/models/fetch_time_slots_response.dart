@@ -4,13 +4,15 @@
 
 import 'dart:convert';
 
-FetchTimeSlotsResponse fetchTimeSlotsResponseFromJson(String str) => FetchTimeSlotsResponse.fromJson(json.decode(str));
+FetchTimeSlotsResponse fetchTimeSlotsResponseFromJson(String str) =>
+    FetchTimeSlotsResponse.fromJson(json.decode(str));
 
-String fetchTimeSlotsResponseToJson(FetchTimeSlotsResponse data) => json.encode(data.toJson());
+String fetchTimeSlotsResponseToJson(FetchTimeSlotsResponse data) =>
+    json.encode(data.toJson());
 
 class FetchTimeSlotsResponse {
   final String message;
-  final Map<String, Datum> data;
+  final dynamic data;
   final bool success;
   final int code;
 
@@ -23,7 +25,7 @@ class FetchTimeSlotsResponse {
 
   FetchTimeSlotsResponse copyWith({
     String? message,
-    Map<String, Datum>? data,
+    Map<String, TimeSlot>? data,
     bool? success,
     int? code,
   }) =>
@@ -34,52 +36,57 @@ class FetchTimeSlotsResponse {
         code: code ?? this.code,
       );
 
-  factory FetchTimeSlotsResponse.fromJson(Map<String, dynamic> json) => FetchTimeSlotsResponse(
-    message: json["message"],
-    data: Map.from(json["data"]).map((k, v) => MapEntry<String, Datum>(k, Datum.fromJson(v))),
-    success: json["success"],
-    code: json["code"],
-  );
+  factory FetchTimeSlotsResponse.fromJson(Map<String, dynamic> json) =>
+      FetchTimeSlotsResponse(
+        message: json["message"],
+        data: json["data"] is List
+            ? []
+            : Map.from(json["data"])
+                .map((k, v) => MapEntry<String, TimeSlot>(k, TimeSlot.fromJson(v))),
+        success: json["success"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": Map.from(data).map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-    "success": success,
-    "code": code,
-  };
+        "message": message,
+        "data": Map.from(data)
+            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        "success": success,
+        "code": code,
+      };
 }
 
-class Datum {
+class TimeSlot {
   final String startTime;
   final String stopTime;
   final int duration;
 
-  Datum({
+  TimeSlot({
     required this.startTime,
     required this.stopTime,
     required this.duration,
   });
 
-  Datum copyWith({
+  TimeSlot copyWith({
     String? startTime,
     String? stopTime,
     int? duration,
   }) =>
-      Datum(
+      TimeSlot(
         startTime: startTime ?? this.startTime,
         stopTime: stopTime ?? this.stopTime,
         duration: duration ?? this.duration,
       );
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    startTime: json["start_time"],
-    stopTime: json["stop_time"],
-    duration: json["duration"],
-  );
+  factory TimeSlot.fromJson(Map<String, dynamic> json) => TimeSlot(
+        startTime: json["start_time"],
+        stopTime: json["stop_time"],
+        duration: json["duration"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "start_time": startTime,
-    "stop_time": stopTime,
-    "duration": duration,
-  };
+        "start_time": startTime,
+        "stop_time": stopTime,
+        "duration": duration,
+      };
 }

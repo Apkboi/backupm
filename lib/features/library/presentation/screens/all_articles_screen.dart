@@ -64,21 +64,32 @@ class _AllArticlesScreenState extends State<AllArticlesScreen> {
                   }
 
                   if (state is GetLibraryCoursesFailureState) {
-                    return AppPromptWidget(
-                      retryTextColor: Pallets.navy,
-                      textColor: Pallets.navy,
-                      onTap: () {
-                        _bloc.add(
-                            GetLibraryCoursesEvent(category.id.toString()));
-                      },
+                    return Column(
+                      children: [
+                        AppPromptWidget(
+                          retryTextColor: Pallets.navy,
+                          textColor: Pallets.navy,
+                          onTap: () {
+                            _bloc.add(
+                                GetLibraryCoursesEvent(category.id.toString()));
+                          },
+                        ),
+                      ],
                     );
                   }
 
                   if (state is GetLibraryCoursesSuccessState) {
                     if (state.response.data.isEmpty) {
-                      return const AppEmptyState(
-                        tittle: 'There are no courses here',
-                        subtittle: '',
+                      return const Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(16),
+                            child: AppEmptyState(
+                              tittle: 'There are no articles here',
+                              subtittle: '',
+                            ),
+                          ),
+                        ],
                       );
                     }
                     return RefreshIndicator(

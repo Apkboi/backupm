@@ -23,7 +23,7 @@ class AppEmptyState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ImageWidget(imageUrl: Assets.images.svgs.success),
+          ImageWidget(imageUrl: Assets.images.pngs.emptyBascket.path),
           15.verticalSpace,
           TextView(
             text: tittle ?? "Your Favorites Space Awaits",

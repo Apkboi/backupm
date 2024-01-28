@@ -9,6 +9,7 @@ class PathParam {
   static const userId = 'userId';
   static const userName = 'userName';
   static const isOnline = 'user';
-  static const libraryCategory = 'user';
+  static const libraryCategory = 'libraryCategory';
+  static const libraryCourse = 'libraryCourse';
 // static const chatId = 'chatId';
 }

@@ -1,6 +1,8 @@
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/therapy/presentation/data/models/fetch_dates_response.dart';
+import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
 import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/dormain/repository/therapy_repository.dart';
 
@@ -18,12 +20,19 @@ class TherapyRepositoryImpl extends TherapyRepository {
   }
 
   @override
-  Future<dynamic> getAvailableTimeSlots(String date) async {
-    final response = await _networkService.call(
-        UrlConfig.sessionTimeSlots, RequestMethod.post,
-        data: {"date": date});
+  Future<FetchTimeSlotsResponse> getAvailableTimeSlots(String date) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.sessionTimeSlots, RequestMethod.post,
+          data: {"date": date});
 
-    return response.data;
+      return FetchTimeSlotsResponse.fromJson(response.data) ;
+    }  catch (e,stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
+      rethrow;
+      // TODO
+    }
   }
 
   @override

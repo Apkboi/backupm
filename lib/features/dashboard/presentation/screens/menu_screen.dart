@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -9,6 +10,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
+import 'package:mentra/features/dashboard/presentation/widget/unlock_premmium_feature_dialog.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -115,7 +117,12 @@ class _MenuScreenState extends State<MenuScreen> {
                                 textColor: Pallets.orangePink,
                                 bgColor: Pallets.lighterPink,
                                 onTap: () {
-                                  context.pushNamed(PageUrl.therapyScreen);
+                                  CustomDialogs.showBottomSheet(
+                                    context,
+                                    const UnlockPremiumFeatureDialog(),
+                                  );
+
+                                  // context.pushNamed(PageUrl.therapyScreen);
                                 },
                                 image: Assets.images.pngs.pTherapy.path,
                                 text: "Professional Therapy")),
