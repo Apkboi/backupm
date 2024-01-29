@@ -7,10 +7,15 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -52,14 +57,14 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               ),
               6.verticalSpace,
               TextView(
-                text:  widget.session.focus,
+                text: widget.session.focus,
                 style: GoogleFonts.fraunces(
                     color: Pallets.navy,
                     fontSize: 32.sp,
                     fontWeight: FontWeight.w600),
               ),
               8.verticalSpace,
-               TextView(
+              TextView(
                   text: 'Session with ${widget.session.therapist.user.name}',
                   color: Pallets.brandColor,
                   fontWeight: FontWeight.w600),
@@ -96,7 +101,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                     color: Pallets.white,
                     borderRadius: BorderRadius.circular(18)),
                 padding: const EdgeInsets.all(18),
-                child:  Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const TextView(
@@ -118,21 +123,22 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                 padding: const EdgeInsets.all(18),
                 child: Column(
                   children: [
-                     Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const  TextView(
+                        const TextView(
                           text: 'Date',
                           color: Pallets.ink,
                         ),
                         TextView(
-                          text: TimeUtil.formatDate(widget.session.startsAt.toIso8601String()),
+                          text: TimeUtil.formatDate(
+                              widget.session.startsAt.toIso8601String()),
                           // color: Pallets.mildOrange,
                         ),
                       ],
                     ),
                     16.verticalSpace,
-                     Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const TextView(
@@ -140,7 +146,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                           color: Pallets.ink,
                         ),
                         TextView(
-                          text:TimeUtil.formatTime(widget.session.startsAt),
+                          text: TimeUtil.formatTime(widget.session.startsAt),
                           // color: Pallets.mildOrange,
                         ),
                       ],
@@ -163,8 +169,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
-                     TextView(
-                      text: widget.session.note,
+                    TextView(
+                      text: widget.session.note ?? '',
                     ),
                   ],
                 ),
@@ -172,7 +178,9 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               77.verticalSpace,
               Center(
                 child: CustomNeumorphicButton(
-                  onTap: () {},
+                  onTap: () {
+                    _reScheduleTherapy(context);
+                  },
                   color: Pallets.primary,
                   expanded: false,
                   text: "Reschedule Session",
@@ -185,9 +193,31 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
     );
   }
 
+  void _reScheduleTherapy(BuildContext context) {
+    // context.pop();
+    injector.get<TherapyBloc>().currentSessionFlow = SessionFlow.reSchedule;
+    CustomDialogs.showCupertinoBottomSheet(context, SelectDateSheet(
+      onSelected: (DateTime selectedDate) {
+        injector.get<TherapyBloc>().updatePayload(
+            date: selectedDate, sessionId: widget.session.id.toString());
+
+        CustomDialogs.showCupertinoBottomSheet(
+          context,
+          SelectTimeSheet(
+            date: selectedDate,
+          ),
+        );
+      },
+    ), useRootNavigator: true);
+  }
+
   void _cancelTherapySession(BuildContext context) async {
     final bool? canceled = await CustomDialogs.showCupertinoBottomSheet(
-        context, const CancelSessionSheet());
+      context,
+      CancelSessionSheet(
+        session: widget.session,
+      ),
+    );
 
     if (canceled ?? false) {
       context.pop();

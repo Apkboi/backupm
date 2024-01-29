@@ -48,8 +48,12 @@ class RescheduleSessionEvent extends TherapyEvent {
   List<Object?> get props => [payload];
 }
 
+class CancelSessionEvent extends TherapyEvent {
+  final String sessionId;
+  final String? note;
 
+  const CancelSessionEvent({required this.sessionId,  this.note});
 
-
-
-
+  @override
+  List<Object?> get props => [sessionId, note];
+}

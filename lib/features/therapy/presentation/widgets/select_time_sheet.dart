@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
@@ -232,11 +233,12 @@ class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
               }
 
               if (state is GetTimeSlotsFailureState) {
-                return SizedBox(
-                  height: 150.h,
-                  child: Center(
-                    child: CustomDialogs.getLoading(size: 40),
-                  ),
+                return AppPromptWidget(
+                  textColor: Pallets.primary,
+                  retryTextColor: Pallets.primary,
+                  onTap: () {
+                    therapyBloc.add(GetTimeSlotsEvent(date: widget.date));
+                  },
                 );
               }
 

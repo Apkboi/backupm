@@ -76,7 +76,7 @@ class TherapyRepositoryImpl extends TherapyRepository {
           UrlConfig.rescheduleSession, RequestMethod.post,
           data: payload.toJson());
 
-      return response.data;
+      return CreateSessionResponse.fromJson(response.data);
     } catch (e) {
       logger.e(e.toString());
       rethrow;
@@ -85,13 +85,13 @@ class TherapyRepositoryImpl extends TherapyRepository {
 
   @override
   Future<CreateSessionResponse> cancelSession(
-      String sessionId, String note) async {
+      {required String sessionId, String? note}) async {
     try {
       final response = await _networkService.call(
           UrlConfig.cancelSession, RequestMethod.post,
-          data: {"sessionId": sessionId, "note": note});
+          data: {"session_id": sessionId, "note": note});
 
-      return response.data;
+      return CreateSessionResponse.fromJson(response.data);
     } catch (e) {
       logger.e(e);
       rethrow;

@@ -78,6 +78,11 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                           Expanded(
                             child: Theme(
                               data: context.theme.copyWith(
+                                  textTheme: context.textTheme.copyWith(
+                                    headline6: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                   colorScheme: context.colorScheme.copyWith(
                                       primary: Pallets.lightSecondary,
                                       onPrimary: Pallets.black),
@@ -120,7 +125,13 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                           size: 50, color: Pallets.primary),
                     )),
                   if (state is GetAvailableDatesFailureState)
-                    const AppPromptWidget()
+                    AppPromptWidget(
+                      textColor: Pallets.primary,
+                      retryTextColor: Pallets.primary,
+                      onTap: () {
+                        _bloc.add(GetAvailableDatesEvent());
+                      },
+                    )
                 ],
               ),
             ),
@@ -130,18 +141,18 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
     );
   }
 
-  // String _formatDate(DateTime date) {
-  //   // Format the date as 'yyyy-MM-dd' to match the available date slots
-  //   return DateFormat('yyyy-MM-dd').format(date);
-  // }
-  //
-  // int getHighestYear(List<DateTime> dateTimes) {
-  //   if (dateTimes.isEmpty) {
-  //     throw ArgumentError('The list of DateTime objects is empty.');
-  //   }
-  //
-  //   int highestYear = dateTimes.map((dateTime) => dateTime.year).reduce((max, current) => max > current ? max : current);
-  //
-  //   return highestYear;
-  // }
+// String _formatDate(DateTime date) {
+//   // Format the date as 'yyyy-MM-dd' to match the available date slots
+//   return DateFormat('yyyy-MM-dd').format(date);
+// }
+//
+// int getHighestYear(List<DateTime> dateTimes) {
+//   if (dateTimes.isEmpty) {
+//     throw ArgumentError('The list of DateTime objects is empty.');
+//   }
+//
+//   int highestYear = dateTimes.map((dateTime) => dateTime.year).reduce((max, current) => max > current ? max : current);
+//
+//   return highestYear;
+// }
 }

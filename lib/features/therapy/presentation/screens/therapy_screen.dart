@@ -157,7 +157,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
 
   @override
   void initState() {
-    therapyBloc.add(GetUpcomingSessionsEvent());
+    injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
     super.initState();
   }
 
@@ -165,7 +165,8 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<TherapyBloc, TherapyState>(
-      bloc: therapyBloc,
+      bloc: injector.get<TherapyBloc>(),
+      buildWhen: _buildWhen,
       listener: _listenToTherapyBloc,
       builder: (context, state) {
         if (state is GetUpcomingSessionsLoadingState) {
@@ -183,7 +184,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
             textColor: Pallets.navy,
             retryTextColor: Pallets.navy,
             onTap: () {
-              therapyBloc.add(GetUpcomingSessionsEvent());
+              injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
             },
           ));
         }
@@ -192,7 +193,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
           if (state.response.data.data.isNotEmpty) {
             return RefreshIndicator(
               onRefresh: () async {
-                therapyBloc.add(GetUpcomingSessionsEvent());
+                injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
               },
               child: ListView.builder(
                 shrinkWrap: true,
@@ -204,15 +205,17 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
               ),
             );
           } else {
-            return Column(
+
+            return const Column(
               children: [
-                const AppEmptyState(
+                AppEmptyState(
                   tittle: 'No session history.',
                   subtittle:
                       "You have no previous session history. start by booking a session with a therapist",
                 ),
               ],
             );
+
           }
         }
 
@@ -222,6 +225,11 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
   }
 
   void _listenToTherapyBloc(BuildContext context, TherapyState state) {}
+
+  bool _buildWhen(TherapyState previous, TherapyState current) =>
+      current is GetUpcomingSessionsLoadingState ||
+      current is GetUpcomingSessionsSuccessState ||
+      current is GetUpcomingSessionsFailureState;
 
   @override
   bool get wantKeepAlive => true;
@@ -236,11 +244,11 @@ class TherapyHistory extends StatefulWidget {
 
 class _TherapyHistoryState extends State<TherapyHistory>
     with AutomaticKeepAliveClientMixin {
-  final TherapyBloc therapyBloc = TherapyBloc(injector.get());
+  // final TherapyBloc therapyBloc = TherapyBloc(injector.get());
 
   @override
   void initState() {
-    therapyBloc.add(GetSessionHistoryEvent());
+    injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
     super.initState();
   }
 
@@ -248,8 +256,9 @@ class _TherapyHistoryState extends State<TherapyHistory>
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<TherapyBloc, TherapyState>(
-      bloc: therapyBloc,
+      bloc: injector.get<TherapyBloc>(),
       listener: _listenToTherapyBloc,
+      buildWhen: _buildWhen,
       builder: (context, state) {
         if (state is GetSessionsHistoryLoadingState) {
           return Center(
@@ -265,7 +274,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
             retryTextColor: Pallets.navy,
             title: state.error,
             onTap: () {
-              therapyBloc.add(GetSessionHistoryEvent());
+              injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
             },
           );
         }
@@ -274,7 +283,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
           if (state.response.data.data.isNotEmpty) {
             return RefreshIndicator(
               onRefresh: () async {
-                therapyBloc.add(GetSessionHistoryEvent());
+                injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
               },
               child: ListView.builder(
                 shrinkWrap: true,
@@ -308,4 +317,9 @@ class _TherapyHistoryState extends State<TherapyHistory>
 
   @override
   bool get wantKeepAlive => true;
+
+  bool _buildWhen(TherapyState previous, TherapyState current) =>
+      current is GetSessionsHistoryLoadingState ||
+      current is GetSessionsHistorySuccessState ||
+      current is GetSessionsHistoryFailureState;
 }

@@ -117,12 +117,12 @@ class _MenuScreenState extends State<MenuScreen> {
                                 textColor: Pallets.orangePink,
                                 bgColor: Pallets.lighterPink,
                                 onTap: () {
-                                  CustomDialogs.showBottomSheet(
-                                    context,
-                                    const UnlockPremiumFeatureDialog(),
-                                  );
+                                  // CustomDialogs.showBottomSheet(
+                                  //   context,
+                                  //   const UnlockPremiumFeatureDialog(),
+                                  // );
 
-                                  // context.pushNamed(PageUrl.therapyScreen);
+                                  context.pushNamed(PageUrl.therapyScreen);
                                 },
                                 image: Assets.images.pngs.pTherapy.path,
                                 text: "Professional Therapy")),

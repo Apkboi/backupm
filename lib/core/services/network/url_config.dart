@@ -32,6 +32,9 @@ class UrlConfig {
   static const String loginPreview = "/auth/login/preview";
 
   static const String getLibraryCoursesEndpoint = "/wellness-library/courses/list";
+  static  String getCourseDetails(String id) => "/wellness-library/courses/show/$id";
+  static const String getFavourites = "/wellness-library/courses/favourites";
+  static const String updateFavourite = "/wellness-library/courses/save-to-favourite";
 
   static const String getLibraryCategoriesEndpoint = "/wellness-library/categories/list";
 

@@ -124,13 +124,12 @@ class CreateSessionSuccessState extends TherapyState {
   List<Object?> get props => [response];
 }
 
-
 class RescheduleSessionLoadingState extends TherapyState {
   @override
   List<Object?> get props => [];
 }
 
-class  RescheduleSessionFailureState extends TherapyState {
+class RescheduleSessionFailureState extends TherapyState {
   final String error;
 
   const RescheduleSessionFailureState({required this.error});
@@ -139,10 +138,33 @@ class  RescheduleSessionFailureState extends TherapyState {
   List<Object?> get props => [error];
 }
 
-class  RescheduleSessionSuccessState extends TherapyState {
+class RescheduleSessionSuccessState extends TherapyState {
   final CreateSessionResponse response;
 
   const RescheduleSessionSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class CancelSessionLoadingState extends TherapyState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CancelSessionSessionFailureState extends TherapyState {
+  final String error;
+
+  const CancelSessionSessionFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class CancelSessionSessionSuccessState extends TherapyState {
+  final CreateSessionResponse response;
+
+  const CancelSessionSessionSuccessState({required this.response});
 
   @override
   List<Object?> get props => [response];

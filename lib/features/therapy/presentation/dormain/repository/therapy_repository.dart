@@ -5,14 +5,18 @@ import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slot
 import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
 
 abstract class TherapyRepository {
-
   Future<FetchDatesResponse> getAvailableDate();
+
   Future<FetchTimeSlotsResponse> getAvailableTimeSlots(String date);
+
   Future<UpcomingSessionsResponse> getUpcomingSessions();
+
   Future<UpcomingSessionsResponse> getSessionsHistory();
+
   Future<CreateSessionResponse> createSession(CreateSessionPayload payload);
+
   Future<CreateSessionResponse> rescheduleSession(CreateSessionPayload payload);
-  Future<dynamic> cancelSession(String sessionId, String note);
 
-
+  Future<CreateSessionResponse> cancelSession(
+      {required String sessionId,  String? note});
 }

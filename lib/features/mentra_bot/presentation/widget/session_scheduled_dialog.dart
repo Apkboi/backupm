@@ -14,9 +14,11 @@ class SessionScheduledDialog extends StatelessWidget {
   const SessionScheduledDialog({
     super.key,
     required this.sessionDetails,
+    this.tittle,
   });
 
   final SessionDetails sessionDetails;
+  final String? tittle;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class SessionScheduledDialog extends StatelessWidget {
           ),
           10.verticalSpace,
           TextView(
-            text: 'Session Scheduled!',
+            text: tittle?? 'Session Scheduled!',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -54,7 +56,11 @@ class SessionScheduledDialog extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                ImageWidget(imageUrl: Assets.images.svgs.avatar1),
+                ImageWidget(
+                  imageUrl: sessionDetails.therapist.user.avatar,
+                  size: 60,
+                  borderRadius: BorderRadius.circular(50),
+                ),
                 10.verticalSpace,
                 const TextView(
                   text: 'Session with',
@@ -77,8 +83,7 @@ class SessionScheduledDialog extends StatelessWidget {
                     ImageWidget(imageUrl: Assets.images.svgs.icCalender),
                     10.horizontalSpace,
                     TextView(
-                      text: TimeUtil.formatToFullDate(
-                          DateTime.parse(sessionDetails.startsAt)),
+                      text: TimeUtil.formatToFullDate(DateTime.parse(sessionDetails.startsAt)),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -89,8 +94,9 @@ class SessionScheduledDialog extends StatelessWidget {
                   children: [
                     ImageWidget(imageUrl: Assets.images.svgs.icClock),
                     10.horizontalSpace,
-                    const TextView(
-                      text: '9:00 am',
+                     TextView(
+                      text: TimeUtil.formatTime(
+                        DateTime.parse(sessionDetails.startsAt),),
                       fontWeight: FontWeight.w600,
                     ),
                   ],

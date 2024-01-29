@@ -28,6 +28,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<GetTimeSlotsEvent>(_mapGetTimeSlotsEventToState);
     on<CreateSessionEvent>(_mapCreateSessionEventToState);
     on<RescheduleSessionEvent>(_mapRescheduleSessionEventToState);
+    on<CancelSessionEvent>(_mapCancelSessionEventToState);
   }
 
   CreateSessionPayload createSessionsPayload = CreateSessionPayload.empty();
@@ -85,6 +86,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     emit(CreateSessionLoadingState());
     try {
       final response = await _therapyRepository.createSession(event.payload);
+      clearPayload();
       emit(CreateSessionSuccessState(response: response));
     } catch (e) {
       emit(CreateSessionFailureState(error: e.toString()));
@@ -97,9 +99,25 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     try {
       final response =
           await _therapyRepository.rescheduleSession(event.payload);
+      clearPayload();
       emit(RescheduleSessionSuccessState(response: response));
     } catch (e) {
       emit(RescheduleSessionFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapCancelSessionEventToState(
+      CancelSessionEvent event, Emitter<TherapyState> emit) async {
+    emit(CancelSessionLoadingState());
+    try {
+      final response = await _therapyRepository.cancelSession(
+        sessionId: event.sessionId,
+        note: event.note,
+      );
+
+      emit(CancelSessionSessionSuccessState(response: response));
+    } catch (e) {
+      emit(CancelSessionSessionFailureState(error: e.toString()));
     }
   }
 
@@ -109,17 +127,26 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     String? time,
     String? focus,
     String? note,
+    String? sessionId,
   }) {
     createSessionsPayload = createSessionsPayload.copyWith(
       date: date ?? createSessionsPayload.date,
       time: time ?? createSessionsPayload.time,
       focus: focus ?? createSessionsPayload.focus,
       note: note ?? createSessionsPayload.note,
+      sessionId: sessionId ?? createSessionsPayload.sessionId,
     );
   }
 
   // Method to clear fields in the payload
   void clearPayload() {
     createSessionsPayload = CreateSessionPayload.empty();
+  }
+  void scheduleOrRescheduleSession() {
+    if (currentSessionFlow == SessionFlow.schedule) {
+      add(CreateSessionEvent(payload: createSessionsPayload));
+    } else {
+      add(RescheduleSessionEvent(payload: createSessionsPayload));
+    }
   }
 }

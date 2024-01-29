@@ -14,8 +14,8 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_scheduled_dialog.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
+import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
 import 'package:mentra/features/therapy/presentation/widgets/session_focus_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -38,7 +38,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
     return Material(
       color: Pallets.bottomSheetColor,
       child: BlocConsumer<TherapyBloc, TherapyState>(
-        bloc: therapyBloc,
+        bloc: injector.get(),
         listener: _listenToTherapyBloc,
         builder: (context, state) {
           return CupertinoScaffold(
@@ -211,13 +211,37 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
     );
   }
 
-  void _closeAllSheets(BuildContext context,
+  void sessionCreated(BuildContext context,
       {required CreateSessionResponse sessionDetails}) {
+    injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+
     context.pop();
     context.pop();
     context.pop();
+    context.pop();
+    // CustomDialogs.hideLoading(context);
     CustomDialogs.showCustomDialog(
         SessionScheduledDialog(sessionDetails: sessionDetails.data), context);
+  }
+
+  void sessionRescheduled(BuildContext context,
+      {required CreateSessionResponse sessionDetails}) {
+    injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+
+    // rootNavigatorKey.currentState?.pop();
+    context.pop();
+    context.pop();
+    context.pop();
+    context.pop();
+    context.pop();
+
+    // CustomDialogs.hideLoading(context);!
+    CustomDialogs.showCustomDialog(
+        SessionScheduledDialog(
+          sessionDetails: sessionDetails.data,
+          tittle: "Session Rescheduled successfully",
+        ),
+        context);
   }
 
   void _selectSessionFocus() async {
@@ -230,31 +254,28 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
     injector
         .get<TherapyBloc>()
         .updatePayload(note: _notesController.text, focus: focus);
+    injector.get<TherapyBloc>().scheduleOrRescheduleSession();
   }
 
-  void _listenToTherapyBloc(BuildContext context, TherapyState state) {
-    if (state is CreateSessionLoadingState ||
-        state is RescheduleSessionLoadingState) {
-      CustomDialogs.showLoading(context);
-    }
+  void _listenToTherapyBloc(BuildContext _context, TherapyState state) {
     if (state is RescheduleSessionFailureState) {
-      context.pop();
+      _context.pop();
       CustomDialogs.error(state.error);
     }
     if (state is CreateSessionFailureState) {
-      context.pop();
+      _context.pop();
       CustomDialogs.error(state.error);
     }
 
     if (state is CreateSessionLoadingState ||
         state is RescheduleSessionLoadingState) {
-      CustomDialogs.showLoading(context);
+      CustomDialogs.showLoading(_context);
     }
     if (state is CreateSessionSuccessState) {
-      _closeAllSheets(context, sessionDetails: state.response);
+      sessionCreated(_context, sessionDetails: state.response);
     }
     if (state is RescheduleSessionSuccessState) {
-      _closeAllSheets(context, sessionDetails: state.response);
+      sessionRescheduled(_context, sessionDetails: state.response);
     }
   }
 }

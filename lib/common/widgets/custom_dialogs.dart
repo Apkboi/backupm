@@ -78,6 +78,7 @@ class CustomDialogs {
     Widget child, {
     Color? barrierColor,
     BoxConstraints? constraints,
+    bool? useRootNavigator,
     ShapeBorder? shape,
   }) {
     return mbs.showCupertinoModalBottomSheet(
@@ -85,6 +86,7 @@ class CustomDialogs {
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: true,
+      useRootNavigator: useRootNavigator??false,
       builder: (context) => Material(
         child: CupertinoPageScaffold(child: child),
       ),

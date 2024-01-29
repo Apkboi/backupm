@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/features/library/data/models/get_course_details_response.dart';
+import 'package:mentra/features/library/data/models/get_favourite_courses_response.dart';
 import 'package:mentra/features/library/data/models/get_library_categories_response.dart';
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
+import 'package:mentra/features/library/data/models/update_favourites_endpoints.dart';
 import 'package:mentra/features/library/dormain/repository/wellness_library_repository.dart';
 
 part 'wellness_library_event.dart';
@@ -20,6 +23,9 @@ class WellnessLibraryBloc
       : super(WellnessLibraryInitial()) {
     on<GetLibraryCategoriesEvent>(_mapGetLibraryCategoriesEventToState);
     on<GetLibraryCoursesEvent>(_mapGetLibraryCoursesEventToState);
+    on<GetFavouriteCoursesEvent>(_mapGetFavouriteCoursesEventToState);
+    on<UpdateFavouriteEvent>(_mapUpdateFavouriteEventToState);
+    on<GetCourseDetailEvent>(_mapGetCourseDetailEventToState);
   }
 
   Future<void> _mapGetLibraryCategoriesEventToState(
@@ -50,5 +56,42 @@ class WellnessLibraryBloc
     }
   }
 
-// ... (rest of the code remains unchanged)
+  FutureOr<void> _mapGetFavouriteCoursesEventToState(
+      GetFavouriteCoursesEvent event,
+      Emitter<WellnessLibraryState> emit) async {
+    emit(const GetFavouritesLoadingState());
+
+    try {
+      final courses = await _wellnessLibraryRepository.getFavouriteCourses();
+      emit(GetFavouritesSuccessState(response: courses));
+    } catch (e) {
+      emit(GetFavouritesFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapUpdateFavouriteEventToState(
+      UpdateFavouriteEvent event, Emitter<WellnessLibraryState> emit) async {
+    emit(const UpdateFavouritesLoadingState());
+
+    try {
+      final response =
+          await _wellnessLibraryRepository.updateFavourite(event.id);
+      emit(UpdateFavouritesSuccessState(response: response));
+    } catch (e) {
+      emit(UpdateFavouritesFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapGetCourseDetailEventToState(
+      GetCourseDetailEvent event, Emitter<WellnessLibraryState> emit) async {
+    emit(const GetCourseDetailsLoadingState());
+
+    try {
+      final response =
+          await _wellnessLibraryRepository.getCourseDetails(event.id);
+      emit(GetCourseDetailsSuccessState(response: response));
+    } catch (e) {
+      emit(GetCourseDetailsFailureState(error: e.toString()));
+    }
+  }
 }
