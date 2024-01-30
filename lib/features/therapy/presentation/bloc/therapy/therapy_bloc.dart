@@ -2,12 +2,12 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
-import 'package:mentra/features/therapy/presentation/data/models/fetch_dates_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
-import 'package:mentra/features/therapy/presentation/dormain/repository/therapy_repository.dart';
+import 'package:mentra/features/therapy/data/models/create_session_response.dart';
+import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
+import 'package:mentra/features/therapy/data/models/fetch_dates_response.dart';
+import 'package:mentra/features/therapy/data/models/fetch_time_slots_response.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
 
 part 'therapy_state.dart';
 
@@ -29,6 +29,8 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<CreateSessionEvent>(_mapCreateSessionEventToState);
     on<RescheduleSessionEvent>(_mapRescheduleSessionEventToState);
     on<CancelSessionEvent>(_mapCancelSessionEventToState);
+    on<MatchTherapistEvent>(_mapMatchTherapistEventToState);
+    on<SelectTherapistEvent>(_mapSelectTherapistEventToState);
   }
 
   CreateSessionPayload createSessionsPayload = CreateSessionPayload.empty();
@@ -121,6 +123,38 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     }
   }
 
+
+
+  Future<void> _mapMatchTherapistEventToState(
+      MatchTherapistEvent event,
+      Emitter<TherapyState> emit,
+      ) async {
+    emit(MatchTherapistLoadingState());
+    try {
+      final therapist = await _therapyRepository.matchTherapist();
+      emit(MatchTherapistSuccessState(therapist: therapist));
+    } catch (e) {
+      emit(MatchTherapistFailureState(error: e.toString()));
+    }
+  }
+
+  Future<void> _mapSelectTherapistEventToState(
+      SelectTherapistEvent event,
+      Emitter<TherapyState> emit,
+      ) async {
+    emit(SelectTherapistLoadingState());
+    try {
+      await _therapyRepository.acceptTherapist( therapistId: event.therapistUserId,);
+      emit(SelectTherapistSuccessState(therapistUserId: event.therapistUserId));
+    } catch (e) {
+      emit(SelectTherapistFailureState(error: e.toString()));
+    }
+  }
+
+
+
+
+
   // Method to update fields in the payload
   void updatePayload({
     DateTime? date,
@@ -142,6 +176,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
   void clearPayload() {
     createSessionsPayload = CreateSessionPayload.empty();
   }
+
   void scheduleOrRescheduleSession() {
     if (currentSessionFlow == SessionFlow.schedule) {
       add(CreateSessionEvent(payload: createSessionsPayload));

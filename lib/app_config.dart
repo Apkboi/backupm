@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,7 @@ import 'core/services/firebase/crashlytics.dart';
 import 'core/services/firebase/notifiactions.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
-
 import 'features/account/presentation/user_bloc/user_bloc.dart';
-import 'features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 
 enum Flavor { dev, staging, prod }
 
@@ -54,6 +53,8 @@ class AppConfig {
   }
 
   Future<void> initCore() async {
+    final window = WidgetsFlutterBinding.ensureInitialized().window;
+    await _ensureScreenSize(window);
     final sessionManager = SessionManager();
     // final objectBox = await BoxManager.create();
     await sessionManager.init();
@@ -97,4 +98,12 @@ class AppConfig {
   Future<void> initializeCountriesList() async {
     // final util = CountryUtil();
   }
+}
+
+// Add this function
+Future<void> _ensureScreenSize(SingletonFlutterWindow window) async {
+  return window.physicalGeometry.isEmpty
+      ? Future.delayed(
+          const Duration(milliseconds: 10), () => _ensureScreenSize(window))
+      : Future.value();
 }

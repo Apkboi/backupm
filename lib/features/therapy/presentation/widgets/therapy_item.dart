@@ -6,7 +6,7 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
 
 class TherapyItem extends StatelessWidget {

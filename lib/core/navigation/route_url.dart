@@ -35,6 +35,8 @@ class PageUrl {
   static const changePasscodeScreen = 'changePasscodeScreen';
   static const emergencySosScreen = 'emergencySosScreen';
   static const userPreferenceScreen = 'userPreferenceScreen';
+  static const changeTherapistScreen = 'changeTherapistScreen';
+  static const matchTherapistScreen = 'matchTherapistScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

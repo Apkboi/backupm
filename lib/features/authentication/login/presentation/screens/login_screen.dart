@@ -204,10 +204,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _getUserDetails() {
+
     if (_formKey.currentState!.validate()) {
       injector
           .get<LoginBloc>()
           .add(LoginPreviewEvent(email: _emailController.text.trim()));
     }
+
+
   }
 }

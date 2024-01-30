@@ -7,8 +7,8 @@ import 'package:mentra/features/library/data/repository/wellness_library_reposit
 import 'package:mentra/features/library/dormain/repository/wellness_library_repository.dart';
 import 'package:mentra/features/settings/data/repository/user_preference_rpository_impl.dart';
 import 'package:mentra/features/settings/dormain/repository/user_preference_rpository.dart';
-import 'package:mentra/features/therapy/presentation/data/repository/therapy_repository_impl.dart';
-import 'package:mentra/features/therapy/presentation/dormain/repository/therapy_repository.dart';
+import 'package:mentra/features/therapy/data/repository/therapy_repository_impl.dart';
+import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
 
 void setup(GetIt getIt) {
   getIt.registerLazySingleton<AuthRepository>(

@@ -35,6 +35,8 @@ import 'package:mentra/features/settings/presentation/screens/settings_screen.da
 import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
+import 'package:mentra/features/therapy/presentation/screens/change_therapist_screen.dart';
+import 'package:mentra/features/therapy/presentation/screens/match_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_profile_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
@@ -247,6 +249,18 @@ class CustomRoutes {
           flow: stringToUserPreferenceFlow(
               state.uri.queryParameters[PathParam.userPreferenceFlow] ?? ''),
         ),
+      ),
+
+      GoRoute(
+        path: '/changeTherapistScreen',
+        name: PageUrl.changeTherapistScreen,
+        builder: (context, state) => const ChangeTherapistScreen(),
+      ),
+
+      GoRoute(
+        path: '/matchTherapistScreen',
+        name: PageUrl.matchTherapistScreen,
+        builder: (context, state) => const MatchTherapistScreen(),
       ),
     ],
   );

@@ -170,23 +170,21 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
       listener: _listenToTherapyBloc,
       builder: (context, state) {
         if (state is GetUpcomingSessionsLoadingState) {
-          return Expanded(
-              child: Center(
+          return Center(
             child: CustomDialogs.getLoading(
-              size: 50,
+          size: 50,
             ),
-          ));
+          );
         }
 
         if (state is GetUpcomingSessionsFailureState) {
-          return Expanded(
-              child: AppPromptWidget(
+          return AppPromptWidget(
             textColor: Pallets.navy,
             retryTextColor: Pallets.navy,
             onTap: () {
-              injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+          injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
             },
-          ));
+          );
         }
 
         if (state is GetUpcomingSessionsSuccessState) {

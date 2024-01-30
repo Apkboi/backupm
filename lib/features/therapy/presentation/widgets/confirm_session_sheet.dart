@@ -15,7 +15,7 @@ import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_scheduled_dialog.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
+import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/session_focus_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

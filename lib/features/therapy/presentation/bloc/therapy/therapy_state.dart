@@ -169,3 +169,51 @@ class CancelSessionSessionSuccessState extends TherapyState {
   @override
   List<Object?> get props => [response];
 }
+
+
+
+class MatchTherapistLoadingState extends TherapyState {
+  @override
+  List<Object?> get props => [];
+}
+
+class MatchTherapistSuccessState extends TherapyState {
+  final TherapistData therapist;
+
+  MatchTherapistSuccessState({required this.therapist});
+
+  @override
+  List<Object?> get props => [therapist];
+}
+
+class MatchTherapistFailureState extends TherapyState {
+  final String error;
+
+  MatchTherapistFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class SelectTherapistLoadingState extends TherapyState {
+  @override
+  List<Object?> get props => [];
+}
+
+class SelectTherapistSuccessState extends TherapyState {
+  final String therapistUserId;
+
+  SelectTherapistSuccessState({required this.therapistUserId});
+
+  @override
+  List<Object?> get props => [therapistUserId];
+}
+
+class SelectTherapistFailureState extends TherapyState {
+  final String error;
+
+  SelectTherapistFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}

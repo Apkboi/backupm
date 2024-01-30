@@ -12,7 +12,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
-import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';

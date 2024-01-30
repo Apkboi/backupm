@@ -1,6 +1,6 @@
 // Event classes
 import 'package:equatable/equatable.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
+import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
 
 abstract class TherapyEvent extends Equatable {
   const TherapyEvent();
@@ -57,3 +57,38 @@ class CancelSessionEvent extends TherapyEvent {
   @override
   List<Object?> get props => [sessionId, note];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class MatchTherapistEvent extends TherapyEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class SelectTherapistEvent extends TherapyEvent {
+  final String therapistUserId;
+
+  SelectTherapistEvent({required this.therapistUserId});
+
+  @override
+  List<Object?> get props => [therapistUserId];
+}
+
+
+
+
+
+

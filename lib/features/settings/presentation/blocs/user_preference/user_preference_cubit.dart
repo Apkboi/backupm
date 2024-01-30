@@ -5,9 +5,11 @@ import 'package:mentra/features/settings/data/data_sources/preference_questions.
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/dormain/repository/user_preference_rpository.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
 part 'user_preference_state.dart';
 
 enum UserPreferenceFlow { signup, changeTherapist, updatePreference }
+
 UserPreferenceFlow stringToUserPreferenceFlow(String value) {
   switch (value) {
     case 'signup':
@@ -58,29 +60,31 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
   void answerQuestion({required int id, required String answer}) {
     //   Update the question with the answer
     stagedMessages.where((element) => element.id == id).first.answer = answer;
-
     //   Check if the answered question is the last question in the list to get next question
     if (id == stagedMessages.last.id) {
       //   Get NextQuestion
       getNextQuestion();
     } else {
-      currentQuestion = stagedMessages.last;
 
-      emit(QuestionUpdatedState());
+      currentQuestion = stagedMessages.last;
+      if (stagedMessages.length == dataSource.therapyQuestions.length) {
+        emit(QuestionsCompletedState());
+      } else {
+        emit(QuestionUpdatedState());
+      }
     }
   }
 
   getNextQuestion() {
+    stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]);
+    currentQuestion = stagedMessages.last;
     // Check if questions are complete
     if (stagedMessages.length == dataSource.therapyQuestions.length) {
       emit(QuestionsCompletedState());
     } else {
-      stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]);
-      currentQuestion = stagedMessages.last;
-
       emit(QuestionUpdatedState());
-      _scrollToLast();
     }
+    _scrollToLast();
   }
 
   void updateCurrentQuestion(QuestionPromptModel question) {
@@ -94,8 +98,15 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
     for (QuestionPromptModel question in messages) {
       // Use the question key as the map key and the answer as the value
-      questionsMap[question.key] = question.answer;
+
+      if (question.key == 'age_range') {
+        questionsMap[question.key] = agePreferenceMap[question.answer];
+      } else {
+        questionsMap[question.key] = question.answer;
+      }
     }
+
+    logger.i(questionsMap);
 
     return questionsMap;
   }
@@ -116,4 +127,11 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     // emit(UpdatePreferenceSuccessState(response));
 //   emit(UpdatePreferenceFailureState(error))
   }
+
+  final agePreferenceMap = {
+    'Younger (20s-30s)': '20-30',
+    'Middle-aged (40s-50s)': '40-50',
+    'Older (60s+)': '60 -100',
+    'No preference': '0'
+  };
 }

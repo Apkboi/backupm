@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/widgets/user_preference/preference_message_base_box.dart';
@@ -14,6 +17,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
   const UserPreferenceScreen({super.key, required this.flow});
+
   final UserPreferenceFlow flow;
 
   @override
@@ -43,7 +47,27 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
         ),
         body: BlocConsumer<UserPreferenceCubit, UserPreferenceState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is UpdatePreferenceLoadingState) {
+              CustomDialogs.showLoading(context);
+            }
+            if (state is UpdatePreferenceFailureState) {
+              context.pop();
+              CustomDialogs.error(state.error);
+            }
+            if (state is UpdatePreferenceSuccessState) {
+              context.pop();
+              CustomDialogs.success(state.response.message);
+              if (widget.flow == UserPreferenceFlow.signup) {
+                context.goNamed(PageUrl.home);
+              }
+
+              if (widget.flow == UserPreferenceFlow.updatePreference) {
+                context.pop();
+              }
+              if (widget.flow == UserPreferenceFlow.changeTherapist) {
+                context.pop();
+              }
+            }
           },
           builder: (context, state) {
             return Stack(
@@ -76,7 +100,9 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
                                 .toList()[index],
                           ),
                         )),
-                        _InputBar()
+                        _InputBar(
+                          currentFlow: widget.flow,
+                        )
                       ],
                     ),
                   ),
@@ -91,44 +117,65 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
 }
 
 class _InputBar extends StatelessWidget {
-  _InputBar({Key? key}) : super(key: key);
+  _InputBar({Key? key, required this.currentFlow}) : super(key: key);
   final TextEditingController controller = TextEditingController();
+  final UserPreferenceFlow currentFlow;
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<UserPreferenceCubit>();
-    return bloc.currentQuestion!.options.isEmpty
-        ? Row(
-            children: [
-              Expanded(
-                  child: FilledTextField(
-                      hasBorder: false,
-                      hasElevation: false,
-                      controller: controller,
-                      // suffix: ImageWidget(
-                      //   imageUrl: Assets.images.svgs.share,
-                      //   height: 20,
-                      //   width: 20,
-                      // ),
-                      fillColor: Pallets.white,
-                      contentPadding: const EdgeInsets.all(16),
-                      radius: 45,
-                      hint: 'Message')),
-              10.horizontalSpace,
-              InkWell(
-                onTap: () {
-                  _answerQuestion(context);
-                  // _endSession(context);
-                },
-                child: CircleAvatar(
-                    backgroundColor: Pallets.white,
-                    radius: 24,
-                    child:
-                        ImageWidget(imageUrl: Assets.images.svgs.messageIcon)),
-              )
-            ],
-          )
-        : 0.horizontalSpace;
+    return BlocConsumer(
+        bloc: bloc,
+        builder: (context, state) {
+          if (state is QuestionsCompletedState) {
+            // if (currentFlow == UserPreferenceFlow.signup ||
+            //     currentFlow == UserPreferenceFlow.updatePreference) {
+            return CustomNeumorphicButton(
+              onTap: () {
+                bloc.updatePreferences(
+                    bloc.convertQuestionsToMap(bloc.stagedMessages));
+              },
+              color: Pallets.primary,
+              text: 'Done',
+            );
+            // }
+          }
+
+          return bloc.currentQuestion!.options.isEmpty
+              ? Row(
+                  children: [
+                    Expanded(
+                        child: FilledTextField(
+                            hasBorder: false,
+                            hasElevation: false,
+                            controller: controller,
+                            // suffix: ImageWidget(
+                            //   imageUrl: Assets.images.svgs.share,
+                            //   height: 20,
+                            //   width: 20,
+                            // ),
+                            fillColor: Pallets.white,
+                            contentPadding: const EdgeInsets.all(16),
+                            radius: 45,
+                            hint: 'Message')),
+                    10.horizontalSpace,
+                    InkWell(
+                      onTap: () {
+                        _answerQuestion(context);
+                        // _endSession(context);
+                      },
+                      child: CircleAvatar(
+                          backgroundColor: Pallets.white,
+                          radius: 24,
+                          child: ImageWidget(
+                              imageUrl: Assets.images.svgs.messageIcon)),
+                    )
+                  ],
+                )
+              : 0.horizontalSpace;
+        },
+        buildWhen: _buildWhen,
+        listener: _listenToUserPreferenceBloc);
   }
 
   void _answerQuestion(BuildContext context) {
@@ -137,5 +184,15 @@ class _InputBar extends StatelessWidget {
           id: context.read<UserPreferenceCubit>().currentQuestion?.id ?? -1,
           answer: controller.text.trim());
     }
+  }
+
+  void _listenToUserPreferenceBloc(BuildContext context, Object? state) {
+    if (state is QuestionsCompletedState &&
+        currentFlow == UserPreferenceFlow.changeTherapist) {}
+  }
+
+  bool _buildWhen(Object? previous, Object? current) {
+    return current is QuestionsCompletedState ||
+        current is QuestionUpdatedState;
   }
 }

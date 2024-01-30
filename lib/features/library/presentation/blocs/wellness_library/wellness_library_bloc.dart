@@ -34,8 +34,8 @@ class WellnessLibraryBloc
     emit(GetLibraryCategoriesLoadingState());
 
     try {
-      final response = await _wellnessLibraryRepository.getLibraryCategories();
 
+      final response = await _wellnessLibraryRepository.getLibraryCategories();
       libraryCategories = response.data;
       emit(GetLibraryCategoriesSuccessState(response: response));
     } catch (e) {

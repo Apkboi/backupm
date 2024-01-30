@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -37,7 +39,10 @@ class SettingsGroup1 extends StatelessWidget {
           24.verticalSpace,
           SettingListTile(
               onTap: () {
-                context.pushNamed(PageUrl.userPreferenceScreen);
+                context
+                    .pushNamed(PageUrl.userPreferenceScreen, queryParameters: {
+                  PathParam.userPreferenceFlow: UserPreferenceFlow.updatePreference.name
+                });
               },
               leadingWidget: Row(
                 children: [

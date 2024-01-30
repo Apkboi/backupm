@@ -7,7 +7,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
+import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class SessionScheduledDialog extends StatelessWidget {
@@ -43,7 +43,7 @@ class SessionScheduledDialog extends StatelessWidget {
           ),
           10.verticalSpace,
           TextView(
-            text: tittle?? 'Session Scheduled!',
+            text: tittle ?? 'Session Scheduled!',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -83,7 +83,8 @@ class SessionScheduledDialog extends StatelessWidget {
                     ImageWidget(imageUrl: Assets.images.svgs.icCalender),
                     10.horizontalSpace,
                     TextView(
-                      text: TimeUtil.formatToFullDate(DateTime.parse(sessionDetails.startsAt)),
+                      text: TimeUtil.formatToFullDate(
+                          DateTime.parse(sessionDetails.startsAt)),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -94,9 +95,10 @@ class SessionScheduledDialog extends StatelessWidget {
                   children: [
                     ImageWidget(imageUrl: Assets.images.svgs.icClock),
                     10.horizontalSpace,
-                     TextView(
+                    TextView(
                       text: TimeUtil.formatTime(
-                        DateTime.parse(sessionDetails.startsAt),),
+                        DateTime.parse(sessionDetails.startsAt),
+                      ),
                       fontWeight: FontWeight.w600,
                     ),
                   ],

@@ -1,12 +1,14 @@
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_session_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/create_sessions_payload.dart';
-import 'package:mentra/features/therapy/presentation/data/models/fetch_dates_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/fetch_time_slots_response.dart';
-import 'package:mentra/features/therapy/presentation/data/models/upcoming_sessions_response.dart';
-import 'package:mentra/features/therapy/presentation/dormain/repository/therapy_repository.dart';
+import 'package:mentra/features/therapy/data/models/accept_therapist_response.dart';
+import 'package:mentra/features/therapy/data/models/create_session_response.dart';
+import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
+import 'package:mentra/features/therapy/data/models/fetch_dates_response.dart';
+import 'package:mentra/features/therapy/data/models/fetch_time_slots_response.dart';
+import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
 
 class TherapyRepositoryImpl extends TherapyRepository {
   final NetworkService _networkService;
@@ -92,6 +94,37 @@ class TherapyRepositoryImpl extends TherapyRepository {
           data: {"session_id": sessionId, "note": note});
 
       return CreateSessionResponse.fromJson(response.data);
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AcceptTherapistResponse> acceptTherapist(
+      {required String therapistId}) async {
+    try {
+      final response = await _networkService
+          .call(UrlConfig.selectTherapist, RequestMethod.post, data: {
+        "therapist_user_id": therapistId,
+      });
+
+      return AcceptTherapistResponse.fromJson(response.data);
+    } catch (e) {
+      logger.e(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MatchTherapistResponse> matchTherapist() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.matchTherapist,
+        RequestMethod.post,
+      );
+
+      return MatchTherapistResponse.fromJson(response.data);
     } catch (e) {
       logger.e(e);
       rethrow;
