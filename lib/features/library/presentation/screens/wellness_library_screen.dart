@@ -14,6 +14,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
+import 'package:mentra/features/library/presentation/widgets/article_item.dart';
 import 'package:mentra/features/library/presentation/widgets/library_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -81,7 +82,8 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
                   20.verticalSpace,
                   const Expanded(
                       child: TabBarView(
-                          physics: BouncingScrollPhysics(),
+
+                          physics: NeverScrollableScrollPhysics(),
                           children: [DiscoverContents(), FavoriteContents()])),
                   8.verticalSpace,
                 ],
@@ -92,6 +94,89 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
       ),
     );
   }
+}
+
+class FavoriteContents extends StatefulWidget {
+  const FavoriteContents({super.key});
+
+  @override
+  State<FavoriteContents> createState() => _FavoriteContentsState();
+}
+
+class _FavoriteContentsState extends State<FavoriteContents>
+    with AutomaticKeepAliveClientMixin {
+  final bloc = WellnessLibraryBloc(injector.get());
+
+  @override
+  void initState() {
+    bloc.add(const GetFavouriteCoursesEvent());
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return BlocConsumer<WellnessLibraryBloc, WellnessLibraryState>(
+      bloc: bloc,
+      listener: (context, state) {},
+      builder: (context, state) {
+        if (state is GetFavouritesLoadingState) {
+          return Center(
+            child: CustomDialogs.getLoading(size: 50, color: Pallets.primary),
+          );
+        }
+
+        if (state is GetFavouritesFailureState) {
+          return AppPromptWidget(
+            retryTextColor: Pallets.navy,
+            textColor: Pallets.navy,
+            onTap: () {
+              bloc.add(GetLibraryCategoriesEvent());
+            },
+          );
+        }
+
+        if (state is GetFavouritesSuccessState) {
+          if (state.response.data.isNotEmpty) {
+            return RefreshIndicator(
+              onRefresh: () async {
+                bloc.add(const GetFavouriteCoursesEvent());
+              },
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount:  state.response.data.length,
+                itemBuilder: (context, index) {
+                  return ArticleItem(
+                    course: state.response.data[index],
+                  );
+                },
+              ),
+            );
+          } else {
+            return RefreshIndicator(
+              onRefresh: () async {
+                bloc.add(const GetFavouriteCoursesEvent());
+              },
+              child: ListView(
+                // shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                children: const [
+                  AppEmptyState(),
+                  Spacer(),
+                ],
+              ),
+            );
+          }
+        }
+
+        return Container();
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class DiscoverContents extends StatefulWidget {
@@ -157,26 +242,4 @@ class _DiscoverContentsState extends State<DiscoverContents>
 
   @override
   bool get wantKeepAlive => true;
-}
-
-class FavoriteContents extends StatefulWidget {
-  const FavoriteContents({super.key});
-
-  @override
-  State<FavoriteContents> createState() => _FavoriteContentsState();
-}
-
-class _FavoriteContentsState extends State<FavoriteContents> {
-  @override
-  Widget build(BuildContext context) {
-    return const Column(children: [AppEmptyState()]);
-    // return ListView.builder(
-    //   padding: const EdgeInsets.only(top: 10),
-    //   physics: const BouncingScrollPhysics(),
-    //   itemBuilder: (context, index) => const Padding(
-    //     padding: EdgeInsets.only(top: 10.0),
-    //     child: ArticleItem(),
-    //   ),
-    // );
-  }
 }

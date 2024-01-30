@@ -251,9 +251,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
   }
 
   void _scheduleSession(BuildContext context) {
-    injector
-        .get<TherapyBloc>()
-        .updatePayload(note: _notesController.text, focus: focus);
+    injector.get<TherapyBloc>().updatePayload(note: _notesController.text, focus: focus);
     injector.get<TherapyBloc>().scheduleOrRescheduleSession();
   }
 

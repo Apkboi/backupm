@@ -205,7 +205,6 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
               ),
             );
           } else {
-
             return const Column(
               children: [
                 AppEmptyState(
@@ -215,7 +214,6 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
                 ),
               ],
             );
-
           }
         }
 
@@ -295,15 +293,22 @@ class _TherapyHistoryState extends State<TherapyHistory>
               ),
             );
           } else {
-            return Column(
-              children: [
-                16.verticalSpace,
-                const AppEmptyState(
-                  tittle: 'No session history.',
-                  subtittle:
-                      "You have no previous session history. start by booking a session with a therapist",
-                ),
-              ],
+            return RefreshIndicator(
+              onRefresh: () async {
+                injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
+              },
+              child: ListView(
+                // shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                children: [
+                  16.verticalSpace,
+                  const AppEmptyState(
+                    tittle: 'No session history.',
+                    subtittle:
+                        "You have no previous session history. start by booking a session with a therapist",
+                  ),
+                ],
+              ),
             );
           }
         }

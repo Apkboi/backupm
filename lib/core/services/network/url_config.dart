@@ -8,8 +8,7 @@ class UrlConfig {
 
   static const String imageBaseUrl = String.fromEnvironment('IMAGE_BASE_URL');
   static const String dojahTestAppId = String.fromEnvironment('DOJAH_APP_ID');
-  static const String dojahTestPublicKey =
-      String.fromEnvironment('DOJAH_PUBLIC_KEY');
+  static const String dojahTestPublicKey = String.fromEnvironment('DOJAH_PUBLIC_KEY');
   static const String facePlusTestApiKey =
       String.fromEnvironment('FACE_PLUS_TEST_API_KEY');
   static const String facePlusTestApiSecret =
@@ -18,6 +17,7 @@ class UrlConfig {
       String.fromEnvironment('MESSAGE_USER_EMAIL');
   static const String messageUserPassKey =
       String.fromEnvironment('MESSAGE_USER_PASSKEY');
+
 
   // static const String facePlusProdApiKey =
   //     String.fromEnvironment('FACE_PLUS_PROD_API_KEY');
@@ -76,6 +76,7 @@ class UrlConfig {
   static const String sessionHistory = '/user/session/schedule/history';
   static const String sessionTimeSlots = '/user/session/schedule/fetch-timeslots';
   static const String createSession = '/user/session/schedule/create';
+  static const String updatePreference = '/user/therapy/preferences';
   static const String fetchDates = '/user/session/schedule/fetch-dates';
   static const String cancelSession = '/user/session/schedule/cancel';
   static const String rescheduleSession = '/user/session/schedule/reschedule';

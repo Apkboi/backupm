@@ -34,8 +34,31 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         // canGoBack: false,
-        leading: 0.horizontalSpace,
+        // leading: 0.horizontalSpace,
         tittleText: 'Talk to Mentra',
+        actions: [
+          PopupMenuButton(
+            onSelected: (value) {
+              switch (value) {
+                case "end":
+                  _endSession(context);
+                  break;
+              }
+            },
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem<String>(
+                  value: 'end',
+                  child: Text('End Session'),
+                ),
+              ];
+            },
+            child: const CircleAvatar(
+                backgroundColor: Pallets.white,
+                foregroundColor: Pallets.black,
+                child: Icon(Icons.more_vert)),
+          )
+        ],
       ),
       body: Stack(
         children: [
@@ -60,45 +83,6 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _InputBar extends StatelessWidget {
-  const _InputBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        InkWell(
-          onTap: () {
-            _endSession(context);
-          },
-          child: const CircleAvatar(
-            backgroundColor: Pallets.white,
-            radius: 24,
-            child: Icon(
-              Icons.close,
-              color: Pallets.red,
-            ),
-          ),
-        ),
-        10.horizontalSpace,
-        Expanded(
-            child: FilledTextField(
-                hasBorder: false,
-                hasElevation: false,
-                suffix: ImageWidget(
-                  imageUrl: Assets.images.svgs.share,
-                  height: 20,
-                  width: 20,
-                ),
-                fillColor: Pallets.white,
-                contentPadding: const EdgeInsets.all(16),
-                radius: 45,
-                hint: 'Message'))
-      ],
     );
   }
 
@@ -148,5 +132,44 @@ class _InputBar extends StatelessWidget {
         context.pop();
       }
     }
+  }
+}
+
+class _InputBar extends StatelessWidget {
+  const _InputBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // InkWell(
+        //   onTap: () {
+        //     _endSession(context);
+        //   },
+        //   child: const CircleAvatar(
+        //     backgroundColor: Pallets.white,
+        //     radius: 24,
+        //     child: Icon(
+        //       Icons.close,
+        //       color: Pallets.red,
+        //     ),
+        //   ),
+        // ),
+        // 10.horizontalSpace,
+        Expanded(
+            child: FilledTextField(
+                hasBorder: false,
+                hasElevation: false,
+                suffix: ImageWidget(
+                  imageUrl: Assets.images.svgs.share,
+                  height: 20,
+                  width: 20,
+                ),
+                fillColor: Pallets.white,
+                contentPadding: const EdgeInsets.all(16),
+                radius: 45,
+                hint: 'Message'))
+      ],
+    );
   }
 }

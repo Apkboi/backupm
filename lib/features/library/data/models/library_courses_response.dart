@@ -49,14 +49,78 @@ class GetLibraryCoursesResponse {
   };
 }
 
+// To parse this JSON data, do
+//
+//     final libraryCourse = libraryCourseFromJson(jsonString);
+
+
+
+LibraryCourse libraryCourseFromJson(String str) => LibraryCourse.fromJson(json.decode(str));
+
+String libraryCourseToJson(LibraryCourse data) => json.encode(data.toJson());
+
+class Attachment {
+  final int id;
+  final LibraryCourse course;
+  final Image file;
+  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  Attachment({
+    required this.id,
+    required this.course,
+    required this.file,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  Attachment copyWith({
+    int? id,
+    LibraryCourse? course,
+    Image? file,
+    String? status,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) =>
+      Attachment(
+        id: id ?? this.id,
+        course: course ?? this.course,
+        file: file ?? this.file,
+        status: status ?? this.status,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+
+  factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
+    id: json["id"],
+    course: LibraryCourse.fromJson(json["course"]),
+    file: Image.fromJson(json["file"]),
+    status: json["status"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "course": course.toJson(),
+    "file": file.toJson(),
+    "status": status,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
+
 class LibraryCourse {
   final int id;
   final String title;
   final String body;
   final String courseType;
   final String status;
-  final Category category;
-  final List<Attachment> attachments;
+  final Category? category;
+  final List<Attachment>? attachments;
+  final bool favourite;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -66,8 +130,9 @@ class LibraryCourse {
     required this.body,
     required this.courseType,
     required this.status,
-    required this.category,
-    required this.attachments,
+    this.category,
+    this.attachments,
+    required this.favourite,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -80,6 +145,7 @@ class LibraryCourse {
     String? status,
     Category? category,
     List<Attachment>? attachments,
+    bool? favourite,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
@@ -91,6 +157,7 @@ class LibraryCourse {
         status: status ?? this.status,
         category: category ?? this.category,
         attachments: attachments ?? this.attachments,
+        favourite: favourite ?? this.favourite,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -101,8 +168,9 @@ class LibraryCourse {
     body: json["body"],
     courseType: json["course_type"],
     status: json["status"],
-    category: Category.fromJson(json["category"]),
-    attachments: List<Attachment>.from(json["attachments"].map((x) => Attachment.fromJson(x))),
+    category: json["category"] == null ? null : Category.fromJson(json["category"]),
+    attachments: json["attachments"] == null ? [] : List<Attachment>.from(json["attachments"]!.map((x) => Attachment.fromJson(x))),
+    favourite: json["favourite"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -113,75 +181,70 @@ class LibraryCourse {
     "body": body,
     "course_type": courseType,
     "status": status,
-    "category": category.toJson(),
-    "attachments": List<dynamic>.from(attachments.map((x) => x.toJson())),
+    "category": category?.toJson(),
+    "attachments": attachments == null ? [] : List<dynamic>.from(attachments!.map((x) => x.toJson())),
+    "favourite": favourite,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };
 }
 
-class Attachment {
+class Image {
   final int id;
-  final Attachment? course;
-  final String? body;
-  final String? courseType;
-  final String status;
+  final dynamic name;
+  final String url;
+  final String mimeType;
+  final String size;
+  final String formattedSize;
   final DateTime createdAt;
-  final DateTime updatedAt;
-  final String? title;
 
-  Attachment({
+  Image({
     required this.id,
-    this.course,
-    required this.body,
-    required this.courseType,
-    required this.status,
+    required this.name,
+    required this.url,
+    required this.mimeType,
+    required this.size,
+    required this.formattedSize,
     required this.createdAt,
-    required this.updatedAt,
-    this.title,
   });
 
-  Attachment copyWith({
+  Image copyWith({
     int? id,
-    Attachment? course,
-    String? body,
-    String? courseType,
-    String? status,
+    dynamic name,
+    String? url,
+    String? mimeType,
+    String? size,
+    String? formattedSize,
     DateTime? createdAt,
-    DateTime? updatedAt,
-    String? title,
   }) =>
-      Attachment(
+      Image(
         id: id ?? this.id,
-        course: course ?? this.course,
-        body: body ?? this.body,
-        courseType: courseType ?? this.courseType,
-        status: status ?? this.status,
+        name: name ?? this.name,
+        url: url ?? this.url,
+        mimeType: mimeType ?? this.mimeType,
+        size: size ?? this.size,
+        formattedSize: formattedSize ?? this.formattedSize,
         createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        title: title ?? this.title,
       );
 
-  factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
     id: json["id"],
-    course: json["course"] == null ? null : Attachment.fromJson(json["course"]),
-    body: json["body"],
-    courseType: json["course_type"],
-    status: json["status"],
+    name: json["name"],
+    url: json["url"],
+    mimeType: json["mime_type"],
+    size: json["size"],
+    formattedSize: json["formatted_size"],
     createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    title: json["title"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "course": course?.toJson(),
-    "body": body,
-    "course_type": courseType,
-    "status": status,
+    "name": name,
+    "url": url,
+    "mime_type": mimeType,
+    "size": size,
+    "formatted_size": formattedSize,
     "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "title": title,
   };
 }
 
@@ -250,61 +313,16 @@ class Category {
   };
 }
 
-class Image {
-  final int id;
-  final dynamic name;
-  final String url;
-  final String mimeType;
-  final String size;
-  final String formattedSize;
-  final DateTime createdAt;
 
-  Image({
-    required this.id,
-    required this.name,
-    required this.url,
-    required this.mimeType,
-    required this.size,
-    required this.formattedSize,
-    required this.createdAt,
-  });
 
-  Image copyWith({
-    int? id,
-    dynamic name,
-    String? url,
-    String? mimeType,
-    String? size,
-    String? formattedSize,
-    DateTime? createdAt,
-  }) =>
-      Image(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        url: url ?? this.url,
-        mimeType: mimeType ?? this.mimeType,
-        size: size ?? this.size,
-        formattedSize: formattedSize ?? this.formattedSize,
-        createdAt: createdAt ?? this.createdAt,
-      );
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
-    id: json["id"],
-    name: json["name"],
-    url: json["url"],
-    mimeType: json["mime_type"],
-    size: json["size"],
-    formattedSize: json["formatted_size"],
-    createdAt: DateTime.parse(json["created_at"]),
-  );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "url": url,
-    "mime_type": mimeType,
-    "size": size,
-    "formatted_size": formattedSize,
-    "created_at": createdAt.toIso8601String(),
-  };
-}
+
+
+
+
+
+
+
+
+

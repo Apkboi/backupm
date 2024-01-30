@@ -25,6 +25,7 @@ import 'package:mentra/features/library/presentation/screens/video_article_scree
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
+import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/screens/change_passcode_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/delete_account_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/edit_avatar_screen.dart';
@@ -39,10 +40,10 @@ import 'package:mentra/features/therapy/presentation/screens/therapist_profile_s
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
-final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
-final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
-final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
-final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
+// final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
+// final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
+// final _shellNavigatorCKey = GlobalKey<NavigatorState>(debugLabel: 'shellC');
+// final _shellNavigatorDKey = GlobalKey<NavigatorState>(debugLabel: 'shellD');
 
 class CustomRoutes {
   static final goRouter = GoRouter(
@@ -242,7 +243,10 @@ class CustomRoutes {
       GoRoute(
         path: '/userPreferenceScreen',
         name: PageUrl.userPreferenceScreen,
-        builder: (context, state) => const UserPreferenceScreen(),
+        builder: (context, state) => UserPreferenceScreen(
+          flow: stringToUserPreferenceFlow(
+              state.uri.queryParameters[PathParam.userPreferenceFlow] ?? ''),
+        ),
       ),
     ],
   );

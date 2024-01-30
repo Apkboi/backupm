@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-GetCourseDetailsResponse getCourseDetailsResponseFromJson(String str) => GetCourseDetailsResponse.fromJson(json.decode(str));
+GetCourseDetailsResponse getCourseDetailsResponseFromJson(String str) =>
+    GetCourseDetailsResponse.fromJson(json.decode(str));
 
-String getCourseDetailsResponseToJson(GetCourseDetailsResponse data) => json.encode(data.toJson());
+String getCourseDetailsResponseToJson(GetCourseDetailsResponse data) =>
+    json.encode(data.toJson());
 
 class GetCourseDetailsResponse {
   final String message;
@@ -34,19 +36,20 @@ class GetCourseDetailsResponse {
         code: code ?? this.code,
       );
 
-  factory GetCourseDetailsResponse.fromJson(Map<String, dynamic> json) => GetCourseDetailsResponse(
-    message: json["message"],
-    data: Data.fromJson(json["data"]),
-    success: json["success"],
-    code: json["code"],
-  );
+  factory GetCourseDetailsResponse.fromJson(Map<String, dynamic> json) =>
+      GetCourseDetailsResponse(
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
+        success: json["success"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": data.toJson(),
-    "success": success,
-    "code": code,
-  };
+        "message": message,
+        "data": data.toJson(),
+        "success": success,
+        "code": code,
+      };
 }
 
 class Attachment {
@@ -84,22 +87,22 @@ class Attachment {
       );
 
   factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
-    id: json["id"],
-    course: Data.fromJson(json["course"]),
-    file: Image.fromJson(json["file"]),
-    status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        course: Data.fromJson(json["course"]),
+        file: Image.fromJson(json["file"]),
+        status: json["status"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "course": course.toJson(),
-    "file": file.toJson(),
-    "status": status,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "course": course.toJson(),
+        "file": file.toJson(),
+        "status": status,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
 class Data {
@@ -153,30 +156,37 @@ class Data {
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    title: json["title"],
-    body: json["body"],
-    courseType: json["course_type"],
-    status: json["status"],
-    category: json["category"] == null ? null : Category.fromJson(json["category"]),
-    attachments: json["attachments"] == null ? [] : List<Attachment>.from(json["attachments"]!.map((x) => Attachment.fromJson(x))),
-    favourite: json["favourite"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        title: json["title"],
+        body: json["body"],
+        courseType: json["course_type"],
+        status: json["status"],
+        category: json["category"] == null
+            ? null
+            : Category.fromJson(json["category"]),
+        attachments: json["attachments"] == null
+            ? []
+            : List<Attachment>.from(
+                json["attachments"]!.map((x) => Attachment.fromJson(x))),
+        favourite: json["favourite"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "body": body,
-    "course_type": courseType,
-    "status": status,
-    "category": category?.toJson(),
-    "attachments": attachments == null ? [] : List<dynamic>.from(attachments!.map((x) => x.toJson())),
-    "favourite": favourite,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "title": title,
+        "body": body,
+        "course_type": courseType,
+        "status": status,
+        "category": category?.toJson(),
+        "attachments": attachments == null
+            ? []
+            : List<dynamic>.from(attachments!.map((x) => x.toJson())),
+        "favourite": favourite,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
 class Image {
@@ -218,24 +228,24 @@ class Image {
       );
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-    id: json["id"],
-    name: json["name"],
-    url: json["url"],
-    mimeType: json["mime_type"],
-    size: json["size"],
-    formattedSize: json["formatted_size"],
-    createdAt: DateTime.parse(json["created_at"]),
-  );
+        id: json["id"],
+        name: json["name"],
+        url: json["url"],
+        mimeType: json["mime_type"],
+        size: json["size"],
+        formattedSize: json["formatted_size"],
+        createdAt: DateTime.parse(json["created_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "url": url,
-    "mime_type": mimeType,
-    "size": size,
-    "formatted_size": formattedSize,
-    "created_at": createdAt.toIso8601String(),
-  };
+        "id": id,
+        "name": name,
+        "url": url,
+        "mime_type": mimeType,
+        "size": size,
+        "formatted_size": formattedSize,
+        "created_at": createdAt.toIso8601String(),
+      };
 }
 
 class Category {
@@ -281,24 +291,24 @@ class Category {
       );
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    backgroundColor: json["background_color"],
-    status: json["status"],
-    image: Image.fromJson(json["image"]),
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        backgroundColor: json["background_color"],
+        status: json["status"],
+        image: Image.fromJson(json["image"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "background_color": backgroundColor,
-    "status": status,
-    "image": image.toJson(),
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "name": name,
+        "description": description,
+        "background_color": backgroundColor,
+        "status": status,
+        "image": image.toJson(),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

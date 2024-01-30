@@ -4,13 +4,15 @@
 
 import 'dart:convert';
 
+import 'package:mentra/features/library/data/models/library_courses_response.dart';
+
 GetFavoutiteCoursesResponse getFavoutiteCoursesResponseFromJson(String str) => GetFavoutiteCoursesResponse.fromJson(json.decode(str));
 
 String getFavoutiteCoursesResponseToJson(GetFavoutiteCoursesResponse data) => json.encode(data.toJson());
 
 class GetFavoutiteCoursesResponse {
   final String message;
-  final List<Datum> data;
+  final List<LibraryCourse> data;
   final bool success;
   final int code;
 
@@ -23,7 +25,7 @@ class GetFavoutiteCoursesResponse {
 
   GetFavoutiteCoursesResponse copyWith({
     String? message,
-    List<Datum>? data,
+    List<LibraryCourse>? data,
     bool? success,
     int? code,
   }) =>
@@ -36,7 +38,7 @@ class GetFavoutiteCoursesResponse {
 
   factory GetFavoutiteCoursesResponse.fromJson(Map<String, dynamic> json) => GetFavoutiteCoursesResponse(
     message: json["message"],
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: List<LibraryCourse>.from(json["data"].map((x) => LibraryCourse.fromJson(x))),
     success: json["success"],
     code: json["code"],
   );
@@ -49,141 +51,7 @@ class GetFavoutiteCoursesResponse {
   };
 }
 
-class Datum {
-  final int id;
-  final String title;
-  final String body;
-  final String courseType;
-  final String status;
-  final Category category;
-  final List<Attachment> attachments;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
-  Datum({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.courseType,
-    required this.status,
-    required this.category,
-    required this.attachments,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  Datum copyWith({
-    int? id,
-    String? title,
-    String? body,
-    String? courseType,
-    String? status,
-    Category? category,
-    List<Attachment>? attachments,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      Datum(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        body: body ?? this.body,
-        courseType: courseType ?? this.courseType,
-        status: status ?? this.status,
-        category: category ?? this.category,
-        attachments: attachments ?? this.attachments,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-    id: json["id"],
-    title: json["title"],
-    body: json["body"],
-    courseType: json["course_type"],
-    status: json["status"],
-    category: Category.fromJson(json["category"]),
-    attachments: List<Attachment>.from(json["attachments"].map((x) => Attachment.fromJson(x))),
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "title": title,
-    "body": body,
-    "course_type": courseType,
-    "status": status,
-    "category": category.toJson(),
-    "attachments": List<dynamic>.from(attachments.map((x) => x.toJson())),
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
-}
-
-class Attachment {
-  final int id;
-  final Attachment? course;
-  final String? body;
-  final String? courseType;
-  final String status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final String? title;
-
-  Attachment({
-    required this.id,
-    this.course,
-    required this.body,
-    required this.courseType,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-    this.title,
-  });
-
-  Attachment copyWith({
-    int? id,
-    Attachment? course,
-    String? body,
-    String? courseType,
-    String? status,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    String? title,
-  }) =>
-      Attachment(
-        id: id ?? this.id,
-        course: course ?? this.course,
-        body: body ?? this.body,
-        courseType: courseType ?? this.courseType,
-        status: status ?? this.status,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        title: title ?? this.title,
-      );
-
-  factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
-    id: json["id"],
-    course: json["course"] == null ? null : Attachment.fromJson(json["course"]),
-    body: json["body"],
-    courseType: json["course_type"],
-    status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    title: json["title"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "course": course?.toJson(),
-    "body": body,
-    "course_type": courseType,
-    "status": status,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "title": title,
-  };
-}
 
 class Category {
   final int id;

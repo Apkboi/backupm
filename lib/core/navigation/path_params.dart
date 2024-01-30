@@ -11,5 +11,6 @@ class PathParam {
   static const isOnline = 'user';
   static const libraryCategory = 'libraryCategory';
   static const libraryCourse = 'libraryCourse';
+  static const userPreferenceFlow = 'userPreferenceFlow';
 // static const chatId = 'chatId';
 }

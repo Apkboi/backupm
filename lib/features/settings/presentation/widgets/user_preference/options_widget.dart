@@ -27,28 +27,34 @@ class OptionsWidget extends StatelessWidget {
               context.read<UserPreferenceCubit>().answerQuestion(
                   id: question.id, answer: question.options[index]);
             },
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Container(
-                  width: 80,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    // shape: BoxShape.circle,
-                    color: isSelected
-                        ? Pallets.lightSecondary
-                        : Pallets.lightTurquoise,
-                  ),
-                  child: Center(
-                    child: Text(
-                      question.options[index],
-                      style: TextStyle(color: Pallets.black, fontSize: 16.sp),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Container(
+                      // width: 100,
+                      height: 40,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        // shape: BoxShape.circle,
+                        color: isSelected
+                            ? Pallets.lightSecondary
+                            : Pallets.lightTurquoise,
+                      ),
+                      child: Center(
+                        child: Text(
+                          question.options[index],
+                          style: TextStyle(color: Pallets.black, fontSize: 16.sp),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           );
         },

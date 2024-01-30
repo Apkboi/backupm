@@ -5,22 +5,23 @@ import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/widgets/user_preference/preference_message_base_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
-  const UserPreferenceScreen({Key? key}) : super(key: key);
+  const UserPreferenceScreen({super.key, required this.flow});
+  final UserPreferenceFlow flow;
 
   @override
   State<UserPreferenceScreen> createState() => _UserPreferenceScreenState();
 }
 
 class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
-  final userPreferenceBloc = UserPreferenceCubit();
+  final userPreferenceBloc = UserPreferenceCubit(injector.get());
 
   @override
   void initState() {
