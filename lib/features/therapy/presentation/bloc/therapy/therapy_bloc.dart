@@ -189,7 +189,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
       emit(MatchTherapistFailureState(error: e.toString()));
       changeTherapistMessages.add(ChangeTherapistMessageModel(
           messageType: ChangeTherapistMessageType.retry,
-          isSender: false,
+          isSender: true,
           time: DateTime.now(),
           message: [e.toString()]));
       changeTherapistMessages.add(ChangeTherapistMessageModel(

@@ -26,20 +26,25 @@ class UrlConfig {
   static final coreBaseUrl =
       environment == Environment.production ? PRODUCTION_URL : STAGING_URL;
 
-  static const String login = '/auth/login';
-  static const String me = '/auth/me';
 
-  static const String loginPreview = "/auth/login/preview";
+
 
   static const String getLibraryCoursesEndpoint = "/wellness-library/courses/list";
   static  String getCourseDetails(String id) => "/wellness-library/courses/show/$id";
   static const String getFavourites = "/wellness-library/courses/favourites";
   static const String updateFavourite = "/wellness-library/courses/save-to-favourite";
-
   static const String getLibraryCategoriesEndpoint = "/wellness-library/categories/list";
-
   static const String getConversationStarterEndpoint = "/user/conversation-starter/get";
 
+
+  //SOS
+  static const String getEmergencyContacts = '/emergency-contacts/list';
+
+
+  // Authentication
+  static const String login = '/auth/login';
+  static const String me = '/auth/me';
+  static const String loginPreview = "/auth/login/preview";
   static String getUser(String userId) => '/auth/user/$userId';
   static const String forgotPassword = '/auth/forgot-password';
   static const String verifyOtp = '/auth/otp/verify';
@@ -47,26 +52,16 @@ class UrlConfig {
   static const String oauthLogin = '/auth/oauth-login';
   static const String sendOtp = '/auth/register/steps';
 
-  ///CONFIGS
-  ///
-  static const String getConfigs = '/general/configs';
-  static const String getCountries = '/location/countries?per_page=300';
 
-  ///WASTE DISPOSAL
-  static const String initializeWasteDisposal = '/waste-management/create';
-  static const String getAllRequests = '/waste-management/view-all';
-  static const String acceptInvoice = '/waste-management/view-all';
-  static const String uploadManifest = '/waste-management/view-all';
 
-  static String viewSingleRequest(String requestId) =>
-      '/waste-management/single/$requestId';
+
+
 
   ///ACCOUNT
   static const String updateProfile = '/account/update';
   static const String changePassword = '/account/change-password';
   static const String updatePassword = '/general/account/change-password';
   static const String allowNotifications = 'general/account/allow-notification';
-
   static const String deleteAccount = 'general/account/deactivate';
   static const String updateOnlineStatus = '/user/update_if_online';
   static const String resetPassword = '/auth/reset-password';

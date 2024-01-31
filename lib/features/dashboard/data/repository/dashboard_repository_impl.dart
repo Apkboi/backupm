@@ -15,4 +15,11 @@ class DashboardRepositoryImpl extends DashboardRepository {
 
     return ConversationStarterResponse.fromJson(response.data);
   }
+
+  @override
+  Future getEmergencyContacts() async {
+    final response = await _networkService.call(
+        UrlConfig.getEmergencyContacts, RequestMethod.get);
+    return response.data;
+  }
 }

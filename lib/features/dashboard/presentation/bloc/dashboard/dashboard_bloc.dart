@@ -15,6 +15,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   DashboardBloc(this._dashboardRepository) : super(DashboardInitial()) {
     on<GetConversationStarterEvent>(_mapGetConversationStarterEventToState);
+    on<GetEmergencyContactsEvent>(_mapGetEmergencyContactsEventToState);
   }
 
   Future<void> _mapGetConversationStarterEventToState(
@@ -29,6 +30,17 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       emit(GetConversationStarterSuccessState(data: conversationStarterData));
     } catch (e) {
       emit(GetConversationStarterFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapGetEmergencyContactsEventToState(
+      GetEmergencyContactsEvent event, Emitter<DashboardState> emit) async {
+    emit(GetEmergencyContactLoadingState());
+    try {
+      final response = await _dashboardRepository.getEmergencyContacts();
+      emit(GetEmergencyContactSuccessState(data: response));
+    } catch (e) {
+      emit(GetEmergencyContactFailureState(error: e.toString()));
     }
   }
 }

@@ -9,4 +9,8 @@ class GetConversationStarterEvent extends DashboardEvent {
   @override
   List<Object?> get props => [];
 }
+class GetEmergencyContactsEvent extends DashboardEvent {
+  @override
+  List<Object?> get props => [];
+}
 

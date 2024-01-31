@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/sos_dialer_item.dart';
 
 class EmergencySosScreen extends StatefulWidget {
@@ -16,11 +23,20 @@ class EmergencySosScreen extends StatefulWidget {
 }
 
 class _EmergencySosScreenState extends State<EmergencySosScreen> {
+  final _bloc = DashboardBloc(injector.get());
+
+  @override
+  void initState() {
+    _bloc.add(GetEmergencyContactsEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      extendBodyBehindAppBar: true,extendBody: true,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(17),
         child: Column(
@@ -43,13 +59,8 @@ class _EmergencySosScreenState extends State<EmergencySosScreen> {
             ),
             32.verticalSpace,
             CustomNeumorphicButton(
-                text: "Talk to Mentra",
-                onTap: () {
-
-            }, color: Pallets.primary
-            ),
+                text: "Talk to Mentra", onTap: () {}, color: Pallets.primary),
             32.verticalSpace,
-
           ],
         ),
       ),
@@ -60,40 +71,66 @@ class _EmergencySosScreenState extends State<EmergencySosScreen> {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(17),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  13.verticalSpace,
-                  const TextView(
-                    text:
-                        'In case of an emergency, here are the helpline numbers you can contact for immediate assistance:',
-                    fontWeight: FontWeight.w600,
-                  ),
-                  19.verticalSpace,
-                  SosDialerItem(
-                    icon: '🚑',
-                    tittle: "Medical Emergency",
-                    subtittle: "998",
-                    onTap: () {},
-                  ),
-                  9.verticalSpace,
-                  SosDialerItem(
-                    iconBg: Pallets.pink,
-                    icon: '🚓',
-                    tittle: "Police",
-                    subtittle: "998",
-                    onTap: () {},
-                  ),
-                  9.verticalSpace,
-                  SosDialerItem(
-                    icon: '🚒',
-                    iconBg: Colors.orange,
-                    tittle: "Fire Department",
-                    subtittle: "997",
-                    onTap: () {},
-                  ),
-                  9.verticalSpace,
-                ],
+              child: BlocConsumer<DashboardBloc, DashboardState>(
+                bloc: _bloc,
+                listener: (context, state) {},
+                builder: (context, state) {
+                  if (state is GetEmergencyContactLoadingState) {
+                    return SizedBox(
+                      height: 300,
+                      child: CustomDialogs.getLoading(size: 30),
+                    );
+                  }
+                  if (state is GetEmergencyContactFailureState) {
+                    return AppPromptWidget(
+                      onTap: () {
+                        _bloc.add(GetEmergencyContactsEvent());
+                      },
+                    );
+                  }
+
+                  if (state is GetEmergencyContactSuccessState) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        13.verticalSpace,
+                        const TextView(
+                          text:
+                              'In case of an emergency, here are the helpline numbers you can contact for immediate assistance:',
+                          fontWeight: FontWeight.w600,
+                        ),
+                        19.verticalSpace,
+                        SosDialerItem(
+                          icon: '🚑',
+                          tittle: "Medical Emergency",
+                          subtittle: "998",
+                          onTap: () {},
+                        ),
+                        9.verticalSpace,
+                        SosDialerItem(
+                          iconBg: Pallets.pink,
+                          icon: '🚓',
+                          tittle: "Police",
+                          subtittle: "998",
+                          onTap: () {},
+                        ),
+                        9.verticalSpace,
+                        SosDialerItem(
+                          icon: '🚒',
+                          iconBg: Colors.orange,
+                          tittle: "Fire Department",
+                          subtittle: "997",
+                          onTap: () {
+                            Helpers.launchUrl('123456789');
+                          },
+                        ),
+                        9.verticalSpace,
+                      ],
+                    );
+                  }
+
+                  return 0.verticalSpace;
+                },
               ),
             ),
           ),

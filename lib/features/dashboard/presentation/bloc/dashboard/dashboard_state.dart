@@ -32,3 +32,26 @@ class GetConversationStarterSuccessState extends DashboardState {
   @override
   List<Object?> get props => [data];
 }
+
+class GetEmergencyContactLoadingState extends DashboardState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetEmergencyContactFailureState extends DashboardState {
+  final String error;
+
+  const GetEmergencyContactFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class GetEmergencyContactSuccessState extends DashboardState {
+  final dynamic data;
+
+  const GetEmergencyContactSuccessState({required this.data});
+
+  @override
+  List<Object?> get props => [data];
+}

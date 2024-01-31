@@ -21,42 +21,45 @@ class SosDialerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlassContainer(
-        radius: 50,
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: (iconBg??Pallets.skyBlue).withOpacity(0.4),
-                radius: 24,
-                child: Center(child: Text(icon)),
-              ),
-              12.horizontalSpace,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextView(text: tittle),
-                    TextView(
-                      text: subtittle,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
+    return InkWell(
+      onTap: onTap,
+      child: GlassContainer(
+          radius: 50,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: (iconBg ?? Pallets.skyBlue).withOpacity(0.4),
+                  radius: 24,
+                  child: Center(child: Text(icon)),
                 ),
-              ),
-              const CircleAvatar(
-                radius: 24,
-                backgroundColor: Pallets.red,
-                child: Center(
-                    child: Icon(
-                  Icons.phone_rounded,
-                  color: Pallets.white,
-                )),
-              ),
-            ],
-          ),
-        ));
+                12.horizontalSpace,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextView(text: tittle),
+                      TextView(
+                        text: subtittle,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ],
+                  ),
+                ),
+                const CircleAvatar(
+                  radius: 24,
+                  backgroundColor: Pallets.red,
+                  child: Center(
+                      child: Icon(
+                    Icons.phone_rounded,
+                    color: Pallets.white,
+                  )),
+                ),
+              ],
+            ),
+          )),
+    );
   }
 }

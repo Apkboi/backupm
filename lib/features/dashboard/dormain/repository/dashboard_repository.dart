@@ -2,6 +2,7 @@ import 'package:mentra/features/dashboard/data/models/conversation_starter_respo
 
 abstract class DashboardRepository {
   Future<ConversationStarterResponse> getConversationStarter();
+  Future<dynamic> getEmergencyContacts();
 }
 
 
