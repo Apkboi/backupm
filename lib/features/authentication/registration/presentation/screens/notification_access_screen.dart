@@ -6,9 +6,11 @@ import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/custom_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../core/services/permission_handler/permission_handler_service.dart';
@@ -59,8 +61,13 @@ class _NotificationAccessScreenState extends State<NotificationAccessScreen> {
                                   fontWeight: FontWeight.w600, fontSize: 14.sp),
                             ),
                             onPressed: () async {
-                              await PermissionHandlerService().requestPermission(Permission.notification);
-                              context.goNamed(PageUrl.homeScreen);
+                              await PermissionHandlerService()
+                                  .requestPermission(Permission.notification);
+                              context.pushNamed(PageUrl.userPreferenceScreen,
+                                  queryParameters: {
+                                    PathParam.userPreferenceFlow:
+                                    UserPreferenceFlow.signup.name
+                                  });
                             },
                           ),
                         ),
@@ -80,7 +87,11 @@ class _NotificationAccessScreenState extends State<NotificationAccessScreen> {
                                   fontWeight: FontWeight.w600, fontSize: 14.sp),
                             ),
                             onPressed: () {
-                              context.pushNamed(PageUrl.menuScreen);
+                              context.pushNamed(PageUrl.userPreferenceScreen,
+                                  queryParameters: {
+                                    PathParam.userPreferenceFlow:
+                                        UserPreferenceFlow.signup.name
+                                  });
                             },
                           ),
                         ),

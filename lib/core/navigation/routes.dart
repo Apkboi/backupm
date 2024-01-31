@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
@@ -35,6 +37,8 @@ import 'package:mentra/features/settings/presentation/screens/settings_screen.da
 import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
+import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+import 'package:mentra/features/therapy/presentation/screens/accept_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/change_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/match_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
@@ -260,7 +264,17 @@ class CustomRoutes {
       GoRoute(
         path: '/matchTherapistScreen',
         name: PageUrl.matchTherapistScreen,
-        builder: (context, state) => const MatchTherapistScreen(),
+        builder: (context, state) => MatchTherapistScreen(
+          updatedPreference: bool.parse(
+              state.uri.queryParameters[PathParam.updatedPreference] ?? '0'),
+        ),
+      ),
+      GoRoute(
+        path: '/acceptTherapistScreen',
+        name: PageUrl.acceptTherapistScreen,
+        builder: (context, state) => AcceptTherapistScreen(
+          suggestedTherapist:SuggestedTherapist.fromJson(jsonDecode( state.uri.queryParameters[PathParam.therapist] ?? '')),
+        ),
       ),
     ],
   );

@@ -20,21 +20,26 @@ class _SenderMessageItemState extends State<SenderMessageItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width / 2 + 40),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  topLeft: Radius.circular(20)),
-              color: Pallets.white),
-          child: widget.child ??
-              Text(
-                widget.message,
-                style: const TextStyle(fontSize: 14),
-              ),
+        Column(
+          children: List.generate(
+            widget.message.length,
+            (index) => Container(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width / 2 + 40),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      topLeft: Radius.circular(20)),
+                  color: Pallets.lightSecondary),
+              child: widget.child ??
+                  Text(
+                    widget.message[index],
+                    style: const TextStyle(fontSize: 14),
+                  ),
+            ),
+          ),
         ),
         const SizedBox(
           height: 5,

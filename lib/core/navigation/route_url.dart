@@ -37,6 +37,7 @@ class PageUrl {
   static const userPreferenceScreen = 'userPreferenceScreen';
   static const changeTherapistScreen = 'changeTherapistScreen';
   static const matchTherapistScreen = 'matchTherapistScreen';
+  static const acceptTherapistScreen = 'acceptTherapistScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

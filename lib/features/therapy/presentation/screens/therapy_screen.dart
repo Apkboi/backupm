@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/custom_tabbar.dart';
 import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
@@ -104,21 +105,20 @@ class _TherapyScreenState extends State<TherapyScreen> {
                     ),
                   ),
                   10.verticalSpace,
-
-                  // CustomOutlinedButton(
-                  //   bgColor: Colors.white,
-                  //   padding: const EdgeInsets.all(20),
-                  //   outlineWidth: 1.5,
-                  //   radius: 100,
-                  //   outlinedColr: Pallets.primary,
-                  //   child: const TextView(
-                  //     text: 'Change Therapist',
-                  //     fontWeight: FontWeight.w600,
-                  //   ),
-                  //   onPressed: () {
-                  //     context.pushNamed(PageUrl.therapistProfile);
-                  //   },
-                  // )
+                  CustomOutlinedButton(
+                    bgColor: Colors.white,
+                    padding: const EdgeInsets.all(20),
+                    outlineWidth: 1.5,
+                    radius: 100,
+                    outlinedColr: Pallets.primary,
+                    child: const TextView(
+                      text: 'Change Therapist',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    onPressed: () {
+                      context.pushNamed(PageUrl.changeTherapistScreen);
+                    },
+                  )
                 ],
               ),
             ),
@@ -172,7 +172,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
         if (state is GetUpcomingSessionsLoadingState) {
           return Center(
             child: CustomDialogs.getLoading(
-          size: 50,
+              size: 50,
             ),
           );
         }
@@ -182,7 +182,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
             textColor: Pallets.navy,
             retryTextColor: Pallets.navy,
             onTap: () {
-          injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+              injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
             },
           );
         }

@@ -137,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           tittle: 'Logout',
                           onTap: () {
                             SessionManager.instance.logOut();
-                            context.goNamed(PageUrl.login);
+                            context.goNamed(PageUrl.onBoardingPage);
                           },
                         ),
                       )),

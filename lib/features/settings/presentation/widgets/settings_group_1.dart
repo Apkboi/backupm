@@ -46,7 +46,7 @@ class SettingsGroup1 extends StatelessWidget {
               },
               leadingWidget: Row(
                 children: [
-                  5.horizontalSpace,
+                  10.horizontalSpace,
                   ImageWidget(
                     imageUrl: Assets.images.svgs.bulb,
                     fit: BoxFit.fill,

@@ -8,6 +8,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
@@ -58,14 +59,16 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
               context.pop();
               CustomDialogs.success(state.response.message);
               if (widget.flow == UserPreferenceFlow.signup) {
-                context.goNamed(PageUrl.home);
+                context.goNamed(PageUrl.homeScreen);
               }
 
               if (widget.flow == UserPreferenceFlow.updatePreference) {
                 context.pop();
               }
               if (widget.flow == UserPreferenceFlow.changeTherapist) {
-                context.pop();
+                context.pushReplacementNamed(PageUrl.matchTherapistScreen,queryParameters: {
+                  PathParam.updatedPreference:'true'
+                });
               }
             }
           },

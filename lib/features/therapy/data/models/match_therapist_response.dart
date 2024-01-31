@@ -10,7 +10,7 @@ String matchTherapistResponseToJson(MatchTherapistResponse data) => json.encode(
 
 class MatchTherapistResponse {
   final String message;
-  final Data data;
+  final SuggestedTherapist data;
   final bool success;
   final int code;
 
@@ -23,7 +23,7 @@ class MatchTherapistResponse {
 
   MatchTherapistResponse copyWith({
     String? message,
-    Data? data,
+    SuggestedTherapist? data,
     bool? success,
     int? code,
   }) =>
@@ -36,7 +36,7 @@ class MatchTherapistResponse {
 
   factory MatchTherapistResponse.fromJson(Map<String, dynamic> json) => MatchTherapistResponse(
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data: SuggestedTherapist.fromJson(json["data"]),
     success: json["success"],
     code: json["code"],
   );
@@ -49,25 +49,25 @@ class MatchTherapistResponse {
   };
 }
 
-class Data {
+class SuggestedTherapist {
   final User user;
   final Therapist therapist;
 
-  Data({
+  SuggestedTherapist({
     required this.user,
     required this.therapist,
   });
 
-  Data copyWith({
+  SuggestedTherapist copyWith({
     User? user,
     Therapist? therapist,
   }) =>
-      Data(
+      SuggestedTherapist(
         user: user ?? this.user,
         therapist: therapist ?? this.therapist,
       );
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory SuggestedTherapist.fromJson(Map<String, dynamic> json) => SuggestedTherapist(
     user: User.fromJson(json["user"]),
     therapist: Therapist.fromJson(json["therapist"]),
   );

@@ -17,18 +17,15 @@ class SettingsGroup3 extends StatelessWidget {
       child: Column(
         children: [
           SettingListTile(
-            leadingWidget: 0.horizontalSpace,
             tittle: 'Delete Account',
             onTap: () {
               context.pushNamed(PageUrl.deleteAccountScreen);
             },
           ),
           24.verticalSpace,
-          SettingListTile(
-              leadingWidget: 0.horizontalSpace, tittle: 'Privacy Policy'),
+          const SettingListTile(tittle: 'Privacy Policy'),
           24.verticalSpace,
-          SettingListTile(
-              leadingWidget: 0.horizontalSpace, tittle: 'Terms and Conditions'),
+          const SettingListTile(tittle: 'Terms and Conditions'),
         ],
       ),
     ));

@@ -47,7 +47,7 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     // emit(state.copyWith(highlightIndex: -1));
 
     scrollController.jumpTo(
-      alignment: stagedMessages.length.toDouble(),
+      alignment: 0.5,
       index: 0,
 
       // curve: Curves.easeOut,
@@ -65,7 +65,6 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
       //   Get NextQuestion
       getNextQuestion();
     } else {
-
       currentQuestion = stagedMessages.last;
       if (stagedMessages.length == dataSource.therapyQuestions.length) {
         emit(QuestionsCompletedState());

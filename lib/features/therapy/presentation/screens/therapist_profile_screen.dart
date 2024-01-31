@@ -8,9 +8,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/therapy/presentation/widgets/therapist_about_widget.dart';
-import 'package:mentra/features/therapy/presentation/widgets/therapist_review_widget.dart';
-import 'package:mentra/features/therapy/presentation/widgets/therapists_spcialization_widget.dart';
+
 import 'package:mentra/gen/assets.gen.dart';
 
 class TherapistProfileScreen extends StatefulWidget {
@@ -37,24 +35,29 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                 Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    Container(
-                      height: 0.3.sh,
-                      width: 1.sw,
-                      decoration: BoxDecoration(
-                          color: Pallets.primary,
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  Assets.images.pngs.avatar20.path))),
-                      child: const Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 60.0, left: 16),
-                          child: CustomBackButton(),
+                    Column(
+                      children: [
+                        Container(
+                          height: 300,
+                          width: 1.sw,
+                          decoration: BoxDecoration(
+                              color: Pallets.primary,
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      Assets.images.pngs.avatar20.path))),
+                          child: const Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 60.0, left: 16),
+                              child: CustomBackButton(),
+                            ),
+                          ),
                         ),
-                      ),
+                        200.verticalSpace
+                      ],
                     ),
                     Positioned(
-                      bottom: -0.2.sh,
+                      bottom: 20,
                       right: 0,
                       left: 0,
                       child: Padding(
@@ -78,12 +81,12 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                                 const TextView(
                                     align: TextAlign.center,
                                     text:
-                                        "MDS - Periodonyology and Oral\nImpantology, BDS"),
+                                    "MDS - Periodonyology and Oral\nImpantology, BDS"),
                                 16.verticalSpace,
                                 Container(
                                   decoration: BoxDecoration(
                                       color:
-                                          Pallets.pendingColor.withOpacity(0.2),
+                                      Pallets.pendingColor.withOpacity(0.2),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -130,6 +133,7 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                                         fontWeight: FontWeight.w600,
                                       ),
                                       onPressed: () {
+
                                         // _cancelTherapySession(context);
                                       },
                                     ),
@@ -143,44 +147,45 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                     ),
                   ],
                 ),
-                IgnorePointer(
-                  ignoring: true,
-                  child: 0.2.sh.verticalSpace,
-                ),
-                IgnorePointer(
-                  ignoring: true,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TextView(
-                          text: 'About Nour',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        16.verticalSpace,
-                        const TherapistAboutWidget(),
-                        16.verticalSpace,
-                        const TextView(
-                          text: 'Specializations',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        16.verticalSpace,
-                        const TherapistSpecializationWidget(),
-                        16.verticalSpace,
-                        const TextView(
-                          text: 'Reviews',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        16.verticalSpace,
-                        const TherapistsReviewWidget()
-                      ],
-                    ),
-                  ),
-                )
+                Container(height: 100,color: Pallets.black,)
+                // IgnorePointer(
+                //   ignoring: true,
+                //   child: 0.2.sh.verticalSpace,
+                // ),
+                // IgnorePointer(
+                //   ignoring: true,
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(16),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         const TextView(
+                //           text: 'About Nour',
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.w600,
+                //         ),
+                //         16.verticalSpace,
+                //         const TherapistAboutWidget(),
+                //         16.verticalSpace,
+                //         const TextView(
+                //           text: 'Specializations',
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.w600,
+                //         ),
+                //         16.verticalSpace,
+                //         const TherapistSpecializationWidget(),
+                //         16.verticalSpace,
+                //         const TextView(
+                //           text: 'Reviews',
+                //           fontSize: 18,
+                //           fontWeight: FontWeight.w600,
+                //         ),
+                //         16.verticalSpace,
+                //         const TherapistsReviewWidget()
+                //       ],
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),

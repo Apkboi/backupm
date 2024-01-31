@@ -74,25 +74,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: TextSpan(
                           text: 'By continuing, you agree to Mentra’s ',
                           style: GoogleFonts.plusJakartaSans(
-                              color: Theme.of(context).colorScheme.onBackground,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .onBackground,
                               fontSize: 13,
                               fontWeight: FontWeight.w400),
                           children: [
                             TextSpan(
                               text: 'Privacy Policy ',
-                              recognizer: TapGestureRecognizer()..onTap = () {},
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {},
                               style: const TextStyle(
                                   color: Pallets.red,
                                   fontWeight: FontWeight.w700),
                             ),
                             TextSpan(
                               text: ' and',
-                              recognizer: TapGestureRecognizer()..onTap = () {},
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {},
                               style: const TextStyle(),
                             ),
                             TextSpan(
                               text: ' Terms of Service',
-                              recognizer: TapGestureRecognizer()..onTap = () {},
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {},
                               style: const TextStyle(
                                   color: Pallets.red,
                                   fontWeight: FontWeight.w700),
@@ -204,13 +210,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _getUserDetails() {
-
     if (_formKey.currentState!.validate()) {
       injector
           .get<LoginBloc>()
           .add(LoginPreviewEvent(email: _emailController.text.trim()));
     }
-
-
   }
 }

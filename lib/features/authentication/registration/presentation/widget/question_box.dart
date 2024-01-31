@@ -14,7 +14,6 @@ class QuestionBox extends StatefulWidget {
   final Widget? child;
   final bool isSender;
 
-
   @override
   State<QuestionBox> createState() => _QuestionBoxState();
 }

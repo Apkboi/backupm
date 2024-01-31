@@ -12,9 +12,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-import '../../../../../core/services/permission_handler/permission_handler_service.dart';
 
 class UserEmailScreen extends StatefulWidget {
   const UserEmailScreen({super.key, required this.email});
@@ -57,6 +55,7 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                           'Sweet choice! To make sure we\'re all set, we just need your email. Can you share it with us?',
                         ], isSender: false),
                         100.verticalSpace,
+
                       ],
                     )),
                     BlocConsumer<RegistrationBloc, RegistrationState>(
@@ -77,8 +76,7 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                             ]).call,
                             hasBorder: false,
                             suffix: InkWell(
-                              onTap: () async{
-
+                              onTap: () async {
                                 _goToNextScreen(context);
                               },
                               child: const Icon(
@@ -86,11 +84,10 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                                 size: 25,
                               ),
                             ),
-
                             radius: 43,
                             // preffix: const Icon(Iconsax.search_normal4),
                             contentPadding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 10),
+                                vertical: 16, horizontal: 10),
                             fillColor: Pallets.white,
                           ),
                         );

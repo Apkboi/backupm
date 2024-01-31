@@ -127,6 +127,7 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                   if (state is GetAvailableDatesFailureState)
                     AppPromptWidget(
                       textColor: Pallets.primary,
+                      message: state.error,
                       retryTextColor: Pallets.primary,
                       onTap: () {
                         _bloc.add(GetAvailableDatesEvent());

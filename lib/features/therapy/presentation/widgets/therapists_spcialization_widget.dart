@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/bullet_widget.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 
 class TherapistSpecializationWidget extends StatelessWidget {
-  const TherapistSpecializationWidget({super.key});
+  const TherapistSpecializationWidget(
+      {super.key, required this.suggestedTherapist});
+
+  final SuggestedTherapist suggestedTherapist;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +20,13 @@ class TherapistSpecializationWidget extends StatelessWidget {
       child: Column(
         children: [
           ...List.generate(
-              3, (index) =>
-              const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: BulletWidget(
-                    text: "Anxiety and Stress Management"),
-              ))
+              suggestedTherapist.therapist.techniquesOfExpertise.length,
+              (index) => Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: BulletWidget(
+                        text: suggestedTherapist
+                            .therapist.techniquesOfExpertise[index]),
+                  ))
         ],
       ),
     );
