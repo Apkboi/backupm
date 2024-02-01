@@ -4,14 +4,12 @@ import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/error_widget.dart';
-import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/sos_dialer_item.dart';
 
@@ -100,31 +98,21 @@ class _EmergencySosScreenState extends State<EmergencySosScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                         19.verticalSpace,
-                        SosDialerItem(
-                          icon: '🚑',
-                          tittle: "Medical Emergency",
-                          subtittle: "998",
-                          onTap: () {},
-                        ),
-                        9.verticalSpace,
-                        SosDialerItem(
-                          iconBg: Pallets.pink,
-                          icon: '🚓',
-                          tittle: "Police",
-                          subtittle: "998",
-                          onTap: () {},
-                        ),
-                        9.verticalSpace,
-                        SosDialerItem(
-                          icon: '🚒',
-                          iconBg: Colors.orange,
-                          tittle: "Fire Department",
-                          subtittle: "997",
-                          onTap: () {
-                            Helpers.launchUrl('123456789');
-                          },
-                        ),
-                        9.verticalSpace,
+                        ...List.generate(
+                          state.data.data.length,
+                          (index) => Padding(
+                            padding: const EdgeInsets.only(bottom: 18.0),
+                            child: SosDialerItem(
+                              icon: state.data.data[index].image.url,
+                              tittle: state.data.data[index].title,
+                              subtittle: state.data.data[index].contact,
+                              onTap: () {
+                                UrlLauncher().dialPhoneNumber(
+                                    state.data.data[index].contact);
+                              },
+                            ),
+                          ),
+                        )
                       ],
                     );
                   }

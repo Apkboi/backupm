@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
@@ -32,7 +33,7 @@ class SosDialerItem extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: (iconBg ?? Pallets.skyBlue).withOpacity(0.4),
                   radius: 24,
-                  child: Center(child: Text(icon)),
+                  child: Center(child: ImageWidget(size: 20, imageUrl: icon,)),
                 ),
                 12.horizontalSpace,
                 Expanded(

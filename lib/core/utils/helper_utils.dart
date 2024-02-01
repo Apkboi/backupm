@@ -48,6 +48,12 @@ class Helpers {
     return (earthRadius * c).floor();
   }
 
+  static launchRawUrl(String data) async {
+    final launcher = UrlLauncher();
+
+    await launcher.launchRawUrl(data);
+  }
+
   static launchUrl(String? data) async {
     final launcher = UrlLauncher();
 

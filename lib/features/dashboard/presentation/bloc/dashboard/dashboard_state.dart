@@ -48,7 +48,7 @@ class GetEmergencyContactFailureState extends DashboardState {
 }
 
 class GetEmergencyContactSuccessState extends DashboardState {
-  final dynamic data;
+  final GetEmergencyContactsResponse data;
 
   const GetEmergencyContactSuccessState({required this.data});
 

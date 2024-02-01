@@ -18,6 +18,11 @@ class UrlLauncher {
     }
   }
 
+  Future launchRawUrl(String urlString) async {
+    final uri = Uri.parse(urlString);
+    await launchUrl(uri);
+  }
+
   /// Launch an email client with the given email address
   Future<void> sendEmail(String emailAddress) async {
     final mailtoUri = Uri(scheme: 'mailto', path: emailAddress);
