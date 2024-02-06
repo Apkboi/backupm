@@ -17,6 +17,8 @@ import 'package:mentra/features/library/presentation/blocs/wellness_library/well
 import 'package:mentra/features/library/presentation/widgets/favorite_acction_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
+import 'package:flutter_html/flutter_html.dart';
+
 class ArticleDetailsScreen extends StatefulWidget {
   const ArticleDetailsScreen({Key? key, required this.courseJson})
       : super(key: key);
@@ -141,11 +143,14 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           //   ),
                           // ),
                           // 16.verticalSpace,
-                          TextView(
-                            text: course.body,
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          Html(data: course.body, style: {
+                            "p": Style(
+                                fontSize: FontSize(
+                                  15.sp,
+                                  Unit.px,
+                                ),
+                                fontWeight: FontWeight.w500),
+                          }),
                           29.verticalSpace,
                           // TextView(
                           //   text: '2. Mindfulness Meditation',
