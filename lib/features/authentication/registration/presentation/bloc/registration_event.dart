@@ -31,3 +31,18 @@ class VerifyOtpEvent extends RegistrationEvent {
   @override
   List<Object?> get props => [email, otp];
 }
+
+class AppleAuthEvent extends RegistrationEvent {
+  const AppleAuthEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GoogleAuthEvent extends RegistrationEvent {
+  const GoogleAuthEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+

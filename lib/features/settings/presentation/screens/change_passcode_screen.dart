@@ -9,10 +9,8 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/widgets/pin_view.dart';
-import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 enum ChangePasscodeMode {
@@ -35,8 +33,9 @@ class _ChangePasscodeScreenState extends State<ChangePasscodeScreen> {
   int activeCount = -1;
   String oldPin = '';
   String pin = '';
+  String? hash;
   String conFirmPin = '';
-  final _registrationBloc = RegistrationBloc(injector.get());
+  final _bloc = SettingsBloc(injector.get());
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +49,9 @@ class _ChangePasscodeScreenState extends State<ChangePasscodeScreen> {
               padding: const EdgeInsets.all(16),
               child: Form(
                 key: _formKey,
-                child: BlocConsumer<RegistrationBloc, RegistrationState>(
-                  bloc: _registrationBloc,
-                  listener: _listenToRegistrationBloc,
+                child: BlocConsumer<SettingsBloc, SettingsState>(
+                  bloc: _bloc,
+                  listener: _listenToSettingsState,
                   builder: (context, state) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -163,8 +162,8 @@ class _ChangePasscodeScreenState extends State<ChangePasscodeScreen> {
     if (pinMode == ChangePasscodeMode.oldPin) {
       setState(() {
         oldPin = val;
-        pinMode = ChangePasscodeMode.setPin;
-        _pinController.resetPin();
+        // pinMode = ChangePasscodeMode.setPin;
+        _verifyPasscode();
       });
     } else if (pinMode == ChangePasscodeMode.setPin) {
       setState(() {
@@ -176,15 +175,13 @@ class _ChangePasscodeScreenState extends State<ChangePasscodeScreen> {
       if (pinMode == ChangePasscodeMode.confirmPin) {
         if (pin == val) {
           conFirmPin = val;
-          pinMode = ChangePasscodeMode.confirmPin;
+          // pinMode = ChangePasscodeMode.confirmPin;
           setState(() {});
-
-          _registerUser();
+          _updatePasscode();
         } else {
           pin = '';
           conFirmPin = '';
           pinMode = ChangePasscodeMode.setPin;
-          _pinController.resetPin();
           setState(() {});
           CustomDialogs.showToast('Passcode mismatch');
         }
@@ -192,28 +189,57 @@ class _ChangePasscodeScreenState extends State<ChangePasscodeScreen> {
     }
   }
 
-  void _listenToRegistrationBloc(
-      BuildContext context, RegistrationState state) {
-    if (state is RegistrationLoadingState) {
+  void _listenToSettingsState(BuildContext context, SettingsState state) {
+    if (state is VerifyPasscodeSuccessState) {
+      hash = state.response.data.hash;
+      pinMode = ChangePasscodeMode.setPin;
+      _pinController.resetPin();
+
+      setState(() {});
+      context.pop();
+      CustomDialogs.success('Passcode correct');
+      // CustomDialogs.showLoading(context);
+    }
+    if (state is UpdatePasscodeSuccessState) {
+      context.pop();
+      context.pop();
+      CustomDialogs.success(state.response.message);
+    }
+    if (state is UpdatePasscodeLoadingState ||
+        state is VerifyPasscodeLoadingState) {
       CustomDialogs.showLoading(context);
     }
-    if (state is RegistrationSuccessState) {
-      injector.get<RegistrationBloc>().clear();
-
+    if (state is UpdatePasscodeFailureState) {
       context.pop();
-      context.pushNamed(PageUrl.biometricAccess);
+      _pinController.resetPin();
+      pinMode = ChangePasscodeMode.oldPin;
+      CustomDialogs.error(state.error);
     }
+    if (state is VerifyPasscodeFailureState) {
+      pinMode = ChangePasscodeMode.oldPin;
+      _pinController.resetPin();
 
-    if (state is RegistrationFailureState) {
       context.pop();
+      setState(() {});
+
+      CustomDialogs.error(state.error);
+    }
+    if (state is UpdatePasscodeFailureState) {
+      pinMode = ChangePasscodeMode.setPin;
+      context.pop();
+      setState(() {});
       CustomDialogs.error(state.error);
     }
   }
 
-  void _registerUser() {
-    injector.get<RegistrationBloc>().updateFields(password: conFirmPin);
-    // logger.i(injector.get<RegistrationBloc>().registrationPayload.toJson());
-    _registrationBloc.add(RegisterEvent(
-        payload: injector.get<RegistrationBloc>().registrationPayload));
+  void _updatePasscode() {
+    _bloc.add(UpdatePasscodeEvent(
+        hash: hash!, passcode: pin, passcodeConfirmation: conFirmPin));
+  }
+
+  void _verifyPasscode() {
+    _bloc.add(VerifyPasscodeEvent(
+      passcode: oldPin,
+    ));
   }
 }

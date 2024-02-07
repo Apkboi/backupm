@@ -1,15 +1,11 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/login_preview_response.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:mentra/features/authentication/dormain/usecase/auth_success_usecase.dart';
-import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
-
 part 'login_event.dart';
-
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {

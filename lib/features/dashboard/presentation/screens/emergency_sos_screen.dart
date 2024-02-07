@@ -12,6 +12,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/sos_dialer_item.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class EmergencySosScreen extends StatefulWidget {
   const EmergencySosScreen({super.key});
@@ -65,7 +66,9 @@ class _EmergencySosScreenState extends State<EmergencySosScreen> {
       appBar: const CustomAppBar(tittleText: 'Emergency SOS'),
       body: Stack(
         children: [
-          const AppBg(),
+          AppBg(
+            image: Assets.images.pngs.homeBg.path,
+          ),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(17),

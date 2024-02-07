@@ -43,12 +43,10 @@ class _SecurityPrivacyScreenState extends State<SecurityPrivacyScreen> {
                               onTap: () {
                                 context.pushNamed(PageUrl.changePasscodeScreen);
                               },
-                              leadingWidget: 0.horizontalSpace,
                               tittle: 'Change PIN'),
                           35.verticalSpace,
                           SettingListTile(
                               onTap: () {},
-                              leadingWidget: 0.horizontalSpace,
                               trailingWidget: CupertinoSwitch(
                                 value: true,
                                 onChanged: (value) {},

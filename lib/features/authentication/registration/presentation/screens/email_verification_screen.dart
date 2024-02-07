@@ -48,18 +48,24 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                         child: CustomBackButton()),
                     Expanded(
                         child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        16.verticalSpace,
-                        QuestionBox(message: [
-                          'Thank you! 📧 We\'ve sent a one-time verification code to ${injector.get<RegistrationBloc>().registrationPayload.email}. Please check your email and enter the code here.',
-                        ], isSender: false),
-                        100.verticalSpace,
-                      ],
-                    )),
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            16.verticalSpace,
+                            QuestionBox(message: [
+                              'Thank you! 📧 We\'ve sent a one-time verification code to ${injector
+                                  .get<RegistrationBloc>()
+                                  .registrationPayload
+                                  .email}. Please check your email and enter the code here.',
+                            ], isSender: false),
+                            100.verticalSpace,
+                          ],
+                        )),
                     Padding(
                       padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                          bottom: MediaQuery
+                              .of(context)
+                              .viewInsets
+                              .bottom),
                       child: BlocConsumer<RegistrationBloc, RegistrationState>(
                         bloc: _bloc,
                         listener: _listenToRegistrationBloc,
@@ -70,7 +76,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             outline: false,
                             controller: _controller,
                             validator:
-                                RequiredValidator(errorText: 'Enter code').call,
+                            RequiredValidator(errorText: 'Enter code').call,
                             hasBorder: false,
                             inputType: TextInputType.number,
                             suffix: InkWell(
@@ -110,13 +116,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       // context.pushNamed(PageUrl.selectYearScreen);
 
       _bloc.add(VerifyOtpEvent(
-          email: injector.get<RegistrationBloc>().registrationPayload.email,
+          email: injector
+              .get<RegistrationBloc>()
+              .registrationPayload
+              .email,
           otp: _controller.text.trim()));
     }
   }
 
-  void _listenToRegistrationBloc(
-      BuildContext context, RegistrationState state) {
+  void _listenToRegistrationBloc(BuildContext context,
+      RegistrationState state) {
     if (state is VerifyOtpLoadingState) {
       CustomDialogs.showLoading(context);
     }

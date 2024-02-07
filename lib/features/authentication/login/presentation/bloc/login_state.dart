@@ -54,3 +54,21 @@ class LoginPreviewFailureState extends LoginState {
   @override
   List<Object?> get props => [error];
 }
+class OauthLoadingState extends LoginState {
+  @override
+  List<Object?> get props => [];
+}
+
+class  OauthSuccessState extends LoginState {
+  @override
+  List<Object?> get props => [];
+}
+
+class  OauthFailureState extends LoginState {
+  final String error;
+
+  const OauthFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}

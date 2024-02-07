@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image/image.dart';
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -9,9 +10,11 @@ import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/login_preview_response.dart';
+import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
 import 'package:mentra/features/authentication/data/models/register_payload.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final NetworkService _networkService;
@@ -45,6 +48,17 @@ class AuthRepositoryImpl extends AuthRepository {
       rethrow;
     }
   }
+
+  GoogleSignIn googleAuthService = GoogleSignIn(
+    scopes: [
+      'email',
+      'profile',
+    ],
+
+    // serverClientId: ,serverClientId
+    clientId:
+        '297535846989-bgfgbuiv6q0lhbms1229m7msr1bhjce0.apps.googleusercontent.com',
+  );
 
   @override
   Future sendOtp(String email) async {
@@ -82,6 +96,53 @@ class AuthRepositoryImpl extends AuthRepository {
         data: {"email": email});
 
     return LoginPreviewResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<GoogleSignInAuthentication?> googleAuth() async {
+    try {
+      final response = await googleAuthService.signIn();
+
+      final res = await response?.authentication;
+
+      logger.i(res?.idToken.toString());
+      logger.i(res?.accessToken.toString());
+      // logger.i(res?..toString());
+      //
+      return res;
+    } catch (e) {
+      logger.e(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<AuthorizationCredentialAppleID?> appleAuth() async {
+    try {
+      final response = await SignInWithApple.getAppleIDCredential(scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName
+      ]);
+
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<dynamic> oauthSignIn(OauthReqDto data) async {
+    try {
+      final response = await _networkService(
+        UrlConfig.oauthLogin,
+        RequestMethod.post,
+        data: data.toJson(),
+      );
+
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
   }
 }
 

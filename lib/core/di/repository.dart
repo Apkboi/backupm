@@ -5,7 +5,9 @@ import 'package:mentra/features/dashboard/data/repository/dashboard_repository_i
 import 'package:mentra/features/dashboard/dormain/repository/dashboard_repository.dart';
 import 'package:mentra/features/library/data/repository/wellness_library_repository_impl.dart';
 import 'package:mentra/features/library/dormain/repository/wellness_library_repository.dart';
+import 'package:mentra/features/settings/data/repository/settings_repository_impl.dart';
 import 'package:mentra/features/settings/data/repository/user_preference_rpository_impl.dart';
+import 'package:mentra/features/settings/dormain/repository/settings_repository.dart';
 import 'package:mentra/features/settings/dormain/repository/user_preference_rpository.dart';
 import 'package:mentra/features/therapy/data/repository/therapy_repository_impl.dart';
 import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
@@ -21,4 +23,6 @@ void setup(GetIt getIt) {
       () => TherapyRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<UserPreferenceRepository>(
       () => UserPreferenceRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<SettingsRepository>(
+      () => SettingsRepositoryImpl(getIt.get()));
 }

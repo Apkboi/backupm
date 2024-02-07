@@ -16,6 +16,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/library/presentation/widgets/article_item.dart';
 import 'package:mentra/features/library/presentation/widgets/library_item.dart';
+import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -26,12 +27,11 @@ class WellnessLibraryScreen extends StatefulWidget {
   State<WellnessLibraryScreen> createState() => _WellnessLibraryScreenState();
 }
 
-final bloc = WellnessLibraryBloc(injector.get());
+final bloc = SettingsBloc(injector.get());
 
 class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
   @override
   void initState() {
-    bloc.add(GetLibraryCategoriesEvent());
     super.initState();
   }
 
@@ -82,7 +82,6 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
                   20.verticalSpace,
                   const Expanded(
                       child: TabBarView(
-
                           physics: NeverScrollableScrollPhysics(),
                           children: [DiscoverContents(), FavoriteContents()])),
                   8.verticalSpace,
@@ -145,7 +144,7 @@ class _FavoriteContentsState extends State<FavoriteContents>
               },
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:  state.response.data.length,
+                itemCount: state.response.data.length,
                 itemBuilder: (context, index) {
                   return ArticleItem(
                     course: state.response.data[index],

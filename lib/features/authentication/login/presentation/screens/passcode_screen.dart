@@ -128,13 +128,15 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
     // injector.get<CacheCubit>().validatePin(pin);
   }
 
-  void _listenToLoginBloc(BuildContext context, LoginState state) {
+  void _listenToLoginBloc(BuildContext context, LoginState state) async{
     if (state is LoginLoadingState) {
       CustomDialogs.showLoading(context);
     }
     if (state is LoginSuccessState) {
       context.pop();
-      context.goNamed(PageUrl.homeScreen);
+
+      await context.pushNamed(PageUrl.welcomeScreen);
+
     }
 
     if (state is LoginFailureState) {

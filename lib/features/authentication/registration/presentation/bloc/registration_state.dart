@@ -20,7 +20,7 @@ class RegistrationSuccessState extends RegistrationState {
   @override
   List<Object?> get props => [authSuccessResponse];
 
-  RegistrationSuccessState(this.authSuccessResponse);
+  const RegistrationSuccessState(this.authSuccessResponse);
 }
 
 class RegistrationFailureState extends RegistrationState {
@@ -65,6 +65,25 @@ class VerifyOtpFailureState extends RegistrationState {
   final String error;
 
   const VerifyOtpFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class OauthLoadingState extends RegistrationState {
+  @override
+  List<Object?> get props => [];
+}
+
+class  OauthSuccessState extends RegistrationState {
+  @override
+  List<Object?> get props => [];
+}
+
+class  OauthFailureState extends RegistrationState {
+  final String error;
+
+  const OauthFailureState({required this.error});
 
   @override
   List<Object?> get props => [error];

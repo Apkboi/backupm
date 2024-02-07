@@ -90,6 +90,7 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                               child: CalendarDatePicker(
                                 initialDate: state.response.data.first,
                                 currentDate: state.response.data.first,
+
                                 selectableDayPredicate: (DateTime date) {
                                   // Check if the date is in the list of available date slots
                                   return (state).response.data.contains(date);

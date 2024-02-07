@@ -58,12 +58,11 @@ class UrlConfig {
 
 
   ///ACCOUNT
-  static const String updateProfile = '/account/update';
-  static const String changePassword = '/account/change-password';
-  static const String updatePassword = '/general/account/change-password';
+  static const String updateProfile = '/user/profile/update';
+  static const String changePassword = '/user/passcode/change-password';
+  static const String verifyPasscode = '/user/passcode/verify';
+  static const String updatePassword = '/user/passcode/update';
   static const String allowNotifications = 'general/account/allow-notification';
-  static const String deleteAccount = 'general/account/deactivate';
-  static const String updateOnlineStatus = '/user/update_if_online';
   static const String resetPassword = '/auth/reset-password';
 
 /// Therapy

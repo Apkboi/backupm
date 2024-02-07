@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/passcode_screen.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/welcome_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/signup_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/splash_screen.dart';
@@ -155,11 +155,11 @@ class CustomRoutes {
         name: PageUrl.therapistProfile,
         builder: (context, state) => const TherapistProfileScreen(),
       ),
-      // GoRoute(
-      //   path: '/therapistProfile',
-      //   name: PageUrl.therapistProfile,
-      //   builder: (context, state) => const TherapistProfileScreen(),
-      // ),
+      GoRoute(
+        path: '/welcomeScreen',
+        name: PageUrl.welcomeScreen,
+        builder: (context, state) =>  WelcomeScreen(),
+      ),
       GoRoute(
         path: '/therapyScreen',
         name: PageUrl.therapyScreen,
@@ -170,7 +170,6 @@ class CustomRoutes {
         name: PageUrl.summariesScreen,
         builder: (context, state) => const SummariesScreen(),
       ),
-
       GoRoute(
         path: '/therapistChatScreen',
         name: PageUrl.therapistChatScreen,
@@ -254,13 +253,11 @@ class CustomRoutes {
               state.uri.queryParameters[PathParam.userPreferenceFlow] ?? ''),
         ),
       ),
-
       GoRoute(
         path: '/changeTherapistScreen',
         name: PageUrl.changeTherapistScreen,
         builder: (context, state) => const ChangeTherapistScreen(),
       ),
-
       GoRoute(
         path: '/matchTherapistScreen',
         name: PageUrl.matchTherapistScreen,
@@ -273,7 +270,8 @@ class CustomRoutes {
         path: '/acceptTherapistScreen',
         name: PageUrl.acceptTherapistScreen,
         builder: (context, state) => AcceptTherapistScreen(
-          suggestedTherapist:SuggestedTherapist.fromJson(jsonDecode( state.uri.queryParameters[PathParam.therapist] ?? '')),
+          suggestedTherapist: SuggestedTherapist.fromJson(
+              jsonDecode(state.uri.queryParameters[PathParam.therapist] ?? '')),
         ),
       ),
     ],

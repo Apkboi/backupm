@@ -131,6 +131,9 @@ dependencies:
   modal_bottom_sheet: ^3.0.0-pre
   scrollable_positioned_list: ^0.3.8
   flutter_html: ^3.0.0-beta.2
+  google_sign_in: ^6.2.1
+  sign_in_with_apple: ^5.0.0
+  flutter_stripe: ^10.0.0
 #  fluttermoji: ^1.0.2
 #  neumorphic_ui: ^1.0.1
 

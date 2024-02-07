@@ -18,9 +18,8 @@ class NewUserPrompt extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: ShapeDecoration(
-          color: Colors.white.withOpacity(0.7),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+          color: Pallets.white.withOpacity(0.55),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       child: IntrinsicHeight(
         child: Row(
           children: [

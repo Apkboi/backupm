@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
+import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
 import 'package:mentra/features/authentication/data/models/register_payload.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:mentra/features/authentication/dormain/usecase/auth_success_usecase.dart';
@@ -12,13 +13,15 @@ part 'registration_event.dart';
 part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  final AuthRepository _userRepository;
+  final AuthRepository _authRepository;
   RegistrationPayload registrationPayload = RegistrationPayload.empty();
 
-  RegistrationBloc(this._userRepository) : super(RegistrationInitial()) {
+  RegistrationBloc(this._authRepository) : super(RegistrationInitial()) {
     on<RegisterEvent>(_mapRegisterEventToState);
     on<SendOtpEvent>(_mapSendOtpEventToState);
     on<VerifyOtpEvent>(_mapVerifyOtpEventToState);
+    on<GoogleAuthEvent>(_mapGoogleAuthEventToState);
+    on<AppleAuthEvent>(_mapAppleAuthEventToState);
   }
 
   Future<void> _mapRegisterEventToState(
@@ -27,7 +30,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
     try {
       // Call your registration API here
-      var authResponse = await _userRepository.register(event.payload);
+      var authResponse = await _authRepository.register(event.payload);
 
       AuthSuccessUsecase().execute(authResponse);
 
@@ -43,7 +46,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
     try {
       // Call your send OTP API here
-      await _userRepository.sendOtp(event.email);
+      await _authRepository.sendOtp(event.email);
 
       emit(SendOtpSuccessState());
     } catch (e) {
@@ -58,7 +61,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     try {
       // Call your verify OTP API here
       final isVerified =
-          await _userRepository.verifyOtp(event.email, event.otp);
+          await _authRepository.verifyOtp(event.email, event.otp);
 
       emit(VerifyOtpSuccessState());
     } catch (e) {
@@ -96,5 +99,38 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
   void clear() {
     registrationPayload = RegistrationPayload.empty();
+  }
+
+  FutureOr<void> _mapGoogleAuthEventToState(
+      GoogleAuthEvent event, Emitter<RegistrationState> emit) async {
+    emit(OauthLoadingState());
+
+    try {
+      final response = await _authRepository.googleAuth();
+      var res = await _authRepository.oauthSignIn(OauthReqDto(
+        token: response?.idToken,
+        provider: 'google',
+      ));
+      emit(OauthSuccessState());
+    } on Exception catch (e) {
+      emit(OauthFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapAppleAuthEventToState(
+      AppleAuthEvent event, Emitter<RegistrationState> emit) async {
+    emit(OauthLoadingState());
+
+    try {
+      final response = await _authRepository.appleAuth();
+      var res = await _authRepository.oauthSignIn(OauthReqDto(
+        token: response?.identityToken,
+        provider: 'apple',
+      ));
+
+      emit(OauthSuccessState());
+    } catch (e) {
+      emit(OauthFailureState(error: e.toString()));
+    }
   }
 }
