@@ -58,10 +58,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (val) async {
+    return WillPopScope(
+      // canPop: false,
+      onWillPop: () async {
         context.goNamed(PageUrl.homeScreen);
+        return false;
       },
       child: Scaffold(
         body: Stack(
@@ -126,7 +127,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                     TextView(
+                    TextView(
                       align: TextAlign.center,
                       text:
                           'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}. \nInhale positivity, exhale stress',
