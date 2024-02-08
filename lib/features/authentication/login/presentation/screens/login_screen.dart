@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +19,8 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart'
+    as regbloc;
 import 'package:mentra/gen/assets.gen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -74,31 +78,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       text: TextSpan(
                           text: 'By continuing, you agree to Mentra’s ',
                           style: GoogleFonts.plusJakartaSans(
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .onBackground,
+                              color: Theme.of(context).colorScheme.onBackground,
                               fontSize: 13,
                               fontWeight: FontWeight.w400),
                           children: [
                             TextSpan(
                               text: 'Privacy Policy ',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {},
+                              recognizer: TapGestureRecognizer()..onTap = () {},
                               style: const TextStyle(
                                   color: Pallets.red,
                                   fontWeight: FontWeight.w700),
                             ),
                             TextSpan(
                               text: ' and',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {},
+                              recognizer: TapGestureRecognizer()..onTap = () {},
                               style: const TextStyle(),
                             ),
                             TextSpan(
                               text: ' Terms of Service',
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {},
+                              recognizer: TapGestureRecognizer()..onTap = () {},
                               style: const TextStyle(
                                   color: Pallets.red,
                                   fontWeight: FontWeight.w700),
@@ -137,53 +135,61 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     24.verticalSpace,
-                    CustomButton(
-                      foregroundColor: Pallets.black,
-                      bgColor: Pallets.white,
-                      elevation: 0,
-                      padding: const EdgeInsets.all(16),
-                      borderRadius: BorderRadius.circular(100),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ImageWidget(
-                            imageUrl: Assets.images.svgs.apple,
-                            size: 15,
-                          ),
-                          5.horizontalSpace,
-                          TextView(
-                            text: 'Continue with Apple',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontWeight: FontWeight.w600, fontSize: 14.sp),
-                          )
-                        ],
+                    if (Platform.isIOS)
+                      CustomButton(
+                        foregroundColor: Pallets.black,
+                        bgColor: Pallets.white,
+                        elevation: 0,
+                        padding: const EdgeInsets.all(16),
+                        borderRadius: BorderRadius.circular(100),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ImageWidget(
+                              imageUrl: Assets.images.svgs.apple,
+                              size: 15,
+                            ),
+                            5.horizontalSpace,
+                            TextView(
+                              text: 'Continue with Apple',
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontWeight: FontWeight.w600, fontSize: 14.sp),
+                            )
+                          ],
+                        ),
+                        onPressed: () {
+                          injector.get<LoginBloc>().add(const AppleAuthEvent());
+                        },
                       ),
-                      onPressed: () {},
-                    ),
                     16.verticalSpace,
-                    CustomButton(
-                      foregroundColor: Pallets.black,
-                      bgColor: Pallets.white,
-                      elevation: 0,
-                      padding: const EdgeInsets.all(16),
-                      borderRadius: BorderRadius.circular(100),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ImageWidget(
-                            imageUrl: Assets.images.svgs.google,
-                            size: 15,
-                          ),
-                          5.horizontalSpace,
-                          TextView(
-                            text: 'Continue with Google',
-                            style: GoogleFonts.plusJakartaSans(
-                                fontWeight: FontWeight.w600, fontSize: 14.sp),
-                          )
-                        ],
+                    if (Platform.isAndroid)
+                      CustomButton(
+                        foregroundColor: Pallets.black,
+                        bgColor: Pallets.white,
+                        elevation: 0,
+                        padding: const EdgeInsets.all(16),
+                        borderRadius: BorderRadius.circular(100),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ImageWidget(
+                              imageUrl: Assets.images.svgs.google,
+                              size: 15,
+                            ),
+                            5.horizontalSpace,
+                            TextView(
+                              text: 'Continue with Google',
+                              style: GoogleFonts.plusJakartaSans(
+                                  fontWeight: FontWeight.w600, fontSize: 14.sp),
+                            )
+                          ],
+                        ),
+                        onPressed: () {
+                          injector
+                              .get<LoginBloc>()
+                              .add(const GoogleAuthEvent());
+                        },
                       ),
-                      onPressed: () {},
-                    ),
                   ],
                 ),
               ),
@@ -204,6 +210,25 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     if (state is LoginPreviewFailureState) {
+      context.pop();
+      CustomDialogs.error(state.error);
+    }
+    if (state is OauthLoadingState) {
+      CustomDialogs.showLoading(context);
+    }
+    if (state is OauthSuccessState) {
+      if (state.response.data.newUser) {
+        injector
+            .get<regbloc.RegistrationBloc>()
+            .updateFields(email: state.response.data.email);
+        context.pop();
+        context.pushNamed(PageUrl.selectYearScreen);
+      } else {
+        context.pop();
+        context.pushNamed(PageUrl.welcomeScreen);
+      }
+    }
+    if (state is OauthFailureState) {
       context.pop();
       CustomDialogs.error(state.error);
     }

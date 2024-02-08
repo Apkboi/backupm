@@ -78,7 +78,11 @@ class _SignupOptionScreenState extends State<SignupOptionScreen> {
                                     )
                                   ],
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  injector
+                                      .get<RegistrationBloc>()
+                                      .add(const AppleAuthEvent());
+                                },
                               ),
                             ),
                             16.verticalSpace,
@@ -172,8 +176,16 @@ class _SignupOptionScreenState extends State<SignupOptionScreen> {
       CustomDialogs.showLoading(context);
     }
     if (state is OauthSuccessState) {
-      context.pop();
-      context.pushNamed(PageUrl.selectYearScreen);
+      if (state.response.data.newUser) {
+        injector
+            .get<RegistrationBloc>()
+            .updateFields(email: state.response.data.email);
+        context.pop();
+        context.pushNamed(PageUrl.selectYearScreen);
+      } else {
+        context.pop();
+        context.pushNamed(PageUrl.welcomeScreen);
+      }
     }
     if (state is OauthFailureState) {
       context.pop();

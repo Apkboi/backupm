@@ -21,8 +21,8 @@ class GoogleAuthEvent extends LoginEvent {
   List<Object?> get props => [];
 }
 
-class AppAuthEvent extends LoginEvent {
-  const AppAuthEvent();
+class AppleAuthEvent extends LoginEvent {
+  const AppleAuthEvent();
 
   @override
   List<Object?> get props => [];

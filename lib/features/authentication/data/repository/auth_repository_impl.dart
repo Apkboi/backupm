@@ -11,6 +11,7 @@ import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/login_preview_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
+import 'package:mentra/features/authentication/data/models/onauth_response.dart';
 import 'package:mentra/features/authentication/data/models/register_payload.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:path_provider/path_provider.dart';
@@ -57,7 +58,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
     // serverClientId: ,serverClientId
     clientId:
-        '297535846989-bgfgbuiv6q0lhbms1229m7msr1bhjce0.apps.googleusercontent.com',
+        '469691765994-mpvuctgp9epjihb9gs0bj138alged9jg.apps.googleusercontent.com',
   );
 
   @override
@@ -101,6 +102,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<GoogleSignInAuthentication?> googleAuth() async {
     try {
+      await googleAuthService.signOut();
       final response = await googleAuthService.signIn();
 
       final res = await response?.authentication;
@@ -131,7 +133,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<dynamic> oauthSignIn(OauthReqDto data) async {
+  Future<OauthResponse> oauthSignIn(OauthReqDto data) async {
     try {
       final response = await _networkService(
         UrlConfig.oauthLogin,
@@ -139,7 +141,7 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data.toJson(),
       );
 
-      return response.data;
+      return OauthResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

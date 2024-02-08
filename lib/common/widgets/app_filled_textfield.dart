@@ -57,6 +57,7 @@ class AppFilledTextField extends StatelessWidget {
               enabled: enabled,
               fillColor: Colors.transparent,
               suffix: suffix,
+              controller: controller,
               maxLine: maxLines,
               obscured: obscured,
               hint: hint),

@@ -58,10 +58,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (val) async {
+    return WillPopScope(
+      // canPop: false,
+      onWillPop: () async {
         context.goNamed(PageUrl.homeScreen);
+        return false;
       },
       child: Scaffold(
         body: Stack(
@@ -90,30 +91,37 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                     child: CircleAvatar(
                                       radius: 0.5.sw - 50,
                                       backgroundColor: Pallets.white,
-                                      child: Transform.scale(
-                                        scale: _scaleAnimation.value,
-                                        child: CircleAvatar(
-                                          radius: 0.5.sw - 60,
-                                          backgroundColor: Pallets.secondary,
-                                        ),
+
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Transform.scale(
+                                              scale: _scaleAnimation.value,
+                                              child: CircleAvatar(
+                                                radius: 0.5.sw - 60,
+                                                backgroundColor:
+                                                    Pallets.secondary,
+
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              countdown.toString(),
+                                              style: GoogleFonts.fraunces(
+                                                fontWeight:
+                                                FontWeight.w700,
+                                                fontSize: 32.0,
+                                                color: Pallets.black
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 16.0, bottom: 16),
-                                  child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      countdown.toString(),
-                                      style: GoogleFonts.fraunces(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 32.0,
-                                      ),
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),

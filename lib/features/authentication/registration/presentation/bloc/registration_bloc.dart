@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
+import 'package:mentra/features/authentication/data/models/onauth_response.dart';
 import 'package:mentra/features/authentication/data/models/register_payload.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:mentra/features/authentication/dormain/usecase/auth_success_usecase.dart';
@@ -111,8 +112,11 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         token: response?.idToken,
         provider: 'google',
       ));
-      emit(OauthSuccessState());
-    } on Exception catch (e) {
+      if (!res.data.newUser) {
+        AuthSuccessUsecase().execute(res.toAuthSuccessResponse);
+      }
+      emit(OauthSuccessState(res));
+    } catch (e) {
       emit(OauthFailureState(error: e.toString()));
     }
   }
@@ -128,7 +132,10 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         provider: 'apple',
       ));
 
-      emit(OauthSuccessState());
+      if (!res.data.newUser) {
+        AuthSuccessUsecase().execute(res.toAuthSuccessResponse);
+      }
+      emit(OauthSuccessState(res));
     } catch (e) {
       emit(OauthFailureState(error: e.toString()));
     }

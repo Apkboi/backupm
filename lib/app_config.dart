@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'core/services/firebase/notifiactions.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 import 'features/account/presentation/user_bloc/user_bloc.dart';
+import 'firebase_options.dart';
 
 enum Flavor { dev, staging, prod }
 
@@ -59,12 +61,13 @@ class AppConfig {
     // final objectBox = await BoxManager.create();
     await sessionManager.init();
     injector.registerLazySingleton<SessionManager>(() => sessionManager);
+    initFirebaseServices();
   }
 
   Future<void> initFirebaseServices() async {
-    // await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     CrashlyticsService.onCrash();
     await notificationService.initializeNotification();
     FirebaseDatabase.instance.setPersistenceEnabled(true);
