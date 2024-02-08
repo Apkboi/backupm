@@ -47,17 +47,32 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   bloc: _bloc,
                   listener: (context, state) {
                     logger.i(state.runtimeType.toString());
+                    if (state is SubscriptionLoadingState) {
+                      CustomDialogs.showLoading(context);
+                    }
+
+                    if (state is SubscriptionFailureState) {
+                      context.pop();
+                      CustomDialogs.error(state.error);
+                    }
+                    if (state is SubscribeSuccessState) {
+                      context.pop();
+                      context.pop();
+                      CustomDialogs.success('Payment successful.');
+                    }
                   },
                   builder: (context, state) {
                     if (state is GetPlansLoadingState) {
                       return Center(
-                        child: CustomDialogs.getLoading(),
+                        child: CustomDialogs.getLoading(size: 30),
                       );
                     }
                     if (state is GetPlansFailureState) {
                       return Center(
                         child: AppPromptWidget(
-                          onTap: () {},
+                          onTap: () {
+                            _bloc.add(GetPlansEvent());
+                          },
                         ),
                       );
                     }
@@ -77,13 +92,15 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                           39.verticalSpace,
                           Expanded(
                             flex: 1,
-                            child: PageView(
+                            child: PageView.builder(
+                              itemCount: state.response.data.length,
+                              itemBuilder: (context, index) => Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: PlanDetailsItem(
+                                    plan: state.response.data[index]),
+                              ),
                               padEnds: true,
-                              controller: PageController(viewportFraction: 0.8),
-                              children: const [
-                                PlanDetailsItem(),
-                                PlanDetailsItem(),
-                              ],
+                              controller: PageController(viewportFraction: 0.9),
                             ),
                           )
                         ],
@@ -91,6 +108,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                     }
                     return 0.verticalSpace;
                   },
+                  buildWhen: _buildWhen,
                 ),
               ),
             ],
@@ -98,5 +116,11 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
         ],
       ),
     );
+  }
+
+  bool _buildWhen(SubscriptionState previous, SubscriptionState current) {
+    return current is GetPlansLoadingState ||
+        current is GetPlansFailureState ||
+        current is GetPlansSuccessState;
   }
 }

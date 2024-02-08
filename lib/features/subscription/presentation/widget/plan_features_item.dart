@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,12 +9,17 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/subscription/data/models/card_details_payload.dart';
+import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
+import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 
 import 'card_details_sheet.dart';
 
 class PlanDetailsItem extends StatefulWidget {
-  const PlanDetailsItem({Key? key}) : super(key: key);
+  const PlanDetailsItem({super.key, required this.plan});
+
+  final SubscriptionPlan plan;
 
   @override
   State<PlanDetailsItem> createState() => _PlanDetailsItemState();
@@ -30,7 +34,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
       padding: const EdgeInsets.only(right: 8.0),
       child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
         bloc: injector.get(),
-        listener: (context, state) {},
+        listener: _listenToSubscriptionBloc,
         builder: (context, state) {
           return Column(
             children: [
@@ -59,27 +63,33 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   TextView(
-                                    text: 'Essential',
+                                    text: widget.plan.isActiveSubscription
+                                        ? 'Current Plan'
+                                        : widget.plan.name,
                                     style: GoogleFonts.fraunces(
                                         color: Pallets.primary,
                                         fontSize: 24,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   5.verticalSpace,
-                                  const TextView(
-                                      text: '79 AED/month',
+                                  TextView(
+                                      text: '${widget.plan.price} AED/month',
                                       fontSize: 18,
                                       color: Pallets.lightSecondary,
                                       fontWeight: FontWeight.w500),
                                   10.verticalSpace,
-                                  const TextView(
+                                  TextView(
                                       text:
-                                          'Upgrade to our Essential Plan for enhanced features and a more robust experience.',
+                                          'Upgrade to our ${widget.plan.name}  for enhanced features and a more robust experience.',
                                       color: Pallets.navy,
                                       fontWeight: FontWeight.w500),
                                   10.verticalSpace,
                                   ...List.generate(
-                                      2, (index) => const PlanFeature()),
+                                      widget.plan.benefits.length,
+                                      (index) => PlanFeature(
+                                            benefit:
+                                                widget.plan.benefits[index],
+                                          )),
                                 ],
                               ),
                             ),
@@ -90,34 +100,46 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                   ),
                 ),
               ),
-              Column(
-                children: [
-                  CustomOutlinedButton(
-                    radius: 100,
-                    bgColor: Pallets.white,
-                    outlinedColr: Pallets.primary,
-                    padding: const EdgeInsets.all(12),
-                    child: const TextView(
-                      align: TextAlign.center,
-                      text: 'Subscribe Monthly\n(AED 79/month)',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    onPressed: () {
-                      _subscribe(context);
-                    },
-                  ),
-                  16.verticalSpace,
-                  CustomNeumorphicButton(
-                    onTap: () {
-                      _subscribe(context);
-                    },
-                    color: Pallets.primary,
-                    padding: const EdgeInsets.all(12),
-                    text: "Subscribe Annually\n(AED 760/year, Save 20%)",
-                  ),
-                  21.verticalSpace
-                ],
-              )
+              if (!widget.plan.isActiveSubscription)
+                Column(
+                  children:
+                      List.generate(widget.plan.durations.length, (index) {
+                    if (widget.plan.durations[index].frequency == 'Monthly') {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            bottom: widget.plan.durations.length > 1 ? 10 : 20),
+                        child: CustomOutlinedButton(
+                          radius: 100,
+                          bgColor: Pallets.white,
+                          outlinedColr: Pallets.primary,
+                          padding: const EdgeInsets.all(12),
+                          child: TextView(
+                            align: TextAlign.center,
+                            text:
+                                'Subscribe Monthly\n(AED ${widget.plan.durations[index].price}/month)',
+                            fontWeight: FontWeight.w600,
+                          ),
+                          onPressed: () {
+                            _subscribe(context, widget.plan.durations[index]);
+                          },
+                        ),
+                      );
+                    } else {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: CustomNeumorphicButton(
+                          onTap: () {
+                            // _subscribe(context);
+                          },
+                          color: Pallets.primary,
+                          padding: const EdgeInsets.all(12),
+                          text:
+                              "Subscribe Annually\n(AED ${widget.plan.durations[index].price}/year, Save 20%)",
+                        ),
+                      );
+                    }
+                  }),
+                ),
             ],
           );
         },
@@ -125,8 +147,9 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
     );
   }
 
-  void _subscribe(BuildContext context) async {
-    final cardDetails = await CustomDialogs.showBottomSheet(
+  void _subscribe(BuildContext context, PlanDuration duration) async {
+    // log(widget.plan.id.toString());
+    final SubscriptionCard? cardDetails = await CustomDialogs.showBottomSheet(
       context,
       const CardDetailsSheet(),
       shape: const RoundedRectangleBorder(
@@ -137,13 +160,26 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
     );
 
     if (cardDetails != null) {
-      _bloc.add(SubscribeEvent(cardDetails));
+      SubscriptionPayload payload = SubscriptionPayload(
+          planId: widget.plan.id,
+          planDurationId: duration.id,
+          cardOwnerName: cardDetails.cardOwnerName,
+          cardNumber: cardDetails.cardNumber,
+          cardExpMonth: 12,
+          cardExpYear: 34,
+          cardCvc: 122);
+      _bloc.add(SubscribeEvent(payload));
     }
   }
+
+  void _listenToSubscriptionBloc(
+      BuildContext context, SubscriptionState state) {}
 }
 
 class PlanFeature extends StatelessWidget {
-  const PlanFeature({Key? key}) : super(key: key);
+  const PlanFeature({super.key, required this.benefit});
+
+  final Benefit benefit;
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +193,7 @@ class PlanFeature extends StatelessWidget {
             size: 24,
           ),
           8.horizontalSpace,
-          const Expanded(
-              child: TextView(text: 'Daily limited access to Talk to Mentra'))
+          Expanded(child: TextView(text: benefit.title))
         ],
       ),
     );

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
+import 'package:mentra/features/subscription/data/models/subscribe_response.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/dormain/repository/subscription_repository.dart';
 
@@ -23,10 +25,11 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       GetPlansEvent event, Emitter<SubscriptionState> emit) async {
     emit(GetPlansLoadingState());
     try {
-      final response = subscriptionRepository.getPlans();
+      final response = await subscriptionRepository.getPlans();
       emit(GetPlansSuccessState(response));
-    } catch (e) {
+    } catch (e,stack) {
       logger.e(e.toString());
+      logger.e(stack.toString());
       emit(GetPlansFailureState(e.toString()));
     }
   }
@@ -35,7 +38,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       SubscribeEvent event, Emitter<SubscriptionState> emit) async {
     emit(SubscriptionLoadingState());
     try {
-      final response = subscriptionRepository.getPlans();
+      final response = await subscriptionRepository.subscribe(event.payload);
       emit(SubscribeSuccessState(response));
     } catch (e) {
       logger.e(e.toString());

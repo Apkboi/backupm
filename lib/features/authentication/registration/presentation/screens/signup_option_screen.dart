@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,6 +55,7 @@ class _SignupOptionScreenState extends State<SignupOptionScreen> {
                             QuestionBox(message: [
                               'Awesome choice, ${injector.get<RegistrationBloc>().registrationPayload.name} 🎉 Would you like to sign up using your email, Google, or Apple?',
                             ], isSender: false),
+                            if(Platform.isIOS)
                             Align(
                               alignment: Alignment.centerRight,
                               child: CustomButton(
@@ -86,6 +89,7 @@ class _SignupOptionScreenState extends State<SignupOptionScreen> {
                               ),
                             ),
                             16.verticalSpace,
+
                             Align(
                               alignment: Alignment.centerRight,
                               child: CustomButton(

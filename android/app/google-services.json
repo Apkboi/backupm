@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "469691765994",
+    "project_id": "mentra-2323f",
+    "storage_bucket": "mentra-2323f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:469691765994:android:9ab1f3088154314144b393",
+        "android_client_info": {
+          "package_name": "com.mentraapp.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "469691765994-p131ofo9501662c3v016lapuh1r2g4h4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mentraapp.app",
+            "certificate_hash": "070d82284653b58ccf45c6aa73c592b217d976f3"
+          }
+        },
+        {
+          "client_id": "469691765994-t31c846ivpkp23c2v012meslregtpmhh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mentraapp.app",
+            "certificate_hash": "ce6c04043641e57c393fec176b1b316365633088"
+          }
+        },
+        {
+          "client_id": "469691765994-cec55sbhm1mg7v5hdmop5u27u0703lrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2tnX54R2stFkTn6ogP95h4GW5BTET6Jk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "469691765994-2sbns1i5e9gaa9usknd42scm6geu4k6q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "469691765994-ahpdo7k71o5d95ilcmk2bg01nsvfskol.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mentra.app.mentra.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mentra/core/theme/app_styles.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
@@ -33,6 +34,8 @@ class FilledTextField extends StatefulWidget {
 
   final double radius;
 
+  final List<TextInputFormatter>? inputFormatters;
+
   const FilledTextField(
       {Key? key,
       required this.hint,
@@ -61,7 +64,8 @@ class FilledTextField extends StatefulWidget {
       this.textColor,
       this.labelText,
       this.labelTextStyle,
-      this.suffixIcon})
+      this.suffixIcon,
+      this.inputFormatters})
       : super(key: key);
 
   @override
@@ -98,6 +102,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
           onSaved: widget.onSaved,
           obscureText: widget.obscured!,
           focusNode: widget.focusNode,
+          inputFormatters: widget.inputFormatters,
           autofocus: widget.autofocus!,
           minLines: widget.minLine,
           textInputAction: widget.textInputAction,

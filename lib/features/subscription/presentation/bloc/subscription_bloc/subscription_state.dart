@@ -29,7 +29,7 @@ class GetPlansLoadingState extends SubscriptionState {
 }
 
 class GetPlansSuccessState extends SubscriptionState {
-  final dynamic response;
+  final GetPlansResponse response;
 
   const GetPlansSuccessState(this.response);
 
@@ -47,7 +47,7 @@ class GetPlansFailureState extends SubscriptionState {
 }
 
 class SubscribeSuccessState extends SubscriptionState {
-  final dynamic response;
+  final SubscribeResponse response;
 
   const SubscribeSuccessState(this.response);
 
