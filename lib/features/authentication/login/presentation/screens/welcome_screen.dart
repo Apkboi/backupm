@@ -126,7 +126,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                     TextView(
+                    TextView(
                       align: TextAlign.center,
                       text:
                           'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}. \nInhale positivity, exhale stress',

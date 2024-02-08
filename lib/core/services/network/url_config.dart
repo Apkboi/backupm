@@ -9,6 +9,7 @@ class UrlConfig {
   static const String imageBaseUrl = String.fromEnvironment('IMAGE_BASE_URL');
   static const String dojahTestAppId = String.fromEnvironment('DOJAH_APP_ID');
   static const String dojahTestPublicKey = String.fromEnvironment('DOJAH_PUBLIC_KEY');
+  static const String stripeTestKey = String.fromEnvironment('STRIPE_TEST_KEY');
   static const String facePlusTestApiKey =
       String.fromEnvironment('FACE_PLUS_TEST_API_KEY');
   static const String facePlusTestApiSecret =
