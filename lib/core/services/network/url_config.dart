@@ -10,6 +10,7 @@ class UrlConfig {
   static const String dojahTestAppId = String.fromEnvironment('DOJAH_APP_ID');
   static const String dojahTestPublicKey = String.fromEnvironment('DOJAH_PUBLIC_KEY');
   static const String stripeTestKey = String.fromEnvironment('STRIPE_TEST_KEY');
+  static const String stripeSecretKey = String.fromEnvironment('STRIPE_SECRET_KEY');
   static const String facePlusTestApiKey =
       String.fromEnvironment('FACE_PLUS_TEST_API_KEY');
   static const String facePlusTestApiSecret =
@@ -80,4 +81,8 @@ class UrlConfig {
 
 //  NOtification
   static const String getNotifications = '/notifications/list';
+
+  //  Subscription
+  static const String getPlans = '/finance/plans';
+  static const String subscribe = '/finance/subscriptions/initiate';
 }

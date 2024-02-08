@@ -133,6 +133,8 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   google_sign_in: ^6.1.6
   sign_in_with_apple: ^5.0.0
+  flutter_stripe: ^10.0.0
+  mesibo_flutter_sdk: ^2.2.0
 #  flutter_stripe: ^9.5.0+1
 #  fluttermoji: ^1.0.2
 #  neumorphic_ui: ^1.0.1

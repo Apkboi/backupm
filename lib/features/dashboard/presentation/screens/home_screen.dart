@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -11,9 +12,11 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/subscription/presentation/widget/card_details_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/navigation/route_url.dart';
 
@@ -149,7 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               CustomNeumorphicButton(
                                 onTap: () {
                                   context.pushNamed(PageUrl.talkToMentraScreen);
-                                  // context.pushNamed(PageUrl.selectPlanScreen);
+                                  // _handlePayPress();
+                                  // _handlePaymentRequest();
+
+                                  // _showCardDialog(context);
                                 },
                                 color: Pallets.secondary,
                                 fgColor: Pallets.black,
@@ -170,4 +176,60 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  void _showCardDialog(BuildContext context) {
+    CustomDialogs.showBottomSheet(
+      context,
+      const CardDetailsSheet(),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      )),
+    );
+  }
+}
+
+Future<void> _handlePayPress() async {
+  double price = 100.5;
+  int constPrice = (price * 100).toInt();
+  try {
+    final paymentMethod = await Stripe.instance.createPlatformPayPaymentMethod(
+        params: const PlatformPayPaymentMethodParamsGooglePay(
+            googlePayParams: GooglePayParams(
+                testEnv: true, merchantCountryCode: 'CA', currencyCode: "CAD"),
+            googlePayPaymentMethodParams: GooglePayPaymentMethodParams(
+                amount: 50,
+                billingAddressConfig:
+                    GooglePayBillingAddressConfig(isRequired: true),
+                shippingAddressConfig:
+                    GooglePayShippingAddressConfig(isRequired: true)))
+
+        // GooglePayParams(
+        //   merchantCountryCode: "CA",
+        //   currencyCode: "CAD",
+        //   merchantName: "Tingsapp",
+        //   isEmailRequired: true,
+        //   testEnv: true,
+        // ),
+        // GooglePayPaymentMethodParams(
+        //   amount: constPrice,
+        //   billingAddressConfig: GooglePayBillingAddressConfig(isRequired: true),
+        //   shippingAddressConfig: GooglePayShippingAddressConfig(isRequired: true),
+        // ),
+        );
+    // handlePaymentMethod(paymentMethod);
+  } catch (e) {
+    if (e is StripeException) {
+      debugPrint('Stripe exception google pay,,,,,,,,,,,,,,,, ${e.error}');
+    } else {
+      debugPrint('General pay error >>>>>>>>>>>>>>> $e');
+    }
+    // setState(() {});
+  }
+}
+
+Future<void> _handlePaymentRequest() async {
+  StripeService().initPaymentSheet();
+  // await Stripe.instance.presentPaymentSheet();
 }

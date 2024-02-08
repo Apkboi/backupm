@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mentra/app.dart';
+import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'core/di/injector.dart';
 import 'core/services/data/hive/hive_manager.dart';
 import 'core/services/data/session_manager.dart';
@@ -72,6 +73,7 @@ class AppConfig {
     await notificationService.initializeNotification();
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     await FirebaseMessaging.instance.getInitialMessage();
+    StripeService.initialize();
     // signMessageUser();
   }
 

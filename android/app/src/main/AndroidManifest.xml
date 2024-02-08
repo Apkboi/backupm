@@ -4,6 +4,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+        android:enableOnBackInvokedCallback="true"
         android:label="mentra">
         <activity
             android:name=".MainActivity"

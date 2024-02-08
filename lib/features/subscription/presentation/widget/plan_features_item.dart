@@ -1,12 +1,18 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
+
+import 'card_details_sheet.dart';
 
 class PlanDetailsItem extends StatefulWidget {
   const PlanDetailsItem({Key? key}) : super(key: key);
@@ -16,95 +22,123 @@ class PlanDetailsItem extends StatefulWidget {
 }
 
 class _PlanDetailsItemState extends State<PlanDetailsItem> {
+  final _bloc = injector.get<SubscriptionBloc>();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    width: 1.sw,
-                    // color: Pallets.grey,
-                    decoration: ShapeDecoration(
-                        // color: Pallets.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 20,
-                          sigmaY: 20,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 16),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              TextView(
-                                text: 'Essential',
-                                style: GoogleFonts.fraunces(
-                                    color: Pallets.primary,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w600),
+      child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
+        bloc: injector.get(),
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 1.sw,
+                        // color: Pallets.grey,
+                        decoration: ShapeDecoration(
+                            // color: Pallets.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 20,
+                              sigmaY: 20,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextView(
+                                    text: 'Essential',
+                                    style: GoogleFonts.fraunces(
+                                        color: Pallets.primary,
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  5.verticalSpace,
+                                  const TextView(
+                                      text: '79 AED/month',
+                                      fontSize: 18,
+                                      color: Pallets.lightSecondary,
+                                      fontWeight: FontWeight.w500),
+                                  10.verticalSpace,
+                                  const TextView(
+                                      text:
+                                          'Upgrade to our Essential Plan for enhanced features and a more robust experience.',
+                                      color: Pallets.navy,
+                                      fontWeight: FontWeight.w500),
+                                  10.verticalSpace,
+                                  ...List.generate(
+                                      2, (index) => const PlanFeature()),
+                                ],
                               ),
-                              5.verticalSpace,
-                              const TextView(
-                                  text: '79 AED/month',
-                                  fontSize: 18,
-                                  color: Pallets.lightSecondary,
-                                  fontWeight: FontWeight.w500),
-                              10.verticalSpace,
-                              const TextView(
-                                  text:
-                                      'Upgrade to our Essential Plan for enhanced features and a more robust experience.',
-                                  color: Pallets.navy,
-                                  fontWeight: FontWeight.w500),
-                              10.verticalSpace,
-                              ...List.generate(
-                                  2, (index) => const PlanFeature()),
-                            ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ),
-          Column(
-            children: [
-              CustomOutlinedButton(
-                radius: 100,
-                bgColor: Pallets.white,
-                outlinedColr: Pallets.primary,
-                padding: const EdgeInsets.all(12),
-                child: const TextView(
-                  align: TextAlign.center,
-                  text: 'Subscribe Monthly\n(AED 79/month)',
-                  fontWeight: FontWeight.w600,
                 ),
-                onPressed: () {},
               ),
-              16.verticalSpace,
-              CustomNeumorphicButton(
-                onTap: () {},
-                color: Pallets.primary,
-                padding: const EdgeInsets.all(12),
-                text: "Subscribe Annually\n(AED 760/year, Save 20%)",
-              ),
-              21.verticalSpace
+              Column(
+                children: [
+                  CustomOutlinedButton(
+                    radius: 100,
+                    bgColor: Pallets.white,
+                    outlinedColr: Pallets.primary,
+                    padding: const EdgeInsets.all(12),
+                    child: const TextView(
+                      align: TextAlign.center,
+                      text: 'Subscribe Monthly\n(AED 79/month)',
+                      fontWeight: FontWeight.w600,
+                    ),
+                    onPressed: () {
+                      _subscribe(context);
+                    },
+                  ),
+                  16.verticalSpace,
+                  CustomNeumorphicButton(
+                    onTap: () {
+                      _subscribe(context);
+                    },
+                    color: Pallets.primary,
+                    padding: const EdgeInsets.all(12),
+                    text: "Subscribe Annually\n(AED 760/year, Save 20%)",
+                  ),
+                  21.verticalSpace
+                ],
+              )
             ],
-          )
-        ],
+          );
+        },
       ),
     );
+  }
+
+  void _subscribe(BuildContext context) async {
+    final cardDetails = await CustomDialogs.showBottomSheet(
+      context,
+      const CardDetailsSheet(),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      )),
+    );
+
+    if (cardDetails != null) {
+      _bloc.add(SubscribeEvent(cardDetails));
+    }
   }
 }
 
@@ -123,7 +157,8 @@ class PlanFeature extends StatelessWidget {
             size: 24,
           ),
           8.horizontalSpace,
-          const TextView(text: 'Daily limited access to Talk to Mentra')
+          const Expanded(
+              child: TextView(text: 'Daily limited access to Talk to Mentra'))
         ],
       ),
     );

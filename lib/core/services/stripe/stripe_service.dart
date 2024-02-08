@@ -1,3 +1,4 @@
+import 'package:cloudinary/cloudinary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -13,6 +14,10 @@ class StripeService {
     Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
     Stripe.urlScheme = 'flutterstripe';
     await Stripe.instance.applySettings();
+    // await Stripe.instance.applySettings();
+    // Stripe.instance.isPlatformPaySupportedListenable.addListener(() {
+    //
+    // });
   }
 
   NetworkService networkService = injector.get<NetworkService>();
@@ -25,13 +30,16 @@ class StripeService {
       // 2. initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
+
+          // paymentIntentClientSecret:data['paymentIntentClientSecret'],
           // Enable custom flow
           customFlow: true,
           // Main params
           merchantDisplayName: 'Flutter Stripe Store Demo',
-          paymentIntentClientSecret: data['paymentIntent'],
+          // paymentIntentClientSecret: data['paymentIntent'],
           // Customer keys
           customerEphemeralKeySecret: data['ephemeralKey'],
+          setupIntentClientSecret: data['client_secret'],
           customerId: data['customer'],
           // Extra options
           applePay: PaymentSheetApplePay(
@@ -41,9 +49,12 @@ class StripeService {
           style: ThemeMode.dark,
         ),
       );
+
+      // await Stri
       // setState(() {
       //   step = 1;
       // });
+     await  presentPaymentSheet();
     } catch (e) {
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(content: Text('Error: $e')),
@@ -115,11 +126,28 @@ class StripeService {
   }
 
   Future<Map<String, dynamic>> createTestPaymentSheet() async {
-    final url = Uri.parse('/payment-sheet');
+    Map<String, dynamic> payload = {
+      "amount": '100000',
+      "currency": 'NGN',
+      "payment_method_types[]": ["card"],
+      "metadata": {
+        "order_id": 'orderId',
+        "email": 'email',
+        "app_env": 'dev',
+        "amount": 100000,
+        "duration": 'duration',
+        "payment_for": 'paymentFor'
+      },
+    };
+    final url = Uri.parse('https://api.stripe.com/v1/payment_intents');
     final response =
-        await networkService.call(url.toString(), RequestMethod.post, data: {
-      'a': 'a',
-    });
+        await networkService.call(url.toString(), RequestMethod.post,
+            data: payload,
+            options: Options(headers: {
+              "Authorization":
+                  'Bearer sk_test_51IIZDzIshQwWGM1okIkVHeXQ5Lb1gDto5pKaWsDCY1QHPMB3wqUWg9V3sWcesCliKP6CVKINoawRErr9XGclukKj00cp2S7Xr8',
+              "Content-Type": "application/x-www-form-urlencoded"
+            }));
 
     final body = response.data;
 
