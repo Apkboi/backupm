@@ -45,12 +45,10 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                               onTap: () {
                                 _deleteAccount();
                               },
-                              leadingWidget: 0.horizontalSpace,
                               tittle: 'Delete Account'),
                           35.verticalSpace,
                           SettingListTile(
                               onTap: () => _deleteAccountData(),
-                              leadingWidget: 0.horizontalSpace,
                               tittle: 'Erase Data'),
                         ],
                       ),

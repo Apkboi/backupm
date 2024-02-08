@@ -10,7 +10,7 @@ String authSuccessResponseToJson(AuthSuccessResponse data) => json.encode(data.t
 
 class AuthSuccessResponse {
   final String message;
-  final Data data;
+  final AuthSuccessData data;
   final bool success;
   final int code;
 
@@ -23,7 +23,7 @@ class AuthSuccessResponse {
 
   AuthSuccessResponse copyWith({
     String? message,
-    Data? data,
+    AuthSuccessData? data,
     bool? success,
     int? code,
   }) =>
@@ -36,7 +36,7 @@ class AuthSuccessResponse {
 
   factory AuthSuccessResponse.fromJson(Map<String, dynamic> json) => AuthSuccessResponse(
     message: json["message"],
-    data: Data.fromJson(json["data"]),
+    data: AuthSuccessData.fromJson(json["data"]),
     success: json["success"],
     code: json["code"],
   );
@@ -49,25 +49,25 @@ class AuthSuccessResponse {
   };
 }
 
-class Data {
+class AuthSuccessData {
   final String token;
   final MentraUser user;
 
-  Data({
+  AuthSuccessData({
     required this.token,
     required this.user,
   });
 
-  Data copyWith({
+  AuthSuccessData copyWith({
     String? token,
     MentraUser? user,
   }) =>
-      Data(
+      AuthSuccessData(
         token: token ?? this.token,
         user: user ?? this.user,
       );
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory AuthSuccessData.fromJson(Map<String, dynamic> json) => AuthSuccessData(
     token: json["token"],
     user: MentraUser.fromJson(json["user"]),
   );

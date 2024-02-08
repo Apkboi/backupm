@@ -75,11 +75,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Center(
                                 child: TextView(
                                   text:
-                                  injector
-                                      .get<UserBloc>()
-                                      .appUser
-                                      ?.name ??
-                                      '',
+                                      injector.get<UserBloc>().appUser?.name ??
+                                          '',
                                   style: GoogleFonts.fraunces(
                                     fontSize: 32.sp,
                                   ),
@@ -115,18 +112,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                 topLeft: Radius.circular(21))),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Padding(
                                               padding:
-                                              const EdgeInsets.all(16.0),
+                                                  const EdgeInsets.all(16.0),
                                               child: TextView(
                                                 text: 'Select year',
                                                 style: GoogleFonts.fraunces(
                                                     color: Pallets.navy,
                                                     fontSize: 20.sp,
                                                     fontWeight:
-                                                    FontWeight.w600),
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                             16.verticalSpace,
@@ -134,7 +131,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               child: DateSelectorWidget(
                                                 alignment: Alignment.center,
                                                 initialYear: 1999,
-                                                onYearSelected: (year) {},
+                                                onYearSelected: (selectedYear) {
+                                                  year =
+                                                      selectedYear.toString();
+                                                  context.pop();
+                                                  setState(() {});
+                                                },
                                               ),
                                             ),
                                           ],
@@ -151,7 +153,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             const TextView(
                                               text: 'Birth Year',
@@ -217,6 +219,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: CustomNeumorphicButton(
                           text: "Save Changes",
                           onTap: () {
+                            bloc.add(UpdateProfileEvent(
+                                _nameController.text, int.parse(year)));
                             // sc
                           },
                           color: Pallets.primary),
@@ -234,7 +238,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void _listenToSettingsBloc(BuildContext context, SettingsState state) {
     if (state is UpdateProfileSuccessState) {
       context.pop();
-      context.pop();
+      CustomDialogs.success(state.response.message);
+      // context.pop();
     }
     if (state is UpdateProfileLoadingState) {
       CustomDialogs.showLoading(context);
@@ -243,15 +248,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       context.pop();
       CustomDialogs.error(state.error);
     }
+    if (state is UpdateProfileFailureState) {
+      context.pop();
+      CustomDialogs.error(state.error);
+    }
   }
 
   void _preFillContents() {
-    var user = injector
-        .get<UserBloc>()
-        .appUser;
-    year = user!.birthYear;
-    _nameController.text = user!.name;
-    setState(() {});
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        var user = injector.get<UserBloc>().appUser;
+        year = user!.birthYear;
+        _nameController.text = user.name;
+        setState(() {});
+      },
+    );
   }
 
 // Future<DateTime?> _selectYear(BuildContext context, int selectedYear) async {

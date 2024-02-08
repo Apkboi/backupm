@@ -75,12 +75,15 @@ class OauthLoadingState extends RegistrationState {
   List<Object?> get props => [];
 }
 
-class  OauthSuccessState extends RegistrationState {
+class OauthSuccessState extends RegistrationState {
+  final OauthResponse response;
+  const OauthSuccessState(this.response);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [response];
 }
 
-class  OauthFailureState extends RegistrationState {
+class OauthFailureState extends RegistrationState {
   final String error;
 
   const OauthFailureState({required this.error});

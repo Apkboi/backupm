@@ -35,7 +35,7 @@ class SettingsRepositoryImpl extends SettingsRepository {
     try {
       final response = await networkService
           .call(UrlConfig.updateProfile, RequestMethod.post, data: {
-        "birth_year": birthYear,
+        "birth_year": birthYear.toString(),
         "name": name,
       });
 
