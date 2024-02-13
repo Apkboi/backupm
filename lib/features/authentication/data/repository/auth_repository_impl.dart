@@ -57,8 +57,12 @@ class AuthRepositoryImpl extends AuthRepository {
     ],
 
     // serverClientId: ,serverClientId
-    clientId:
-        '469691765994-mpvuctgp9epjihb9gs0bj138alged9jg.apps.googleusercontent.com',
+    // clientId:
+    //     '469691765994-mpvuctgp9epjihb9gs0bj138alged9jg.apps.googleusercontent.com',
+
+    clientId: Platform.isAndroid
+        ? '469691765994-qkesja0jfhllglus5ep9dftdvvpcg8uq.apps.googleusercontent.com'
+        : "469691765994-ahpdo7k71o5d95ilcmk2bg01nsvfskol.apps.googleusercontent.com",
   );
 
   @override
@@ -104,6 +108,8 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       await googleAuthService.signOut();
       final response = await googleAuthService.signIn();
+
+
 
       final res = await response?.authentication;
 

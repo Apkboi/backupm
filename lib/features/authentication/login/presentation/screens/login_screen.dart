@@ -162,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                     16.verticalSpace,
-                    if (Platform.isAndroid)
+                    // if (Platform.isAndroid)
                       CustomButton(
                         foregroundColor: Pallets.black,
                         bgColor: Pallets.white,

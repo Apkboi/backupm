@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/models/success_response.dart';
+import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/settings/data/models/update_profile_response.dart';
 import 'package:mentra/features/settings/data/models/verify_passcode_response.dart';
 import 'package:mentra/features/settings/dormain/repository/settings_repository.dart';
@@ -29,6 +31,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     try {
       final response = await _settingsRepository.updateProfile(
           name: event.name, birthYear: event.birthYear);
+      injector.get<UserBloc>().add(SaveUserEvent(response.data));
       emit(UpdateProfileSuccessState(response: response));
     } catch (e) {
       emit(UpdateProfileFailureState(error: e.toString()));

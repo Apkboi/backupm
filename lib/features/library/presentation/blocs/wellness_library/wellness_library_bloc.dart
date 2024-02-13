@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/library/data/models/get_course_details_response.dart';
 import 'package:mentra/features/library/data/models/get_favourite_courses_response.dart';
 import 'package:mentra/features/library/data/models/get_library_categories_response.dart';
@@ -34,7 +35,6 @@ class WellnessLibraryBloc
     emit(GetLibraryCategoriesLoadingState());
 
     try {
-
       final response = await _wellnessLibraryRepository.getLibraryCategories();
       libraryCategories = response.data;
       emit(GetLibraryCategoriesSuccessState(response: response));
@@ -51,7 +51,9 @@ class WellnessLibraryBloc
       final courses = await _wellnessLibraryRepository
           .getLibraryCourses(event.id.toString());
       emit(GetLibraryCoursesSuccessState(response: courses));
-    } catch (e) {
+    } catch (e, stack) {
+      logger.e(stack);
+      logger.e(e.toString());
       emit(GetLibraryCoursesFailureState(error: e.toString()));
     }
   }

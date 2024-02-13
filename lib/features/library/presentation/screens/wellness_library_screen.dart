@@ -66,26 +66,31 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
       body: Stack(
         children: [
           const AppBg(),
-          DefaultTabController(
-            length: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(17.0),
-              child: Column(
-                children: [
-                  100.h.verticalSpace,
-                  const CustomTabbar(tabs: [
-                    Tab(
-                      text: "Discover",
-                    ),
-                    Tab(text: "Favorites"),
-                  ]),
-                  20.verticalSpace,
-                  const Expanded(
-                      child: TabBarView(
-                          physics: NeverScrollableScrollPhysics(),
-                          children: [DiscoverContents(), FavoriteContents()])),
-                  8.verticalSpace,
-                ],
+          SafeArea(
+            child: DefaultTabController(
+              length: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(17.0),
+                child: Column(
+                  children: [
+                    // 100.h.verticalSpace,
+                    const CustomTabbar(tabs: [
+                      Tab(
+                        text: "Discover",
+                      ),
+                      Tab(text: "Favorites"),
+                    ]),
+                    20.verticalSpace,
+                    const Expanded(
+                        child: TabBarView(
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [
+                          DiscoverContents(),
+                          FavoriteContents()
+                        ])),
+                    8.verticalSpace,
+                  ],
+                ),
               ),
             ),
           ),
@@ -162,7 +167,7 @@ class _FavoriteContentsState extends State<FavoriteContents>
                 padding: EdgeInsets.zero,
                 children: const [
                   AppEmptyState(),
-                  Spacer(),
+                  // Spacer(),
                 ],
               ),
             );

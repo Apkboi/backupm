@@ -25,7 +25,8 @@ class ArticleItem extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16), color: Pallets.white),
+            borderRadius: BorderRadius.circular(16),
+            color: Pallets.white.withOpacity(0.9)),
         padding: const EdgeInsets.all(10),
         child: Row(
           children: [
@@ -35,7 +36,7 @@ class ArticleItem extends StatelessWidget {
               child: Stack(
                 children: [
                   ImageWidget(
-                    imageUrl: Assets.images.pngs.article.path,
+                    imageUrl: course.attachments!.first.file.url,
                     height: 126.h,
                     // fit: BoxFit.cover,
                     borderRadius: BorderRadius.circular(16),
@@ -65,7 +66,7 @@ class ArticleItem extends StatelessWidget {
                 2.verticalSpace,
                 const TextView(
                   // text: course.courseType == 'text' ? 'Article' : 'Video',
-                  text:  'Article',
+                  text: 'Article',
                   fontSize: 13,
                 ),
               ],

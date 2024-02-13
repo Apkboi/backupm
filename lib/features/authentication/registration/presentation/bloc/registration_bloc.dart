@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
 import 'package:mentra/features/authentication/data/models/onauth_response.dart';
@@ -108,6 +109,10 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
     try {
       final response = await _authRepository.googleAuth();
+      if (response?.idToken == null) {
+        emit(const OauthFailureState(error: "Google auth failed"));
+        return;
+      }
       var res = await _authRepository.oauthSignIn(OauthReqDto(
         token: response?.idToken,
         provider: 'google',

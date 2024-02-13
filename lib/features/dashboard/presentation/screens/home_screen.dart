@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -190,46 +190,46 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Future<void> _handlePayPress() async {
-  double price = 100.5;
-  int constPrice = (price * 100).toInt();
-  try {
-    final paymentMethod = await Stripe.instance.createPlatformPayPaymentMethod(
-        params: const PlatformPayPaymentMethodParamsGooglePay(
-            googlePayParams: GooglePayParams(
-                testEnv: true, merchantCountryCode: 'CA', currencyCode: "CAD"),
-            googlePayPaymentMethodParams: GooglePayPaymentMethodParams(
-                amount: 50,
-                billingAddressConfig:
-                    GooglePayBillingAddressConfig(isRequired: true),
-                shippingAddressConfig:
-                    GooglePayShippingAddressConfig(isRequired: true)))
-
-        // GooglePayParams(
-        //   merchantCountryCode: "CA",
-        //   currencyCode: "CAD",
-        //   merchantName: "Tingsapp",
-        //   isEmailRequired: true,
-        //   testEnv: true,
-        // ),
-        // GooglePayPaymentMethodParams(
-        //   amount: constPrice,
-        //   billingAddressConfig: GooglePayBillingAddressConfig(isRequired: true),
-        //   shippingAddressConfig: GooglePayShippingAddressConfig(isRequired: true),
-        // ),
-        );
-    // handlePaymentMethod(paymentMethod);
-  } catch (e) {
-    if (e is StripeException) {
-      debugPrint('Stripe exception google pay,,,,,,,,,,,,,,,, ${e.error}');
-    } else {
-      debugPrint('General pay error >>>>>>>>>>>>>>> $e');
-    }
-    // setState(() {});
-  }
-}
-
-Future<void> _handlePaymentRequest() async {
-  StripeService().initPaymentSheet();
-  // await Stripe.instance.presentPaymentSheet();
-}
+// Future<void> _handlePayPress() async {
+//   double price = 100.5;
+//   int constPrice = (price * 100).toInt();
+//   try {
+//     final paymentMethod = await Stripe.instance.createPlatformPayPaymentMethod(
+//         params: const PlatformPayPaymentMethodParamsGooglePay(
+//             googlePayParams: GooglePayParams(
+//                 testEnv: true, merchantCountryCode: 'CA', currencyCode: "CAD"),
+//             googlePayPaymentMethodParams: GooglePayPaymentMethodParams(
+//                 amount: 50,
+//                 billingAddressConfig:
+//                     GooglePayBillingAddressConfig(isRequired: true),
+//                 shippingAddressConfig:
+//                     GooglePayShippingAddressConfig(isRequired: true)))
+//
+//         // GooglePayParams(
+//         //   merchantCountryCode: "CA",
+//         //   currencyCode: "CAD",
+//         //   merchantName: "Tingsapp",
+//         //   isEmailRequired: true,
+//         //   testEnv: true,
+//         // ),
+//         // GooglePayPaymentMethodParams(
+//         //   amount: constPrice,
+//         //   billingAddressConfig: GooglePayBillingAddressConfig(isRequired: true),
+//         //   shippingAddressConfig: GooglePayShippingAddressConfig(isRequired: true),
+//         // ),
+//         );
+//     // handlePaymentMethod(paymentMethod);
+//   } catch (e) {
+//     if (e is StripeException) {
+//       debugPrint('Stripe exception google pay,,,,,,,,,,,,,,,, ${e.error}');
+//     } else {
+//       debugPrint('General pay error >>>>>>>>>>>>>>> $e');
+//     }
+//     // setState(() {});
+//   }
+// }
+//
+// Future<void> _handlePaymentRequest() async {
+//   StripeService().initPaymentSheet();
+//   // await Stripe.instance.presentPaymentSheet();
+// }

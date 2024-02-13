@@ -119,8 +119,8 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                                 ),
                               ),
                               const SizedBox(width: 11),
-                              const TextView(
-                                text: '4 Mins read',
+                              TextView(
+                                text: "${course.readTime ?? '4 Mins'} read",
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -128,7 +128,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           ),
                           24.verticalSpace,
                           ImageWidget(
-                            imageUrl: Assets.images.pngs.article.path,
+                            imageUrl: course.attachments!.first.file.url,
                             height: 213.h,
                             // fit: BoxFit.cover,
                             borderRadius: BorderRadius.circular(10),
@@ -143,12 +143,19 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           //   ),
                           // ),
                           // 16.verticalSpace,
-                          Html(data: course.body, style: {
+                          Html(data: state.response.data.body, style: {
                             "p": Style(
                                 fontSize: FontSize(
-                                  15.sp,
+                                  16.sp,
                                   Unit.px,
                                 ),
+                                fontWeight: FontWeight.w400),
+                            "h4": Style(
+                                fontSize: FontSize(
+                                  16.sp,
+                                  Unit.px,
+                                ),
+                                height: Height(15),
                                 fontWeight: FontWeight.w500),
                           }),
                           29.verticalSpace,

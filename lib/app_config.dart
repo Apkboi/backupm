@@ -73,7 +73,7 @@ class AppConfig {
     await notificationService.initializeNotification();
     FirebaseDatabase.instance.setPersistenceEnabled(true);
     await FirebaseMessaging.instance.getInitialMessage();
-    StripeService.initialize();
+    // StripeService.initialize();
     // signMessageUser();
   }
 

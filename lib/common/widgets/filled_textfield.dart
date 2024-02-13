@@ -75,89 +75,73 @@ class FilledTextField extends StatefulWidget {
 class _FilledTextFieldState extends State<FilledTextField> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // padding: widget.contentPadding ?? const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(widget.radius),
-          color: widget.fillColor ?? Pallets.white,
-          boxShadow: widget.hasElevation!
-              ? [
-                  BoxShadow(
-                      color: Pallets.grey.withOpacity(0.1),
-                      offset: const Offset(1, 1),
-                      spreadRadius: 1,
-                      blurStyle: BlurStyle.outer)
-                ]
-              : []),
-      child: SizedBox(
-        child: TextFormField(
-          validator: widget.validator,
-          key: widget.formKey,
-          controller: widget.controller,
-          maxLines: widget.maxLine ?? 1,
-          keyboardType: widget.inputType,
-          cursorColor: Theme.of(context).colorScheme.onBackground,
-          onChanged: widget.onChanged,
-          onFieldSubmitted: widget.onFieldSubmitted,
-          onSaved: widget.onSaved,
-          obscureText: widget.obscured!,
-          focusNode: widget.focusNode,
-          inputFormatters: widget.inputFormatters,
-          autofocus: widget.autofocus!,
-          minLines: widget.minLine,
-          textInputAction: widget.textInputAction,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: widget.textColor ??
-                  Theme.of(context).colorScheme.onBackground,
-              fontSize: 16,
-              fontWeight: FontWeight.w500),
-          decoration: AppStyles.filledTextFieldDecoration.copyWith(
-              fillColor:
-                  widget.fillColor ?? Theme.of(context).colorScheme.surface,
-              enabledBorder: widget.hasBorder!
-                  ? OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(widget.radius),
-                      borderSide:
-                          BorderSide(color: Pallets.grey.withOpacity(0.2)))
-                  : OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(widget.radius),
-                      borderSide: BorderSide.none,
+    return SizedBox(
+      child: TextFormField(
+        validator: widget.validator,
+        key: widget.formKey,
+        controller: widget.controller,
+        maxLines: widget.maxLine ?? 1,
+        keyboardType: widget.inputType,
+        cursorColor: Theme.of(context).colorScheme.onBackground,
+        onChanged: widget.onChanged,
+        onFieldSubmitted: widget.onFieldSubmitted,
+        onSaved: widget.onSaved,
+        obscureText: widget.obscured!,
+        focusNode: widget.focusNode,
+        inputFormatters: widget.inputFormatters,
+        autofocus: widget.autofocus!,
+        minLines: widget.minLine,
+        textInputAction: widget.textInputAction,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: widget.textColor ??
+                Theme.of(context).colorScheme.onBackground,
+            fontSize: 16,
+            fontWeight: FontWeight.w500),
+        decoration: AppStyles.filledTextFieldDecoration.copyWith(
+            fillColor: widget.fillColor ?? Theme.of(context).colorScheme.surface,
+            enabledBorder: widget.hasBorder!
+                ? OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.radius),
+                    borderSide:
+                        BorderSide(color: Pallets.grey.withOpacity(0.2)))
+                : OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.radius),
+                    borderSide: BorderSide.none,
+                  ),
+            hintText: widget.hint,
+            suffixIcon: widget.suffixIcon,
+            suffix: widget.suffix,
+            focusedBorder: widget.outline!
+                ? OutlineInputBorder(
+                    gapPadding: 2,
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1,
                     ),
-              hintText: widget.hint,
-              suffixIcon: widget.suffixIcon,
-              suffix: widget.suffix,
-              focusedBorder: widget.outline!
-                  ? OutlineInputBorder(
-                      gapPadding: 2,
-                      borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(widget.radius))
-                  : OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(widget.radius),
-                      borderSide: BorderSide.none,
-                    ),
-              border: widget.hasBorder!
-                  ? OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(widget.radius),
-                      borderSide: const BorderSide(color: Colors.transparent),
-                    )
-                  : OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(widget.radius),
-                      borderSide: BorderSide.none,
-                    ),
-              prefixIcon: widget.preffix,
-              prefixIconColor: Pallets.grey,
-              suffixIconColor: Theme.of(context).colorScheme.primary,
-              enabled: widget.enabled,
-              contentPadding: widget.contentPadding ?? const EdgeInsets.all(18),
-              filled: true,
+                    borderRadius: BorderRadius.circular(widget.radius))
+                : OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.radius),
+                    borderSide: BorderSide.none,
+                  ),
+            border: widget.hasBorder!
+                ? OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.radius),
+                    borderSide: const BorderSide(color: Colors.transparent),
+                  )
+                : OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(widget.radius),
+                    borderSide: BorderSide.none,
+                  ),
+            prefixIcon: widget.preffix,
+            prefixIconColor: Pallets.grey,
+            suffixIconColor: Theme.of(context).colorScheme.primary,
+            enabled: widget.enabled,
+            contentPadding: widget.contentPadding ?? const EdgeInsets.all(16),
+            filled: true,
 
-              // labelText: widget.labelText,
-              // labelStyle: widget.labelTextStyle,
-              hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
-        ),
+            // labelText: widget.labelText,
+            // labelStyle: widget.labelTextStyle,
+            hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
       ),
     );
   }

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>469691765994-mpvuctgp9epjihb9gs0bj138alged9jg.apps.googleusercontent.com</string>
+	<string>469691765994-ahpdo7k71o5d95ilcmk2bg01nsvfskol.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.469691765994-mpvuctgp9epjihb9gs0bj138alged9jg</string>
+	<string>com.googleusercontent.apps.469691765994-ahpdo7k71o5d95ilcmk2bg01nsvfskol</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>469691765994-p131ofo9501662c3v016lapuh1r2g4h4.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mentraapp.app</string>
+	<string>com.mentra.app.mentra.RunnerTests</string>
 	<key>PROJECT_ID</key>
 	<string>mentra-2323f</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:469691765994:ios:e528b90603bc393944b393</string>
+	<string>1:469691765994:ios:62fa24625d238b3044b393</string>
 </dict>
 </plist>

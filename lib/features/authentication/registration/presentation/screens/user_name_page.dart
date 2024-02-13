@@ -61,11 +61,10 @@ class _UsernamePageState extends State<UsernamePage> {
                       child: FilledTextField(
                         hint: "Type name..",
                         controller: _nameController,
-                        validator:
-                            RequiredValidator(errorText: 'Enter your name')
-                                .call,
+                        validator: RequiredValidator(errorText: 'Enter your name').call,
                         hasElevation: false,
                         outline: false,
+
                         hasBorder: false,
                         suffix: InkWell(
                           onTap: () {
@@ -73,7 +72,7 @@ class _UsernamePageState extends State<UsernamePage> {
                           },
                           child: const Icon(
                             Icons.send_rounded,
-                            size: 25,
+                            size: 20,
                           ),
                         ),
                         // onChanged: widget.onChanged,

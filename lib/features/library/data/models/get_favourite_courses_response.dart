@@ -6,9 +6,11 @@ import 'dart:convert';
 
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
 
-GetFavoutiteCoursesResponse getFavoutiteCoursesResponseFromJson(String str) => GetFavoutiteCoursesResponse.fromJson(json.decode(str));
+GetFavoutiteCoursesResponse getFavoutiteCoursesResponseFromJson(String str) =>
+    GetFavoutiteCoursesResponse.fromJson(json.decode(str));
 
-String getFavoutiteCoursesResponseToJson(GetFavoutiteCoursesResponse data) => json.encode(data.toJson());
+String getFavoutiteCoursesResponseToJson(GetFavoutiteCoursesResponse data) =>
+    json.encode(data.toJson());
 
 class GetFavoutiteCoursesResponse {
   final String message;
@@ -36,22 +38,22 @@ class GetFavoutiteCoursesResponse {
         code: code ?? this.code,
       );
 
-  factory GetFavoutiteCoursesResponse.fromJson(Map<String, dynamic> json) => GetFavoutiteCoursesResponse(
-    message: json["message"],
-    data: List<LibraryCourse>.from(json["data"].map((x) => LibraryCourse.fromJson(x))),
-    success: json["success"],
-    code: json["code"],
-  );
+  factory GetFavoutiteCoursesResponse.fromJson(Map<String, dynamic> json) =>
+      GetFavoutiteCoursesResponse(
+        message: json["message"],
+        data: List<LibraryCourse>.from(
+            json["data"].map((x) => LibraryCourse.fromJson(x))),
+        success: json["success"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-    "success": success,
-    "code": code,
-  };
+        "message": message,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "success": success,
+        "code": code,
+      };
 }
-
-
 
 class Category {
   final int id;
@@ -96,26 +98,26 @@ class Category {
       );
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    backgroundColor: json["background_color"],
-    status: json["status"],
-    image: Image.fromJson(json["image"]),
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        name: json["name"],
+        description: json["description"],
+        backgroundColor: json["background_color"],
+        status: json["status"],
+        image: Image.fromJson(json["image"]),
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "background_color": backgroundColor,
-    "status": status,
-    "image": image.toJson(),
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "name": name,
+        "description": description,
+        "background_color": backgroundColor,
+        "status": status,
+        "image": image.toJson(),
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
 class Image {
@@ -157,22 +159,22 @@ class Image {
       );
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-    id: json["id"],
-    name: json["name"],
-    url: json["url"],
-    mimeType: json["mime_type"],
-    size: json["size"],
-    formattedSize: json["formatted_size"],
-    createdAt: DateTime.parse(json["created_at"]),
-  );
+        id: json["id"],
+        name: json["name"],
+        url: json["url"],
+        mimeType: json["mime_type"],
+        size: json["size"],
+        formattedSize: json["formatted_size"],
+        createdAt: DateTime.parse(json["created_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "url": url,
-    "mime_type": mimeType,
-    "size": size,
-    "formatted_size": formattedSize,
-    "created_at": createdAt.toIso8601String(),
-  };
+        "id": id,
+        "name": name,
+        "url": url,
+        "mime_type": mimeType,
+        "size": size,
+        "formatted_size": formattedSize,
+        "created_at": createdAt.toIso8601String(),
+      };
 }

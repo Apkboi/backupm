@@ -130,6 +130,8 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                         child: CustomNeumorphicButton(
                           onTap: () {
                             // _subscribe(context);
+                            _subscribe(context, widget.plan.durations[index]);
+
                           },
                           color: Pallets.primary,
                           padding: const EdgeInsets.all(12),

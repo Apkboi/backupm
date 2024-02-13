@@ -28,6 +28,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool _passwordObscured = true;
 
   final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
 
   var year = '';
 
@@ -130,7 +131,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             Expanded(
                                               child: DateSelectorWidget(
                                                 alignment: Alignment.center,
-                                                initialYear: 1999,
+                                                initialYear: int.parse(year),
                                                 onYearSelected: (selectedYear) {
                                                   year =
                                                       selectedYear.toString();
@@ -203,9 +204,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               //       ),
                               //     )),
                               // 16.verticalSpace,
-                              const AppFilledTextField(
+                              AppFilledTextField(
                                 hint: 'habib@gmail.com',
                                 enabled: false,
+                                controller: _emailController,
                                 label: 'Enter your email',
                               ),
                               16.verticalSpace,
@@ -238,7 +240,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void _listenToSettingsBloc(BuildContext context, SettingsState state) {
     if (state is UpdateProfileSuccessState) {
       context.pop();
-      CustomDialogs.success(state.response.message);
+      CustomDialogs.success('Profile updated');
       // context.pop();
     }
     if (state is UpdateProfileLoadingState) {
@@ -261,6 +263,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         var user = injector.get<UserBloc>().appUser;
         year = user!.birthYear;
         _nameController.text = user.name;
+        _emailController.text = user.email;
         setState(() {});
       },
     );
