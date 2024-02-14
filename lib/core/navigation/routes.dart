@@ -158,7 +158,7 @@ class CustomRoutes {
       GoRoute(
         path: '/welcomeScreen',
         name: PageUrl.welcomeScreen,
-        builder: (context, state) =>  WelcomeScreen(),
+        builder: (context, state) => WelcomeScreen(),
       ),
       GoRoute(
         path: '/therapyScreen',
@@ -183,7 +183,9 @@ class CustomRoutes {
       GoRoute(
         path: '/videoPlayerScreen',
         name: PageUrl.videoPlayerScreen,
-        builder: (context, state) => const VideoPlayerScreen(),
+        builder: (context, state) =>  VideoPlayerScreen(
+          courseJson: state.uri.queryParameters[PathParam.libraryCourse] ?? "",
+        ),
       ),
       GoRoute(
         path: '/articleDetailsScreen',
@@ -208,7 +210,9 @@ class CustomRoutes {
       GoRoute(
         path: '/videoArticleScreen',
         name: PageUrl.videoArticleScreen,
-        builder: (context, state) => const VideoArticleScreen(),
+        builder: (context, state) => VideoArticleScreen(
+          courseId: state.uri.queryParameters[PathParam.id] ?? "",
+        ),
       ),
       GoRoute(
         path: '/settingsScreen',

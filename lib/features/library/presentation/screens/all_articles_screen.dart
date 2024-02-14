@@ -98,23 +98,13 @@ class _AllArticlesScreenState extends State<AllArticlesScreen> {
                             GetLibraryCoursesEvent(category.id.toString()));
                       },
                       child: ListView.builder(
-                        itemCount: state.response.data
-                            .where((element) =>
-                                element.courseType.toString().toLowerCase() !=
-                                'video')
-                            .length,
+                        itemCount: state.response.data.length,
                         padding: const EdgeInsets.all(16),
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.only(top: 10.0),
                             child: ArticleItem(
-                              course: state.response.data
-                                  .where((element) =>
-                                      element.courseType
-                                          .toString()
-                                          .toLowerCase() !=
-                                      'video')
-                                  .toList()[index],
+                              course: state.response.data[index],
                             ),
                           );
                         },

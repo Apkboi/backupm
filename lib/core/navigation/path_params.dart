@@ -7,6 +7,7 @@ class PathParam {
   static const profilePhoto = 'profilePhoto';
   static const hash = 'hash';
   static const userId = 'userId';
+  static const url = 'userId';
   static const userName = 'userName';
   static const isOnline = 'user';
   static const libraryCategory = 'libraryCategory';

@@ -81,12 +81,12 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                                 const TextView(
                                     align: TextAlign.center,
                                     text:
-                                    "MDS - Periodonyology and Oral\nImpantology, BDS"),
+                                        "MDS - Periodonyology and Oral\nImpantology, BDS"),
                                 16.verticalSpace,
                                 Container(
                                   decoration: BoxDecoration(
                                       color:
-                                      Pallets.pendingColor.withOpacity(0.2),
+                                          Pallets.pendingColor.withOpacity(0.2),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -133,7 +133,6 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                                         fontWeight: FontWeight.w600,
                                       ),
                                       onPressed: () {
-
                                         // _cancelTherapySession(context);
                                       },
                                     ),
@@ -147,7 +146,10 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                     ),
                   ],
                 ),
-                Container(height: 100,color: Pallets.black,)
+                Container(
+                  height: 100,
+                  color: Pallets.black,
+                )
                 // IgnorePointer(
                 //   ignoring: true,
                 //   child: 0.2.sh.verticalSpace,

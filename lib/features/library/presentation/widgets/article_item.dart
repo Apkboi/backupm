@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -8,7 +7,6 @@ import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
-import 'package:mentra/gen/assets.gen.dart';
 
 class ArticleItem extends StatelessWidget {
   const ArticleItem({super.key, required this.course});
@@ -19,9 +17,14 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(PageUrl.articleDetailsScreen, queryParameters: {
-          PathParam.libraryCourse: jsonEncode(course.toJson())
-        });
+        if (course.courseType == 'Video') {
+          context.pushNamed(PageUrl.videoArticleScreen,
+              queryParameters: {PathParam.id: course.id.toString()});
+        } else {
+          context.pushNamed(PageUrl.articleDetailsScreen, queryParameters: {
+            PathParam.libraryCourse: jsonEncode(course.toJson())
+          });
+        }
       },
       child: Container(
         decoration: BoxDecoration(
