@@ -40,6 +40,12 @@
     	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>This allows Mesibo to use your microphone for voice and video calls</string>
+	<key>NSAppleMusicUsageDescription</key>
+    <string>This enables you to send media files using mesibo</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Mentra syncs phone numbers from your contacts to Mesibo servers to help you connect with other Mesibo users and to provide a better experience</string>
 	<key>NSCameraUsageDescription</key>
     <string>Mentra will use this feature to let you add your card, upload documents, scan QR codes or take a selfie.</string>
     <key>NSFaceIDUsageDescription</key>
@@ -52,11 +58,17 @@
    	<string>Can I use the mic please?</string>
    	<key>NSPhotoLibraryUsageDescription</key>
    	<string>Can I use the PhotoLibrary please? Only for capturing your profile picture</string>
-   	<key>NSCameraUsageDescription</key>
-    <string>Scan your card to add it automatically</string>
-    <key>NSCameraUsageDescription
-    &lt;string&gt;To scan cards&lt;/string&gt;</key>
-    <string>To scan cards</string>
+    <key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+    	<true/>
+    	<key>UIApplicationSupportsIndirectInputEvents</key>
+    	<true/>
+    	<key>UIBackgroundModes</key>
+    	<array>
+    		<string>audio</string>
+    		<string>fetch</string>
+    		<string>voip</string>
+    		<string>remote-notification</string>
+    	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

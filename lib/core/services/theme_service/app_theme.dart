@@ -18,6 +18,7 @@ class AppTheme extends ChangeNotifier {
     brightness: Brightness.light,
     primaryColor: Pallets.primary,
     useMaterial3: false,
+
     hintColor: Pallets.grey,
     scaffoldBackgroundColor: Pallets.bgLight,
     fontFamily: GoogleFonts.plusJakartaSans().fontFamily,

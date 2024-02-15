@@ -7,6 +7,7 @@ import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
 
 class TherapyItem extends StatelessWidget {
@@ -18,9 +19,11 @@ class TherapyItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
         CustomDialogs.showCupertinoBottomSheet(
-            context,  TherapyDetailsSheet(session: session,));
+            context,
+            TherapyDetailsSheet(
+              session: session,
+            ));
       },
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -54,13 +57,9 @@ class TherapyItem extends StatelessWidget {
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
-                    if (session.status == 'Accepted')
-                      CustomNeumorphicButton(
-                          expanded: false,
-                          text: 'Join session',
-                          padding: const EdgeInsets.all(10),
-                          onTap: () {},
-                          color: Pallets.primary)
+                    SessionButton(
+                        startDate: session.startsAt,
+                        endDate: session.endsAt ?? DateTime.now())
                   ],
                 ),
               ),
@@ -98,3 +97,8 @@ class TherapyStatusIndicator extends StatelessWidget {
             )));
   }
 }
+
+
+
+
+

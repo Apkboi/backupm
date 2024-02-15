@@ -52,7 +52,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       ),
       body: FullScreenVideoDialog(
           videoPath: course.attachments?.first.file.url ?? '',
-
           videoType: VideoSourceType.network),
     );
   }
@@ -190,8 +189,15 @@ class _FullScreenVideoDialogState extends State<FullScreenVideoDialog> {
       autoInitialize: true,
       looping: false,
       autoPlay: true,
+      draggableProgressBar: true,
+      progressIndicatorDelay: const Duration(milliseconds: 300),
+
       // showControls: false,
-      customControls: const MaterialControls(showPlayButton: true),
+      customControls: const CupertinoControls(
+        showPlayButton: true,
+        backgroundColor: Pallets.black,
+        iconColor: Pallets.white,
+      ),
       errorBuilder: (context, errorMessage) {
         return Center(
           child: Text(errorMessage),
@@ -213,7 +219,7 @@ class _FullScreenVideoDialogState extends State<FullScreenVideoDialog> {
           Chewie(
             controller: _chewieController,
           ),
-          Column(
+          const Column(
             children: [
               // Spacer(),
               // VideoControllerWidget(

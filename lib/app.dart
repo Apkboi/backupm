@@ -39,6 +39,9 @@ class MentraApp extends StatelessWidget {
               ],
               supportedLocales: S.delegate.supportedLocales,
 
+              // theme: ThemeData(
+              //   primarySwatch: Colors.blueGrey,
+              // ),
               //
               theme: AppTheme.lightTheme,
               // darkTheme: AppTheme.darkTheme,
