@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/database/local/userstorage.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/mesibo/mesibo_service.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 
@@ -30,7 +31,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       SaveUserEvent event, Emitter<UserState> emit) async {
     _userStorage.saveUser(event.appUser);
     appUser = event.appUser;
-    // await injector.get<MesiboCubit>().initialize();
+     // injector.get<MesiboCubit>().initialize();
     emit(UserCachedState(event.appUser));
   }
 
@@ -40,7 +41,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     if (user != null) {
       appUser = user;
-      // await injector.get<MesiboCubit>().initialize();
+
+       // injector.get<MesiboCubit>().initialize();
       emit(UserCachedState(user));
     }
   }

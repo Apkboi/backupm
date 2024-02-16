@@ -17,48 +17,25 @@ class MesiboCubit extends Cubit<MesiboState>
 
   final MesiboService _mesiboService = MesiboService();
   bool mOnline = false;
-  final Mesibo _mesibo = Mesibo();
+
+  // final Mesibo _mesibo = Mesibo();
+
+  Future<void> startGroupCall() async {
+    // await _mesiboService.groupCall('Mentra');
+    await _mesiboService.groupCall('Mentra');
+  }
 
   Future<void> initialize() async {
     try {
-      // // Mesibo SDK initialization with error handling and logging
-      // _mesiboService.login(
-      //     token: "aa17ccdc6c6b511981daca5e9ecffb71b2673967591107a181e444ac89cgae212ab4f93",
-      //     listener: this,
-      //
-      //     appName: 'Mentra');
-      // Future<String> asyncAppId =
-      // _mesibo.getAppIdForAccessToken();
-      // asyncAppId.then((String appid) {
-      //   logger.i(appid);
-      // });
+      await _mesiboService.login(
+          token:
+              "68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
+          listener: this,
+          appName: "Mentra");
 
-      // initialize mesibo
-      // injector.get<Mesibo>() = Mesibo();
-      // injector.get<MesiboUI>() = MesiboUI();
-      await _mesibo.setAccessToken('68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520');
-      _mesibo.setListener(this);
-      await _mesibo.start();
-
-
-
-      injector.get<MesiboUI>().getUiDefaults().then((MesiboUIOptions options) {
-        options.enableBackButton = true;
-        options.appName = 'Mentra';
-
-        // options.toolbarColor = 0xff00868b;
-        injector.get<MesiboUI>().setUiDefaults(options);
-      });
-
-
-      MesiboUIButtons buttons = MesiboUIButtons();
-      buttons.message = true;
-      buttons.audioCall = false;
-      buttons.videoCall = true;
-      buttons.groupAudioCall = true;
-      buttons.groupVideoCall = true;
-      buttons.endToEndEncryptionInfo = false; // e2ee should be enabled
-      injector.get<MesiboUI>().setupBasicCustomization(buttons, null);
+      // await _mesibo.setAccessToken('68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520');
+      // _mesibo.setListener(this);
+      // await _mesibo.start();
     } catch (e) {
       // handleError(e.message);
     }
