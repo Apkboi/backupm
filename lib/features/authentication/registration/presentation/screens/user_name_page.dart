@@ -61,7 +61,9 @@ class _UsernamePageState extends State<UsernamePage> {
                       child: FilledTextField(
                         hint: "Type name..",
                         controller: _nameController,
-                        validator: RequiredValidator(errorText: 'Enter your name').call,
+                        validator:
+                            RequiredValidator(errorText: 'Enter your name')
+                                .call,
                         hasElevation: false,
                         outline: false,
 

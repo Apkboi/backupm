@@ -10,6 +10,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/date_selector_widget.dart';
@@ -90,7 +91,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 26, vertical: 10),
                                     onTap: () {
-                                      // context.pushNamed(PageUrl.editProfileScreen);
+                                      context
+                                          .pushNamed(PageUrl.editAvatarScreen);
                                     },
                                     color: Pallets.buttonBlack,
                                     child: const TextView(

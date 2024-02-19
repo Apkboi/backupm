@@ -21,155 +21,153 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SizedBox(
-          height: 54,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomNeumorphicButton(
-                expanded: false,
-                onTap: () {
-                  context.goNamed(PageUrl.homeScreen);
-                },
-                color: Pallets.primary,
-                text: 'Home',
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-              ),
-            ],
-          ),
-        ),
-      ),
-      appBar: CustomAppBar(
-        tittleText: '',
-        leadingWidth: 100,
-        height: 80,
-        actions: [
-          CircleAvatar(
-            backgroundColor: Pallets.white,
-            child: ImageWidget(imageUrl: Assets.images.svgs.bell),
-          ),
-          10.horizontalSpace,
-          InkWell(
-            onTap: () {
-              context.pushNamed(PageUrl.settingsScreen);
-            },
-            child: CircleAvatar(
+    return WillPopScope(
+      onWillPop: () async {
+        context.goNamed(PageUrl.homeScreen);
+        return false;
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        // floatingActionButton: Padding(
+        //   padding: const EdgeInsets.all(20),
+        //   child: CustomNeumorphicButton(
+        //     expanded: false,
+        //     onTap: () {
+        //       context.goNamed(PageUrl.homeScreen);
+        //     },
+        //     color: Pallets.primary,
+        //     text: 'Home',
+        //     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+        //   ),
+        // ),
+        appBar: CustomAppBar(
+          tittleText: '',
+          leadingWidth: 100,
+          height: 80,
+          actions: [
+            CircleAvatar(
               backgroundColor: Pallets.white,
-              child: ImageWidget(imageUrl: Assets.images.svgs.settings),
+              child: ImageWidget(imageUrl: Assets.images.svgs.bell),
+            ),
+            10.horizontalSpace,
+            InkWell(
+              onTap: () {
+                context.pushNamed(PageUrl.settingsScreen);
+              },
+              child: CircleAvatar(
+                backgroundColor: Pallets.white,
+                child: ImageWidget(imageUrl: Assets.images.svgs.settings),
+              ),
+            ),
+            16.horizontalSpace,
+          ],
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomNeumorphicButton(
+              onTap: () {
+                context.pushNamed(PageUrl.emergencySosScreen);
+              },
+              color: Pallets.primary,
+              padding: EdgeInsets.zero,
+              text: 'SOS',
             ),
           ),
-          16.horizontalSpace,
-        ],
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomNeumorphicButton(
-            onTap: () {
-              context.pushNamed(PageUrl.emergencySosScreen);
-            },
-            color: Pallets.primary,
-            padding: EdgeInsets.zero,
-            text: 'SOS',
-          ),
         ),
-      ),
-      body: Stack(
-        children: [
-          const AppBg(),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    20.verticalSpace,
-                    // const TextView(
-                    //   text: 'Upcoming Session',
-                    //   fontSize: 16,
-                    //   fontWeight: FontWeight.w600,
-                    //   color: Pallets.primary,
-                    // ),
-                    // 24.verticalSpace,
-                    // const UpcomingSession(),
-                    // const UnlockPremiumWidget(),
-                    const NewUserPrompt(),
-                    48.verticalSpace,
-                    const TextView(
-                      text: 'Your Journey',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Pallets.primary,
-                    ),
-                    24.verticalSpace,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                            child: MenuItem(
-                                textColor: Pallets.orangePink,
-                                bgColor: Pallets.lighterPink,
-                                onTap: () {
-                                  // CustomDialogs.showBottomSheet(
-                                  //   context,
-                                  //   const UnlockPremiumFeatureDialog(),
-                                  // );
+        body: Stack(
+          children: [
+            const AppBg(),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      20.verticalSpace,
+                      // const TextView(
+                      //   text: 'Upcoming Session',
+                      //   fontSize: 16,
+                      //   fontWeight: FontWeight.w600,
+                      //   color: Pallets.primary,
+                      // ),
+                      // 24.verticalSpace,
+                      // const UpcomingSession(),
+                      // const UnlockPremiumWidget(),
+                      const NewUserPrompt(),
+                      48.verticalSpace,
+                      const TextView(
+                        text: 'Your Journey',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Pallets.primary,
+                      ),
+                      24.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: MenuItem(
+                                  textColor: Pallets.orangePink,
+                                  bgColor: Pallets.lighterPink,
+                                  onTap: () {
+                                    // CustomDialogs.showBottomSheet(
+                                    //   context,
+                                    //   const UnlockPremiumFeatureDialog(),
+                                    // );
 
-                                  context.pushNamed(PageUrl.therapyScreen);
-                                },
-                                image: Assets.images.pngs.pTherapy.path,
-                                text: "Professional Therapy")),
-                        16.horizontalSpace,
-                        Expanded(
-                            child: MenuItem(
-                                onTap: () {
-                                  context
-                                      .pushNamed(PageUrl.wellnessLibraryScreen);
-                                },
-                                textColor: Pallets.mildGreen,
-                                bgColor: Pallets.lightGreen,
-                                image: Assets.images.pngs.wLibrary.path,
-                                text: "Wellness Library")),
-                      ],
-                    ),
-                    const SizedBox(height: 16.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                            child: MenuItem(
-                                onTap: () {
-                                  context.pushNamed(PageUrl.summariesScreen);
-                                },
-                                textColor: Pallets.brown,
-                                bgColor: Pallets.lightOrange,
-                                image: Assets.images.pngs.summary.path,
-                                text: "Summaries")),
-                        16.horizontalSpace,
-                        Expanded(
-                            child: MenuItem(
-                                textColor: Pallets.indigo,
-                                bgColor: Pallets.lightBlue,
-                                image: Assets.images.pngs.gJournal.path,
-                                text: "Guided Journal")),
-                      ],
-                    ),
-                    100.verticalSpace
-                  ],
+                                    context.pushNamed(PageUrl.therapyScreen);
+                                  },
+                                  image: Assets.images.pngs.pTherapy.path,
+                                  text: "Professional Therapy")),
+                          16.horizontalSpace,
+                          Expanded(
+                              child: MenuItem(
+                                  onTap: () {
+                                    context.pushNamed(
+                                        PageUrl.wellnessLibraryScreen);
+                                  },
+                                  textColor: Pallets.mildGreen,
+                                  bgColor: Pallets.lightGreen,
+                                  image: Assets.images.pngs.wLibrary.path,
+                                  text: "Wellness Library")),
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: MenuItem(
+                                  onTap: () {
+                                    context.pushNamed(PageUrl.summariesScreen);
+                                  },
+                                  textColor: Pallets.brown,
+                                  bgColor: Pallets.lightOrange,
+                                  image: Assets.images.pngs.summary.path,
+                                  text: "Summaries")),
+                          16.horizontalSpace,
+                          Expanded(
+                              child: MenuItem(
+                                  textColor: Pallets.indigo,
+                                  bgColor: Pallets.lightBlue,
+                                  image: Assets.images.pngs.gJournal.path,
+                                  text: "Guided Journal")),
+                        ],
+                      ),
+                      100.verticalSpace
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          // Align(
-          //   alignment: Alignment.bottomCenter,
-          //   child:,
-          // )
-        ],
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child:,
+            // )
+          ],
+        ),
       ),
     );
   }

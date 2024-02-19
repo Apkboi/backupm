@@ -41,6 +41,8 @@ class TextView extends StatelessWidget {
       child: Text(
         text,
         key: textKey,
+
+        // textScaleFactor: ScreenUtil().textScaleFactor,
         style: style?.copyWith(inherit: true) ??
             GoogleFonts.plusJakartaSans(
               color: color,

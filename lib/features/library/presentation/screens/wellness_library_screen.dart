@@ -238,7 +238,19 @@ class _DiscoverContentsState extends State<DiscoverContents>
             ),
           );
         } else {
-          return const AppEmptyState();
+          return RefreshIndicator(
+            onRefresh: () async {
+              bloc.add(GetLibraryCategoriesEvent());
+            },
+            child: ListView(
+              // shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              children: const [
+                AppEmptyState(),
+                // Spacer(),
+              ],
+            ),
+          );
         }
       },
     );

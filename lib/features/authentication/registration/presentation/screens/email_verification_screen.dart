@@ -85,16 +85,16 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                               },
                               child: const Icon(
                                 Icons.send_rounded,
-                                size: 25,
+                                size: 20,
                               ),
                             ),
                             // onChanged: widget.onChanged,
                             // onFieldSubmitted: widget.onFieldSubmitted,
                             // onSaved: widget.onSaved,
-                            radius: 43,
+                            radius: 50,
                             // preffix: const Icon(Iconsax.search_normal4),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 10),
+                            // contentPadding: const EdgeInsets.symmetric(
+                            //     vertical: 4, horizontal: 10),
                             fillColor: Pallets.white,
                           );
                         },

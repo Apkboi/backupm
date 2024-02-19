@@ -50,6 +50,7 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
                           SizedBox(
                               height: 200.h,
                               child: DateSelectorWidget(
+                                initialYear: 2000,
                                 onYearSelected: (year) {
                                   selectedYear = year;
                                 },

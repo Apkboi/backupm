@@ -48,7 +48,7 @@ class _OnboardingItemState extends State<OnboardingItem> {
             ))),
             // 35.verticalSpace,
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(children: [
                 TextView(
                     text: widget.header,
@@ -62,9 +62,9 @@ class _OnboardingItemState extends State<OnboardingItem> {
                 TextView(
                     text: widget.text,
                     align: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Pallets.grey,
+                    style: const TextStyle(
+                        fontSize: 15,
+                        color: Pallets.black80,
                         fontWeight: FontWeight.w500)),
               ],),
             )

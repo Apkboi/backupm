@@ -20,7 +20,8 @@ class MentraApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(428, 926),
+      designSize: const Size(390, 844),
+      // designSize: ScreenUtil.defaultSize,
       useInheritedMediaQuery: true,
       minTextAdapt: true,
       builder: (contextAlt, child) {

@@ -109,8 +109,8 @@ class _FilledTextFieldState extends State<FilledTextField> {
                     borderSide: BorderSide.none,
                   ),
             hintText: widget.hint,
-            suffixIcon: widget.suffixIcon,
-            suffix: widget.suffix,
+            suffixIcon: widget.suffix,
+            // suffix: widget.suffix,
             focusedBorder: widget.outline!
                 ? OutlineInputBorder(
                     gapPadding: 2,

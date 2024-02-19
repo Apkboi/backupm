@@ -29,17 +29,20 @@ class CustomNeumorphicButton extends StatelessWidget {
       onTap: () {
         onTap();
       },
-      child: Padding(
-        padding: const EdgeInsets.all(1),
+      child: Container(
+        decoration: ShapeDecoration(
+          color: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(150),
+          ),
+        ),
         child: Container(
-
           decoration: ShapeDecoration(
-
             gradient: LinearGradient(
               begin: const Alignment(0.00, -1.00),
               end: const Alignment(0, 1),
               colors: [
-                Colors.white60,
+                Colors.white.withOpacity(0.32),
                 color.withOpacity(0.9),
                 color.withOpacity(0.9),
                 color.withOpacity(0.9),
@@ -51,7 +54,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                 side: BorderSide(color: color)),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2.5),
             child: Container(
               decoration: ShapeDecoration(
                 color: color,
@@ -61,22 +64,34 @@ class CustomNeumorphicButton extends StatelessWidget {
               ),
               child: Padding(
                 padding: padding ??
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 30),
-                child: Row(
-                  mainAxisAlignment: mainAxisAlignment!,
-                  mainAxisSize: expanded! ? MainAxisSize.max : MainAxisSize.min,
-                  children: [
-                    Center(
-                      child: child ??
-                          Text(
-                            text ?? 'Button',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: fgColor, fontWeight: FontWeight.w600,),
+                    const EdgeInsets.symmetric(vertical: 17.0, horizontal: 30),
+                child: expanded!
+                    ? Row(
+                        mainAxisAlignment: mainAxisAlignment!,
+                        // mainAxisSize: expanded! ? MainAxisSize.max : MainAxisSize.min,
+                        children: [
+                          Center(
+                            child: child ??
+                                Text(
+                                  text ?? 'Button',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: fgColor,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                           ),
-                    ),
-                  ],
-                ),
+                        ],
+                      )
+                    : child ??
+                        Text(
+                          text ?? 'Button',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: fgColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
               ),
             ),
           ),

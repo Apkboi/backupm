@@ -47,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Form(
                 key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Align(
                         alignment: Alignment.topLeft,
@@ -54,8 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     20.verticalSpace,
                     // Align(child: IconButton(onPressed: onPressed, icon: icon),),
                     TextView(
-                      text: 'Hey there! Log into your account',
+                      text: 'Hey there! Log into\nyour account',
                       style: GoogleFonts.fraunces(
+                        color: Pallets.black80,
                           fontSize: 32.sp, fontWeight: FontWeight.w600),
                     ),
                     24.verticalSpace,

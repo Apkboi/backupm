@@ -64,6 +64,7 @@ abstract class Pallets {
   static const primaryLight = Color(0xFFE2ECE4);
   static const maybeBlack = Color(0xFF101010);
   static const red = Color(0xFFE15B2D);
+  static const black80 = Color(0xFF333333);
   static const black = Colors.black;
   // static const red = Colors.red;
   static const white = Colors.white;

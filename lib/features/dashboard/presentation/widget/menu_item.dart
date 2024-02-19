@@ -5,6 +5,8 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
+
+
 class MenuItem extends StatelessWidget {
   const MenuItem(
       {super.key,
@@ -65,11 +67,10 @@ class MenuItem extends StatelessWidget {
               onTap!();
             }
           },
-          child: Center(
-            child: Container(
+          child: const Center(
+            child: SizedBox(
               height: 150,
               width: 150,
-              
             ),
           ),
         ),

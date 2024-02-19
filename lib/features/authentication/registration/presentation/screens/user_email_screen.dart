@@ -13,7 +13,6 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 
-
 class UserEmailScreen extends StatefulWidget {
   const UserEmailScreen({super.key, required this.email});
 
@@ -55,7 +54,6 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                           'Sweet choice! To make sure we\'re all set, we just need your email. Can you share it with us?',
                         ], isSender: false),
                         100.verticalSpace,
-
                       ],
                     )),
                     BlocConsumer<RegistrationBloc, RegistrationState>(
@@ -81,13 +79,13 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                               },
                               child: const Icon(
                                 Icons.send_rounded,
-                                size: 25,
+                                size: 20,
                               ),
                             ),
-                            radius: 43,
+                            radius: 50,
                             // preffix: const Icon(Iconsax.search_normal4),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 16, horizontal: 10),
+                            // contentPadding: const EdgeInsets.symmetric(
+                            //     vertical: 16, horizontal: 16),
                             fillColor: Pallets.white,
                           ),
                         );

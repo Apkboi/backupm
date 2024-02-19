@@ -56,7 +56,7 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
                               : const Radius.circular(15)),
                       color: Pallets.navy),
                   child: Text(
-                    widget.message.reversed.toList()[index],
+                    widget.message.toList()[index],
                     style: const TextStyle(color: Pallets.white),
                   ),
                 ),

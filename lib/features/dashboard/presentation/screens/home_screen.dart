@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: CustomAppBar(
         tittleText: 'Mentra',
         height: 80,
-        leadingWidth: 100,
+        leadingWidth: 80,
         actions: [
           InkWell(
             onTap: () {
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context.pushNamed(PageUrl.emergencySosScreen);
             },
             color: Pallets.primary,
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(8),
             text: 'SOS',
           ),
         ),

@@ -74,21 +74,12 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                             },
                           ),
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: CustomNeumorphicButton(
-                                  onTap: () {
-                                    _goToNextScreen(context);
-                                  },
-                                  color: Pallets.primary,
-                                  text: "Continue"),
-                            )
-                          ],
-                        ),
+                        CustomNeumorphicButton(
+                            onTap: () {
+                              _goToNextScreen(context);
+                            },
+                            color: Pallets.primary,
+                            text: "Continue"),
                       ],
                     ),
                   )

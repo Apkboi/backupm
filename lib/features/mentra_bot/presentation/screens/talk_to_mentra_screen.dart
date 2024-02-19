@@ -160,10 +160,14 @@ class _InputBar extends StatelessWidget {
             child: FilledTextField(
                 hasBorder: false,
                 hasElevation: false,
-                suffix: ImageWidget(
-                  imageUrl: Assets.images.svgs.share,
-                  height: 20,
-                  width: 20,
+                suffix: InkWell(
+                  onTap: () async {
+
+                  },
+                  child: const Icon(
+                    Icons.send_rounded,
+                    size: 25,
+                  ),
                 ),
                 fillColor: Pallets.white,
                 contentPadding: const EdgeInsets.all(16),

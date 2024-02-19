@@ -80,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             Expanded(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -141,7 +141,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               color: Pallets.primary,
               expanded: false,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [

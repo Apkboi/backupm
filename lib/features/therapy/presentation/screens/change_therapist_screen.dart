@@ -11,6 +11,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
@@ -54,9 +55,9 @@ class _ChangeTherapistScreenState extends State<ChangeTherapistScreen> {
                         const QuestionBox(message: [
                           'Hi Mentra, I\'d like to change my therapist.',
                         ], isSender: true),
-                        const QuestionBox(message: [
+                         QuestionBox(message: [
+                          'Hey ${injector.get<UserBloc>().appUser?.name}!',
                           'Of course, I\'m here to help. Before we proceed, may I ask if you have specific preferences in mind for your new therapist?',
-                          'Hey Laila!',
                         ], isSender: false),
                         Align(
                           alignment: Alignment.centerRight,

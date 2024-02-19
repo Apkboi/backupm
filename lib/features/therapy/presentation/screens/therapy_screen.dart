@@ -62,64 +62,67 @@ class _TherapyScreenState extends State<TherapyScreen> {
       body: Stack(
         children: [
           const AppBg(),
-          DefaultTabController(
-            length: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  100.verticalSpace,
-                  const CustomTabbar(tabs: [
-                    Tab(
-                      text: "Upcoming",
+          SafeArea(
+            child: DefaultTabController(
+              length: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+
+                    const CustomTabbar(tabs: [
+                      Tab(
+                        text: "Upcoming",
+                      ),
+                      Tab(text: "History"),
+                    ]),
+                    40.verticalSpace,
+                    const Expanded(
+                        child: TabBarView(
+                            physics: NeverScrollableScrollPhysics(),
+                            children: [UpcomingTherapy(), TherapyHistory()])),
+                    8.verticalSpace,
+                    CustomNeumorphicButton(
+                      onTap: () {
+                        _scheduleTherapy(context);
+                      },
+                      fgColor: Pallets.white,
+                      color: Pallets.primary,
+                      text: "Schedule Session",
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.add,
+                            color: Pallets.white,
+                            size: 18,
+                          ),
+                          TextView(
+                            text: 'Schedule Session',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Pallets.white),
+                          )
+                        ],
+                      ),
                     ),
-                    Tab(text: "History"),
-                  ]),
-                  const Expanded(
-                      child: TabBarView(
-                          physics: NeverScrollableScrollPhysics(),
-                          children: [UpcomingTherapy(), TherapyHistory()])),
-                  8.verticalSpace,
-                  CustomNeumorphicButton(
-                    onTap: () {
-                      _scheduleTherapy(context);
-                    },
-                    fgColor: Pallets.white,
-                    color: Pallets.primary,
-                    text: "Schedule Session",
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: Pallets.white,
-                          size: 18,
-                        ),
-                        TextView(
-                          text: 'Schedule Session',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Pallets.white),
-                        )
-                      ],
-                    ),
-                  ),
-                  10.verticalSpace,
-                  CustomOutlinedButton(
-                    bgColor: Colors.white,
-                    padding: const EdgeInsets.all(20),
-                    outlineWidth: 1.5,
-                    radius: 100,
-                    outlinedColr: Pallets.primary,
-                    child: const TextView(
-                      text: 'Change Therapist',
-                      fontWeight: FontWeight.w600,
-                    ),
-                    onPressed: () {
-                      context.pushNamed(PageUrl.changeTherapistScreen);
-                    },
-                  )
-                ],
+                    10.verticalSpace,
+                    CustomOutlinedButton(
+                      bgColor: Colors.white,
+                      padding: const EdgeInsets.all(20),
+                      outlineWidth: 1.5,
+                      radius: 100,
+                      outlinedColr: Pallets.primary,
+                      child: const TextView(
+                        text: 'Change Therapist',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      onPressed: () {
+                        context.pushNamed(PageUrl.changeTherapistScreen);
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -284,7 +287,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: state.response.data.data.length,
-                padding: const EdgeInsets.only(top: 10),
+                // padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) => TherapyItem(
                   session: state.response.data.data[index],
                 ),

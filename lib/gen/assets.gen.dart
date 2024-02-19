@@ -13,7 +13,6 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   $AssetsImagesPngsGen get pngs => const $AssetsImagesPngsGen();
-
   $AssetsImagesSvgsGen get svgs => const $AssetsImagesSvgsGen();
 }
 
@@ -75,6 +74,8 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/avatar2.png
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/images/pngs/avatar2.png');
+
+
 
   /// File path: assets/images/pngs/background.png
   AssetGenImage get background =>
@@ -306,6 +307,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/supportIcon.svg
   String get supportIcon => 'assets/images/svgs/supportIcon.svg';
 
+  /// File path: assets/images/svgs/therapy.svg
+  String get therapy => 'assets/images/svgs/therapy.svg';
+
   /// File path: assets/images/svgs/tiktox.svg
   String get tiktox => 'assets/images/svgs/tiktox.svg';
 
@@ -359,6 +363,7 @@ class $AssetsImagesSvgsGen {
         success,
         summaries,
         supportIcon,
+        therapy,
         tiktox,
         twitter,
         userEmoji,
