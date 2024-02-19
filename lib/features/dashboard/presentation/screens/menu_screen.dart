@@ -5,6 +5,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
@@ -22,13 +23,17 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
+
       onWillPop: () async {
         context.goNamed(PageUrl.homeScreen);
+        logger.i('popping');
+
         return false;
       },
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.centerFloat,
         // floatingActionButton: Padding(
         //   padding: const EdgeInsets.all(20),
         //   child: CustomNeumorphicButton(
@@ -141,7 +146,8 @@ class _MenuScreenState extends State<MenuScreen> {
                           Expanded(
                               child: MenuItem(
                                   onTap: () {
-                                    context.pushNamed(PageUrl.summariesScreen);
+                                    context
+                                        .pushNamed(PageUrl.summariesScreen);
                                   },
                                   textColor: Pallets.brown,
                                   bgColor: Pallets.lightOrange,

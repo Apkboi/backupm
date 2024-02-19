@@ -87,6 +87,9 @@ class MentraUser {
   final String username;
   final String email;
   final String birthYear;
+  final dynamic stripeCustomerId;
+  final dynamic mesiboUserId;
+  final dynamic mesiboUserToken;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -99,6 +102,9 @@ class MentraUser {
     required this.username,
     required this.email,
     required this.birthYear,
+     this.stripeCustomerId,
+    required this.mesiboUserId,
+    required this.mesiboUserToken,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -112,6 +118,9 @@ class MentraUser {
     String? username,
     String? email,
     String? birthYear,
+    String? stripeCustomerId,
+    dynamic mesiboUserId,
+    dynamic mesiboUserToken,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
@@ -120,10 +129,14 @@ class MentraUser {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
-        avatarBackgroundColor: avatarBackgroundColor ?? this.avatarBackgroundColor,
+        avatarBackgroundColor:
+        avatarBackgroundColor ?? this.avatarBackgroundColor,
         username: username ?? this.username,
         email: email ?? this.email,
         birthYear: birthYear ?? this.birthYear,
+        stripeCustomerId: stripeCustomerId ?? this.stripeCustomerId,
+        mesiboUserId: mesiboUserId ?? this.mesiboUserId,
+        mesiboUserToken: mesiboUserToken ?? this.mesiboUserToken,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
@@ -137,6 +150,9 @@ class MentraUser {
     username: json["username"],
     email: json["email"],
     birthYear: json["birth_year"],
+    stripeCustomerId: json["stripe_customer_id"],
+    mesiboUserId: json["mesibo_user_id"],
+    mesiboUserToken: json["mesibo_user_token"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -150,6 +166,9 @@ class MentraUser {
     "username": username,
     "email": email,
     "birth_year": birthYear,
+    "stripe_customer_id": stripeCustomerId,
+    "mesibo_user_id": mesiboUserId,
+    "mesibo_user_token": mesiboUserToken,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };

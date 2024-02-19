@@ -68,10 +68,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             children: [
                               Center(
                                 child: ImageWidget(
-                                  size: 80,
-                                  imageUrl: Assets.images.pngs.avatar22.path,
-                                  // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
-                                ),
+                                    size: 80,
+
+                                    // imageUrl: Assets.images.pngs.avatar22.path,
+                                    imageUrl: "${injector.get<UserBloc>().appUser?.avatar}"),
                               ),
                               10.verticalSpace,
                               Center(
@@ -263,6 +263,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       const Duration(milliseconds: 300),
       () {
         var user = injector.get<UserBloc>().appUser;
+
         year = user!.birthYear;
         _nameController.text = user.name;
         _emailController.text = user.email;

@@ -77,3 +77,49 @@ class UpdatePasscodeFailureState extends SettingsState {
   @override
   List<Object?> get props => [error];
 }
+
+class GetAvatarsLoadingState extends SettingsState {
+  @override
+  List<Object?> get props => [];
+}
+
+class GetAvatarsSuccessState extends SettingsState {
+  final GetAvatarsResponse response;
+
+  const GetAvatarsSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class GetAvatarsFailureState extends SettingsState {
+  final String error;
+
+  const GetAvatarsFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class UploadImageLoadingState extends SettingsState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UploadImagesSuccessState extends SettingsState {
+  final UploadAvatarResponse response;
+
+  const UploadImagesSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class UploadImageFailureState extends SettingsState {
+  final String error;
+
+  const UploadImageFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}

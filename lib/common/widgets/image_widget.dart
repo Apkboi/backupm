@@ -101,6 +101,7 @@ class _ImageWidgetState extends State<ImageWidget> {
             ),
           );
         }
+
         return InkWell(
           onTap: () {
             if (widget.canPreview!) {
@@ -111,6 +112,9 @@ class _ImageWidgetState extends State<ImageWidget> {
                   imageType: ImageType.asset,
                 ),
               );
+            }
+            if (widget.onTap != null) {
+              widget.onTap!();
             }
           },
           child: Container(

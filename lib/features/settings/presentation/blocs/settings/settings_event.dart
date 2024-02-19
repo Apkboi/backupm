@@ -29,9 +29,23 @@ class UpdatePasscodeEvent extends SettingsEvent {
   final String passcodeConfirmation;
 
   const UpdatePasscodeEvent(
-      {required this.hash, required this.passcode, required this.passcodeConfirmation});
+      {required this.hash,
+      required this.passcode,
+      required this.passcodeConfirmation});
 
   @override
   List<Object?> get props => [hash, passcode, passcodeConfirmation];
 }
 
+class GetAvatarsEvent extends SettingsEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class UploadImageEvent extends SettingsEvent {
+  final int imageId;
+  const UploadImageEvent(this.imageId);
+
+  @override
+  List<Object?> get props => [imageId];
+}

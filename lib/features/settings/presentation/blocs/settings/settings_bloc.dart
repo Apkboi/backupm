@@ -5,7 +5,9 @@ import 'package:equatable/equatable.dart';
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/settings/data/models/get_avatars_response.dart';
 import 'package:mentra/features/settings/data/models/update_profile_response.dart';
+import 'package:mentra/features/settings/data/models/upload_avatar_response.dart';
 import 'package:mentra/features/settings/data/models/verify_passcode_response.dart';
 import 'package:mentra/features/settings/dormain/repository/settings_repository.dart';
 
@@ -21,6 +23,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdateProfileEvent>(_mapUpdateProfileEventToState);
     on<VerifyPasscodeEvent>(_mapVerifyPasscodeEventToState);
     on<UpdatePasscodeEvent>(_mapUpdatePasscodeEventToState);
+    on<GetAvatarsEvent>(_mapGetAvatarsEventToState);
+    on<UploadImageEvent>(_mapUploadImageEventToState);
   }
 
   Future<void> _mapUpdateProfileEventToState(
@@ -65,6 +69,30 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emit(UpdatePasscodeSuccessState(response: response));
     } catch (e) {
       emit(UpdatePasscodeFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapGetAvatarsEventToState(
+      GetAvatarsEvent event, Emitter<SettingsState> emit) async {
+    emit(GetAvatarsLoadingState());
+    try {
+      final response = await _settingsRepository.getAvatars();
+      emit(GetAvatarsSuccessState(response: response));
+    } catch (e) {
+      emit(GetAvatarsFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapUploadImageEventToState(
+      UploadImageEvent event, Emitter<SettingsState> emit) async {
+    emit(UploadImageLoadingState());
+    try {
+      final response =
+          await _settingsRepository.uploadAvatar(avatarId: event.imageId);
+      injector.get<UserBloc>().add(SaveUserEvent(response.data));
+      emit(UploadImagesSuccessState(response: response));
+    } catch (e) {
+      emit(UploadImageFailureState(error: e.toString()));
     }
   }
 }

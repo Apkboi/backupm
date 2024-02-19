@@ -43,7 +43,6 @@ abstract class Pallets {
   static const ink = Color(0xFF737A86);
   static const grey200 = Color(0xffE4E5E7);
 
-
   // static const darkOrange = Color(0xFFEEB21A);
   static const transparentOrage = Color(0xFFFFF8EC);
 
@@ -66,6 +65,7 @@ abstract class Pallets {
   static const red = Color(0xFFE15B2D);
   static const black80 = Color(0xFF333333);
   static const black = Colors.black;
+
   // static const red = Colors.red;
   static const white = Colors.white;
   static const grey = Color(0xff6D6D6D);
@@ -81,6 +81,16 @@ abstract class Pallets {
   static const error = Color(0xffCA1818);
 
   // static const secondary = Color(0xFFCC9933);
+  static const avatarBackgrounds = [
+
+    Colors.amber,
+    Colors.cyan,
+    Colors.pink,
+    Colors.blueAccent,
+    Colors.limeAccent,
+    Colors.deepOrangeAccent,
+    Colors.deepPurpleAccent,
+  ];
 
   static const MaterialColor kToDark = MaterialColor(
     0xff09447f,

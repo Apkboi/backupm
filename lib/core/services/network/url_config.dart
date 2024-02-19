@@ -66,6 +66,9 @@ class UrlConfig {
   static const String updatePassword = '/user/passcode/update';
   static const String allowNotifications = 'general/account/allow-notification';
   static const String resetPassword = '/auth/reset-password';
+  static const String getAvatars = '/user/profile/avatars';
+  static const String uploadAvatar = '/user/profile/upload-avatar';
+
 
 /// Therapy
   static const String upcomingSessions = '/user/session/schedule/upcoming';

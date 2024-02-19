@@ -1,7 +1,9 @@
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
+import 'package:mentra/features/settings/data/models/get_avatars_response.dart';
 import 'package:mentra/features/settings/data/models/update_profile_response.dart';
+import 'package:mentra/features/settings/data/models/upload_avatar_response.dart';
 import 'package:mentra/features/settings/data/models/verify_passcode_response.dart';
 import 'package:mentra/features/settings/dormain/repository/settings_repository.dart';
 
@@ -55,6 +57,33 @@ class SettingsRepositoryImpl extends SettingsRepository {
       });
 
       return VerifyPasscodeResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<GetAvatarsResponse> getAvatars() async {
+    try {
+      final response = await networkService.call(
+        UrlConfig.getAvatars,
+        RequestMethod.get,
+      );
+
+      return GetAvatarsResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<UploadAvatarResponse> uploadAvatar({required int avatarId}) async {
+    try {
+      final response = await networkService.call(
+          UrlConfig.uploadAvatar, RequestMethod.post,
+          data: {"avatar_id": avatarId});
+
+      return UploadAvatarResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

@@ -38,7 +38,7 @@ class CustomDialogs {
       useRootNavigator: useRootNavigator!,
       builder: (BuildContext context) => dialog,
       barrierDismissible: true,
-      barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.1),
+      barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.2),
       // barrierColor: barrierColor,
     );
   }
@@ -86,7 +86,7 @@ class CustomDialogs {
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: true,
-      useRootNavigator: useRootNavigator??false,
+      useRootNavigator: useRootNavigator ?? false,
       builder: (context) => Material(
         child: CupertinoPageScaffold(child: child),
       ),
@@ -328,10 +328,10 @@ class CustomDialogs {
     // }
   }
 
-  static Widget getLoading({double size = 10.0,Color? color}) => Container(
+  static Widget getLoading({double size = 10.0, Color? color}) => Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 10),
-        child: SpinKitDualRing(color: color ??Pallets.primary, size: size),
+        child: SpinKitDualRing(color: color ?? Pallets.primary, size: size),
       );
 
   static void showSnackBar(
