@@ -29,6 +29,7 @@ abstract class Pallets {
   static const indigo = Color(0xFF1A5C81);
   static const trackColor = Color(0xFF47557E);
   static const indigo100 = Color(0xFF8E97FD);
+  static const lighterBlue = Color(0xFFc2d6ff);
   static const yellowBase = Color(0xFFF2AE40);
   static const Grey1 = Color(0xFFE7E7E0);
   static const pendingColor = Color(0xFFFFB300);

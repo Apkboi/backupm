@@ -57,15 +57,15 @@ class _AvartarSelectorState extends State<AvartarSelector> {
                 },
               ),
               10.horizontalSpace,
-              if(widget.selectBackgroundColor!)
-              SwitchButton(
-                tittle: 'Avatar Background',
-                selected: selectedIndex == 1,
-                onSelected: () {
-                  selectedIndex = 1;
-                  setState(() {});
-                },
-              ),
+              if (widget.selectBackgroundColor!)
+                SwitchButton(
+                  tittle: 'Avatar Background',
+                  selected: selectedIndex == 1,
+                  onSelected: () {
+                    selectedIndex = 1;
+                    setState(() {});
+                  },
+                ),
             ],
           ),
           16.verticalSpace,
@@ -112,8 +112,10 @@ class _AvartarSelectorState extends State<AvartarSelector> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                      image: NetworkImage(state
-                                          .response.data[index].image.url)),
+                                      fit: BoxFit.scaleDown,
+                                      image: NetworkImage(
+                                        state.response.data[index].image.url,
+                                      )),
                                   border: selectedImageIndex == index
                                       ? Border.all(
                                           width: 1, color: Pallets.primary)
@@ -129,36 +131,36 @@ class _AvartarSelectorState extends State<AvartarSelector> {
                   );
                 },
               ),
-              if(widget.selectBackgroundColor!)
-
-              SizedBox(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: Pallets.avatarBackgrounds.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 1,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      mainAxisExtent: 72,
-                      crossAxisCount: 4),
-                  itemBuilder: (context, index) => InkWell(
-                      onTap: () {
-                        selectedColorIndex = index;
-                        widget.onBackgroundSelector(
-                            Pallets.avatarBackgrounds[index]);
-                        setState(() {});
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Pallets.avatarBackgrounds[index],
-                          border: selectedColorIndex == index
-                              ? Border.all(width: 1, color: Pallets.primary)
-                              : null,
-                        ),
-                      )),
+              if (widget.selectBackgroundColor!)
+                SizedBox(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: Pallets.avatarBackgrounds.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 1,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            mainAxisExtent: 72,
+                            crossAxisCount: 4),
+                    itemBuilder: (context, index) => InkWell(
+                        onTap: () {
+                          selectedColorIndex = index;
+                          widget.onBackgroundSelector(
+                              Pallets.avatarBackgrounds[index]);
+                          setState(() {});
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Pallets.avatarBackgrounds[index],
+                            border: selectedColorIndex == index
+                                ? Border.all(width: 1, color: Pallets.primary)
+                                : null,
+                          ),
+                        )),
+                  ),
                 ),
-              ),
             ],
           )
         ],

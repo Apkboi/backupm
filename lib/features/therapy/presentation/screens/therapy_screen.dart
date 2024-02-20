@@ -69,7 +69,6 @@ class _TherapyScreenState extends State<TherapyScreen> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-
                     const CustomTabbar(tabs: [
                       Tab(
                         text: "Upcoming",
@@ -199,7 +198,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: state.response.data.data.length,
-                padding: const EdgeInsets.only(top: 10),
+                padding: EdgeInsets.zero,
                 itemBuilder: (context, index) => TherapyItem(
                   session: state.response.data.data[index],
                 ),
@@ -287,6 +286,8 @@ class _TherapyHistoryState extends State<TherapyHistory>
               child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: state.response.data.data.length,
+                padding: EdgeInsets.zero,
+
                 // padding: const EdgeInsets.only(top: 10),
                 itemBuilder: (context, index) => TherapyItem(
                   session: state.response.data.data[index],

@@ -91,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               context.pushNamed(PageUrl.editProfileScreen);
                             },
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 16),
+                                horizontal: 16, vertical: 13),
                             color: Pallets.primary,
                             child: const TextView(
                               text: "Edit profile",

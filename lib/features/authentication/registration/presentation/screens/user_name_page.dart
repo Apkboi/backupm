@@ -43,8 +43,9 @@ class _UsernamePageState extends State<UsernamePage> {
                         alignment: Alignment.topLeft,
                         child: CustomBackButton()),
                     Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      child: ListView(
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        reverse: true,
                         children: [
                           16.verticalSpace,
                           const QuestionBox(message: [
@@ -52,7 +53,7 @@ class _UsernamePageState extends State<UsernamePage> {
                             "Your privacy is a big deal for us. Every chat here is private and anonymous, meaning you can truly be yourself without any worries. Your data? It’s yours and yours alone – safe, secure, and respected"
                                 "Let's start with a nickname or pseudonym. This is how you'll be known in the Mentra community. Remember, you can change this at any time"
                           ], isSender: false),
-                          16.verticalSpace,
+                          // 16.verticalSpace,
                         ],
                       ),
                     ),

@@ -75,8 +75,8 @@ class LibraryItem extends StatelessWidget {
                 ),
               ),
               ImageWidget(
-                imageUrl: Assets.images.pngs.sleep.path,
-                // imageUrl: category.image.url,
+                // imageUrl: Assets.images.pngs.sleep.path,
+                imageUrl: category.image.url,
                 width: 120.w,
                 height: 120.h,
                 fit: BoxFit.fill,

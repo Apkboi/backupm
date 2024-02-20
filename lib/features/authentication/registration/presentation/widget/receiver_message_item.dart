@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class ReceiverMessageItem extends StatefulWidget {
@@ -28,10 +29,13 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
           children: [
             Padding(
               padding: EdgeInsets.only(top: 36.h, right: 10),
-              child: ImageWidget(
-                imageUrl: Assets.images.pngs.smallMentra.path,
-                fit: BoxFit.cover,
-                size: 40,
+              child: CircleAvatar(
+                backgroundColor: Pallets.lighterBlue,
+                child: ImageWidget(
+                  imageUrl: Assets.images.pngs.mentraBig.path,
+                  fit: BoxFit.cover,
+                  size: 40,
+                ),
               ),
             ),
             Column(
@@ -55,9 +59,22 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
                               ? Radius.zero
                               : const Radius.circular(15)),
                       color: Pallets.navy),
-                  child: Text(
-                    widget.message.toList()[index],
-                    style: const TextStyle(color: Pallets.white),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        widget.message.toList()[index],
+                        style: const TextStyle(color: Pallets.white),
+                      ),
+                      8.verticalSpace,
+                      Text(TimeUtil.formatTime(DateTime.now()),
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: Pallets.white,
+                            fontWeight: FontWeight.w600,
+                          ))
+                    ],
                   ),
                 ),
               ),

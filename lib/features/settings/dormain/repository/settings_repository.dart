@@ -19,5 +19,6 @@ abstract class SettingsRepository {
 
   Future<UploadAvatarResponse> uploadAvatar({
     required int avatarId,
+    required String bgColor,
   });
 }

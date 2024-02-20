@@ -9,7 +9,7 @@ class MesiboService {
   //
   MesiboService._internal() {
     // Initialize Mesibo SDK with your app details
-    Mesibo _mesibo = Mesibo();
+    // Mesibo _mesibo = Mesibo();
   }
 
   Future<void> login(
@@ -25,12 +25,10 @@ class MesiboService {
       asyncAppId.then((String appid) {
         logger.i(appid);
       });
-
       Mesibo mesibo = Mesibo();
-
       await mesibo.setAccessToken(token);
-      mesibo.setListener(listener);
-      mesibo.start();
+      mesibo.setListener(this);
+      mesibo.start().then((value) => logger.i('MESIBO IS RUNNING'));
     } catch (e) {
       logger.e(e.toString());
       // TODO
@@ -44,6 +42,11 @@ class MesiboService {
   }
 
   Future<void> sendMessage(String contactId, String message) async {
+    // Send message logic
+  }
+
+  Future<void> stop() async {
+    await Mesibo.getInstance().stop();
     // Send message logic
   }
 

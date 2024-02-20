@@ -8,9 +8,11 @@ class UrlConfig {
 
   static const String imageBaseUrl = String.fromEnvironment('IMAGE_BASE_URL');
   static const String dojahTestAppId = String.fromEnvironment('DOJAH_APP_ID');
-  static const String dojahTestPublicKey = String.fromEnvironment('DOJAH_PUBLIC_KEY');
+  static const String dojahTestPublicKey =
+      String.fromEnvironment('DOJAH_PUBLIC_KEY');
   static const String stripeTestKey = String.fromEnvironment('STRIPE_TEST_KEY');
-  static const String stripeSecretKey = String.fromEnvironment('STRIPE_SECRET_KEY');
+  static const String stripeSecretKey =
+      String.fromEnvironment('STRIPE_SECRET_KEY');
   static const String facePlusTestApiKey =
       String.fromEnvironment('FACE_PLUS_TEST_API_KEY');
   static const String facePlusTestApiSecret =
@@ -20,7 +22,6 @@ class UrlConfig {
   static const String messageUserPassKey =
       String.fromEnvironment('MESSAGE_USER_PASSKEY');
 
-
   // static const String facePlusProdApiKey =
   //     String.fromEnvironment('FACE_PLUS_PROD_API_KEY');
   // static const String facePlusProdApiSecret =
@@ -28,36 +29,33 @@ class UrlConfig {
   static final coreBaseUrl =
       environment == Environment.production ? PRODUCTION_URL : STAGING_URL;
 
+  static const String getLibraryCoursesEndpoint =
+      "/wellness-library/courses/list";
 
-
-
-  static const String getLibraryCoursesEndpoint = "/wellness-library/courses/list";
-  static  String getCourseDetails(String id) => "/wellness-library/courses/show/$id";
+  static String getCourseDetails(String id) =>
+      "/wellness-library/courses/show/$id";
   static const String getFavourites = "/wellness-library/courses/favourites";
-  static const String updateFavourite = "/wellness-library/courses/save-to-favourite";
-  static const String getLibraryCategoriesEndpoint = "/wellness-library/categories/list";
-  static const String getConversationStarterEndpoint = "/user/conversation-starter/get";
-
+  static const String updateFavourite =
+      "/wellness-library/courses/save-to-favourite";
+  static const String getLibraryCategoriesEndpoint =
+      "/wellness-library/categories/list";
+  static const String getConversationStarterEndpoint =
+      "/user/conversation-starter/get";
 
   //SOS
   static const String getEmergencyContacts = '/emergency-contacts/list';
-
 
   // Authentication
   static const String login = '/auth/login';
   static const String me = '/auth/me';
   static const String loginPreview = "/auth/login/preview";
+
   static String getUser(String userId) => '/auth/user/$userId';
   static const String forgotPassword = '/auth/forgot-password';
   static const String verifyOtp = '/auth/otp/verify';
   static const String register = '/auth/register';
   static const String oauthLogin = '/auth/oauth-login';
   static const String sendOtp = '/auth/register/steps';
-
-
-
-
-
 
   ///ACCOUNT
   static const String updateProfile = '/user/profile/update';
@@ -66,14 +64,14 @@ class UrlConfig {
   static const String updatePassword = '/user/passcode/update';
   static const String allowNotifications = 'general/account/allow-notification';
   static const String resetPassword = '/auth/reset-password';
-  static const String getAvatars = '/user/profile/avatars';
+  static const String getAvatars = '/profile/avatars';
   static const String uploadAvatar = '/user/profile/upload-avatar';
 
-
-/// Therapy
+  /// Therapy
   static const String upcomingSessions = '/user/session/schedule/upcoming';
   static const String sessionHistory = '/user/session/schedule/history';
-  static const String sessionTimeSlots = '/user/session/schedule/fetch-timeslots';
+  static const String sessionTimeSlots =
+      '/user/session/schedule/fetch-timeslots';
   static const String createSession = '/user/session/schedule/create';
   static const String updatePreference = '/user/therapy/preferences';
   static const String fetchDates = '/user/session/schedule/fetch-dates';

@@ -15,7 +15,7 @@ class ProfileImageWidget extends StatefulWidget {
       this.bgColor,
       this.border,
       this.borderRadius,
-      this.size,
+      this.size = 24,
       this.color,
       this.imageUrl});
 
@@ -41,40 +41,58 @@ class _ProfileImageWidgetState extends State<ProfileImageWidget> {
       listener: _listenToUserBloc,
       bloc: injector.get(),
       builder: (context, state) {
-        return CachedNetworkImage(
-          imageUrl: widget.imageUrl ?? injector.get<UserBloc>().appUser!.avatar,
-          imageBuilder: (context, imageProvider) => Container(
-            width: widget.size ?? widget.width,
-            height: widget.size ?? widget.height,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: widget.borderRadius,
-              color: widget.bgColor ??
-                  (injector.get<UserBloc>().appUser?.avatarBackgroundColor !=
-                          null
-                      ? injector
-                              .get<UserBloc>()
-                              .appUser
-                              ?.avatarBackgroundColor
-                              .toString()
-                              .toColor() ??
-                          Colors.orange
-                      : Colors.orange),
-              shape: widget.shape ?? BoxShape.circle,
-              border: widget.border,
-              image: DecorationImage(
-                  image: imageProvider,
-                  alignment: Alignment.center,
-                  fit: BoxFit.scaleDown,
-                  onError: (error, trace) {
-                    logger.e(trace);
-                  }),
+        return CircleAvatar(
+          radius: (widget.size! / 2),
+          backgroundColor: widget.bgColor ??
+              (injector.get<UserBloc>().appUser?.avatarBackgroundColor != null
+                  ? injector
+                          .get<UserBloc>()
+                          .appUser
+                          ?.avatarBackgroundColor
+                          .toString()
+                          .toColor() ??
+                      Colors.orange
+                  : Colors.orange),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CachedNetworkImage(
+              fit: BoxFit.scaleDown,
+              imageUrl:
+                  widget.imageUrl ?? injector.get<UserBloc>().appUser!.avatar,
+              imageBuilder: (context, imageProvider) => Container(
+                width: widget.size ?? widget.width,
+                height: widget.size ?? widget.height,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  borderRadius: widget.borderRadius,
+                  // color: widget.bgColor ??
+                  //     (injector.get<UserBloc>().appUser?.avatarBackgroundColor !=
+                  //             null
+                  //         ? injector
+                  //                 .get<UserBloc>()
+                  //                 .appUser
+                  //                 ?.avatarBackgroundColor
+                  //                 .toString()
+                  //                 .toColor() ??
+                  //             Colors.orange
+                  //         : Colors.orange),
+                  shape: widget.shape ?? BoxShape.circle,
+                  border: widget.border,
+                  image: DecorationImage(
+                      image: imageProvider,
+                      alignment: Alignment.center,
+                      fit: BoxFit.scaleDown,
+                      onError: (error, trace) {
+                        logger.e(trace);
+                      }),
+                ),
+              ),
+              placeholder: (context, url) => _ErrorWidget(),
+              errorWidget: (context, url, error) {
+                return _ErrorWidget();
+              },
             ),
           ),
-          placeholder: (context, url) => _ErrorWidget(),
-          errorWidget: (context, url, error) {
-            return _ErrorWidget();
-          },
         );
       },
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -65,14 +66,12 @@ class _PreferenceQuestionBoxState extends State<PreferenceQuestionBox> {
                         style: const TextStyle(color: Pallets.white),
                       ),
                       8.verticalSpace,
-                       Text(
-                          "3:00PM ",
+                      Text(TimeUtil.formatTime(widget.question.questionTime!),
                           style: TextStyle(
                             fontSize: 11.sp,
                             color: Pallets.white,
                             fontWeight: FontWeight.w600,
-                          )
-                      )
+                          ))
                     ],
                   ),
                 ),

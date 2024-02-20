@@ -155,7 +155,7 @@ class _SessionButtonState extends State<SessionButton>
     super.initState();
 
     _checkButtonVisibility();
-   _loginUser1();
+    _loginUser1();
     // Update button visibility every second to reflect real-time
     Timer.periodic(const Duration(seconds: 1), (_) => _checkButtonVisibility());
   }

@@ -25,7 +25,7 @@ class _TherapyMessageBoxState extends State<TherapyMessageBox> {
         // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
         alignment:
             widget.isSender ? Alignment.centerRight : Alignment.centerLeft,
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        // padding: const EdgeInsets.symmetric(vertical: 10),
         child: widget.isSender
             ? UserMessageItem(
                 message: widget.message,

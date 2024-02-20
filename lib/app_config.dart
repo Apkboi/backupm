@@ -11,6 +11,7 @@ import 'core/services/data/hive/hive_manager.dart';
 import 'core/services/data/session_manager.dart';
 import 'core/services/firebase/crashlytics.dart';
 import 'core/services/firebase/notifiactions.dart';
+import 'core/services/mesibo/mesibo_service.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 import 'features/account/presentation/user_bloc/user_bloc.dart';
@@ -52,6 +53,7 @@ class AppConfig {
 
   Future setup() async {
     injector.get<UserBloc>().add(GetUserEvent());
+
     // injector.get<DashboardBloc>().add(GetConversationStarterEvent());
   }
 

@@ -38,6 +38,12 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
         tittleText: 'Talk to Mentra',
         actions: [
           PopupMenuButton(
+            position: PopupMenuPosition.over,
+            // constraints: const BoxConstraints(maxHeight: 60,),
+
+            padding: EdgeInsets.zero,
+            // shape:
+            //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             onSelected: (value) {
               switch (value) {
                 case "end":
@@ -49,6 +55,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
               return [
                 const PopupMenuItem<String>(
                   value: 'end',
+                  height: 30,
                   child: Text('End Session'),
                 ),
               ];
@@ -161,9 +168,7 @@ class _InputBar extends StatelessWidget {
                 hasBorder: false,
                 hasElevation: false,
                 suffix: InkWell(
-                  onTap: () async {
-
-                  },
+                  onTap: () async {},
                   child: const Icon(
                     Icons.send_rounded,
                     size: 25,

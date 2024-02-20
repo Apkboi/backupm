@@ -87,8 +87,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       UploadImageEvent event, Emitter<SettingsState> emit) async {
     emit(UploadImageLoadingState());
     try {
-      final response =
-          await _settingsRepository.uploadAvatar(avatarId: event.imageId);
+      final response = await _settingsRepository.uploadAvatar(
+          avatarId: event.imageId, bgColor: event.bgColor);
       injector.get<UserBloc>().add(SaveUserEvent(response.data));
       emit(UploadImagesSuccessState(response: response));
     } catch (e) {

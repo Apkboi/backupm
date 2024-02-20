@@ -6,6 +6,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/extensions/color_extension.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/settings/presentation/widgets/avatar_selector_widget.dart';
@@ -40,9 +41,8 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
               if (selectedImageId == null) {
                 CustomDialogs.showToast('Select an avatar');
               } else {
-                injector
-                    .get<SettingsBloc>()
-                    .add(UploadImageEvent(selectedImageId!));
+                injector.get<SettingsBloc>().add(
+                    UploadImageEvent(selectedImageId!, selectedColor.toHex()));
               }
             },
             color: Pallets.black,
@@ -62,7 +62,8 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
                 child: Center(
                   child: ImageWidget(
                     imageUrl: selectedImageUrl,
-                    size: 100,
+                    fit: BoxFit.scaleDown,
+                    size: 150,
                     // fit: BoxFit.contain,
                   ),
                 ),

@@ -66,9 +66,8 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
                 context.pop();
               }
               if (widget.flow == UserPreferenceFlow.changeTherapist) {
-                context.pushReplacementNamed(PageUrl.matchTherapistScreen,queryParameters: {
-                  PathParam.updatedPreference:'true'
-                });
+                context.pushReplacementNamed(PageUrl.matchTherapistScreen,
+                    queryParameters: {PathParam.updatedPreference: 'true'});
               }
             }
           },
@@ -86,6 +85,7 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
                         Expanded(
                             child: ScrollablePositionedList.builder(
                           reverse: true,
+                          padding: EdgeInsets.zero,
                           physics: const BouncingScrollPhysics(),
                           itemScrollController: context
                               .read<UserPreferenceCubit>()
@@ -119,10 +119,16 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
   }
 }
 
-class _InputBar extends StatelessWidget {
+class _InputBar extends StatefulWidget {
   _InputBar({Key? key, required this.currentFlow}) : super(key: key);
-  final TextEditingController controller = TextEditingController();
   final UserPreferenceFlow currentFlow;
+
+  @override
+  State<_InputBar> createState() => _InputBarState();
+}
+
+class _InputBarState extends State<_InputBar> {
+  final TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +158,19 @@ class _InputBar extends StatelessWidget {
                             hasBorder: false,
                             hasElevation: false,
                             controller: controller,
+                            suffix: InkWell(
+                              onTap: () async {
+                                _answerQuestion(context);
+                              },
+                              child: const Icon(
+                                Icons.send_rounded,
+                                size: 30,
+                              ),
+                            ),
+                            onChanged: (p0) {
+                              // setState(() {});
+                              return null;
+                            },
                             // suffix: ImageWidget(
                             //   imageUrl: Assets.images.svgs.share,
                             //   height: 20,
@@ -161,18 +180,21 @@ class _InputBar extends StatelessWidget {
                             contentPadding: const EdgeInsets.all(16),
                             radius: 45,
                             hint: 'Message')),
-                    10.horizontalSpace,
-                    InkWell(
-                      onTap: () {
-                        _answerQuestion(context);
-                        // _endSession(context);
-                      },
-                      child: CircleAvatar(
-                          backgroundColor: Pallets.white,
-                          radius: 24,
-                          child: ImageWidget(
-                              imageUrl: Assets.images.svgs.messageIcon)),
-                    )
+                    // 10.horizontalSpace,
+                    // InkWell(
+                    //   onTap: () {
+                    //     _answerQuestion(context);
+                    //     // _endSession(context);
+                    //   },
+                    //   child: CircleAvatar(
+                    //       backgroundColor: Pallets.white,
+                    //       radius: 24,
+                    //       child: ImageWidget(
+                    //           color: controller.text.isNotEmpty
+                    //               ? Pallets.primary
+                    //               : null,
+                    //           imageUrl: Assets.images.svgs.messageIcon)),
+                    // )
                   ],
                 )
               : 0.horizontalSpace;
@@ -191,7 +213,7 @@ class _InputBar extends StatelessWidget {
 
   void _listenToUserPreferenceBloc(BuildContext context, Object? state) {
     if (state is QuestionsCompletedState &&
-        currentFlow == UserPreferenceFlow.changeTherapist) {}
+        widget.currentFlow == UserPreferenceFlow.changeTherapist) {}
   }
 
   bool _buildWhen(Object? previous, Object? current) {

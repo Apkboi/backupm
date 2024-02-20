@@ -5,7 +5,6 @@ import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/app_filled_textfield.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
@@ -17,7 +16,6 @@ import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/date_selector_widget.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
-import 'package:mentra/gen/assets.gen.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});

@@ -79,7 +79,9 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
         body: Stack(
           children: [
-            const AppBg(),
+            AppBg(
+              image: Assets.images.pngs.homeBg.path,
+            ),
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

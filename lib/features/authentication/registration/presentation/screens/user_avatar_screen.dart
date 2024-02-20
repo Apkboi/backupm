@@ -9,7 +9,6 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/avatar_gridview.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 import 'package:mentra/features/settings/presentation/widgets/avatar_selector_widget.dart';
 
@@ -44,9 +43,10 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.min,
+                      child: ListView(
+                        reverse: true,
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        // mainAxisSize: MainAxisSize.min,
                         children: [
                           QuestionBox(message: [
                             'Great choice, ${injector.get<RegistrationBloc>().registrationPayload.name}! Next, please choose an avatar that best represents you. We’re constantly adding more options to ensure you find the perfect match',
@@ -67,10 +67,11 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                       children: [
                         SizedBox(
                           height: 0.4.sh,
-                          child: AvatarGridView(
+                          child: AvartarSelector(
+                            onBackgroundSelector: (p0) {},
                             onAvatarSelected: (p0) {
                               setState(() {
-                                selectedAvatar = p0;
+                                selectedAvatar = p0.image.url;
                               });
                             },
                           ),

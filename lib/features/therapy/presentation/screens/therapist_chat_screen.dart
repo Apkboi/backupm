@@ -54,13 +54,12 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
-                      itemCount: messages.length,
-                      itemBuilder: (context, index) =>
-                          TherapyMessageBox(
-                            message: [messages[index]],
-                            isSender: !index.isEven,
-                          ),
-                    )),
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) => TherapyMessageBox(
+                    message: [messages[index]],
+                    isSender: !index.isEven,
+                  ),
+                )),
                 const _InputBar()
               ],
             ),
@@ -78,7 +77,7 @@ class _InputBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Expanded(
+        Expanded(
             child: FilledTextField(
                 hasBorder: false,
                 hasElevation: false,
@@ -87,20 +86,29 @@ class _InputBar extends StatelessWidget {
                 //   height: 20,
                 //   width: 20,
                 // ),
+                suffix: InkWell(
+                  onTap: () {
+                    // _answerQuestion(context);
+                  },
+                  child: const Icon(
+                    Icons.send_rounded,
+                    size: 30,
+                  ),
+                ),
                 fillColor: Pallets.white,
-                contentPadding: EdgeInsets.all(16),
+                contentPadding: const EdgeInsets.all(16),
                 radius: 45,
                 hint: 'Message')),
-        10.horizontalSpace,
-        InkWell(
-          onTap: () {
-            // _endSession(context);
-          },
-          child: CircleAvatar(
-              backgroundColor: Pallets.white,
-              radius: 24,
-              child: ImageWidget(imageUrl: Assets.images.svgs.messageIcon)),
-        )
+        // 10.horizontalSpace,
+        // InkWell(
+        //   onTap: () {
+        //     // _endSession(context);
+        //   },
+        //   child: CircleAvatar(
+        //       backgroundColor: Pallets.white,
+        //       radius: 24,
+        //       child: ImageWidget(imageUrl: Assets.images.svgs.messageIcon)),
+        // )
       ],
     );
   }

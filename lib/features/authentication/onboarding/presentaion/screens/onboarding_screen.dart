@@ -33,58 +33,59 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         body: Stack(
       children: [
         const AppBg(),
-        Column(
-          children: [
-            SizedBox(
-              height: 0.73.sh,
-              child: CarouselSlider(
-                  // controller: _pageController,
-                  options: CarouselOptions(
-                    viewportFraction: 1,
-                    height: 1.sh,
-                    autoPlay: true,
-                    // scrollDirection: Axis.horizontal,
-                    autoPlayCurve: Curves.easeInCirc,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 300),
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                  ),
-                  // onPageChanged: (index) {
-                  //   setState(() {
-                  //     _currentIndex = index;
-                  //   });
-                  // },
-                  items: [
-                    OnboardingItem(
-                      img: Assets.images.pngs.onboarding1.path,
-                      header: heading1,
-                      text: body1,
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 0.74.sh,
+                child: CarouselSlider(
+                    // controller: _pageController,
+                    options: CarouselOptions(
+                      viewportFraction: 1,
+                      height: 1.sh,
+                      autoPlay: true,
+                      // scrollDirection: Axis.horizontal,
+                      autoPlayCurve: Curves.easeInCirc,
+                      autoPlayInterval: const Duration(seconds: 3),
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 300),
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          _currentIndex = index;
+                        });
+                      },
                     ),
-                    OnboardingItem(
-                      img: Assets.images.pngs.onboarding2.path,
-                      header: heading2,
-                      text: body2,
-                    ),
-                    OnboardingItem(
-                      img: Assets.images.pngs.onboarding3.path,
-                      header: heading3,
-                      text: body3,
-                    ),
-                  ]),
-            ),
-            Expanded(
-              child: Padding(
+                    // onPageChanged: (index) {
+                    //   setState(() {
+                    //     _currentIndex = index;
+                    //   });
+                    // },
+                    items: [
+                      OnboardingItem(
+                        img: Assets.images.pngs.onboarding1.path,
+                        header: heading1,
+                        text: body1,
+                      ),
+                      OnboardingItem(
+                        img: Assets.images.pngs.onboarding2.path,
+                        header: heading2,
+                        text: body2,
+                      ),
+                      OnboardingItem(
+                        img: Assets.images.pngs.onboarding3.path,
+                        header: heading3,
+                        text: body3,
+                      ),
+                    ]),
+              ),
+              Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    20.verticalSpace,
                     Indicator(
                       seledtedIndex: _currentIndex,
                       items_count: 3,
@@ -94,7 +95,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: Pallets.primary,
                       text: 'Create an Account',
                       onTap: () {
-                        injector.get<RegistrationBloc>().updateFields(role: 'User');
+                        injector
+                            .get<RegistrationBloc>()
+                            .updateFields(role: 'User');
                         context.pushNamed(PageUrl.usernameScreen);
                         // CustomDialogs.showBottomSheet(
                         //     context, const SignupIntroScreen(),
@@ -120,8 +123,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Positioned(
           // alignment: Alignment.topRight,

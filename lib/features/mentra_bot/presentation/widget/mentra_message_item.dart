@@ -28,10 +28,13 @@ class _MentraMessageItemState extends State<MentraMessageItem> {
           children: [
             Padding(
               padding: EdgeInsets.only(top: 36.h, right: 10),
-              child: ImageWidget(
-                imageUrl: Assets.images.pngs.smallMentra.path,
-                fit: BoxFit.cover,
-                size: 40,
+              child: CircleAvatar(
+                backgroundColor: Pallets.lighterBlue,
+                child: ImageWidget(
+                  imageUrl: Assets.images.pngs.mentraBig.path,
+                  fit: BoxFit.cover,
+                  size: 40,
+                ),
               ),
             ),
             Column(

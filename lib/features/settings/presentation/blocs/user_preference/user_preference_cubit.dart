@@ -34,7 +34,8 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
   void startMessage() {
     stagedMessages.clear();
-    stagedMessages.add(dataSource.therapyQuestions.first);
+    stagedMessages
+        .add(dataSource.therapyQuestions.first..questionTime = DateTime.now());
     currentQuestion = dataSource.therapyQuestions.first;
     logger.i(stagedMessages.length);
     emit(QuestionUpdatedState());
@@ -59,7 +60,9 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
   void answerQuestion({required int id, required String answer}) {
     //   Update the question with the answer
+
     stagedMessages.where((element) => element.id == id).first.answer = answer;
+    stagedMessages.where((element) => element.id == id).first.answerTime = DateTime.now();
     //   Check if the answered question is the last question in the list to get next question
     if (id == stagedMessages.last.id) {
       //   Get NextQuestion
@@ -75,7 +78,8 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
   }
 
   getNextQuestion() {
-    stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]);
+    stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]
+      ..questionTime = DateTime.now());
     currentQuestion = stagedMessages.last;
     // Check if questions are complete
     if (stagedMessages.length == dataSource.therapyQuestions.length) {

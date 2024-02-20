@@ -13,11 +13,9 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/services/mesibo/mesibo_service.dart';
-import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 import 'package:mentra/features/subscription/presentation/widget/card_details_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/navigation/route_url.dart';
@@ -32,7 +30,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    DashboardUsecase().execute();
     // MesiboService service = MesiboService();
     // service.login(token:
     // "68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
@@ -91,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         right: 0,
                         left: 0,
                         child: ImageWidget(
-                          imageUrl: Assets.images.pngs.mentra.path,
+                          imageUrl: Assets.images.pngs.mentraBig.path,
                           height: 300.h,
                           width: 254,
                           fit: BoxFit.contain,
@@ -158,7 +155,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               69.verticalSpace,
                               CustomNeumorphicButton(
                                 onTap: () {
-                                  context.pushNamed(PageUrl.talkToMentraScreen);
+                                  injector.get<MesiboCubit>().startGroupCall();
+
+                                  // context.pushNamed(PageUrl.talkToMentraScreen);
                                   // _handlePayPress();
                                   // _handlePaymentRequest();
 

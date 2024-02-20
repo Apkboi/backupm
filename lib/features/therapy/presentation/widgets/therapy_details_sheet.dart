@@ -10,7 +10,9 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/navigation/routes.dart';
+import 'package:mentra/core/services/mesibo/mesibo_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
@@ -74,8 +76,9 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                   CustomNeumorphicButton(
                       fgColor: Pallets.black,
                       padding: const EdgeInsets.all(10),
-                      onTap: () {
-                        context.pushNamed(PageUrl.therapistChatScreen);
+                      onTap: () async {
+                        injector.get<MesiboCubit>().startGroupCall();
+                        // context.pushNamed(PageUrl.therapistChatScreen);
                       },
                       text: "Message Nour",
                       color: Pallets.milkColor),

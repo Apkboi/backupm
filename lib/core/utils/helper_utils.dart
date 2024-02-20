@@ -165,4 +165,36 @@ class Helpers {
       );
     }
   }
+
+  static launchWhatsappLink(String data) async {
+    final launcher = UrlLauncher();
+
+    await launcher.launchRawUrl(data);
+  }
+
+  static launchEmailWithMessage({
+    required String email,
+    String? message,
+    String? subject,
+  }) async {
+    final launcher = UrlLauncher();
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      query: encodeQueryParameters(<String, String>{
+        'subject': subject.toString(),
+        'body': message.toString(),
+      }),
+    );
+
+    await launcher.launchRawUrl(emailLaunchUri.toString());
+  }
+
+  static String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry<String, String> e) =>
+    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
 }

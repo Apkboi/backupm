@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
@@ -39,10 +40,11 @@ class SettingsGroup1 extends StatelessWidget {
           24.verticalSpace,
           SettingListTile(
               onTap: () {
-                context
-                    .pushNamed(PageUrl.userPreferenceScreen, queryParameters: {
-                  PathParam.userPreferenceFlow: UserPreferenceFlow.updatePreference.name
-                });
+                context.pushNamed(PageUrl.userPreferenceScreen,
+                    queryParameters: {
+                      PathParam.userPreferenceFlow:
+                          UserPreferenceFlow.updatePreference.name
+                    });
               },
               leadingWidget: Row(
                 children: [
@@ -57,9 +59,16 @@ class SettingsGroup1 extends StatelessWidget {
               tittle: 'Preferences'),
           24.verticalSpace,
           SettingListTile(
-              leadingIconUrl: Assets.images.svgs.star, tittle: 'Give feedback'),
+              onTap: () {
+                Helpers.launchEmailWithMessage(email: 'support@mentra.com');
+              },
+              leadingIconUrl: Assets.images.svgs.star,
+              tittle: 'Give feedback'),
           24.verticalSpace,
           SettingListTile(
+              onTap: () {
+                Helpers.launchEmailWithMessage(email: 'support@mentra.com');
+              },
               leadingIconUrl: Assets.images.svgs.supportIcon,
               tittle: 'Support'),
         ],

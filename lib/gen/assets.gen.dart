@@ -109,6 +109,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get mentra =>
       const AssetGenImage('assets/images/pngs/mentra.png');
 
+  /// File path: assets/images/pngs/mentra_big.png
+  AssetGenImage get mentraBig =>
+      const AssetGenImage('assets/images/pngs/mentra_big.png');
+
   /// File path: assets/images/pngs/onboarding1.png
   AssetGenImage get onboarding1 =>
       const AssetGenImage('assets/images/pngs/onboarding1.png');
@@ -174,6 +178,7 @@ class $AssetsImagesPngsGen {
         homeBg,
         insight,
         mentra,
+        mentraBig,
         onboarding1,
         onboarding2,
         onboarding3,

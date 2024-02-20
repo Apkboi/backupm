@@ -44,8 +44,10 @@ class GetAvatarsEvent extends SettingsEvent {
 
 class UploadImageEvent extends SettingsEvent {
   final int imageId;
-  const UploadImageEvent(this.imageId);
+  final String bgColor;
+
+  const UploadImageEvent(this.imageId, this.bgColor);
 
   @override
-  List<Object?> get props => [imageId];
+  List<Object?> get props => [imageId, bgColor];
 }

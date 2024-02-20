@@ -24,14 +24,14 @@ class _PreferenceQuestionBaseBoxState extends State<PreferenceQuestionBaseBox> {
         Container(
             // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            // padding: const EdgeInsets.symmetric(vertical: 0),
             child: PreferenceQuestionBox(
               question: widget.question,
             )),
         Container(
             // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
             alignment: Alignment.centerRight,
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            // padding: const EdgeInsets.symmetric(vertical: 10),
             child: PreferenceAnswerBox(
               question: widget.question,
             )),
