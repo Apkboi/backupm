@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +9,6 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/widgets/pin_view.dart';
-import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -67,8 +65,8 @@ class _SetPasscodeScreenState extends State<SetPasscodeScreen> {
                             children: [
                               pinMode == PinMode.setPin
                                   ? const QuestionBox(message: [
-                                      'Inhale slowly for a count of four, hold, and exhale for four. Repeat a few times.! 👋 ',
-                                      "Looking good! "
+                                      'Appreciated! Let\'s secure your account. Please create a 4-digit passcode',
+
                                     ], isSender: false)
                                   : const QuestionBox(message: [
                                       'Well done! To ensure it\'s correct, please confirm your passcode.',

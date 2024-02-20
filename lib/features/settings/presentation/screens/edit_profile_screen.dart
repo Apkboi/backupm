@@ -12,6 +12,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/profile_image_widget.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/date_selector_widget.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
@@ -67,11 +68,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: Column(
                             children: [
                               Center(
-                                child: ImageWidget(
-                                    size: 80,
+                                child: ProfileImageWidget(
+                                  size: 80,
 
-                                    // imageUrl: Assets.images.pngs.avatar22.path,
-                                    imageUrl: "${injector.get<UserBloc>().appUser?.avatar}"),
+                                  // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
+                                ),
                               ),
                               10.verticalSpace,
                               Center(
@@ -89,7 +90,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 child: CustomNeumorphicButton(
                                     expanded: false,
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 26, vertical: 10),
+                                        horizontal: 10, vertical: 10),
                                     onTap: () {
                                       context
                                           .pushNamed(PageUrl.editAvatarScreen);

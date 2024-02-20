@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/therapy/data/models/accept_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/change_therapist_message_model.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
@@ -41,16 +42,10 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
   final scrollController = ItemScrollController();
 
   void _scrollToLast() async {
-
-
     scrollController.jumpTo(
-      alignment:0.5,
+      alignment: 0.5,
       index: 0,
-
-
     );
-
-
   }
 
   CreateSessionPayload createSessionsPayload = CreateSessionPayload.empty();
@@ -65,7 +60,8 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     try {
       final sessions = await _therapyRepository.getUpcomingSessions();
       emit(GetUpcomingSessionsSuccessState(response: sessions));
-    } catch (e) {
+    } catch (e,stack) {
+      logger.e(stack);
       emit(GetUpcomingSessionsFailureState(error: e.toString()));
     }
   }
@@ -76,7 +72,9 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     try {
       final response = await _therapyRepository.getSessionsHistory();
       emit(GetSessionsHistorySuccessState(response: response));
-    } catch (e) {
+    } catch (e,stack) {
+      logger.e(stack);
+
       emit(GetSessionsHistoryFailureState(error: e.toString()));
     }
   }
@@ -175,7 +173,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
           time: DateTime.now(),
           therapist: response.data,
           message: [
-            "Great news! I've found a therapist who matches your preferences. Their name is ${response.data.user.name}, and they specialize in ${response.data.therapist.techniquesOfExpertise.firstOrNull}. ${response.data.user.name} is a ${response.data.therapist.gender} therapist who speaks ${response.data.therapist.languagesSpoken}."
+            "Great news! I've found a therapist who matches your preferences. Their name is ${response.data.user.name}, and they specialize in ${(response.data.therapist.techniquesOfExpertise).firstOrNull}. ${response.data.user.name} is a ${response.data.therapist.gender} therapist who speaks ${response.data.therapist.languagesSpoken}."
           ]));
       changeTherapistMessages.add(ChangeTherapistMessageModel(
           messageType: ChangeTherapistMessageType.therapistSuggestion,
@@ -185,18 +183,19 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
           message: []));
       _scrollToLast();
       emit(MatchTherapistSuccessState(response: response));
-    } catch (e) {
+    } catch (e, stack) {
       emit(MatchTherapistFailureState(error: e.toString()));
       changeTherapistMessages.add(ChangeTherapistMessageModel(
           messageType: ChangeTherapistMessageType.retry,
           isSender: true,
           time: DateTime.now(),
           message: [e.toString()]));
-      changeTherapistMessages.add(ChangeTherapistMessageModel(
-          messageType: ChangeTherapistMessageType.retry,
-          isSender: false,
-          time: DateTime.now(),
-          message: ["Retry"]));
+      logger.e(stack);
+      // changeTherapistMessages.add(ChangeTherapistMessageModel(
+      //     messageType: ChangeTherapistMessageType.retry,
+      //     isSender: false,
+      //     time: DateTime.now(),
+      //     message: ["Retry"]));
       _scrollToLast();
     }
   }

@@ -64,8 +64,9 @@ class TherapyRepositoryImpl extends TherapyRepository {
           data: payload.toJson());
 
       return CreateSessionResponse.fromJson(response.data);
-    } catch (e) {
+    } catch (e,stack) {
       logger.e(e.toString());
+      logger.e(stack.toString());
       rethrow;
     }
   }
@@ -125,8 +126,9 @@ class TherapyRepositoryImpl extends TherapyRepository {
       );
 
       return MatchTherapistResponse.fromJson(response.data);
-    } catch (e) {
+    } catch (e,stack) {
       logger.e(e);
+      logger.e(stack);
       rethrow;
     }
   }

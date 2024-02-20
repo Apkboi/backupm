@@ -231,8 +231,11 @@ class _DiscoverContentsState extends State<DiscoverContents>
               padding: EdgeInsets.zero,
               itemCount: bloc.libraryCategories.length,
               itemBuilder: (context, index) {
-                return LibraryItem(
-                  category: bloc.libraryCategories[index],
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: LibraryItem(
+                    category: bloc.libraryCategories[index],
+                  ),
                 );
               },
             ),

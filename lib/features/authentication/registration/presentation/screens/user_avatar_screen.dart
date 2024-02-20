@@ -11,6 +11,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/avatar_gridview.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/features/settings/presentation/widgets/avatar_selector_widget.dart';
 
 class UserAvatarScreen extends StatefulWidget {
   const UserAvatarScreen({super.key});
@@ -40,15 +41,15 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                         child: CustomBackButton()),
                   ),
                   16.verticalSpace,
-                  const Expanded(
+                  Expanded(
                     child: Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           QuestionBox(message: [
-                            'Thanks for sharing! Let\'s add a personal touch. Choose an avatar to represent yourself.',
+                            'Great choice, ${injector.get<RegistrationBloc>().registrationPayload.name}! Next, please choose an avatar that best represents you. We’re constantly adding more options to ensure you find the perfect match',
                           ], isSender: false),
                         ],
                       ),

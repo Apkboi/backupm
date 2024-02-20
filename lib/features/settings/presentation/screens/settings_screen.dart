@@ -13,6 +13,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/profile_image_widget.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_group_1.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_group_3.dart';
@@ -68,9 +69,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Center(
-                        child: ImageWidget(
+                        child: ProfileImageWidget(
                           size: 80,
-                          imageUrl: Assets.images.pngs.avatar22.path,
+
                           // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
                         ),
                       ),
@@ -79,8 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: TextView(
                           text: injector.get<UserBloc>().appUser?.name ?? '',
                           style: GoogleFonts.fraunces(
-                            fontSize: 32.sp,
-                          ),
+                              fontSize: 32.sp, color: Pallets.navy),
                         ),
                       ),
                       18.verticalSpace,
@@ -90,6 +90,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onTap: () {
                               context.pushNamed(PageUrl.editProfileScreen);
                             },
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 16),
                             color: Pallets.primary,
                             child: const TextView(
                               text: "Edit profile",

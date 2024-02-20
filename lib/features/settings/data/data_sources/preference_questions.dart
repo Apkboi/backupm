@@ -4,8 +4,7 @@ class PreferenceQuestionsDataSource {
   final List<QuestionPromptModel> therapyQuestions = [
     QuestionPromptModel(
       question: [
-        'How would you describe your current state of mind?',
-        'Inhale slowly for a count of four, hold, and exhale for four. Repeat a few times.! 👋'
+        "let's personalize your experience. How are you feeling right now?"
       ],
       answer: null,
       options: [
@@ -20,7 +19,9 @@ class PreferenceQuestionsDataSource {
       id: 0,
     ),
     QuestionPromptModel(
-      question: ['Have you ever tried therapy or counseling before?'],
+      question: [
+        ' Understanding where you\'re at is important to us. Have you ever tried therapy or counseling before?'
+      ],
       answer: null,
       options: ['Yes', 'No'],
       key: 'had_therapy',

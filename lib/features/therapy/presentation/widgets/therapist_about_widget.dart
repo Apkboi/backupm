@@ -20,7 +20,9 @@ class TherapistAboutWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextView(text: therapist.therapist.bio ?? therapist.therapist.field),
+          TextView(
+              text: therapist.therapist.bio??
+                  therapist.therapist.field.toString()),
           10.verticalSpace,
           if (therapist.therapist.degrees != null)
             Column(
@@ -37,32 +39,32 @@ class TherapistAboutWidget extends StatelessWidget {
                 16.verticalSpace,
               ],
             ),
-
-          if(therapist.therapist.certifications!= null)
+          if (therapist.therapist.certifications != null)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              const TextView(
-                text: "Certifications:",
-                fontWeight: FontWeight.w500,
-              ),
-              ...List.generate(
-                  therapist.therapist.certifications.length,
-                      (index) =>  Padding(
-                    padding:const EdgeInsets.symmetric(vertical: 8),
-                    child: BulletWidget(
-                        text: therapist.therapist.certifications[index]),
-                  )),
-              16.verticalSpace,
-            ],),
-
+                const TextView(
+                  text: "Certifications:",
+                  fontWeight: FontWeight.w500,
+                ),
+                ...List.generate(
+                    therapist.therapist.certifications.length,
+                    (index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: BulletWidget(
+                              text: therapist.therapist.certifications[index]),
+                        )),
+                16.verticalSpace,
+              ],
+            ),
           const TextView(
             text: "Experience::",
             fontWeight: FontWeight.w500,
           ),
           5.verticalSpace,
-           TextView(
-            text: "Over ${therapist.therapist.yearsOfExperience} years in private practice and clinical research",
+          TextView(
+            text:
+                "Over ${therapist.therapist.yearsOfExperience} years in private practice and clinical research",
           ),
         ],
       ),

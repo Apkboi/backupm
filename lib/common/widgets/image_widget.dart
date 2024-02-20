@@ -15,6 +15,7 @@ class ImageWidget extends StatefulWidget {
   final BoxBorder? border;
   final BorderRadius? borderRadius;
   final double? size;
+
   final Color? color;
   final VoidCallback? onTap;
   final bool? canPreview;
@@ -35,6 +36,7 @@ class ImageWidget extends StatefulWidget {
     this.imageType = ImageWidgetType.asset,
     this.canPreview = false,
     this.onTap,
+
   }) : super(key: key);
 
   @override
@@ -84,11 +86,12 @@ class _ImageWidgetState extends State<ImageWidget> {
                 height: widget.size ?? widget.height,
                 decoration: BoxDecoration(
                   borderRadius: widget.borderRadius,
+
                   shape: widget.shape ?? BoxShape.rectangle,
                   border: widget.border,
                   image: DecorationImage(
                       image: imageProvider,
-                      fit: BoxFit.cover,
+                      fit: widget.fit?? BoxFit.cover,
                       onError: (error, trace) {
                         logger.e(trace);
                       }),

@@ -51,7 +51,7 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const QuestionBox(message: [
-                          'Sweet choice! To make sure we\'re all set, we just need your email. Can you share it with us?',
+                          'Now, could you share your email address with us? We’ll send a verification code to ensure everything’s secure',
                         ], isSender: false),
                         100.verticalSpace,
                       ],

@@ -62,7 +62,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
             initialRating: 3,
             minRating: 1,
             direction: Axis.horizontal,
-            allowHalfRating: true,
+            allowHalfRating: false,
             glow: false,
             itemCount: 5,
             itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),

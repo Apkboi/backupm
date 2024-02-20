@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+
 CreateSessionResponse createSessionResponseFromJson(String str) => CreateSessionResponse.fromJson(json.decode(str));
 
 String createSessionResponseToJson(CreateSessionResponse data) => json.encode(data.toJson());
@@ -140,7 +142,7 @@ class SessionDetails {
 
 class DataTherapist {
   final User user;
-  final TherapistTherapist therapist;
+  final Therapist therapist;
 
   DataTherapist({
     required this.user,
@@ -149,7 +151,7 @@ class DataTherapist {
 
   DataTherapist copyWith({
     User? user,
-    TherapistTherapist? therapist,
+    Therapist? therapist,
   }) =>
       DataTherapist(
         user: user ?? this.user,
@@ -158,7 +160,7 @@ class DataTherapist {
 
   factory DataTherapist.fromJson(Map<String, dynamic> json) => DataTherapist(
     user: User.fromJson(json["user"]),
-    therapist: TherapistTherapist.fromJson(json["therapist"]),
+    therapist: Therapist.fromJson(json["therapist"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -167,172 +169,7 @@ class DataTherapist {
   };
 }
 
-class TherapistTherapist {
-  final String phoneNumber;
-  final dynamic phoneCode;
-  final String gender;
-  final List<String> countriesLivedIn;
-  final List<String> languagesSpoken;
-  final String nationality;
-  final String country;
-  final String address;
-  final dynamic bio;
-  final String field;
-  final dynamic yearsOfExperience;
-  final String emirateOfLicensure;
-  final String currentWorkplace;
-  final String weeklyTimeSpent;
-  final String interestInMentra;
-  final String intendedWeeklyTime;
-  final String heardAboutUs;
-  final List<String> treatableConditions;
-  final List<String> techniquesOfExpertise;
-  final dynamic certifications;
-  final dynamic degrees;
-  final dynamic comment;
-  final String status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
-  TherapistTherapist({
-    required this.phoneNumber,
-    required this.phoneCode,
-    required this.gender,
-    required this.countriesLivedIn,
-    required this.languagesSpoken,
-    required this.nationality,
-    required this.country,
-    required this.address,
-    required this.bio,
-    required this.field,
-    required this.yearsOfExperience,
-    required this.emirateOfLicensure,
-    required this.currentWorkplace,
-    required this.weeklyTimeSpent,
-    required this.interestInMentra,
-    required this.intendedWeeklyTime,
-    required this.heardAboutUs,
-    required this.treatableConditions,
-    required this.techniquesOfExpertise,
-    required this.certifications,
-    required this.degrees,
-    required this.comment,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  TherapistTherapist copyWith({
-    String? phoneNumber,
-    dynamic phoneCode,
-    String? gender,
-    List<String>? countriesLivedIn,
-    List<String>? languagesSpoken,
-    String? nationality,
-    String? country,
-    String? address,
-    dynamic bio,
-    String? field,
-    dynamic yearsOfExperience,
-    String? emirateOfLicensure,
-    String? currentWorkplace,
-    String? weeklyTimeSpent,
-    String? interestInMentra,
-    String? intendedWeeklyTime,
-    String? heardAboutUs,
-    List<String>? treatableConditions,
-    List<String>? techniquesOfExpertise,
-    dynamic certifications,
-    dynamic degrees,
-    dynamic comment,
-    String? status,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      TherapistTherapist(
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        phoneCode: phoneCode ?? this.phoneCode,
-        gender: gender ?? this.gender,
-        countriesLivedIn: countriesLivedIn ?? this.countriesLivedIn,
-        languagesSpoken: languagesSpoken ?? this.languagesSpoken,
-        nationality: nationality ?? this.nationality,
-        country: country ?? this.country,
-        address: address ?? this.address,
-        bio: bio ?? this.bio,
-        field: field ?? this.field,
-        yearsOfExperience: yearsOfExperience ?? this.yearsOfExperience,
-        emirateOfLicensure: emirateOfLicensure ?? this.emirateOfLicensure,
-        currentWorkplace: currentWorkplace ?? this.currentWorkplace,
-        weeklyTimeSpent: weeklyTimeSpent ?? this.weeklyTimeSpent,
-        interestInMentra: interestInMentra ?? this.interestInMentra,
-        intendedWeeklyTime: intendedWeeklyTime ?? this.intendedWeeklyTime,
-        heardAboutUs: heardAboutUs ?? this.heardAboutUs,
-        treatableConditions: treatableConditions ?? this.treatableConditions,
-        techniquesOfExpertise: techniquesOfExpertise ?? this.techniquesOfExpertise,
-        certifications: certifications ?? this.certifications,
-        degrees: degrees ?? this.degrees,
-        comment: comment ?? this.comment,
-        status: status ?? this.status,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory TherapistTherapist.fromJson(Map<String, dynamic> json) => TherapistTherapist(
-    phoneNumber: json["phone_number"],
-    phoneCode: json["phone_code"],
-    gender: json["gender"],
-    countriesLivedIn: List<String>.from(json["countries_lived_in"].map((x) => x)),
-    languagesSpoken: List<String>.from(json["languages_spoken"].map((x) => x)),
-    nationality: json["nationality"],
-    country: json["country"],
-    address: json["address"],
-    bio: json["bio"],
-    field: json["field"],
-    yearsOfExperience: json["years_of_experience"],
-    emirateOfLicensure: json["emirate_of_licensure"],
-    currentWorkplace: json["current_workplace"],
-    weeklyTimeSpent: json["weekly_time_spent"],
-    interestInMentra: json["interest_in_mentra"],
-    intendedWeeklyTime: json["intended_weekly_time"],
-    heardAboutUs: json["heard_about_us"],
-    treatableConditions: List<String>.from(json["treatable_conditions"].map((x) => x)),
-    techniquesOfExpertise: List<String>.from(json["techniques_of_expertise"].map((x) => x)),
-    certifications: json["certifications"],
-    degrees: json["degrees"],
-    comment: json["comment"],
-    status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "phone_number": phoneNumber,
-    "phone_code": phoneCode,
-    "gender": gender,
-    "countries_lived_in": List<dynamic>.from(countriesLivedIn.map((x) => x)),
-    "languages_spoken": List<dynamic>.from(languagesSpoken.map((x) => x)),
-    "nationality": nationality,
-    "country": country,
-    "address": address,
-    "bio": bio,
-    "field": field,
-    "years_of_experience": yearsOfExperience,
-    "emirate_of_licensure": emirateOfLicensure,
-    "current_workplace": currentWorkplace,
-    "weekly_time_spent": weeklyTimeSpent,
-    "interest_in_mentra": interestInMentra,
-    "intended_weekly_time": intendedWeeklyTime,
-    "heard_about_us": heardAboutUs,
-    "treatable_conditions": List<dynamic>.from(treatableConditions.map((x) => x)),
-    "techniques_of_expertise": List<dynamic>.from(techniquesOfExpertise.map((x) => x)),
-    "certifications": certifications,
-    "degrees": degrees,
-    "comment": comment,
-    "status": status,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
-}
 
 class User {
   final int id;

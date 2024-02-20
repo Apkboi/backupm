@@ -23,7 +23,6 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-
       onWillPop: () async {
         context.goNamed(PageUrl.homeScreen);
         logger.i('popping');
@@ -32,8 +31,7 @@ class _MenuScreenState extends State<MenuScreen> {
       },
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         // floatingActionButton: Padding(
         //   padding: const EdgeInsets.all(20),
         //   child: CustomNeumorphicButton(
@@ -48,7 +46,7 @@ class _MenuScreenState extends State<MenuScreen> {
         // ),
         appBar: CustomAppBar(
           tittleText: '',
-          leadingWidth: 100,
+          leadingWidth: 80,
           height: 80,
           actions: [
             CircleAvatar(
@@ -146,8 +144,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           Expanded(
                               child: MenuItem(
                                   onTap: () {
-                                    context
-                                        .pushNamed(PageUrl.summariesScreen);
+                                    context.pushNamed(PageUrl.summariesScreen);
                                   },
                                   textColor: Pallets.brown,
                                   bgColor: Pallets.lightOrange,

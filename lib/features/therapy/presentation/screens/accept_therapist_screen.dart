@@ -141,7 +141,7 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                                     TextView(
                                         align: TextAlign.center,
                                         text:
-                                            '${widget.suggestedTherapist.therapist.field ?? widget.suggestedTherapist.therapist.certifications ?? widget.suggestedTherapist.therapist.techniquesOfExpertise.first}'),
+                                            '${widget.suggestedTherapist.therapist.field ?? widget.suggestedTherapist.therapist.certifications ?? (widget.suggestedTherapist.therapist.techniquesOfExpertise as List<String>).firstOrNull.toString()}'),
                                     16.verticalSpace,
                                     Container(
                                       decoration: BoxDecoration(

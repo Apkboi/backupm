@@ -5,13 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/utils/string_extension.dart';
+import 'package:mentra/features/account/presentation/profile_image_widget.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/authentication/login/presentation/widgets/pin_view.dart';
-import 'package:mentra/gen/assets.gen.dart';
 
 class PasscodeScreen extends StatefulWidget {
   const PasscodeScreen({Key? key}) : super(key: key);
@@ -43,9 +43,22 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     0.15.sh.verticalSpace,
-                    ImageWidget(
+                    ProfileImageWidget(
                       size: 80,
-                      imageUrl: Assets.images.pngs.avatar22.path,
+                      bgColor: injector
+                                  .get<LoginBloc>()
+                                  .userPreview
+                                  ?.avatarBackgroundColor !=
+                              null
+                          ? injector
+                                  .get<LoginBloc>()
+                                  .userPreview
+                                  ?.avatarBackgroundColor
+                                  .toString()
+                                  .toColor() ??
+                              Colors.orange
+                          : Colors.orange,
+                      imageUrl: injector.get<LoginBloc>().userPreview!.avatar,
                       // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
                     ),
                     7.verticalSpace,
@@ -128,7 +141,7 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
     // injector.get<CacheCubit>().validatePin(pin);
   }
 
-  void _listenToLoginBloc(BuildContext context, LoginState state) async{
+  void _listenToLoginBloc(BuildContext context, LoginState state) async {
     if (state is LoginLoadingState) {
       CustomDialogs.showLoading(context);
     }
@@ -136,7 +149,6 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
       context.pop();
 
       await context.pushNamed(PageUrl.welcomeScreen);
-
     }
 
     if (state is LoginFailureState) {

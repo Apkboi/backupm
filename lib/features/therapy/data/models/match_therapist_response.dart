@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-MatchTherapistResponse matchTherapistResponseFromJson(String str) => MatchTherapistResponse.fromJson(json.decode(str));
+MatchTherapistResponse matchTherapistResponseFromJson(String str) =>
+    MatchTherapistResponse.fromJson(json.decode(str));
 
-String matchTherapistResponseToJson(MatchTherapistResponse data) => json.encode(data.toJson());
+String matchTherapistResponseToJson(MatchTherapistResponse data) =>
+    json.encode(data.toJson());
 
 class MatchTherapistResponse {
   final String message;
@@ -34,19 +36,20 @@ class MatchTherapistResponse {
         code: code ?? this.code,
       );
 
-  factory MatchTherapistResponse.fromJson(Map<String, dynamic> json) => MatchTherapistResponse(
-    message: json["message"],
-    data: SuggestedTherapist.fromJson(json["data"]),
-    success: json["success"],
-    code: json["code"],
-  );
+  factory MatchTherapistResponse.fromJson(Map<String, dynamic> json) =>
+      MatchTherapistResponse(
+        message: json["message"],
+        data: SuggestedTherapist.fromJson(json["data"]),
+        success: json["success"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": data.toJson(),
-    "success": success,
-    "code": code,
-  };
+        "message": message,
+        "data": data.toJson(),
+        "success": success,
+        "code": code,
+      };
 }
 
 class SuggestedTherapist {
@@ -67,15 +70,16 @@ class SuggestedTherapist {
         therapist: therapist ?? this.therapist,
       );
 
-  factory SuggestedTherapist.fromJson(Map<String, dynamic> json) => SuggestedTherapist(
-    user: User.fromJson(json["user"]),
-    therapist: Therapist.fromJson(json["therapist"]),
-  );
+  factory SuggestedTherapist.fromJson(Map<String, dynamic> json) =>
+      SuggestedTherapist(
+        user: User.fromJson(json["user"]),
+        therapist: Therapist.fromJson(json["therapist"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "user": user.toJson(),
-    "therapist": therapist.toJson(),
-  };
+        "user": user.toJson(),
+        "therapist": therapist.toJson(),
+      };
 }
 
 class Therapist {
@@ -84,18 +88,18 @@ class Therapist {
   final String gender;
   final List<String> countriesLivedIn;
   final List<String> languagesSpoken;
-  final String nationality;
-  final String country;
-  final String address;
+  final dynamic nationality;
+  final dynamic country;
+  final dynamic address;
   final dynamic bio;
-  final String field;
+  final dynamic field;
   final dynamic yearsOfExperience;
-  final String emirateOfLicensure;
-  final String currentWorkplace;
-  final String weeklyTimeSpent;
-  final String interestInMentra;
-  final String intendedWeeklyTime;
-  final String heardAboutUs;
+  final dynamic emirateOfLicensure;
+  final dynamic currentWorkplace;
+  final dynamic weeklyTimeSpent;
+  final dynamic interestInMentra;
+  final dynamic intendedWeeklyTime;
+  final dynamic heardAboutUs;
   final List<String> treatableConditions;
   final List<String> techniquesOfExpertise;
   final dynamic certifications;
@@ -115,7 +119,7 @@ class Therapist {
     required this.country,
     required this.address,
     required this.bio,
-    required this.field,
+    this.field,
     required this.yearsOfExperience,
     required this.emirateOfLicensure,
     required this.currentWorkplace,
@@ -179,7 +183,8 @@ class Therapist {
         intendedWeeklyTime: intendedWeeklyTime ?? this.intendedWeeklyTime,
         heardAboutUs: heardAboutUs ?? this.heardAboutUs,
         treatableConditions: treatableConditions ?? this.treatableConditions,
-        techniquesOfExpertise: techniquesOfExpertise ?? this.techniquesOfExpertise,
+        techniquesOfExpertise:
+            techniquesOfExpertise ?? this.techniquesOfExpertise,
         certifications: certifications ?? this.certifications,
         degrees: degrees ?? this.degrees,
         comment: comment ?? this.comment,
@@ -189,60 +194,71 @@ class Therapist {
       );
 
   factory Therapist.fromJson(Map<String, dynamic> json) => Therapist(
-    phoneNumber: json["phone_number"],
-    phoneCode: json["phone_code"],
-    gender: json["gender"],
-    countriesLivedIn: List<String>.from(json["countries_lived_in"].map((x) => x)),
-    languagesSpoken: List<String>.from(json["languages_spoken"].map((x) => x)),
-    nationality: json["nationality"],
-    country: json["country"],
-    address: json["address"],
-    bio: json["bio"],
-    field: json["field"],
-    yearsOfExperience: json["years_of_experience"],
-    emirateOfLicensure: json["emirate_of_licensure"],
-    currentWorkplace: json["current_workplace"],
-    weeklyTimeSpent: json["weekly_time_spent"],
-    interestInMentra: json["interest_in_mentra"],
-    intendedWeeklyTime: json["intended_weekly_time"],
-    heardAboutUs: json["heard_about_us"],
-    treatableConditions: List<String>.from(json["treatable_conditions"].map((x) => x)),
-    techniquesOfExpertise: List<String>.from(json["techniques_of_expertise"].map((x) => x)),
-    certifications: json["certifications"],
-    degrees: json["degrees"],
-    comment: json["comment"],
-    status: json["status"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        phoneNumber: json["phone_number"],
+        phoneCode: json["phone_code"],
+        gender: json["gender"],
+        countriesLivedIn:
+            List<String>.from(json["countries_lived_in"].map((x) => x)),
+        languagesSpoken:
+            List<String>.from(json["languages_spoken"].map((x) => x)),
+        nationality: json["nationality"],
+        country: json["country"],
+        address: json["address"],
+        bio: json["bio"],
+        field: json["field"],
+        yearsOfExperience: json["years_of_experience"],
+        emirateOfLicensure: json["emirate_of_licensure"],
+        currentWorkplace: json["current_workplace"],
+        weeklyTimeSpent: json["weekly_time_spent"],
+        interestInMentra: json["interest_in_mentra"],
+        intendedWeeklyTime: json["intended_weekly_time"],
+        heardAboutUs: json["heard_about_us"],
+        treatableConditions: json["treatable_conditions"] == null
+            ? []
+            : List<String>.from(json["treatable_conditions"].map((x) => x)),
+        techniquesOfExpertise: json["techniques_of_expertise"] == null
+            ? []
+            : List<String>.from(json["techniques_of_expertise"].map((x) => x)),
+        certifications: json["certifications"],
+        degrees: json["degrees"],
+        comment: json["comment"],
+        status: json["status"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "phone_number": phoneNumber,
-    "phone_code": phoneCode,
-    "gender": gender,
-    "countries_lived_in": List<dynamic>.from(countriesLivedIn.map((x) => x)),
-    "languages_spoken": List<dynamic>.from(languagesSpoken.map((x) => x)),
-    "nationality": nationality,
-    "country": country,
-    "address": address,
-    "bio": bio,
-    "field": field,
-    "years_of_experience": yearsOfExperience,
-    "emirate_of_licensure": emirateOfLicensure,
-    "current_workplace": currentWorkplace,
-    "weekly_time_spent": weeklyTimeSpent,
-    "interest_in_mentra": interestInMentra,
-    "intended_weekly_time": intendedWeeklyTime,
-    "heard_about_us": heardAboutUs,
-    "treatable_conditions": List<dynamic>.from(treatableConditions.map((x) => x)),
-    "techniques_of_expertise": List<dynamic>.from(techniquesOfExpertise.map((x) => x)),
-    "certifications": certifications,
-    "degrees": degrees,
-    "comment": comment,
-    "status": status,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "phone_number": phoneNumber,
+        "phone_code": phoneCode,
+        "gender": gender,
+        "countries_lived_in":
+            List<dynamic>.from(countriesLivedIn.map((x) => x)),
+        "languages_spoken": List<dynamic>.from(languagesSpoken.map((x) => x)),
+        "nationality": nationality,
+        "country": country,
+        "address": address,
+        "bio": bio,
+        "field": field,
+        "years_of_experience": yearsOfExperience,
+        "emirate_of_licensure": emirateOfLicensure,
+        "current_workplace": currentWorkplace,
+        "weekly_time_spent": weeklyTimeSpent,
+        "interest_in_mentra": interestInMentra,
+        "intended_weekly_time": intendedWeeklyTime,
+        "heard_about_us": heardAboutUs,
+        "treatable_conditions": treatableConditions == null
+            ? []
+            : List<dynamic>.from(treatableConditions.map((x) => x)),
+        "techniques_of_expertise": techniquesOfExpertise == null
+            ? []
+            : List<dynamic>.from(techniquesOfExpertise.map((x) => x)),
+        "certifications": certifications,
+        "degrees": degrees,
+        "comment": comment,
+        "status": status,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
 class User {
@@ -284,7 +300,8 @@ class User {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
-        avatarBackgroundColor: avatarBackgroundColor ?? this.avatarBackgroundColor,
+        avatarBackgroundColor:
+            avatarBackgroundColor ?? this.avatarBackgroundColor,
         username: username ?? this.username,
         email: email ?? this.email,
         createdAt: createdAt ?? this.createdAt,
@@ -292,26 +309,26 @@ class User {
       );
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    avatar: json["avatar"],
-    name: json["name"],
-    role: json["role"],
-    avatarBackgroundColor: json["avatar_background_color"],
-    username: json["username"],
-    email: json["email"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+        id: json["id"],
+        avatar: json["avatar"],
+        name: json["name"],
+        role: json["role"],
+        avatarBackgroundColor: json["avatar_background_color"],
+        username: json["username"],
+        email: json["email"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "avatar": avatar,
-    "name": name,
-    "role": role,
-    "avatar_background_color": avatarBackgroundColor,
-    "username": username,
-    "email": email,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+        "id": id,
+        "avatar": avatar,
+        "name": name,
+        "role": role,
+        "avatar_background_color": avatarBackgroundColor,
+        "username": username,
+        "email": email,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }

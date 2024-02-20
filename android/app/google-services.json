@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "469691765994-t31c846ivpkp23c2v012meslregtpmhh.apps.googleusercontent.com",
+          "client_id": "469691765994-stsf6g3t35l783kgff43soi9k9slm4gf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mentraapp.app",
@@ -30,7 +30,7 @@
           }
         },
         {
-          "client_id": "469691765994-cec55sbhm1mg7v5hdmop5u27u0703lrr.apps.googleusercontent.com",
+          "client_id": "469691765994-qkesja0jfhllglus5ep9dftdvvpcg8uq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -47,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "469691765994-ahpdo7k71o5d95ilcmk2bg01nsvfskol.apps.googleusercontent.com",
+              "client_id": "469691765994-0k0nhpbkitjfe8ir5a612oldrjlnek6g.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.mentra.app.mentra.RunnerTests"
+                "bundle_id": "com.mentraapp.app.mentra.RunnerTests"
               }
             }
           ]

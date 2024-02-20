@@ -4,15 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/custom_button.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
-import 'package:mentra/gen/assets.gen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BiometricAccessScreen extends StatefulWidget {
@@ -43,7 +40,7 @@ class _BiometricAccessScreenState extends State<BiometricAccessScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const QuestionBox(message: [
-                          'Perfect match! 👍 Fancy enabling biometrics or Face ID for a smoother experience?',
+                          'Strong passcode! Would you like to enable Face ID for even quicker access?',
                         ], isSender: false),
                         Align(
                           alignment: Alignment.centerRight,
@@ -59,8 +56,9 @@ class _BiometricAccessScreenState extends State<BiometricAccessScreen> {
                               style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w600, fontSize: 14.sp),
                             ),
-                            onPressed: () async{
-                              await PermissionHandlerService().requestPermission(Permission.camera);
+                            onPressed: () async {
+                              await PermissionHandlerService()
+                                  .requestPermission(Permission.camera);
                               context.pushNamed(PageUrl.notificationAccess);
                             },
                           ),
@@ -97,5 +95,4 @@ class _BiometricAccessScreenState extends State<BiometricAccessScreen> {
       ),
     );
   }
-
 }

@@ -4,7 +4,9 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/mesibo/mesibo_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 
 class DemoUser {
@@ -98,8 +100,10 @@ class DemoUser {
 class SessionButton extends StatefulWidget {
   final DateTime startDate;
   final DateTime endDate;
+  final TherapySession session;
 
-  SessionButton({required this.startDate, required this.endDate});
+  SessionButton(
+      {required this.startDate, required this.endDate, required this.session});
 
   @override
   _SessionButtonState createState() => _SessionButtonState();
@@ -134,6 +138,10 @@ class _SessionButtonState extends State<SessionButton>
   DemoUser user1 = DemoUser(
       "168a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
       'vic@gmail.com');
+
+  // DemoUser user1 = DemoUser(
+  //     "168a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
+  //     'vic@gmail.com');
   DemoUser user2 = DemoUser(
       "fcb17700353e8081dc836572521540a5f4927bb92145b441f3afe554ac422gadc2e18ac58",
       'xyz@example.com');
@@ -147,6 +155,7 @@ class _SessionButtonState extends State<SessionButton>
     super.initState();
 
     _checkButtonVisibility();
+   _loginUser1();
     // Update button visibility every second to reflect real-time
     Timer.periodic(const Duration(seconds: 1), (_) => _checkButtonVisibility());
   }
@@ -193,11 +202,10 @@ class _SessionButtonState extends State<SessionButton>
               await injector.get<MesiboCubit>().startGroupCall();
               // await bloc.initialize();
               // initMesibo(user1.token);
-              MesiboService service = MesiboService();
-
-              service.groupCall('Mentra');
-
-              // _groupCall();
+              // MesiboService service = MesiboService();
+              //
+              // service.groupCall('Mentra');
+              _groupCall();
             },
             color: Pallets.primary)
         : const SizedBox();
@@ -237,6 +245,7 @@ class _SessionButtonState extends State<SessionButton>
 
     // initialize mesibo
     _mesibo.setAccessToken(token);
+    // _mesibo.setAccessToken(injector.get<UserBloc>().appUser?.mesiboUserToken);
     _mesibo.setListener(this);
     _mesibo.start();
 
@@ -377,9 +386,13 @@ class _SessionButtonState extends State<SessionButton>
     //       "Refer to the group management documentation to create a group and add members before using group call function");
     //   return;
     // }
-
+    //
     MesiboProfile profile =
         MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
+    // MesiboProfile profile = MesiboProfile(
+    //     groupId: widget.session.mesiboGroupId,
+    //     uid: injector.get<UserBloc>().appUser?.mesiboUserId,
+    //     selfProfile: false);
 
     _mesiboUi.groupCall(profile, true, true, false, false);
   }
