@@ -71,11 +71,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         header: heading2,
                         text: body2,
                       ),
-                      OnboardingItem(
-                        img: Assets.images.pngs.onboarding3.path,
-                        header: heading3,
-                        text: body3,
-                      ),
+                      // OnboardingItem(
+                      //   img: Assets.images.pngs.onboarding3.path,
+                      //   header: heading3,
+                      //   text: body3,
+                      // ),
                     ]),
               ),
               Padding(
@@ -88,38 +88,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     20.verticalSpace,
                     Indicator(
                       seledtedIndex: _currentIndex,
-                      items_count: 3,
+                      items_count: 2,
                     ),
                     20.verticalSpace,
                     CustomNeumorphicButton(
                       color: Pallets.primary,
-                      text: 'Create an Account',
+                      text: 'Talk to mentra',
                       onTap: () {
                         injector
                             .get<RegistrationBloc>()
                             .updateFields(role: 'User');
-                        context.pushNamed(PageUrl.usernameScreen);
-                        // CustomDialogs.showBottomSheet(
-                        //     context, const SignupIntroScreen(),
-                        //     shape: const RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.only(
-                        //       topLeft: Radius.circular(16),
-                        //       topRight: Radius.circular(16),
-                        //     )),
-                        //     constraints: BoxConstraints(maxHeight: 0.9.sh));
-                        // context.pushNamed(PageUrl.signUpIntro);
+                        context.pushNamed(PageUrl.onboardingIntro);
+
                       },
                     ),
-                    10.verticalSpace,
-                    CustomNeumorphicButton(
-                      color: Pallets.secondary,
-                      text: 'Login',
-                      fgColor: Pallets.black,
-                      onTap: () {
-                        SessionManager.instance.hasOnboarded = true;
-                        context.pushNamed(PageUrl.login);
-                      },
-                    ),
+                    // 10.verticalSpace,
+                    // CustomNeumorphicButton(
+                    //   color: Pallets.secondary,
+                    //   text: 'Login',
+                    //   fgColor: Pallets.black,
+                    //   onTap: () {
+                    //     SessionManager.instance.hasOnboarded = true;
+                    //     context.pushNamed(PageUrl.login);
+                    //   },
+                    // ),
                   ],
                 ),
               ),

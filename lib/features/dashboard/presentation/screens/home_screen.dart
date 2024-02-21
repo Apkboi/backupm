@@ -14,8 +14,8 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
-import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 import 'package:mentra/features/subscription/presentation/widget/card_details_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/navigation/route_url.dart';
@@ -30,11 +30,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    // MesiboService service = MesiboService();
-    // service.login(token:
-    // "68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
-    //     listener: this,
-    //     appName: "Mentra");
+    DashboardUsecase().execute();
     super.initState();
   }
 
@@ -155,9 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               69.verticalSpace,
                               CustomNeumorphicButton(
                                 onTap: () {
-                                  injector.get<MesiboCubit>().startGroupCall();
+                                  // injector.get<MesiboCubit>().startGroupCall();
 
-                                  // context.pushNamed(PageUrl.talkToMentraScreen);
+                                  context.pushNamed(PageUrl.talkToMentraScreen);
                                   // _handlePayPress();
                                   // _handlePaymentRequest();
 

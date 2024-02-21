@@ -6,6 +6,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/passcode_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/welcome_screen.dart';
+import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/signup_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/splash_screen.dart';
@@ -126,6 +127,10 @@ class CustomRoutes {
         builder: (context, state) => const SignupOptionScreen(),
       ),
       GoRoute(
+        path: '/onboardingIntro',
+        name: PageUrl.onboardingIntro,
+        builder: (context, state) => const OnboardingIntro(),
+      ),      GoRoute(
         path: '/userEmailScreen',
         name: PageUrl.userEmailScreen,
         builder: (context, state) => const UserEmailScreen(email: 'email'),

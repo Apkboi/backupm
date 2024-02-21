@@ -3,6 +3,7 @@ class PageUrl {
   static const splash = 'splash';
   static const signUp = 'signUp';
   static const signUpIntro = 'signUpIntro';
+  static const onboardingIntro = 'onboardingIntro';
   static const welcomeScreen = 'welcomeScreen';
   static const passcodeScreen = 'passcodeScreen';
   static const onBoardingPage = 'onBoardingPage';

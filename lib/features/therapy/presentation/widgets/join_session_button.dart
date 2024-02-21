@@ -2,10 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/services/mesibo/mesibo_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
-import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 
@@ -135,13 +132,14 @@ class _SessionButtonState extends State<SessionButton>
 
       https://docs.mesibo.com/tutorials/get-started/
    **********************************/
-  DemoUser user1 = DemoUser(
-      "168a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
-      'vic@gmail.com');
-
   // DemoUser user1 = DemoUser(
   //     "168a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
   //     'vic@gmail.com');
+
+  // IOS USER
+  DemoUser user1 = DemoUser(
+      "d6582a9d25c85cbf4c9386e5d3529cdbb8f89d911dab801fae224ad1e4ga1499143eaf",
+      'victor@gmail.com');
   DemoUser user2 = DemoUser(
       "fcb17700353e8081dc836572521540a5f4927bb92145b441f3afe554ac422gadc2e18ac58",
       'xyz@example.com');
@@ -177,9 +175,7 @@ class _SessionButtonState extends State<SessionButton>
     } else if (status == Mesibo.MESIBO_STATUS_AUTHFAIL) {
       authFail = true;
       String warning =
-          "The token is invalid. Ensure that you have used appid \"" +
-              mAppId +
-              "\" to generate Mesibo user access token";
+          "The token is invalid. Ensure that you have used appid \"$mAppId\" to generate Mesibo user access token";
       statusText = warning;
       print(warning);
       showAlert("Auth Fail", warning);
@@ -199,13 +195,14 @@ class _SessionButtonState extends State<SessionButton>
             text: 'Join session',
             padding: const EdgeInsets.all(10),
             onTap: () async {
-              await injector.get<MesiboCubit>().startGroupCall();
+              // await injector.get<MesiboCubit>().startGroupCall();
               // await bloc.initialize();
               // initMesibo(user1.token);
               // MesiboService service = MesiboService();
               //
               // service.groupCall('Mentra');
-              _groupCall();
+              // _groupCall();
+              _loginUser1();
             },
             color: Pallets.primary)
         : const SizedBox();
@@ -285,19 +282,23 @@ class _SessionButtonState extends State<SessionButton>
   }
 
   void _loginUser1() {
-    if (null == _mesibo) {
-      showAlert("Mesibo NULL", "mesibo null");
-      return;
-    }
-    if (mLoginDone) {
-      showAlert("Failed",
-          "You have already initiated login. If the connection status is not 1, check the token and the package name/bundle ID");
-      return;
-    }
-    mLoginDone = true;
-    initMesibo(user1.token);
+    try {
+      if (null == _mesibo) {
+        showAlert("Mesibo NULL", "mesibo null");
+        return;
+      }
+      if (mLoginDone) {
+        showAlert("Failed",
+            "You have already initiated login. If the connection status is not 1, check the token and the package name/bundle ID");
+        return;
+      }
+      mLoginDone = true;
+      initMesibo(user1.token);
 
-    remoteUser = user2.address;
+      remoteUser = user2.address;
+    }  catch (e) {
+    logger.e(e.toString());
+    }
   }
 
   void _loginUser2() {
@@ -388,7 +389,10 @@ class _SessionButtonState extends State<SessionButton>
     // }
     //
     MesiboProfile profile =
-        MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
+        // MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
+
+        // IOS PROFILE
+        MesiboProfile(groupId: 2988983, uid: 6361120, selfProfile: false);
     // MesiboProfile profile = MesiboProfile(
     //     groupId: widget.session.mesiboGroupId,
     //     uid: injector.get<UserBloc>().appUser?.mesiboUserId,
