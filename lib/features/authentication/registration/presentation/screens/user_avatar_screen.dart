@@ -97,7 +97,7 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
   void _goToNextScreen(BuildContext context) {
     if (selectedAvatar != null) {
       injector.get<RegistrationBloc>().updateFields(avatarPath: selectedAvatar);
-      context.pushNamed(PageUrl.setPasscode);
+      context.pushNamed(PageUrl.signupOptionScreen);
     } else {
       CustomDialogs.showToast('Please select an avatar');
     }

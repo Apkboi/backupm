@@ -103,7 +103,7 @@ class _UsernamePageState extends State<UsernamePage> {
     log('message');
     if (_formKey.currentState!.validate()) {
       injector.get<RegistrationBloc>().updateFields(name: _nameController.text);
-      context.pushNamed(PageUrl.signupOptionScreen);
+      context.pushNamed(PageUrl.userAvatarScreen);
     }
   }
 }

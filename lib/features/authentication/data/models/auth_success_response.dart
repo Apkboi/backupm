@@ -92,7 +92,7 @@ class MentraUser {
   final String avatar;
   final String name;
   final String role;
-  final String avatarBackgroundColor;
+  final dynamic avatarBackgroundColor;
   final String username;
   final String email;
   final String birthYear;
@@ -108,7 +108,7 @@ class MentraUser {
     required this.avatar,
     required this.name,
     required this.role,
-    required this.avatarBackgroundColor,
+     this.avatarBackgroundColor,
     required this.username,
     required this.email,
     required this.birthYear,

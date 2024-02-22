@@ -124,7 +124,7 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
     injector
         .get<RegistrationBloc>()
         .updateFields(birthYear: _controller.text.toString());
-    context.pushNamed(PageUrl.userAvatarScreen);
+    context.pushNamed(PageUrl.setPasscode);
     // }
   }
 }

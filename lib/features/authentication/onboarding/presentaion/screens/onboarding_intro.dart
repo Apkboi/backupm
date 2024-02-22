@@ -46,7 +46,7 @@ class _OnboardingIntroState extends State<OnboardingIntro> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             const QuestionBox(message: [
-                              'Hi, am mentra,',
+                              'Hi, I am Mentra your 24/7 emotional and mental Wellness budy tailored just for you,',
                               'How will you like to proceed',
                             ], isSender: false),
                             Row(
@@ -54,8 +54,9 @@ class _OnboardingIntroState extends State<OnboardingIntro> {
                               children: [
                                 CustomNeumorphicButton(
                                   onTap: () {
-
-                                    injector.get<RegistrationBloc>().updateFields(role: 'User');
+                                    injector
+                                        .get<RegistrationBloc>()
+                                        .updateFields(role: 'User');
                                     context.pushNamed(PageUrl.usernameScreen);
                                   },
                                   expanded: false,
