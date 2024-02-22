@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,30 +101,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             )),
                       ),
                       22.verticalSpace,
-                      GlassContainer(
-                          child: Padding(
-                        padding: const EdgeInsets.all(17),
-                        child: SettingListTile(
-                          leadingIconUrl: Assets.images.svgs.subscription,
-                          onTap: () {
-                            context.pushNamed(PageUrl.selectPlanScreen);
-                          },
-                          tittle: 'Subscription',
-                          trailingWidget: Row(
-                            children: [
-                              const TextView(
-                                text: 'Free',
-                                color: Pallets.ink,
+                      BlocBuilder<UserBloc, UserState>(
+                        bloc: injector.get(),
+                        builder: (context, state) {
+                          return GlassContainer(
+                              child: Padding(
+                            padding: const EdgeInsets.all(17),
+                            child: SettingListTile(
+                              leadingIconUrl: Assets.images.svgs.subscription,
+                              onTap: () {
+                                context.pushNamed(PageUrl.selectPlanScreen);
+                              },
+                              tittle: 'Subscription',
+                              trailingWidget: Row(
+                                children: [
+                                  TextView(
+                                    text:
+                                        '${injector.get<UserBloc>().appUser?.activeSubscription?.plan.name}',
+                                    color: Pallets.ink,
+                                  ),
+                                  8.horizontalSpace,
+                                  const Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 20,
+                                  )
+                                ],
                               ),
-                              8.horizontalSpace,
-                              const Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 20,
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
+                            ),
+                          ));
+                        },
+                      ),
                       16.verticalSpace,
                       const SettingsGroup1(),
                       16.verticalSpace,

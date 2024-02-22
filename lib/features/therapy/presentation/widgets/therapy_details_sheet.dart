@@ -8,6 +8,8 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/data/permission_manager.dart';
+import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
@@ -16,6 +18,7 @@ import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.d
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class TherapyDetailsSheet extends StatefulWidget {
   const TherapyDetailsSheet({super.key, required this.session});
@@ -79,7 +82,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                         _startMessaging();
                         // context.pushNamed(PageUrl.therapistChatScreen);
                       },
-                      text: "Message Nour",
+                      text: "Message ${widget.session.therapist.user.name}",
                       color: Pallets.milkColor),
                   8.horizontalSpace,
                   CustomOutlinedButton(
@@ -231,21 +234,39 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
   }
 
   void launchMessage() async {
+    PermissionHandlerService().requestPermission(Permission.microphone);
+    PermissionHandlerService().requestPermission(Permission.mediaLibrary);
+    PermissionHandlerService().requestPermission(Permission.camera);
+    MesiboProfile pro = MesiboProfile(
+        groupId: 0,
+        uid: int.parse(widget.session.therapist.user.mesiboUserId),
+        selfProfile: false);
     MesiboProfile profile = await Mesibo.getInstance()
-        .getUserProfile(widget.session.therapist.user.mesiboUserToken);
+        .getUserProfile(widget.session.therapist.user.email);
+    profile.setImageUrl(widget.session.therapist.user.avatar);
+    // profile.address = ;
+    profile.save();
+    logger.i(widget.session.therapist.user.mesiboUserToken);
+    // profile.setImagePath(widget.session.therapist.user.avatar);
+    // profile.address = widget.session.therapist.user.avatar;
     _mesiboUi.getUiDefaults().then((MesiboUIOptions options) {
       options.enableBackButton = true;
       options.appName = "Mentra";
       options.toolbarColor = 0xff00868b;
+      options.onlineIndicationTitle = 'Online';
+      options.statusBarColor = Pallets.primary.value;
+      options.toolbarColor = Pallets.primary.value;
+      options.offlineIndicationTitle = 'Offline';
+      options.emptyMessageListMessage = 'No messages here';
       _mesiboUi.setUiDefaults(options);
     });
 
     MesiboUIButtons buttons = MesiboUIButtons();
     buttons.message = true;
-    buttons.audioCall = true;
-    buttons.videoCall = true;
-    buttons.groupAudioCall = true;
-    buttons.groupVideoCall = true;
+    buttons.audioCall = false;
+    buttons.videoCall = false;
+    buttons.groupAudioCall = false;
+    buttons.groupVideoCall = false;
     buttons.endToEndEncryptionInfo = true; // e2// ee should be enabled
     _mesiboUi.setupBasicCustomization(buttons, null);
     _mesiboUi.launchMessaging(profile);

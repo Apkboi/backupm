@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -8,8 +9,11 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/subscription_prompt_dialog.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -116,13 +120,8 @@ class _MenuScreenState extends State<MenuScreen> {
                               child: MenuItem(
                                   textColor: Pallets.orangePink,
                                   bgColor: Pallets.lighterPink,
-                                  onTap: () {
-                                    // CustomDialogs.showBottomSheet(
-                                    //   context,
-                                    //   const UnlockPremiumFeatureDialog(),
-                                    // );
-
-                                    context.pushNamed(PageUrl.therapyScreen);
+                                  onTap: () async {
+                                    _checkSubscription(context);
                                   },
                                   image: Assets.images.pngs.pTherapy.path,
                                   text: "Professional Therapy")),
@@ -175,5 +174,27 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
       ),
     );
+  }
+
+  bool _userISubscribed() {
+    return injector.get<UserBloc>().appUser?.activeSubscription != null;
+  }
+
+  void _checkSubscription(BuildContext context) async {
+    if (_userISubscribed()) {
+      context.pushNamed(PageUrl.therapyScreen);
+    } else {
+      final bool? subscribe = await CustomDialogs.showBottomSheet(
+          context, const SubscriptionPromptDialog(),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          )),
+          constraints: BoxConstraints(maxHeight: 0.9.sh));
+      if (subscribe ?? false) {
+        context.pushNamed(PageUrl.selectPlanScreen);
+      }
+    }
   }
 }

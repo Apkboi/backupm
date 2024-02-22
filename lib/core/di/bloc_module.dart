@@ -13,7 +13,7 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<RegistrationBloc>(
       () => RegistrationBloc(getIt.get()));
   getIt.registerLazySingleton<LoginBloc>(() => LoginBloc(getIt.get()));
-  getIt.registerLazySingleton<UserBloc>(() => UserBloc());
+  getIt.registerLazySingleton<UserBloc>(() => UserBloc(getIt.get()));
   getIt.registerLazySingleton<UserPreferenceCubit>(
       () => UserPreferenceCubit(injector.get()));
   getIt.registerLazySingleton<DashboardBloc>(

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/login_preview_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
@@ -36,7 +37,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       AuthSuccessUsecase().execute(authResponse);
 
       emit(LoginSuccessState(response: authResponse));
-    } catch (e) {
+    } catch (e,stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
       emit(LoginFailureState(error: e.toString()));
     }
   }

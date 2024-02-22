@@ -58,9 +58,10 @@ class TherapyItem extends StatelessWidget {
                     ),
                     8.verticalSpace,
                     SessionButton(
-                      
-                        startDate: session.startsAt,
-                        endDate: session.endsAt ?? DateTime.now(), session: session,)
+                      startDate: session.startsAt,
+                      endDate: session.endsAt ?? DateTime.now(),
+                      session: session,
+                    )
                   ],
                 ),
               ),
@@ -98,8 +99,3 @@ class TherapyStatusIndicator extends StatelessWidget {
             )));
   }
 }
-
-
-
-
-

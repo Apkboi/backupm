@@ -14,8 +14,11 @@ class SaveUserEvent extends UserEvent {
 }
 
 class GetUserEvent extends UserEvent {
+  @override
+  List<Object?> get props => [];
+}
 
-
+class GetRemoteUser extends UserEvent {
   @override
   List<Object?> get props => [];
 }

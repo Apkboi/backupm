@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:mentra/features/account/data/repository/account_repository_impl.dart';
+import 'package:mentra/features/account/dormain/repository/account_repository.dart';
 import 'package:mentra/features/authentication/data/repository/auth_repository_impl.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:mentra/features/dashboard/data/repository/dashboard_repository_impl.dart';
@@ -17,6 +19,8 @@ import 'package:mentra/features/therapy/dormain/repository/therapy_repository.da
 void setup(GetIt getIt) {
   getIt.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<AccountRepository>(
+      () => AccountRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<DashboardRepository>(
       () => DashboardRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<WellnessLibraryRepository>(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 
@@ -110,39 +111,19 @@ class _SessionButtonState extends State<SessionButton> {
   void _checkButtonVisibility() {
     final now = DateTime.now();
     setState(() {
-      _showButton = true;
-      // _showButton = widget.startDate.isBefore(now) && now.isBefore(widget.endDate);
+      // _showButton = true;
+      _showButton =
+          widget.startDate.isBefore(now) && now.isBefore(widget.endDate);
     });
   }
 
   static Mesibo _mesibo = Mesibo();
   static MesiboUI _mesiboUi = MesiboUI();
   String _mesiboStatus = 'Mesibo status: Not Connected.';
-  Text? mStatusText;
-  bool authFail = false;
-  String mAppId = "";
+
   bool _showButton = false;
 
-  /**********************************
-      Please refer to the tutorial link below for details on obtaining user authentication tokens.
-
-      https://docs.mesibo.com/tutorials/get-started/
-   **********************************/
-  // DemoUser user1 = DemoUser(
-  //     "168a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
-  //     'vic@gmail.com');
-
-  // IOS USER
-  DemoUser user1 = DemoUser(
-      "d6582a9d25c85cbf4c9386e5d3529cdbb8f89d911dab801fae224ad1e4ga1499143eaf",
-      'victor@gmail.com');
-  DemoUser user2 = DemoUser(
-      "fcb17700353e8081dc836572521540a5f4927bb92145b441f3afe554ac422gadc2e18ac58",
-      'xyz@example.com');
-
-  String remoteUser = "";
-  bool mOnline = false, mLoginDone = false;
-  ElevatedButton? loginButton1, loginButton2;
+  Timer? timer;
 
   @override
   void initState() {
@@ -151,10 +132,9 @@ class _SessionButtonState extends State<SessionButton> {
     _checkButtonVisibility();
 
     // Update button visibility every second to reflect real-time
-    Timer.periodic(const Duration(seconds: 1), (_) => _checkButtonVisibility());
+    timer = Timer.periodic(
+        const Duration(seconds: 1), (_) => _checkButtonVisibility());
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -182,34 +162,14 @@ class _SessionButtonState extends State<SessionButton> {
     super.dispose();
   }
 
-
   void initMesibo(String token) async {
-    // optional - only to show alert in AUTHFAIL case
-
-    Future<String> asyncAppId = _mesibo.getAppIdForAccessToken();
-    asyncAppId.then((String appid) {
-      mAppId = appid;
-    });
-
-
-
-
-
-
-
-    /**********************************
-        override default UI text, colors, etc.Refer to the documentation
-
-        https://docs.mesibo.com/ui-modules/
-
-        Also refer to the header file for complete list of parameters (applies to both Android/iOS)
-        https://github.com/mesibo/mesiboframeworks/blob/main/mesiboui.framework/Headers/MesiboUI.h#L170
-     **********************************/
-
     _mesiboUi.getUiDefaults().then((MesiboUIOptions options) {
       options.enableBackButton = true;
       options.appName = "My First App";
-      options.toolbarColor = 0xff00868b;
+      options.enableForward = false;
+      options.statusBarColor = Pallets.primary.value;
+
+      options.toolbarColor = Pallets.primary.value;
       _mesiboUi.setUiDefaults(options);
     });
 
@@ -232,11 +192,6 @@ class _SessionButtonState extends State<SessionButton> {
     _mesiboUi.setupBasicCustomization(buttons, null);
   }
 
-
-
-
-
-
   void _groupCall() async {
     // if (!isOnline()) return;
     int groupid =
@@ -249,20 +204,16 @@ class _SessionButtonState extends State<SessionButton> {
     //   return;
     // }
     //
-    MesiboProfile profile =
-        // MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
+    // MesiboProfile profile =
+    // MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
 
-        // IOS PROFILE
-        MesiboProfile(groupId: 2988983, uid: 63611207, selfProfile: false);
-    // MesiboProfile profile = MesiboProfile(
-    //     groupId: widget.session.mesiboGroupId,
-    //     uid: injector.get<UserBloc>().appUser?.mesiboUserId,
-    //     selfProfile: false);
+    // IOS PROFILE
+    // MesiboProfile(groupId: 2988983, uid: 63611207, selfProfile: false);
+    MesiboProfile profile = MesiboProfile(
+        groupId: int.parse(widget.session.mesiboGroupId.toString()),
+        uid: injector.get<UserBloc>().appUser?.mesiboUserId,
+        selfProfile: false);
 
     _mesiboUi.groupCall(profile, true, true, false, false);
   }
-
-
 }
-
-
