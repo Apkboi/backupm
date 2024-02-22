@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/mesibo/mesibo_service.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
@@ -15,26 +16,25 @@ class MesiboCubit extends Cubit<MesiboState>
 
   MesiboCubit() : super(MesiboInitial());
 
-  final MesiboService _mesiboService = MesiboService();
+  // final MesiboService _mesiboService = MesiboService();
   bool mOnline = false;
 
   // final Mesibo _mesibo = Mesibo();
 
   Future<void> startGroupCall() async {
     // await _mesiboService.groupCall('Mentra');
-    await _mesiboService.groupCall('Mentra');
+    // await _mesiboService.groupCall('Mentra');
   }
 
   Future<void> stop() async {
     // await _mesiboService.groupCall('Mentra');
-    await _mesiboService.stop();
+    // await _mesiboService.stop();
   }
 
   Future<void> initialize() async {
     try {
-      await _mesiboService.login(
-          token:
-              "68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
+      await MesiboService.login(
+          token: "68a28b89c8000016ebbd246fc64ccdd92444cf4557d0e444ac8d2iabc21eeb520",
           listener: this,
           appName: "Mentra");
 
@@ -129,6 +129,7 @@ class MesiboCubit extends Cubit<MesiboState>
   @override
   void Mesibo_onMessage(MesiboMessage message) {
     logger.i('Mesibo_onMessage: $message');
+    CustomDialogs.showToast(message.message.toString());
   }
 
   @override

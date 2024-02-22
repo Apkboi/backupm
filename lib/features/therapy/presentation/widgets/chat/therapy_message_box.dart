@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/mentra_message_item.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/user_message_item.dart';
+import 'package:mentra/features/therapy/data/models/chat_message.dart';
 
 class TherapyMessageBox extends StatefulWidget {
   const TherapyMessageBox({
@@ -10,7 +11,7 @@ class TherapyMessageBox extends StatefulWidget {
     this.child,
   }) : super(key: key);
 
-  final dynamic message;
+  final TherapyChatMessage message;
   final Widget? child;
   final bool isSender;
 
@@ -24,15 +25,15 @@ class _TherapyMessageBoxState extends State<TherapyMessageBox> {
     return Container(
         // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
         alignment:
-            widget.isSender ? Alignment.centerRight : Alignment.centerLeft,
+           !widget.message.isTherapist ? Alignment.centerRight : Alignment.centerLeft,
         // padding: const EdgeInsets.symmetric(vertical: 10),
-        child: widget.isSender
+        child: !widget.message.isTherapist
             ? UserMessageItem(
-                message: widget.message,
+                message: [widget.message.message],
                 child: widget.child,
               )
             : MentraMessageItem(
-                message: widget.message,
+                message: [widget.message.message],
                 child: widget.child,
               ));
   }

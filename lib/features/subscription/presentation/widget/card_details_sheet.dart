@@ -75,7 +75,7 @@ class _CardDetailsSheetState extends State<CardDetailsSheet> {
               controller: _nameController,
               hasBorder: true,
               validator:
-                  RequiredValidator(errorText: 'Enter your card expiry date')
+                  RequiredValidator(errorText: 'Enter your card name')
                       .call,
             ),
             16.verticalSpace,

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-// import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -18,6 +16,7 @@ import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/subscription/presentation/widget/card_details_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,9 +26,13 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    implements MesiboConnectionListener {
+  // Mesibo mesibo = Mesibo();
+
   @override
   void initState() {
+    // _initMesibo();
     DashboardUsecase().execute();
     super.initState();
   }
@@ -151,13 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               69.verticalSpace,
                               CustomNeumorphicButton(
                                 onTap: () {
-                                  // injector.get<MesiboCubit>().startGroupCall();
-
                                   context.pushNamed(PageUrl.talkToMentraScreen);
-                                  // _handlePayPress();
-                                  // _handlePaymentRequest();
-
-                                  // _showCardDialog(context);
                                 },
                                 color: Pallets.secondary,
                                 fgColor: Pallets.black,
@@ -189,6 +186,17 @@ class _HomeScreenState extends State<HomeScreen> {
         topRight: Radius.circular(16),
       )),
     );
+  }
+
+  void _initMesibo() async {
+    // await mesibo.stop();
+    // mesibo.setAccessToken('d6582a9d25c85cbf4c9386e5d3529cdbb8f89d911dab801fae224ad1e4ga1499143eaf');
+    // mesibo.setListener(this);
+    // mesibo.start();
+  }
+  @override
+  void Mesibo_onConnectionStatus(int status) {
+    logger.i(status);
   }
 }
 

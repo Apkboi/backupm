@@ -99,7 +99,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             .get<RegistrationBloc>()
                             .updateFields(role: 'User');
                         context.pushNamed(PageUrl.onboardingIntro);
-
                       },
                     ),
                     // 10.verticalSpace,
@@ -137,23 +136,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               color: Pallets.primary,
               expanded: false,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'English',
-                    style: TextStyle(
-                        color: Pallets.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  5.horizontalSpace,
-                  const Icon(
-                    Icons.keyboard_arrow_down,
-                    size: 20,
+              child: Text(
+                'English',
+                style: TextStyle(
                     color: Pallets.white,
-                  )
-                ],
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600),
               )),
         ),
       ],

@@ -1,6 +1,6 @@
 part of 'session_bloc.dart';
 
-abstract class SessionEvent extends Equatable {
+abstract class SessionEvent {
   const SessionEvent();
 }
 
@@ -15,6 +15,10 @@ class SendMessageEvent extends SessionEvent {
 }
 
 class MessageReceivedEvent extends SessionEvent {
+  final MesiboMessage message;
+
+  MessageReceivedEvent(this.message);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [message];
 }

@@ -1,8 +1,10 @@
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 
 class MesiboService {
   static final MesiboService _instance = MesiboService._internal();
+  Mesibo mesibo = Mesibo();
 
   factory MesiboService() => _instance;
 
@@ -12,7 +14,7 @@ class MesiboService {
     // Mesibo _mesibo = Mesibo();
   }
 
-  Future<void> login(
+  static Future<void> login(
       {required String token,
       required Object listener,
       required String appName}) async {
@@ -20,26 +22,22 @@ class MesiboService {
     // optional - only to show alert in AUTHFAIL case
 
     try {
-      Future<String> asyncAppId =
-          injector.get<Mesibo>().getAppIdForAccessToken();
+      Mesibo mesibo = Mesibo();
+      // await mesibo.stop();
+      Future<String> asyncAppId = mesibo.getAppIdForAccessToken();
       asyncAppId.then((String appid) {
         logger.i(appid);
       });
-      Mesibo mesibo = Mesibo();
-      await mesibo.setAccessToken(token);
-      mesibo.setListener(this);
-      mesibo.start().then((value) => logger.i('MESIBO IS RUNNING'));
+      mesibo.setAccessToken(token);
+      // mesibo.setListener(listener);
+      // mesibo.start().then((value) => logger.i('MESIBO IS RUNNING'));
     } catch (e) {
       logger.e(e.toString());
       // TODO
     }
-
-    // logger.i( injector.get<MesiboUI>().);
   }
 
-  Future<void> startChat(String contactId) async {
-    // Start chat conversation
-  }
+  Future<void> startChat(String contactId) async {}
 
   Future<void> sendMessage(String contactId, String message) async {
     // Send message logic
@@ -75,10 +73,8 @@ class MesiboService {
     _mesiboUi.setupBasicCustomization(buttons, null);
 
     await Future.delayed(Duration(milliseconds: 500));
-
     MesiboProfile profile =
         MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
-
     _mesiboUi.groupCall(profile, true, true, false, false);
   }
 }

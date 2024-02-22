@@ -8,3 +8,8 @@ class SessionInitial extends SessionState {
   @override
   List<Object> get props => [];
 }
+
+class MessagesFetchedEvent extends SessionState {
+  @override
+  List<Object> get props => [];
+}

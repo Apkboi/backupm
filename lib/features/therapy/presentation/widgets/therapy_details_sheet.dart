@@ -15,6 +15,7 @@ import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.d
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
+import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class TherapyDetailsSheet extends StatefulWidget {
@@ -27,6 +28,8 @@ class TherapyDetailsSheet extends StatefulWidget {
 }
 
 class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
+  static MesiboUI _mesiboUi = MesiboUI();
+
   @override
   Widget build(BuildContext context) {
     return CupertinoScaffold(
@@ -74,6 +77,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       padding: const EdgeInsets.all(10),
                       onTap: () async {
                         // injector.get<MesiboCubit>().startGroupCall();
+                        _startMessaging();
                         context.pushNamed(PageUrl.therapistChatScreen);
                       },
                       text: "Message Nour",
@@ -222,4 +226,62 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
       context.pop();
     }
   }
+
+  void _startMessaging() {
+launchMessage();
+  }
+
+
+
+  void launchMessage() async {
+    // optional - only to show alert in AUTHFAIL case
+
+    // Future<String> asyncAppId = _mesibo.getAppIdForAccessToken();
+    // asyncAppId.then((String appid) {
+    //   mAppId = appid;
+    // });
+
+
+
+
+
+
+
+    /**********************************
+        override default UI text, colors, etc.Refer to the documentation
+
+        https://docs.mesibo.com/ui-modules/
+
+        Also refer to the header file for complete list of parameters (applies to both Android/iOS)
+        https://github.com/mesibo/mesiboframeworks/blob/main/mesiboui.framework/Headers/MesiboUI.h#L170
+     **********************************/
+
+    _mesiboUi.getUiDefaults().then((MesiboUIOptions options) {
+      options.enableBackButton = true;
+      options.appName = "My First App";
+      options.toolbarColor = 0xff00868b;
+      _mesiboUi.setUiDefaults(options);
+    });
+
+    /**********************************
+        The code below enables basic UI customization.
+
+        However, you can customize entire user interface by implementing MesiboUIListner for Android and
+        iOS. Refer to
+
+        https://docs.mesibo.com/ui-modules/customizing/
+     **********************************/
+
+    MesiboUIButtons buttons = MesiboUIButtons();
+    buttons.message = true;
+    buttons.audioCall = true;
+    buttons.videoCall = true;
+    buttons.groupAudioCall = true;
+    buttons.groupVideoCall = true;
+    buttons.endToEndEncryptionInfo = false; // e2ee should be enabled
+    _mesiboUi.setupBasicCustomization(buttons, null);
+
+    _mesiboUi.launchUserList();
+  }
+
 }

@@ -54,9 +54,8 @@ class _OnboardingIntroState extends State<OnboardingIntro> {
                               children: [
                                 CustomNeumorphicButton(
                                   onTap: () {
-                                    injector
-                                        .get<RegistrationBloc>()
-                                        .updateFields(role: 'User');
+
+                                    injector.get<RegistrationBloc>().updateFields(role: 'User');
                                     context.pushNamed(PageUrl.usernameScreen);
                                   },
                                   expanded: false,
@@ -71,7 +70,7 @@ class _OnboardingIntroState extends State<OnboardingIntro> {
                               children: [
                                 CustomNeumorphicButton(
                                   onTap: () {
-                                    context.pushNamed(PageUrl.login);
+                                    context.pushNamed(PageUrl.newLoginScreen);
                                   },
                                   expanded: false,
                                   fgColor: Pallets.black,
@@ -99,7 +98,7 @@ class _OnboardingIntroState extends State<OnboardingIntro> {
                       //     ),
                       //     // onChanged: widget.onChanged,
                       //     // onFieldSubmitted: widget.onFieldSubmitted,
-                      //     // onSaved: widget.onSaved,
+                      //     // onSaved: widget.oxSaved,
                       //     radius: 43,
                       //     // preffix: const Icon(Iconsax.search_normal4),
                       //     contentPadding:

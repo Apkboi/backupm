@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 GetIt injector = GetIt.instance;
 final logger = Logger();
 Future<void> init() async{
-  mesiboModule.setup(injector);
+  // mesiboModule.setup(injector);
   networkModule.setup(injector);
   repositoryModule.setup(injector);
   blocModule.setup(injector);

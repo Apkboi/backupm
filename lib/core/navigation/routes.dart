@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/new_login.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/passcode_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/welcome_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_intro.dart';
@@ -130,7 +131,13 @@ class CustomRoutes {
         path: '/onboardingIntro',
         name: PageUrl.onboardingIntro,
         builder: (context, state) => const OnboardingIntro(),
-      ),      GoRoute(
+      ),
+      GoRoute(
+        path: '/newLoginScreen',
+        name: PageUrl.newLoginScreen,
+        builder: (context, state) => const NewLoginScreen(),
+      ),
+      GoRoute(
         path: '/userEmailScreen',
         name: PageUrl.userEmailScreen,
         builder: (context, state) => const UserEmailScreen(email: 'email'),
@@ -188,7 +195,7 @@ class CustomRoutes {
       GoRoute(
         path: '/videoPlayerScreen',
         name: PageUrl.videoPlayerScreen,
-        builder: (context, state) =>  VideoPlayerScreen(
+        builder: (context, state) => VideoPlayerScreen(
           courseJson: state.uri.queryParameters[PathParam.libraryCourse] ?? "",
         ),
       ),
