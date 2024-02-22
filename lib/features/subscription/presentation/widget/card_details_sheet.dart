@@ -23,12 +23,13 @@ class _CardDetailsSheetState extends State<CardDetailsSheet> {
   final _cvvController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  late final RegExp _expiryDateRegex;
+  // late final RegExp _expiryDateRegex;
 
   void _formatExpiryDate() {
     final originalText = _expiryDateController.text;
+
     if (originalText.length == 2) {
-      _expiryDateController.text = "$originalText/";
+      _expiryDateController.text = "${originalText}/";
     }
 
     // if (_expiryDateController.text != formattedText) {
@@ -41,7 +42,7 @@ class _CardDetailsSheetState extends State<CardDetailsSheet> {
 
   @override
   void initState() {
-    _expiryDateRegex = RegExp(r'^([0-9]{0,2})/?([0-9]{0,2})$');
+    // _expiryDateRegex = RegExp(r'^([0-9]{0,2})/?([0-9]{0,2})$');
     _expiryDateController.addListener(_formatExpiryDate);
     super.initState();
   }
@@ -99,6 +100,7 @@ class _CardDetailsSheetState extends State<CardDetailsSheet> {
                   hasElevation: false,
                   controller: _expiryDateController,
                   inputType: TextInputType.number,
+
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9/]')),
                     LengthLimitingTextInputFormatter(5),

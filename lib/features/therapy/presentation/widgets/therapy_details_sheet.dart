@@ -8,7 +8,6 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
@@ -78,7 +77,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       onTap: () async {
                         // injector.get<MesiboCubit>().startGroupCall();
                         _startMessaging();
-                        context.pushNamed(PageUrl.therapistChatScreen);
+                        // context.pushNamed(PageUrl.therapistChatScreen);
                       },
                       text: "Message Nour",
                       color: Pallets.milkColor),
@@ -228,49 +227,18 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
   }
 
   void _startMessaging() {
-launchMessage();
+    launchMessage();
   }
 
-
-
   void launchMessage() async {
-    // optional - only to show alert in AUTHFAIL case
-
-    // Future<String> asyncAppId = _mesibo.getAppIdForAccessToken();
-    // asyncAppId.then((String appid) {
-    //   mAppId = appid;
-    // });
-
-
-
-
-
-
-
-    /**********************************
-        override default UI text, colors, etc.Refer to the documentation
-
-        https://docs.mesibo.com/ui-modules/
-
-        Also refer to the header file for complete list of parameters (applies to both Android/iOS)
-        https://github.com/mesibo/mesiboframeworks/blob/main/mesiboui.framework/Headers/MesiboUI.h#L170
-     **********************************/
-
+    MesiboProfile profile = await Mesibo.getInstance()
+        .getUserProfile(widget.session.therapist.user.mesiboUserToken);
     _mesiboUi.getUiDefaults().then((MesiboUIOptions options) {
       options.enableBackButton = true;
-      options.appName = "My First App";
+      options.appName = "Mentra";
       options.toolbarColor = 0xff00868b;
       _mesiboUi.setUiDefaults(options);
     });
-
-    /**********************************
-        The code below enables basic UI customization.
-
-        However, you can customize entire user interface by implementing MesiboUIListner for Android and
-        iOS. Refer to
-
-        https://docs.mesibo.com/ui-modules/customizing/
-     **********************************/
 
     MesiboUIButtons buttons = MesiboUIButtons();
     buttons.message = true;
@@ -278,10 +246,8 @@ launchMessage();
     buttons.videoCall = true;
     buttons.groupAudioCall = true;
     buttons.groupVideoCall = true;
-    buttons.endToEndEncryptionInfo = false; // e2ee should be enabled
+    buttons.endToEndEncryptionInfo = true; // e2// ee should be enabled
     _mesiboUi.setupBasicCustomization(buttons, null);
-
-    _mesiboUi.launchUserList();
+    _mesiboUi.launchMessaging(profile);
   }
-
 }

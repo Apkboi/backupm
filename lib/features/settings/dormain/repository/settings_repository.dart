@@ -18,7 +18,7 @@ abstract class SettingsRepository {
       required String passcodeConfirmation});
 
   Future<UploadAvatarResponse> uploadAvatar({
-    required int avatarId,
+    required int? avatarId,
     required String bgColor,
   });
 }

@@ -12,6 +12,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/subscription/presentation/widget/card_details_sheet.dart';
@@ -28,12 +29,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen>
     implements MesiboConnectionListener {
-  // Mesibo mesibo = Mesibo();
+  Mesibo mesibo = Mesibo();
 
   @override
   void initState() {
-    // _initMesibo();
     DashboardUsecase().execute();
+    _initMesibo();
     super.initState();
   }
 
@@ -175,25 +176,26 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
-
-  void _showCardDialog(BuildContext context) {
-    CustomDialogs.showBottomSheet(
-      context,
-      const CardDetailsSheet(),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16),
-        topRight: Radius.circular(16),
-      )),
-    );
-  }
+  //
+  // void _showCardDialog(BuildContext context) {
+  //   CustomDialogs.showBottomSheet(
+  //     context,
+  //     const CardDetailsSheet(),
+  //     shape: const RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.only(
+  //       topLeft: Radius.circular(16),
+  //       topRight: Radius.circular(16),
+  //     )),
+  //   );
+  // }
 
   void _initMesibo() async {
     // await mesibo.stop();
-    // mesibo.setAccessToken('d6582a9d25c85cbf4c9386e5d3529cdbb8f89d911dab801fae224ad1e4ga1499143eaf');
-    // mesibo.setListener(this);
-    // mesibo.start();
+    mesibo.setAccessToken(injector.get<UserBloc>().appUser?.mesiboUserToken);
+    mesibo.setListener(this);
+    mesibo.start();
   }
+
   @override
   void Mesibo_onConnectionStatus(int status) {
     logger.i(status);

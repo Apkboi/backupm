@@ -14,6 +14,8 @@ const reviewSubtext =
 const reviewTittle = "Hey Leila! 👋 How was your session with Mentra?";
 const sessionEndedMessage =
     "Look out for a summary in your notifications. If you need to talk again, I'm here for you. Take care!";
+const therapySubscriptionMessage =
+    "Sorry you cant access this feature because you are on a free plan,\nPlease upgrade to gain access to this feature.";
 const endSessionMessage =
     "It's been great talking with you. Remember, I'll clear our chat history for privacy, but I'll send a session summary to your notifications. Would you like to end the session or continue chatting?";
 const registrationSuccesMessage =

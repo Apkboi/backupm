@@ -62,6 +62,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
       emit(GetUpcomingSessionsSuccessState(response: sessions));
     } catch (e,stack) {
       logger.e(stack);
+      logger.e(e.toString());
       emit(GetUpcomingSessionsFailureState(error: e.toString()));
     }
   }

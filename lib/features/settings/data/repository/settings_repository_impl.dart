@@ -78,7 +78,7 @@ class SettingsRepositoryImpl extends SettingsRepository {
 
   @override
   Future<UploadAvatarResponse> uploadAvatar(
-      {required int avatarId, required String bgColor}) async {
+      {required int? avatarId, required String bgColor}) async {
     try {
       final response = await networkService.call(
           UrlConfig.uploadAvatar, RequestMethod.post,

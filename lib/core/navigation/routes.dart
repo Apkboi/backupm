@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/login_preview_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/new_login.dart';
-import 'package:mentra/features/authentication/login/presentation/screens/passcode_screen.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/new_passcode_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/welcome_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
@@ -88,7 +89,7 @@ class CustomRoutes {
       GoRoute(
         path: '/passcodeScreen',
         name: PageUrl.passcodeScreen,
-        builder: (context, state) => const PasscodeScreen(),
+        builder: (context, state) => const NewPascodeScreen(),
       ),
       GoRoute(
         path: '/usernameScreen',
@@ -99,6 +100,11 @@ class CustomRoutes {
         path: '/biometricAccess',
         name: PageUrl.biometricAccess,
         builder: (context, state) => const BiometricAccessScreen(),
+      ),
+      GoRoute(
+        path: '/loginPreview',
+        name: PageUrl.loginPreview,
+        builder: (context, state) => const LoginPreviewScreen(),
       ),
       GoRoute(
         path: '/emailVerificationScreen',

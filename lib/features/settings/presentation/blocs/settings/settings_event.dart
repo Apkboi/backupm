@@ -43,7 +43,7 @@ class GetAvatarsEvent extends SettingsEvent {
 }
 
 class UploadImageEvent extends SettingsEvent {
-  final int imageId;
+  final int? imageId;
   final String bgColor;
 
   const UploadImageEvent(this.imageId, this.bgColor);

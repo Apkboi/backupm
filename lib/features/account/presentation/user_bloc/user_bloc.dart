@@ -4,14 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/database/local/userstorage.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/services/mesibo/mesibo_service.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
-import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 
 part 'user_event.dart';
 
 part 'user_state.dart';
-
 class UserBloc extends Bloc<UserEvent, UserState> {
   @override
   Future<void> close() async {}
@@ -41,6 +38,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     if (user != null) {
       appUser = user;
+
+      logger.i(appUser?.toJson());
 
        // injector.get<MesiboCubit>().initialize();
       emit(UserCachedState(user));

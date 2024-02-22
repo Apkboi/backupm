@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
@@ -38,12 +37,12 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
         actions: [
           CustomNeumorphicButton(
             onTap: () {
-              if (selectedImageId == null) {
-                CustomDialogs.showToast('Select an avatar');
-              } else {
+              // if (selectedImageId == null) {
+              //   CustomDialogs.showToast('Select an avatar');
+              // } else {
                 injector.get<SettingsBloc>().add(
-                    UploadImageEvent(selectedImageId!, selectedColor.toHex()));
-              }
+                    UploadImageEvent(selectedImageId, selectedColor.toHex()));
+              // }
             },
             color: Pallets.black,
             expanded: false,

@@ -10,24 +10,23 @@ import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key, required this.email});
-
-  final String email;
+class LoginPreviewScreen extends StatefulWidget {
+  const LoginPreviewScreen({
+    super.key,
+  });
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<LoginPreviewScreen> createState() => _LoginPreviewScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _LoginPreviewScreenState extends State<LoginPreviewScreen> {
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
-
-  final _bloc = RegistrationBloc(injector.get());
+  // final _bloc = RegistrationBloc(injector.get());
 
   @override
   Widget build(BuildContext context) {
@@ -46,53 +45,51 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     const Align(
                         alignment: Alignment.topLeft,
                         child: CustomBackButton()),
+                    16.verticalSpace,
                     Expanded(
                         child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        16.verticalSpace,
-                        QuestionBox(message: [
-                          'Perfect! A verification code has just been sent to your email ${injector.get<RegistrationBloc>().registrationPayload.email}. Please enter the code here to continue.',
+                        const QuestionBox(message: [
+                          'Now, could you share your email address with us? We’ll help you get access your account..',
                         ], isSender: false),
                         16.verticalSpace,
                       ],
                     )),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: BlocConsumer<RegistrationBloc, RegistrationState>(
-                        bloc: _bloc,
-                        listener: _listenToRegistrationBloc,
-                        builder: (context, state) {
-                          return FilledTextField(
-                            hint: "Enter code",
+                    BlocConsumer<LoginBloc, LoginState>(
+                      listener: _listenToLoginBloc,
+                      bloc: injector.get(),
+                      builder: (context, state) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: FilledTextField(
+                            hint: "Type email here..",
                             hasElevation: false,
-                            outline: false,
                             controller: _controller,
-                            validator:
-                                RequiredValidator(errorText: 'Enter code').call,
+                            outline: false,
+                            validator: MultiValidator([
+                              RequiredValidator(errorText: 'Enter email'),
+                              EmailValidator(errorText: 'Invalid email')
+                            ]).call,
                             hasBorder: false,
-                            inputType: TextInputType.number,
                             suffix: InkWell(
-                              onTap: () {
-                                _goToNextScreen(context);
+                              onTap: () async {
+                                _getUserDetails();
                               },
                               child: const Icon(
                                 Icons.send_rounded,
                                 size: 20,
                               ),
                             ),
-                            // onChanged: widget.onChanged,
-                            // onFieldSubmitted: widget.onFieldSubmitted,
-                            // onSaved: widget.onSaved,
                             radius: 50,
                             // preffix: const Icon(Iconsax.search_normal4),
                             // contentPadding: const EdgeInsets.symmetric(
-                            //     vertical: 4, horizontal: 10),
+                            //     vertical: 16, horizontal: 16),
                             fillColor: Pallets.white,
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),
@@ -104,31 +101,23 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     );
   }
 
-  void _goToNextScreen(BuildContext context) {
-    // log('message');
+  void _getUserDetails() {
     if (_formKey.currentState!.validate()) {
-      // context.pushNamed(PageUrl.selectYearScreen);
-
-      _bloc.add(VerifyOtpEvent(
-          email: injector.get<RegistrationBloc>().registrationPayload.email,
-          otp: _controller.text.trim()));
+      injector
+          .get<LoginBloc>()
+          .add(LoginPreviewEvent(email: _controller.text.trim()));
     }
   }
 
-  void _listenToRegistrationBloc(
-      BuildContext context, RegistrationState state) {
-    if (state is VerifyOtpLoadingState) {
-      CustomDialogs.showLoading(context);
-    }
-    if (state is VerifyOtpSuccessState) {
+
+
+  void _listenToLoginBloc(BuildContext context, LoginState state) {
+    if (state is LoginPreviewSuccessState) {
       context.pop();
-      // injector.get<RegistrationBloc>().updateFields(email: injector.);
-      // CustomDialogs.success('Verification code sent');
-
-      context.pushNamed(PageUrl.selectYearScreen);
+      context.pushNamed(PageUrl.passcodeScreen);
     }
 
-    if (state is VerifyOtpFailureState) {
+    if (state is LoginPreviewFailureState) {
       context.pop();
       CustomDialogs.error(state.error);
     }

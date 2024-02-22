@@ -143,11 +143,12 @@ class _TherapistChatScreenState extends State<TherapistChatScreen>
 
   Future<void> _listenForMessages() async {
     Mesibo.getInstance().setListener(this);
-    MesiboProfile profile = await Mesibo.getInstance().getUserProfile(user2.token);
+    MesiboProfile profile =
+        await Mesibo.getInstance().getUserProfile(user2.token);
     MesiboReadSession rs = MesiboReadSession.createReadSummarySession(this);
     rs.read(4);
     var session = profile.createReadSession(this);
-    var read = await session.read(4);
+    // var read = await session.read(4);
     // logger.i(await session.getTotalMessageCount());
     // sendMessage();
   }
