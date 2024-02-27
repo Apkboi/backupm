@@ -74,37 +74,43 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                               ],
                             ),
                             if (Platform.isIOS)
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: CustomButton(
-                                  foregroundColor: Pallets.black,
-                                  bgColor: Pallets.white,
-                                  isExpanded: false,
-                                  elevation: 0,
-                                  padding: const EdgeInsets.all(16),
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      ImageWidget(
-                                        imageUrl: Assets.images.svgs.apple,
-                                        size: 15,
+                              Column(
+                                children: [
+                                  16.verticalSpace,
+
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: CustomButton(
+                                      foregroundColor: Pallets.black,
+                                      bgColor: Pallets.white,
+                                      isExpanded: false,
+                                      elevation: 0,
+                                      padding: const EdgeInsets.all(16),
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ImageWidget(
+                                            imageUrl: Assets.images.svgs.apple,
+                                            size: 15,
+                                          ),
+                                          5.horizontalSpace,
+                                          TextView(
+                                            text: 'Continue with Apple',
+                                            style: GoogleFonts.plusJakartaSans(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14.sp),
+                                          )
+                                        ],
                                       ),
-                                      5.horizontalSpace,
-                                      TextView(
-                                        text: 'Continue with Apple',
-                                        style: GoogleFonts.plusJakartaSans(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14.sp),
-                                      )
-                                    ],
+                                      onPressed: () {
+                                        injector
+                                            .get<LoginBloc>()
+                                            .add(const AppleAuthEvent());
+                                      },
+                                    ),
                                   ),
-                                  onPressed: () {
-                                    injector
-                                        .get<LoginBloc>()
-                                        .add(const AppleAuthEvent());
-                                  },
-                                ),
+                                ],
                               ),
                             16.verticalSpace,
                             // if (Platform.isAndroid)

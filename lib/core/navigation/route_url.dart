@@ -16,6 +16,13 @@ class PageUrl {
   static const signupOptionScreen = 'signupOptionScreen';
   static const userEmailScreen = 'userEmailScreen';
   static const userAvatarScreen = 'userAvatarScreen';
+  static const newLoginScreen = 'newLoginScreen';
+  static const loginPreview = 'loginPreview';
+  static const passwordResetEmailScreen = 'passwordResetEmailScreen';
+  static const passwordResetEmailVerificationScreen = 'passwordResetEmailVerificationScreen';
+  static const passwordResetScreen = 'passwordResetScreen';
+  static const passwordResetSuccessScreen = 'passwordResetSuccessScreen';
+
   static const homeScreen = 'homeScreen';
   static const menuScreen = 'menuScreen';
   static const therapistProfile = 'therapistProfile';
@@ -40,8 +47,7 @@ class PageUrl {
   static const changeTherapistScreen = 'changeTherapistScreen';
   static const matchTherapistScreen = 'matchTherapistScreen';
   static const acceptTherapistScreen = 'acceptTherapistScreen';
-  static const newLoginScreen = 'newLoginScreen';
-  static const loginPreview = 'loginPreview';
+  static const createJournalScreen = 'createJournalScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

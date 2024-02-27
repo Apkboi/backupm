@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
 class UserMessageItem extends StatefulWidget {
@@ -24,18 +25,18 @@ class _UserMessageItemState extends State<UserMessageItem> {
           constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width / 2 + 40),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
-          decoration:  BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Pallets.navy),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15), color: Pallets.navy),
           child: widget.child ??
               Text(
                 widget.message[0],
-                style: const TextStyle(fontSize: 14,color: Pallets.white),
+                style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Pallets.white,
+                    fontWeight: FontWeight.w500),
               ),
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        5.verticalSpace
       ],
     );
   }

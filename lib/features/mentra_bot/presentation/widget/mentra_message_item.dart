@@ -42,7 +42,7 @@ class _MentraMessageItemState extends State<MentraMessageItem> {
               children: List.generate(
                 widget.message.length,
                 (index) => Container(
-                  margin: const EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.only(bottom: 7),
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width / 2 + 40),
                   padding:
@@ -62,7 +62,7 @@ class _MentraMessageItemState extends State<MentraMessageItem> {
                       color: Pallets.primary),
                   child: Text(
                     widget.message.reversed.toList()[index],
-                    style: const TextStyle(color: Pallets.white),
+                    style: TextStyle(color: Pallets.white, fontSize: 16.sp),
                   ),
                 ),
               ),

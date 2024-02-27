@@ -8,7 +8,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 part 'user_preference_state.dart';
 
-enum UserPreferenceFlow { signup, changeTherapist, updatePreference }
+enum UserPreferenceFlow { signup, changeTherapist, updatePreference,selectTherapist }
 
 UserPreferenceFlow stringToUserPreferenceFlow(String value) {
   switch (value) {
@@ -18,6 +18,8 @@ UserPreferenceFlow stringToUserPreferenceFlow(String value) {
       return UserPreferenceFlow.changeTherapist;
     case 'updatePreference':
       return UserPreferenceFlow.updatePreference;
+      case 'selectTherapist':
+      return UserPreferenceFlow.selectTherapist;
     default:
       throw ArgumentError('Invalid value: $value');
   }
@@ -62,7 +64,8 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     //   Update the question with the answer
 
     stagedMessages.where((element) => element.id == id).first.answer = answer;
-    stagedMessages.where((element) => element.id == id).first.answerTime = DateTime.now();
+    stagedMessages.where((element) => element.id == id).first.answerTime =
+        DateTime.now();
     //   Check if the answered question is the last question in the list to get next question
     if (id == stagedMessages.last.id) {
       //   Get NextQuestion

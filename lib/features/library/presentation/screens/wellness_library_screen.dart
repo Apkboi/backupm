@@ -47,7 +47,7 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
         tittle: TextView(
           text: 'Wellness Library',
           style:
-              GoogleFonts.fraunces(fontSize: 32, fontWeight: FontWeight.w600),
+              GoogleFonts.fraunces(fontSize: 32, fontWeight: FontWeight.w600,color:  Pallets.primaryDark),
         ),
         actions: [
           InkWell(
@@ -162,13 +162,17 @@ class _FavoriteContentsState extends State<FavoriteContents>
               onRefresh: () async {
                 bloc.add(const GetFavouriteCoursesEvent());
               },
-              child: ListView(
-                // shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                children: const [
-                  AppEmptyState(),
-                  // Spacer(),
-                ],
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  children: const [
+                    AppEmptyState(
+                      hasBg: false,
+                    ),
+                    // Spacer(),
+                  ],
+                ),
               ),
             );
           }
@@ -245,13 +249,17 @@ class _DiscoverContentsState extends State<DiscoverContents>
             onRefresh: () async {
               bloc.add(GetLibraryCategoriesEvent());
             },
-            child: ListView(
-              // shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              children: const [
-                AppEmptyState(),
-                // Spacer(),
-              ],
+            child: Center(
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                children: const [
+                  AppEmptyState(
+                    hasBg: false,
+                  ),
+                  // Spacer(),
+                ],
+              ),
             ),
           );
         }

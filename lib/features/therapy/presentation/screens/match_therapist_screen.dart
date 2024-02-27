@@ -8,6 +8,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
@@ -57,6 +58,7 @@ class _MatchTherapistScreenState extends State<MatchTherapistScreen> {
                         onTap: () {
                           context.pop();
                           context.pop();
+                          injector.get<UserBloc>().add(GetRemoteUser());
                         },
                         color: Pallets.primary,
                         text: 'Done',
@@ -78,20 +80,19 @@ class _MatchTherapistScreenState extends State<MatchTherapistScreen> {
                               alignment: Alignment.topLeft,
                               child: CustomBackButton()),
                           16.verticalSpace,
-                          if(messages.isNotEmpty)
-                          Expanded(
-                              child: ScrollablePositionedList.builder(
-                            reverse: true,
-                            physics: const BouncingScrollPhysics(),
-                                itemScrollController: context
-                                    .read<TherapyBloc>()
-                                    .scrollController,
-                            itemCount: messages.length,
-                            itemBuilder: (context, index) {
-                              return ChangeTherapistMessageBox(
-                                  message: messages.reversed.toList()[index]);
-                            },
-                          )),
+                          if (messages.isNotEmpty)
+                            Expanded(
+                                child: ScrollablePositionedList.builder(
+                              reverse: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemScrollController:
+                                  context.read<TherapyBloc>().scrollController,
+                              itemCount: messages.length,
+                              itemBuilder: (context, index) {
+                                return ChangeTherapistMessageBox(
+                                    message: messages.reversed.toList()[index]);
+                              },
+                            )),
                         ],
                       ),
                     ),

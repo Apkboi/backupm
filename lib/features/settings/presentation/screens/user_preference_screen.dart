@@ -4,7 +4,6 @@ import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -65,7 +64,8 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
               if (widget.flow == UserPreferenceFlow.updatePreference) {
                 context.pop();
               }
-              if (widget.flow == UserPreferenceFlow.changeTherapist) {
+              if (widget.flow == UserPreferenceFlow.changeTherapist || widget.flow == UserPreferenceFlow.selectTherapist) {
+                // context.pop();
                 context.pushReplacementNamed(PageUrl.matchTherapistScreen,
                     queryParameters: {PathParam.updatedPreference: 'true'});
               }

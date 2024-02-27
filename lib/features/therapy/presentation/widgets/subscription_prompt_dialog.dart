@@ -34,7 +34,7 @@ class SubscriptionPromptDialog extends StatelessWidget {
               ),
               10.verticalSpace,
               TextView(
-                text: 'Uppgrade',
+                text: 'Upgrade',
                 align: TextAlign.center,
                 style: GoogleFonts.fraunces(
                     fontSize: 24.sp, fontWeight: FontWeight.w600),

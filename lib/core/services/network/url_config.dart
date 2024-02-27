@@ -51,11 +51,12 @@ class UrlConfig {
   static const String loginPreview = "/auth/login/preview";
 
   static String getUser(String userId) => '/auth/user/$userId';
-  static const String forgotPassword = '/auth/forgot-password';
   static const String verifyOtp = '/auth/otp/verify';
   static const String register = '/auth/register';
   static const String oauthLogin = '/auth/oauth-login';
   static const String sendOtp = '/auth/register/steps';
+  static const String forgotPassword = '/auth/password/forgot';
+  static const String passwordReset = '/auth/password/reset';
 
   ///ACCOUNT
   static const String updateProfile = '/user/profile/update';
@@ -80,6 +81,7 @@ class UrlConfig {
   static const String rescheduleSession = '/user/session/schedule/reschedule';
   static const String matchTherapist = '/user/session/therapist/match';
   static const String selectTherapist = '/user/session/therapist/select';
+  static const String getMatchedTherapist = '/user/session/therapist/select';
 
 //  NOtification
   static const String getNotifications = '/notifications/list';

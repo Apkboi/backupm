@@ -6,6 +6,7 @@ import 'package:mentra/features/therapy/data/models/create_session_response.dart
 import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
 import 'package:mentra/features/therapy/data/models/fetch_dates_response.dart';
 import 'package:mentra/features/therapy/data/models/fetch_time_slots_response.dart';
+import 'package:mentra/features/therapy/data/models/get_matched_therapist.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
@@ -64,7 +65,7 @@ class TherapyRepositoryImpl extends TherapyRepository {
           data: payload.toJson());
 
       return CreateSessionResponse.fromJson(response.data);
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.e(e.toString());
       logger.e(stack.toString());
       rethrow;
@@ -126,7 +127,22 @@ class TherapyRepositoryImpl extends TherapyRepository {
       );
 
       return MatchTherapistResponse.fromJson(response.data);
-    } catch (e,stack) {
+    } catch (e, stack) {
+      logger.e(e);
+      logger.e(stack);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<GetMatchedTherapistResponse> getMatchedTherapist() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.getMatchedTherapist,
+        RequestMethod.get,
+      );
+      return GetMatchedTherapistResponse.fromJson(response.data);
+    } catch (e, stack) {
       logger.e(e);
       logger.e(stack);
       rethrow;

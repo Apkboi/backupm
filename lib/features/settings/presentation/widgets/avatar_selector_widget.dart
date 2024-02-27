@@ -69,99 +69,101 @@ class _AvartarSelectorState extends State<AvartarSelector> {
             ],
           ),
           16.verticalSpace,
-          IndexedStack(
-            index: selectedIndex,
-            children: [
-              BlocConsumer<SettingsBloc, SettingsState>(
-                bloc: injector.get(),
-                buildWhen: _buildWhen,
-                listener: _listenToSettingStates,
-                builder: (context, state) {
-                  if (state is GetAvatarsLoadingState) {
-                    return SizedBox(
-                      height: 200.h,
-                      child: Center(
-                        child: CustomDialogs.getLoading(size: 20),
-                      ),
-                    );
-                  }
-                  if (state is GetAvatarsSuccessState) {
-                    return RefreshIndicator(
-                      onRefresh: () async {
+          Expanded(
+            child: IndexedStack(
+              index: selectedIndex,
+              children: [
+                BlocConsumer<SettingsBloc, SettingsState>(
+                  bloc: injector.get(),
+                  buildWhen: _buildWhen,
+                  listener: _listenToSettingStates,
+                  builder: (context, state) {
+                    if (state is GetAvatarsLoadingState) {
+                      return SizedBox(
+                        height: 200.h,
+                        child: Center(
+                          child: CustomDialogs.getLoading(size: 20),
+                        ),
+                      );
+                    }
+                    if (state is GetAvatarsSuccessState) {
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          injector.get<SettingsBloc>().add(GetAvatarsEvent());
+                        },
+                        child: GridView.builder(
+                            shrinkWrap: true,
+                            itemCount: state.response.data.length,
+                            // physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 1,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
+                                    mainAxisExtent: 80,
+                                    crossAxisCount: 4),
+                            itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  selectedImageIndex = index;
+                                  widget.onAvatarSelected(
+                                      state.response.data[index]);
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        fit: BoxFit.scaleDown,
+                                        image: NetworkImage(
+                                          state.response.data[index].image.url,
+                                        )),
+                                    border: selectedImageIndex == index
+                                        ? Border.all(
+                                            width: 1, color: Pallets.primary)
+                                        : null,
+                                  ),
+                                ))),
+                      );
+                    }
+                    return AppPromptWidget(
+                      onTap: () {
                         injector.get<SettingsBloc>().add(GetAvatarsEvent());
                       },
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          itemCount: state.response.data.length,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 1,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                  mainAxisExtent: 80,
-                                  crossAxisCount: 4),
-                          itemBuilder: (context, index) => InkWell(
-                              onTap: () {
-                                selectedImageIndex = index;
-                                widget.onAvatarSelected(
-                                    state.response.data[index]);
-                                setState(() {});
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      fit: BoxFit.scaleDown,
-                                      image: NetworkImage(
-                                        state.response.data[index].image.url,
-                                      )),
-                                  border: selectedImageIndex == index
-                                      ? Border.all(
-                                          width: 1, color: Pallets.primary)
-                                      : null,
-                                ),
-                              ))),
                     );
-                  }
-                  return AppPromptWidget(
-                    onTap: () {
-                      injector.get<SettingsBloc>().add(GetAvatarsEvent());
-                    },
-                  );
-                },
-              ),
-              if (widget.selectBackgroundColor!)
-                SizedBox(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: Pallets.avatarBackgrounds.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 1,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            mainAxisExtent: 72,
-                            crossAxisCount: 4),
-                    itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          selectedColorIndex = index;
-                          widget.onBackgroundSelector(
-                              Pallets.avatarBackgrounds[index]);
-                          setState(() {});
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Pallets.avatarBackgrounds[index],
-                            border: selectedColorIndex == index
-                                ? Border.all(width: 1, color: Pallets.primary)
-                                : null,
-                          ),
-                        )),
-                  ),
+                  },
                 ),
-            ],
+                if (widget.selectBackgroundColor!)
+                  SizedBox(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      itemCount: Pallets.avatarBackgrounds.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 1,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              mainAxisExtent: 72,
+                              crossAxisCount: 4),
+                      itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            selectedColorIndex = index;
+                            widget.onBackgroundSelector(
+                                Pallets.avatarBackgrounds[index]);
+                            setState(() {});
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Pallets.avatarBackgrounds[index],
+                              border: selectedColorIndex == index
+                                  ? Border.all(width: 1, color: Pallets.primary)
+                                  : null,
+                            ),
+                          )),
+                    ),
+                  ),
+              ],
+            ),
           )
         ],
       ),

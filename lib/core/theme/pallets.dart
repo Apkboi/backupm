@@ -38,7 +38,7 @@ abstract class Pallets {
   static const buttonBlack = Color(0xFF242628);
   static const skyBlue = Color(0xFF0666EB);
 
-  static const primaryDark = Color(0xFF069D16);
+  static const primaryDark = Color(0xFF0E5A63);
   static const errorRed = Color(0xFFC62C2C);
   static const successGreen = Color(0xFF0F8345);
   static const ink = Color(0xFF737A86);

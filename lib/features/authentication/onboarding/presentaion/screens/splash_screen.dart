@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -26,7 +28,7 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
     animationCtrl = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 5),
       vsync: this,
     );
     animation = Tween<double>(begin: 0, end: 100).animate(
@@ -63,18 +65,12 @@ class _SplashPageState extends State<SplashPage>
       body: Container(
         height: 1.sh,
         width: 1.sw,
-        decoration: const BoxDecoration(color: Pallets.turquoise1),
+        decoration: const BoxDecoration(color: Pallets.primary),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextView(
-                text: 'Mentra',
-                style: GoogleFonts.caveat(
-                    fontSize: 58.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Pallets.primary),
-              )
+              ImageWidget(width: 1.sw, imageUrl: Assets.images.svgs.splashLogo)
             ],
           ),
         ),
@@ -83,7 +79,7 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _goToNextScreen() {
-    context.pushReplacementNamed(PageUrl.onBoardingPage);
+    // context.pushReplacementNamed(PageUrl.onBoardingPage);
     if (SessionManager.instance.isLoggedIn) {
       context.goNamed(PageUrl.homeScreen);
     } else {

@@ -6,10 +6,12 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class AppEmptyState extends StatelessWidget {
-  const AppEmptyState({super.key, this.tittle, this.subtittle});
+  const AppEmptyState(
+      {super.key, this.tittle, this.subtittle, this.hasBg = true});
 
   final String? tittle;
   final String? subtittle;
+  final bool? hasBg;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +19,16 @@ class AppEmptyState extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       width: 1.sw,
       decoration: ShapeDecoration(
-          color: Pallets.white,
+          color: hasBg! ? Pallets.white : Colors.transparent,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ImageWidget(imageUrl: Assets.images.pngs.emptyBascket.path),
+          ImageWidget(
+            imageUrl: Assets.images.pngs.emptyBascket.path,
+            size: 120,
+          ),
           15.verticalSpace,
           TextView(
             text: tittle ?? "Your Favorites Space Awaits",

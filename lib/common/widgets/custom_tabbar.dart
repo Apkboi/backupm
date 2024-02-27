@@ -34,14 +34,20 @@ class _CustomTabbarState extends State<CustomTabbar> {
         // ],
       ),
       child: TabBar(
-          unselectedLabelColor: Pallets.black,
-          labelColor: Pallets.black,
+          unselectedLabelColor: Pallets.primaryDark,
+          labelColor: Pallets.primaryDark,
           indicator: BoxDecoration(
               color: Pallets.white, borderRadius: BorderRadius.circular(25)),
           padding: EdgeInsets.zero,
           tabs: widget.tabs,
+          unselectedLabelStyle: GoogleFonts.plusJakartaSans(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              color: Pallets.primary),
           labelStyle: GoogleFonts.plusJakartaSans(
-              fontSize: 16.sp, fontWeight: FontWeight.w600, color: Pallets.black)),
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              color: Pallets.primary)),
     );
   }
 }

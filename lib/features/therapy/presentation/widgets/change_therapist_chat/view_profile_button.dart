@@ -43,11 +43,9 @@ class ViewProfileButton extends StatelessWidget {
 
           if (matched != null) {
             if (matched) {
-              context.read<TherapyBloc>().add(TherapistAcceptedEvent());
+              context.read<TherapyBloc>().add(const TherapistAcceptedEvent());
             } else {
-              context
-                  .read<TherapyBloc>()
-                  .add(const MatchTherapistEvent(updatedPreference: false));
+              context.read<TherapyBloc>().add(const MatchTherapistEvent(updatedPreference: false));
             }
           }
         },

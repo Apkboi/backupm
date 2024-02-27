@@ -141,32 +141,37 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                                     TextView(
                                         align: TextAlign.center,
                                         text:
-                                            '${widget.suggestedTherapist.therapist.field ?? widget.suggestedTherapist.therapist.certifications ?? (widget.suggestedTherapist.therapist.techniquesOfExpertise as List<String>).firstOrNull.toString()}'),
+                                            '${widget.suggestedTherapist.therapist.field ?? widget.suggestedTherapist.therapist.certifications ?? (widget.suggestedTherapist.therapist.techniquesOfExpertise).firstOrNull.toString()}'),
                                     16.verticalSpace,
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Pallets.pendingColor
-                                              .withOpacity(0.2),
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0, vertical: 10),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            const Icon(
-                                              Icons.star_rounded,
-                                              color: Pallets.pendingColor,
-                                              size: 13,
-                                            ),
-                                            const TextView(
-                                              text: ' 4.7',
-                                              color: Pallets.pendingColor,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            16.verticalSpace,
-                                          ],
+                                    InkWell(
+                                      onTap: () {
+                                        logger.i(widget.suggestedTherapist.toJson());
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Pallets.pendingColor
+                                                .withOpacity(0.2),
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 10),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Icon(
+                                                Icons.star_rounded,
+                                                color: Pallets.pendingColor,
+                                                size: 13,
+                                              ),
+                                              const TextView(
+                                                text: ' 4.7',
+                                                color: Pallets.pendingColor,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              16.verticalSpace,
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

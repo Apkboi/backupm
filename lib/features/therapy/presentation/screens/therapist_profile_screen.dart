@@ -44,7 +44,7 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                               color: Pallets.primary,
                               image: DecorationImage(
                                   image: AssetImage(
-                                      Assets.images.pngs.avatar20.path))),
+                                      Assets.images.pngs.avatar4.path))),
                           child: const Align(
                             alignment: Alignment.topLeft,
                             child: Padding(

@@ -3,6 +3,8 @@ import 'package:mentra/features/account/data/repository/account_repository_impl.
 import 'package:mentra/features/account/dormain/repository/account_repository.dart';
 import 'package:mentra/features/authentication/data/repository/auth_repository_impl.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
+import 'package:mentra/features/authentication/password_reset/data/repository/password_reset_repository_impl.dart';
+import 'package:mentra/features/authentication/password_reset/dormain/repository/password_reset_repository.dart';
 import 'package:mentra/features/dashboard/data/repository/dashboard_repository_impl.dart';
 import 'package:mentra/features/dashboard/dormain/repository/dashboard_repository.dart';
 import 'package:mentra/features/library/data/repository/wellness_library_repository_impl.dart';
@@ -33,4 +35,6 @@ void setup(GetIt getIt) {
       () => SettingsRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<SubscriptionRepository>(
       () => SubscriptionRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<PasswordResetRepository>(
+      () => PasswordResetRepositoryImpl(getIt.get()));
 }

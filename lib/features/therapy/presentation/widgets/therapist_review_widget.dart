@@ -44,7 +44,7 @@ class ReviewItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ImageWidget(
-              imageUrl: Assets.images.pngs.avatar13.path,
+              imageUrl: Assets.images.pngs.avatar4.path,
               size: 32,
             ),
             8.horizontalSpace,

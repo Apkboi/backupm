@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mentra/app.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
@@ -38,7 +39,7 @@ class AppConfig {
   }
 
   Future<void> _setup() async {
-    WidgetsFlutterBinding.ensureInitialized();
+    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     // await Firebase.initializeApp();
     await DefaultCacheManager().emptyCache();

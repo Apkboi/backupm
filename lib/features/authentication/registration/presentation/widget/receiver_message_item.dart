@@ -65,7 +65,7 @@ class _ReceiverMessageItemState extends State<ReceiverMessageItem> {
                     children: [
                       Text(
                         widget.message.toList()[index],
-                        style: const TextStyle(color: Pallets.white),
+                        style:  TextStyle(color: Pallets.white,fontSize: 15.sp),
                       ),
                       8.verticalSpace,
                       Text(TimeUtil.formatTime(DateTime.now()),

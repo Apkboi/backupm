@@ -50,7 +50,7 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           QuestionBox(message: [
-                            ' Verified! Thanks,${injector.get<RegistrationBloc>().registrationPayload.name}. Could you also tell me your year of birth for age verification?',
+                            'Verified! Thanks,${injector.get<RegistrationBloc>().registrationPayload.name}. Could you also tell me your year of birth for age verification?',
                           ], isSender: false),
                           // SizedBox(
                           //     height: 200.h,

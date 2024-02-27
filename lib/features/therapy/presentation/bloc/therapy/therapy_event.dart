@@ -84,3 +84,10 @@ class TherapistAcceptedEvent extends TherapyEvent {
   @override
   List<Object?> get props => [];
 }
+
+class GetMatchedTherapistEvent extends TherapyEvent {
+  const GetMatchedTherapistEvent();
+
+  @override
+  List<Object?> get props => [];
+}

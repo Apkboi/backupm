@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
 class SenderMessageItem extends StatefulWidget {
@@ -36,14 +37,12 @@ class _SenderMessageItemState extends State<SenderMessageItem> {
               child: widget.child ??
                   Text(
                     widget.message[index],
-                    style: const TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 15.sp),
                   ),
             ),
           ),
         ),
-        const SizedBox(
-          height: 5,
-        ),
+        5.verticalSpace,
       ],
     );
   }

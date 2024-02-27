@@ -128,7 +128,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           ),
                           24.verticalSpace,
                           ImageWidget(
-                            imageUrl: course.attachments!.first.file.url,
+                            imageUrl: course.attachments!.firstOrNull?.file.url??Assets.images.pngs.article.path,
                             height: 213.h,
                             // fit: BoxFit.cover,
                             borderRadius: BorderRadius.circular(10),

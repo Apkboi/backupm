@@ -6,6 +6,7 @@ import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
@@ -24,6 +25,7 @@ class NewPascodeScreen extends StatefulWidget {
 
 class _NewPascodeScreenState extends State<NewPascodeScreen> {
   final _formKey = GlobalKey<FormState>();
+
   // final _controller = TextEditingController();
   final _pinController = PINController();
   final _loginBloc = LoginBloc(injector.get());
@@ -46,22 +48,40 @@ class _NewPascodeScreenState extends State<NewPascodeScreen> {
                   child: Form(
                     key: _formKey,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const Align(
                             alignment: Alignment.topLeft,
                             child: CustomBackButton()),
                         Expanded(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            16.verticalSpace,
-                            QuestionBox(message: [
-                              "Welcome ${injector.get<LoginBloc>().userPreview?.name}",
-                              "Enter your passcode"
-                            ], isSender: false),
-                            16.verticalSpace,
-                          ],
-                        )),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              16.verticalSpace,
+                              const QuestionBox(message: [
+                                "Now, please enter your passcode.",
+                              ], isSender: false),
+                              16.verticalSpace,
+                            ],
+                          ),
+                        ),
+                        // TextView(
+                        //   text: "Forgot password ?",
+                        //   fontSize: 16.sp,
+                        //   fontWeight: FontWeight.w600,
+                        // ),
+                        //
+                        // TextButton(
+                        //     onPressed: () {
+                        //       context.pushNamed(
+                        //           PageUrl.passwordResetEmailScreen);
+                        //     },
+                        //     child: TextView(
+                        //       text: 'Tap to reset',
+                        //       fontSize: 16.sp,
+                        //       fontWeight: FontWeight.w600,
+                        //     )),
+                        16.verticalSpace,
                         PinDots(activeCount: activeCount),
                         // OtpField(
                         //   obscureText: true,

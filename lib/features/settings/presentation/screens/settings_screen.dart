@@ -14,6 +14,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
 import 'package:mentra/features/account/presentation/profile_image_widget.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_group_1.dart';
@@ -31,6 +32,18 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
+  void didChangeDependencies() {
+    RefreshUserUsecase().execute();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    RefreshUserUsecase().execute();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -42,7 +55,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         tittle: TextView(
           text: 'Settings',
           style: GoogleFonts.fraunces(
-              fontSize: 32.sp, fontWeight: FontWeight.w600),
+              fontSize: 32.sp,
+              fontWeight: FontWeight.w600,
+              color: Pallets.primaryDark),
         ),
         actions: [
           InkWell(
@@ -66,91 +81,103 @@ class _SettingsScreenState extends State<SettingsScreen> {
               padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: ProfileImageWidget(
-                          size: 80,
+                child: BlocBuilder<UserBloc, UserState>(
+                  bloc: injector.get(),
+                  builder: (context, state) {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: ProfileImageWidget(
+                              size: 80,
 
-                          // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
-                        ),
-                      ),
-                      10.verticalSpace,
-                      Center(
-                        child: TextView(
-                          text: injector.get<UserBloc>().appUser?.name ?? '',
-                          style: GoogleFonts.fraunces(
-                              fontSize: 32.sp, color: Pallets.navy),
-                        ),
-                      ),
-                      18.verticalSpace,
-                      Center(
-                        child: CustomNeumorphicButton(
-                            expanded: false,
-                            onTap: () {
-                              context.pushNamed(PageUrl.editProfileScreen);
+                              // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
+                            ),
+                          ),
+                          10.verticalSpace,
+                          Center(
+                            child: TextView(
+                              text:
+                                  injector.get<UserBloc>().appUser?.name ?? '',
+                              style: GoogleFonts.fraunces(
+                                  fontSize: 32.sp, color: Pallets.primaryDark),
+                            ),
+                          ),
+                          18.verticalSpace,
+                          Center(
+                            child: CustomNeumorphicButton(
+                                expanded: false,
+                                onTap: () {
+                                  context.pushNamed(PageUrl.editProfileScreen);
+                                },
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 13),
+                                color: Pallets.primary,
+                                child: const TextView(
+                                  text: "Edit profile",
+                                  color: Pallets.white,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                          ),
+                          22.verticalSpace,
+                          BlocBuilder<UserBloc, UserState>(
+                            bloc: injector.get(),
+                            builder: (context, state) {
+                              return GlassContainer(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(17),
+                                child: SettingListTile(
+                                  leadingIconUrl:
+                                      Assets.images.svgs.sub,
+                                  onTap: () {
+                                    context.pushNamed(PageUrl.selectPlanScreen);
+                                  },
+                                  tittle: 'Subscription',
+                                  trailingWidget: Row(
+                                    children: [
+                                      TextView(
+                                        text: injector
+                                                .get<UserBloc>()
+                                                .appUser
+                                                ?.activeSubscription
+                                                ?.plan
+                                                .name ??
+                                            'Free',
+                                        color: Pallets.ink,
+                                      ),
+                                      8.horizontalSpace,
+                                      const Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: 20,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ));
                             },
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 13),
-                            color: Pallets.primary,
-                            child: const TextView(
-                              text: "Edit profile",
-                              color: Pallets.white,
-                              fontWeight: FontWeight.w600,
-                            )),
-                      ),
-                      22.verticalSpace,
-                      BlocBuilder<UserBloc, UserState>(
-                        bloc: injector.get(),
-                        builder: (context, state) {
-                          return GlassContainer(
+                          ),
+                          16.verticalSpace,
+                          const SettingsGroup1(),
+                          16.verticalSpace,
+                          const SettingsGroup2(),
+                          16.verticalSpace,
+                          const SettingsGroup3(),
+                          16.verticalSpace,
+                          GlassContainer(
                               child: Padding(
                             padding: const EdgeInsets.all(17),
                             child: SettingListTile(
-                              leadingIconUrl: Assets.images.svgs.subscription,
+                              leadingIconUrl: Assets.images.svgs.logout,
+                              tittle: 'Logout',
                               onTap: () {
-                                context.pushNamed(PageUrl.selectPlanScreen);
+                                SessionManager.instance.logOut();
+                                context.goNamed(PageUrl.onBoardingPage);
                               },
-                              tittle: 'Subscription',
-                              trailingWidget: Row(
-                                children: [
-                                  TextView(
-                                    text:
-                                        '${injector.get<UserBloc>().appUser?.activeSubscription?.plan.name}',
-                                    color: Pallets.ink,
-                                  ),
-                                  8.horizontalSpace,
-                                  const Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 20,
-                                  )
-                                ],
-                              ),
                             ),
-                          ));
-                        },
-                      ),
-                      16.verticalSpace,
-                      const SettingsGroup1(),
-                      16.verticalSpace,
-                      const SettingsGroup2(),
-                      16.verticalSpace,
-                      const SettingsGroup3(),
-                      16.verticalSpace,
-                      GlassContainer(
-                          child: Padding(
-                        padding: const EdgeInsets.all(17),
-                        child: SettingListTile(
-                          leadingIconUrl: Assets.images.svgs.logout,
-                          tittle: 'Logout',
-                          onTap: () {
-                            SessionManager.instance.logOut();
-                            context.goNamed(PageUrl.onBoardingPage);
-                          },
-                        ),
-                      )),
-                    ]),
+                          )),
+                        ]);
+                  },
+                ),
               ),
             ),
           ),

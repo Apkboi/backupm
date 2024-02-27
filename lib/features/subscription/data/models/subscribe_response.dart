@@ -121,13 +121,13 @@ class Data {
 }
 
 class Plan {
-  final int id;
-  final String name;
-  final String description;
-  final String frequency;
-  final int price;
-  final int discount;
-  final String status;
+  final dynamic id;
+  final dynamic name;
+  final dynamic description;
+  final dynamic frequency;
+  final dynamic price;
+  final dynamic discount;
+  final dynamic status;
   final List<Duration> durations;
   final List<Benefit> benefits;
   final DateTime createdAt;
@@ -208,11 +208,11 @@ class Plan {
 }
 
 class Benefit {
-  final int id;
-  final String title;
-  final String key;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final dynamic id;
+  final dynamic title;
+  final dynamic key;
+  final dynamic createdAt;
+  final dynamic updatedAt;
 
   Benefit({
     required this.id,
@@ -257,12 +257,12 @@ class Benefit {
 }
 
 class Duration {
-  final int id;
-  final String frequency;
-  final String duration;
-  final int price;
-  final int discount;
-  final String stripePriceId;
+  final dynamic id;
+  final dynamic frequency;
+  final dynamic duration;
+  final dynamic price;
+  final dynamic discount;
+  final dynamic stripePriceId;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -272,7 +272,7 @@ class Duration {
     required this.duration,
     required this.price,
     required this.discount,
-    required this.stripePriceId,
+     this.stripePriceId,
     required this.createdAt,
     required this.updatedAt,
   });

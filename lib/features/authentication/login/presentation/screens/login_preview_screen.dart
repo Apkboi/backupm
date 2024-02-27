@@ -51,7 +51,7 @@ class _LoginPreviewScreenState extends State<LoginPreviewScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const QuestionBox(message: [
-                          'Now, could you share your email address with us? We’ll help you get access your account..',
+                          'Fantastic! Let\'s get you logged in. Please provide your email.',
                         ], isSender: false),
                         16.verticalSpace,
                       ],

@@ -32,6 +32,11 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 90.0),
+      //   child: FloatingActionButton(
+      //       onPressed: () {}, backgroundColor: Pallets.error),
+      // ),
       appBar: CustomAppBar(
         // canGoBack: false,
         // leading: 0.horizontalSpace,
@@ -40,7 +45,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
           PopupMenuButton(
             position: PopupMenuPosition.over,
             // constraints: const BoxConstraints(maxHeight: 60,),
-
+            constraints: BoxConstraints(maxWidth: 150),
             padding: EdgeInsets.zero,
             // shape:
             //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -53,10 +58,13 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
             },
             itemBuilder: (context) {
               return [
-                const PopupMenuItem<String>(
+                PopupMenuItem<String>(
                   value: 'end',
                   height: 30,
-                  child: Text('End Session'),
+                  child: Text(
+                    'End Session',
+                    style: TextStyle(fontSize: 14.sp),
+                  ),
                 ),
               ];
             },

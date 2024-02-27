@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/gen/assets.gen.dart';
 import 'image_previewer.dart';
 
 class ImageWidget extends StatefulWidget {
@@ -36,7 +37,6 @@ class ImageWidget extends StatefulWidget {
     this.imageType = ImageWidgetType.asset,
     this.canPreview = false,
     this.onTap,
-
   }) : super(key: key);
 
   @override
@@ -86,12 +86,11 @@ class _ImageWidgetState extends State<ImageWidget> {
                 height: widget.size ?? widget.height,
                 decoration: BoxDecoration(
                   borderRadius: widget.borderRadius,
-
                   shape: widget.shape ?? BoxShape.rectangle,
                   border: widget.border,
                   image: DecorationImage(
                       image: imageProvider,
-                      fit: widget.fit?? BoxFit.cover,
+                      fit: widget.fit ?? BoxFit.cover,
                       onError: (error, trace) {
                         logger.e(trace);
                       }),
@@ -160,7 +159,7 @@ class _ImageWidgetState extends State<ImageWidget> {
         shape: widget.shape ?? BoxShape.rectangle,
         border: widget.border,
         image: DecorationImage(
-            image: AssetImage('Assets.pngsLogoMain'),
+            image: Assets.images.pngs.placeholder.provider(),
             fit: BoxFit.cover,
             onError: (error, trace) {
               // logger.e(trace);

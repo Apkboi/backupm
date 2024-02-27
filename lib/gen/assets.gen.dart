@@ -19,34 +19,6 @@ class $AssetsImagesGen {
 class $AssetsImagesPngsGen {
   const $AssetsImagesPngsGen();
 
-  /// File path: assets/images/pngs/Avatar-13.png
-  AssetGenImage get avatar13 =>
-      const AssetGenImage('assets/images/pngs/Avatar-13.png');
-
-  /// File path: assets/images/pngs/Avatar-14.png
-  AssetGenImage get avatar14 =>
-      const AssetGenImage('assets/images/pngs/Avatar-14.png');
-
-  /// File path: assets/images/pngs/Avatar-15.png
-  AssetGenImage get avatar15 =>
-      const AssetGenImage('assets/images/pngs/Avatar-15.png');
-
-  /// File path: assets/images/pngs/Avatar-16.png
-  AssetGenImage get avatar16 =>
-      const AssetGenImage('assets/images/pngs/Avatar-16.png');
-
-  /// File path: assets/images/pngs/Avatar-20.png
-  AssetGenImage get avatar20 =>
-      const AssetGenImage('assets/images/pngs/Avatar-20.png');
-
-  /// File path: assets/images/pngs/Avatar-21.png
-  AssetGenImage get avatar21 =>
-      const AssetGenImage('assets/images/pngs/Avatar-21.png');
-
-  /// File path: assets/images/pngs/Avatar-22.png
-  AssetGenImage get avatar22 =>
-      const AssetGenImage('assets/images/pngs/Avatar-22.png');
-
   /// File path: assets/images/pngs/Avatar-3.png
   AssetGenImage get avatar3 =>
       const AssetGenImage('assets/images/pngs/Avatar-3.png');
@@ -74,7 +46,6 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/avatar2.png
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/images/pngs/avatar2.png');
-
 
 
   /// File path: assets/images/pngs/background.png
@@ -129,6 +100,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get pTherapy =>
       const AssetGenImage('assets/images/pngs/p_therapy.png');
 
+  /// File path: assets/images/pngs/placeholder.png
+  AssetGenImage get placeholder =>
+      const AssetGenImage('assets/images/pngs/placeholder.png');
+
   /// File path: assets/images/pngs/productivity.png
   AssetGenImage get productivity =>
       const AssetGenImage('assets/images/pngs/productivity.png');
@@ -140,6 +115,10 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/small_mentra.png
   AssetGenImage get smallMentra =>
       const AssetGenImage('assets/images/pngs/small_mentra.png');
+
+  /// File path: assets/images/pngs/splash_logo.png
+  AssetGenImage get splashLogo =>
+      const AssetGenImage('assets/images/pngs/splash_logo.png');
 
   /// File path: assets/images/pngs/summary.png
   AssetGenImage get summary =>
@@ -155,13 +134,6 @@ class $AssetsImagesPngsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        avatar13,
-        avatar14,
-        avatar15,
-        avatar16,
-        avatar20,
-        avatar21,
-        avatar22,
         avatar3,
         avatar4,
         anxiety,
@@ -183,9 +155,11 @@ class $AssetsImagesPngsGen {
         onboarding2,
         onboarding3,
         pTherapy,
+        placeholder,
         productivity,
         sleep,
         smallMentra,
+        splashLogo,
         summary,
         videoThumbail,
         wLibrary
@@ -297,8 +271,14 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/share_filled.svg
   String get shareFilled => 'assets/images/svgs/share_filled.svg';
 
+  /// File path: assets/images/svgs/splash_logo.svg
+  String get splashLogo => 'assets/images/svgs/splash_logo.svg';
+
   /// File path: assets/images/svgs/star.svg
   String get star => 'assets/images/svgs/star.svg';
+
+  /// File path: assets/images/svgs/sub.svg
+  String get sub => 'assets/images/svgs/sub.svg';
 
   /// File path: assets/images/svgs/subscription.svg
   String get subscription => 'assets/images/svgs/subscription.svg';
@@ -363,7 +343,9 @@ class $AssetsImagesSvgsGen {
         settings,
         share,
         shareFilled,
+        splashLogo,
         star,
+        sub,
         subscription,
         success,
         summaries,

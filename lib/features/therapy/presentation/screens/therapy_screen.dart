@@ -13,8 +13,12 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
@@ -42,8 +46,10 @@ class _TherapyScreenState extends State<TherapyScreen> {
         leadingWidth: 0,
         tittle: TextView(
           text: 'Therapy',
-          style:
-              GoogleFonts.fraunces(fontSize: 32, fontWeight: FontWeight.w600),
+          style: GoogleFonts.fraunces(
+              fontSize: 32,
+              fontWeight: FontWeight.w600,
+              color: Pallets.primaryDark),
         ),
         actions: [
           InkWell(
@@ -62,68 +68,116 @@ class _TherapyScreenState extends State<TherapyScreen> {
       body: Stack(
         children: [
           const AppBg(),
-          SafeArea(
-            child: DefaultTabController(
-              length: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    const CustomTabbar(tabs: [
-                      Tab(
-                        text: "Upcoming",
-                      ),
-                      Tab(text: "History"),
-                    ]),
-                    40.verticalSpace,
-                    const Expanded(
-                        child: TabBarView(
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [UpcomingTherapy(), TherapyHistory()])),
-                    8.verticalSpace,
-                    CustomNeumorphicButton(
-                      onTap: () {
-                        _scheduleTherapy(context);
-                      },
-                      fgColor: Pallets.white,
-                      color: Pallets.primary,
-                      text: "Schedule Session",
-                      child: const Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Pallets.white,
-                            size: 18,
+          BlocBuilder<UserBloc, UserState>(
+            bloc: injector.get(),
+            builder: (context, state) {
+              return SafeArea(
+                child: DefaultTabController(
+                  length: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        const CustomTabbar(tabs: [
+                          Tab(
+                            text: "Upcoming",
                           ),
-                          TextView(
-                            text: 'Schedule Session',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Pallets.white),
-                          )
-                        ],
-                      ),
+                          Tab(
+                            text: "History",
+                          ),
+                        ]),
+                        40.verticalSpace,
+                        const Expanded(
+                            child: TabBarView(
+                                physics: NeverScrollableScrollPhysics(),
+                                children: [
+                              UpcomingTherapy(),
+                              TherapyHistory()
+                            ])),
+                        8.verticalSpace,
+                        if (injector
+                                .get<UserBloc>()
+                                .appUser
+                                ?.matchedTherapist !=
+                            null)
+                          Column(
+                            children: [
+                              CustomNeumorphicButton(
+                                onTap: () {
+                                  _scheduleTherapy(context);
+                                },
+                                fgColor: Pallets.white,
+                                color: Pallets.primary,
+                                text: "Schedule Session",
+                                child: const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.add,
+                                      color: Pallets.white,
+                                      size: 18,
+                                    ),
+                                    TextView(
+                                      text: 'Schedule Session',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Pallets.white),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              10.verticalSpace,
+                              CustomOutlinedButton(
+                                bgColor: Colors.white,
+                                padding: const EdgeInsets.all(20),
+                                outlineWidth: 1.5,
+                                radius: 100,
+                                outlinedColr: Pallets.primary,
+                                child: const TextView(
+                                  text: 'Change Therapist',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                onPressed: () {
+                                  context
+                                      .pushNamed(PageUrl.changeTherapistScreen);
+                                },
+                              )
+                            ],
+                          ),
+                        if (injector
+                                .get<UserBloc>()
+                                .appUser
+                                ?.matchedTherapist ==
+                            null)
+                          CustomNeumorphicButton(
+                            onTap: () {
+                              context.pushNamed(PageUrl.userPreferenceScreen,
+                                  queryParameters: {
+                                    PathParam.userPreferenceFlow:
+                                        UserPreferenceFlow.selectTherapist.name
+                                  });
+                            },
+                            fgColor: Pallets.white,
+                            color: Pallets.primary,
+                            text: "Select therapist",
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextView(
+                                  text: 'Select therapist',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Pallets.white),
+                                )
+                              ],
+                            ),
+                          ),
+                      ],
                     ),
-                    10.verticalSpace,
-                    CustomOutlinedButton(
-                      bgColor: Colors.white,
-                      padding: const EdgeInsets.all(20),
-                      outlineWidth: 1.5,
-                      radius: 100,
-                      outlinedColr: Pallets.primary,
-                      child: const TextView(
-                        text: 'Change Therapist',
-                        fontWeight: FontWeight.w600,
-                      ),
-                      onPressed: () {
-                        context.pushNamed(PageUrl.changeTherapistScreen);
-                      },
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),
@@ -205,14 +259,25 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
               ),
             );
           } else {
-            return const Column(
-              children: [
-                AppEmptyState(
-                  tittle: 'No session history.',
-                  subtittle:
-                      "You have no previous session history. start by booking a session with a therapist",
+            return RefreshIndicator(
+              onRefresh: () async {
+                injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+              },
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    16.verticalSpace,
+                    const AppEmptyState(
+                      hasBg: false,
+                      tittle: 'No upcoming session.',
+                      subtittle:
+                          "You have no upcoming sessions. start by booking a session with a therapist",
+                    ),
+                  ],
                 ),
-              ],
+              ),
             );
           }
         }
@@ -299,17 +364,20 @@ class _TherapyHistoryState extends State<TherapyHistory>
               onRefresh: () async {
                 injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
               },
-              child: ListView(
-                // shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                children: [
-                  16.verticalSpace,
-                  const AppEmptyState(
-                    tittle: 'No session history.',
-                    subtittle:
-                        "You have no previous session history. start by booking a session with a therapist",
-                  ),
-                ],
+              child: Center(
+                child: ListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    16.verticalSpace,
+                    const AppEmptyState(
+                      hasBg: false,
+                      tittle: 'No session history.',
+                      subtittle:
+                          "You have no previous session history. start by booking a session with a therapist",
+                    ),
+                  ],
+                ),
               ),
             );
           }

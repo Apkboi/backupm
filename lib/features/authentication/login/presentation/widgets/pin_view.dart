@@ -81,6 +81,7 @@ class _PinViewState extends State<PinView> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisCount: 3,
+
                 children: List.generate(
                     12,
                     (index) => index == 11 && widget.hasBiometric!
@@ -207,8 +208,8 @@ class _PinDotsState extends State<PinDots> {
           4,
           (index) => !(index <= widget.activeCount)
               ? Container(
-                  width: 50.w,
-                  height: 50.h,
+                  width: 50,
+                  height: 50,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     color: Pallets.white,
@@ -217,8 +218,8 @@ class _PinDotsState extends State<PinDots> {
                   ),
                 )
               : Container(
-                  width: 50.w,
-                  height: 50.h,
+                  width: 50,
+                  height: 50,
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(

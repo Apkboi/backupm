@@ -92,7 +92,9 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                     ),
 
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push(PageUrl.passwordResetEmailScreen);
+                        },
                         child: TextView(
                           text: 'Tap to reset',
                           fontSize: 16.sp,

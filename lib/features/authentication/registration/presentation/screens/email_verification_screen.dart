@@ -69,8 +69,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             hasElevation: false,
                             outline: false,
                             controller: _controller,
-                            validator:
-                                RequiredValidator(errorText: 'Enter code').call,
+                            validator: RequiredValidator(errorText: 'Enter code').call,
                             hasBorder: false,
                             inputType: TextInputType.number,
                             suffix: InkWell(

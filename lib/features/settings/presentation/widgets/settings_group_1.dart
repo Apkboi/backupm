@@ -57,13 +57,13 @@ class SettingsGroup1 extends StatelessWidget {
               ),
               leadingIconUrl: Assets.images.svgs.bulb,
               tittle: 'Preferences'),
-          24.verticalSpace,
-          SettingListTile(
-              onTap: () {
-                Helpers.launchEmailWithMessage(email: 'support@mentra.com');
-              },
-              leadingIconUrl: Assets.images.svgs.star,
-              tittle: 'Give feedback'),
+          // 24.verticalSpace,
+          // SettingListTile(
+          //     onTap: () {
+          //       Helpers.launchEmailWithMessage(email: 'support@mentra.com');
+          //     },
+          //     leadingIconUrl: Assets.images.svgs.star,
+          //     tittle: 'Give feedback'),
           24.verticalSpace,
           SettingListTile(
               onTap: () {

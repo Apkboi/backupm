@@ -153,9 +153,12 @@ dependencies:
 
 
 flutter_native_splash:
-  #  color: "#02084B"
-  background_image: "assets/images/pngs/splash_main.png"
-  image: assets/images/pngs/launch.png
+  color: "#1A6A73"
+#  background_image: "assets/images/pngs/splash_main.png"
+#  image: assets/images/pngs/splash_logo.png
+#  android_12:
+#    image: assets/images/pngs/splash_logo.png
+
 
 dev_dependencies:
   flutter_test:
@@ -169,7 +172,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/pngs/logo_white.png"
+  image_path: "assets/images/pngs/launcher.png"
   #  adaptive_icon_foreground: "assets/images/pngs/launch.png"
   #  adaptive_icon_background: "#2C3489"
   remove_alpha_ios: true

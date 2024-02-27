@@ -9,10 +9,10 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/subscription_prompt_dialog.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -25,12 +25,17 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   @override
+  void initState() {
+    RefreshUserUsecase().execute();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         context.goNamed(PageUrl.homeScreen);
         logger.i('popping');
-
         return false;
       },
       child: Scaffold(
@@ -118,13 +123,16 @@ class _MenuScreenState extends State<MenuScreen> {
                         children: [
                           Expanded(
                               child: MenuItem(
-                                  textColor: Pallets.orangePink,
-                                  bgColor: Pallets.lighterPink,
-                                  onTap: () async {
-                                    _checkSubscription(context);
-                                  },
-                                  image: Assets.images.pngs.pTherapy.path,
-                                  text: "Professional Therapy")),
+                            textColor: Pallets.orangePink,
+                            bgColor: Pallets.lighterPink,
+                            image: Assets.images.pngs.summary.path,
+                            text: "My Activities",
+                            onTap: () {
+                              context.pushNamed(PageUrl.summariesScreen);
+                            },
+                            // image: Assets.images.pngs.pTherapy.path,
+                            // text: "Professional Therapy"
+                          )),
                           16.horizontalSpace,
                           Expanded(
                               child: MenuItem(
@@ -144,20 +152,26 @@ class _MenuScreenState extends State<MenuScreen> {
                         children: [
                           Expanded(
                               child: MenuItem(
-                                  onTap: () {
-                                    context.pushNamed(PageUrl.summariesScreen);
-                                  },
                                   textColor: Pallets.brown,
                                   bgColor: Pallets.lightOrange,
-                                  image: Assets.images.pngs.summary.path,
-                                  text: "Summaries")),
+                                  image: Assets.images.pngs.gJournal.path,
+                                  text: "Guided Journal"
+                                  // image: Assets.images.pngs.summary.path,
+                                  // text: "Summaries"
+                                  )),
                           16.horizontalSpace,
                           Expanded(
                               child: MenuItem(
-                                  textColor: Pallets.indigo,
-                                  bgColor: Pallets.lightBlue,
-                                  image: Assets.images.pngs.gJournal.path,
-                                  text: "Guided Journal")),
+                            textColor: Pallets.indigo,
+                            bgColor: Pallets.lightBlue,
+                            image: Assets.images.pngs.pTherapy.path,
+                            text: "Professional Therapy",
+                            onTap: () async {
+                              _checkSubscription(context);
+                            },
+                            // image: Assets.images.pngs.gJournal.path,
+                            // text: "Guided Journal"
+                          )),
                         ],
                       ),
                       100.verticalSpace

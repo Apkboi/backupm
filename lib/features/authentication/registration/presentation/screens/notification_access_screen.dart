@@ -63,11 +63,9 @@ class _NotificationAccessScreenState extends State<NotificationAccessScreen> {
                             onPressed: () async {
                               await PermissionHandlerService()
                                   .requestPermission(Permission.notification);
-                              context.pushNamed(PageUrl.userPreferenceScreen,
-                                  queryParameters: {
-                                    PathParam.userPreferenceFlow:
-                                    UserPreferenceFlow.signup.name
-                                  });
+                              context.pushNamed(
+                                PageUrl.homeScreen,
+                              );
                             },
                           ),
                         ),
@@ -82,16 +80,14 @@ class _NotificationAccessScreenState extends State<NotificationAccessScreen> {
                             padding: const EdgeInsets.all(16),
                             borderRadius: BorderRadius.circular(100),
                             child: TextView(
-                              text: 'No,  not now',
+                              text: 'No, not now',
                               style: GoogleFonts.plusJakartaSans(
                                   fontWeight: FontWeight.w600, fontSize: 14.sp),
                             ),
                             onPressed: () {
-                              context.pushNamed(PageUrl.userPreferenceScreen,
-                                  queryParameters: {
-                                    PathParam.userPreferenceFlow:
-                                        UserPreferenceFlow.signup.name
-                                  });
+                              context.pushNamed(
+                                PageUrl.homeScreen,
+                              );
                             },
                           ),
                         ),

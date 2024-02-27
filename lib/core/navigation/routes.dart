@@ -12,6 +12,10 @@ import 'package:mentra/features/authentication/onboarding/presentaion/screens/on
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/signup_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/splash_screen.dart';
+import 'package:mentra/features/authentication/password_reset/presentation/screens/password_reset_email_screen.dart';
+import 'package:mentra/features/authentication/password_reset/presentation/screens/password_reset_screen.dart';
+import 'package:mentra/features/authentication/password_reset/presentation/screens/password_reset_success_screen.dart';
+import 'package:mentra/features/authentication/password_reset/presentation/screens/password_reset_verification_screen.dart';
 import 'package:mentra/features/authentication/registration/presentation/screens/biometric_access_screen.dart';
 import 'package:mentra/features/authentication/registration/presentation/screens/email_verification_screen.dart';
 import 'package:mentra/features/authentication/registration/presentation/screens/notification_access_screen.dart';
@@ -24,6 +28,7 @@ import 'package:mentra/features/authentication/registration/presentation/screens
 import 'package:mentra/features/dashboard/presentation/screens/emergency_sos_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
+import 'package:mentra/features/journal/presentation/screens/create_journal_screen.dart';
 import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
 import 'package:mentra/features/library/presentation/screens/article_details_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
@@ -295,6 +300,35 @@ class CustomRoutes {
           suggestedTherapist: SuggestedTherapist.fromJson(
               jsonDecode(state.uri.queryParameters[PathParam.therapist] ?? '')),
         ),
+      ),
+      GoRoute(
+        path: '/passwordResetEmailScreen',
+        name: PageUrl.passwordResetEmailScreen,
+        builder: (context, state) => PasswordResetEmailScreen(
+          email: state.uri.queryParameters[PathParam.email] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/passwordResetEmailVerificationScreen',
+        name: PageUrl.passwordResetEmailVerificationScreen,
+        builder: (context, state) => PasswordResetVerificationScreen(
+          email: state.uri.queryParameters[PathParam.email] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/passwordResetScreen',
+        name: PageUrl.passwordResetScreen,
+        builder: (context, state) => const PasswordResetScreen(),
+      ),
+      GoRoute(
+        path: '/createJournalScreen',
+        name: PageUrl.createJournalScreen,
+        builder: (context, state) => const CreateJournalScreen(),
+      ),
+      GoRoute(
+        path: '/passwordResetSuccessScreen',
+        name: PageUrl.passwordResetSuccessScreen,
+        builder: (context, state) => const PasswordResetSuccessScreen(),
       ),
     ],
   );

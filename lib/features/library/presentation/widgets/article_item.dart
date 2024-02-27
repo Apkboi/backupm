@@ -7,6 +7,7 @@ import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class ArticleItem extends StatelessWidget {
   const ArticleItem({super.key, required this.course});
@@ -39,7 +40,7 @@ class ArticleItem extends StatelessWidget {
               child: Stack(
                 children: [
                   ImageWidget(
-                    imageUrl: course.attachments!.first.file.url,
+                    imageUrl: course.attachments?.firstOrNull?.file.url ??Assets.images.pngs.article.path,
                     height: 126.h,
                     // fit: BoxFit.cover,
                     borderRadius: BorderRadius.circular(16),

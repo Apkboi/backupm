@@ -52,22 +52,22 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(color: selectedColor),
-                height: 390.h,
-                child: Center(
-                  child: ImageWidget(
-                    imageUrl: selectedImageUrl,
-                    fit: BoxFit.scaleDown,
-                    size: 150,
-                    // fit: BoxFit.contain,
-                  ),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(color: selectedColor),
+              height: 390.h,
+              child: Center(
+                child: ImageWidget(
+                  imageUrl: selectedImageUrl,
+                  fit: BoxFit.scaleDown,
+                  size: 150,
+                  // fit: BoxFit.contain,
                 ),
               ),
-              AvartarSelector(
+            ),
+            Expanded(
+              child: AvartarSelector(
                 onAvatarSelected: (p0) {
                   selectedImageUrl = p0.image.url;
                   selectedImageId = p0.id;
@@ -77,9 +77,9 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
                   selectedColor = p0;
                   setState(() {});
                 },
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

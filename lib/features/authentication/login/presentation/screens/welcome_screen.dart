@@ -136,6 +136,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   children: [
                     TextView(
                       align: TextAlign.center,
+                      fontSize: 15.sp,
                       text:
                           'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}. \nInhale positivity, exhale stress',
                       fontWeight: FontWeight.w500,

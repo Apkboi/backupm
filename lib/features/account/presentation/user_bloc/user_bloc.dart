@@ -56,7 +56,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       final response = await _accountRepository.getRemoteUser();
 
-    add(SaveUserEvent(response.data));
+      add(SaveUserEvent(response.data));
     } catch (e) {
       // emit(LoginFailureState(error: e.toString()));
     }

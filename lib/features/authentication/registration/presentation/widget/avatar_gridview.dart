@@ -18,13 +18,7 @@ class _AvatarGridViewState extends State<AvatarGridView> {
     Assets.images.pngs.avatar2.path,
     Assets.images.pngs.avatar3.path,
     Assets.images.pngs.avatar4.path,
-    Assets.images.pngs.avatar13.path,
-    Assets.images.pngs.avatar14.path,
-    Assets.images.pngs.avatar15.path,
-    Assets.images.pngs.avatar16.path,
-    Assets.images.pngs.avatar20.path,
-    Assets.images.pngs.avatar21.path,
-    Assets.images.pngs.avatar22.path,
+
 
     // Add more avatar names as needed
   ];

@@ -138,7 +138,8 @@ class _SessionButtonState extends State<SessionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return _showButton
+    return widget.startDate.isBefore(DateTime.now()) &&
+            DateTime.now().isBefore(widget.endDate)
         ? CustomNeumorphicButton(
             expanded: false,
             text: 'Join session',
@@ -165,22 +166,21 @@ class _SessionButtonState extends State<SessionButton> {
   void initMesibo(String token) async {
     _mesiboUi.getUiDefaults().then((MesiboUIOptions options) {
       options.enableBackButton = true;
-      options.appName = "My First App";
+      options.appName = "Mentra";
       options.enableForward = false;
       options.statusBarColor = Pallets.primary.value;
-
       options.toolbarColor = Pallets.primary.value;
       _mesiboUi.setUiDefaults(options);
     });
 
-    /**********************************
+    /************
         The code below enables basic UI customization.
 
         However, you can customize entire user interface by implementing MesiboUIListner for Android and
         iOS. Refer to
 
         https://docs.mesibo.com/ui-modules/customizing/
-     **********************************/
+     ************/
 
     MesiboUIButtons buttons = MesiboUIButtons();
     buttons.message = true;
@@ -204,14 +204,26 @@ class _SessionButtonState extends State<SessionButton> {
     //   return;
     // }
     //
-    // MesiboProfile profile =
-    // MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
+    // MesiboProfile profile = MesiboProfile(
+    //     groupId: 2988983,
+    //     uid: int.parse(injector.get<UserBloc>().appUser?.mesiboUserId),
+    //     selfProfile: false);
+    // MesiboProfile profile = MesiboProfile(
+    //     groupId: 2999906,
+    //     // groupId: 3000046,
+    //     uid: int.parse(injector.get<UserBloc>().appUser?.mesiboUserId),
+    //     selfProfile: false);
 
     // IOS PROFILE
     // MesiboProfile(groupId: 2988983, uid: 63611207, selfProfile: false);
+
+    logger.i(widget.session.mesiboGroupId.toString());
+    logger.i(injector.get<UserBloc>().appUser?.mesiboUserId);
+    logger.i(injector.get<UserBloc>().appUser?.mesiboUserToken);
+    logger.i(injector.get<UserBloc>().appUser?.email);
     MesiboProfile profile = MesiboProfile(
         groupId: int.parse(widget.session.mesiboGroupId.toString()),
-        uid: injector.get<UserBloc>().appUser?.mesiboUserId,
+        uid: int.parse(injector.get<UserBloc>().appUser?.mesiboUserId),
         selfProfile: false);
 
     _mesiboUi.groupCall(profile, true, true, false, false);

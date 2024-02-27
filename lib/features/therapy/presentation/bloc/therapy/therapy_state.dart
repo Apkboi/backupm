@@ -222,3 +222,28 @@ class TherapistAcceptedState extends TherapyState {
   @override
   List<Object?> get props => [];
 }
+
+class GetMatchedTherapistSuccessState extends TherapyState {
+  final GetMatchedTherapistResponse response;
+
+  const GetMatchedTherapistSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class GetMatchedTherapistFailureState extends TherapyState {
+  final String error;
+
+  const GetMatchedTherapistFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class GetMatchedTherapistLoadingState extends TherapyState {
+  const GetMatchedTherapistLoadingState();
+
+  @override
+  List<Object?> get props => [];
+}

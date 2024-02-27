@@ -30,8 +30,10 @@ class _SummariesScreenState extends State<SummariesScreen> {
         leadingWidth: 0,
         tittle: TextView(
           text: 'Summaries',
-          style:
-              GoogleFonts.fraunces(fontSize: 32, fontWeight: FontWeight.w600),
+          style: GoogleFonts.fraunces(
+              fontSize: 32,
+              fontWeight: FontWeight.w600,
+              color: Pallets.primaryDark),
         ),
         actions: [
           InkWell(

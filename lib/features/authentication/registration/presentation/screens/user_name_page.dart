@@ -49,9 +49,7 @@ class _UsernamePageState extends State<UsernamePage> {
                         children: [
                           16.verticalSpace,
                           const QuestionBox(message: [
-                            '🎉 Welcome! It\'s wonderful to have you on board. I\’m Mentra, your 24/7 emotional and mental well-being buddy, tailored just for you. Let\'s get your account set up! 🚀',
-                            "Your privacy is a big deal for us. Every chat here is private and anonymous, meaning you can truly be yourself without any worries. Your data? It’s yours and yours alone – safe, secure, and respected"
-                                "Let's start with a nickname or pseudonym. This is how you'll be known in the Mentra community. Remember, you can change this at any time"
+                            'Exciting! Let\'s get your new account set up. To start, what nickname or pseudonym would you like to use? This will be how you\'re identified within Mentra. (Remember, you can change this at any time',
                           ], isSender: false),
                           // 16.verticalSpace,
                         ],

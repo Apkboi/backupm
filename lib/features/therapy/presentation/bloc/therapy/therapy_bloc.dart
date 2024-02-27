@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/therapy/data/models/accept_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/change_therapist_message_model.dart';
+import 'package:mentra/features/therapy/data/models/get_matched_therapist.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/data/models/create_session_response.dart';
@@ -37,6 +38,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<MatchTherapistEvent>(_mapMatchTherapistEventToState);
     on<SelectTherapistEvent>(_mapSelectTherapistEventToState);
     on<TherapistAcceptedEvent>(_mapStartChangeTherapistConversationToState);
+    on<GetMatchedTherapistEvent>(_mapGetMatchedTherapistEventToState);
   }
 
   final scrollController = ItemScrollController();
@@ -60,7 +62,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     try {
       final sessions = await _therapyRepository.getUpcomingSessions();
       emit(GetUpcomingSessionsSuccessState(response: sessions));
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.e(stack);
       logger.e(e.toString());
       emit(GetUpcomingSessionsFailureState(error: e.toString()));
@@ -73,7 +75,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     try {
       final response = await _therapyRepository.getSessionsHistory();
       emit(GetSessionsHistorySuccessState(response: response));
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.e(stack);
 
       emit(GetSessionsHistoryFailureState(error: e.toString()));
@@ -269,4 +271,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     _scrollToLast();
     emit(const TherapistAcceptedState());
   }
+
+  FutureOr<void> _mapGetMatchedTherapistEventToState(
+      GetMatchedTherapistEvent event, Emitter<TherapyState> emit) {}
 }
