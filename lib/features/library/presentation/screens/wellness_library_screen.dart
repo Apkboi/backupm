@@ -46,8 +46,10 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
         leadingWidth: 0,
         tittle: TextView(
           text: 'Wellness Library',
-          style:
-              GoogleFonts.fraunces(fontSize: 32, fontWeight: FontWeight.w600,color:  Pallets.primaryDark),
+          style: GoogleFonts.fraunces(
+              fontSize: 32,
+              fontWeight: FontWeight.w600,
+              color: Pallets.primaryDark),
         ),
         actions: [
           InkWell(
@@ -109,11 +111,11 @@ class FavoriteContents extends StatefulWidget {
 
 class _FavoriteContentsState extends State<FavoriteContents>
     with AutomaticKeepAliveClientMixin {
-  final bloc = WellnessLibraryBloc(injector.get());
+  // final bloc = WellnessLibraryBloc(injector.get());
 
   @override
   void initState() {
-    bloc.add(const GetFavouriteCoursesEvent());
+    injector.get<WellnessLibraryBloc>().add(const GetFavouriteCoursesEvent());
 
     super.initState();
   }
@@ -122,7 +124,8 @@ class _FavoriteContentsState extends State<FavoriteContents>
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<WellnessLibraryBloc, WellnessLibraryState>(
-      bloc: bloc,
+      bloc: injector.get(),
+      buildWhen: _buildWhen,
       listener: (context, state) {},
       builder: (context, state) {
         if (state is GetFavouritesLoadingState) {
@@ -136,7 +139,9 @@ class _FavoriteContentsState extends State<FavoriteContents>
             retryTextColor: Pallets.navy,
             textColor: Pallets.navy,
             onTap: () {
-              bloc.add(GetLibraryCategoriesEvent());
+              injector
+                  .get<WellnessLibraryBloc>()
+                  .add(GetLibraryCategoriesEvent());
             },
           );
         }
@@ -145,7 +150,9 @@ class _FavoriteContentsState extends State<FavoriteContents>
           if (state.response.data.isNotEmpty) {
             return RefreshIndicator(
               onRefresh: () async {
-                bloc.add(const GetFavouriteCoursesEvent());
+                injector
+                    .get<WellnessLibraryBloc>()
+                    .add(const GetFavouriteCoursesEvent());
               },
               child: ListView.builder(
                 padding: EdgeInsets.zero,
@@ -160,7 +167,9 @@ class _FavoriteContentsState extends State<FavoriteContents>
           } else {
             return RefreshIndicator(
               onRefresh: () async {
-                bloc.add(const GetFavouriteCoursesEvent());
+                injector
+                    .get<WellnessLibraryBloc>()
+                    .add(const GetFavouriteCoursesEvent());
               },
               child: Center(
                 child: ListView(
@@ -185,6 +194,12 @@ class _FavoriteContentsState extends State<FavoriteContents>
 
   @override
   bool get wantKeepAlive => true;
+
+  bool _buildWhen(WellnessLibraryState previous, WellnessLibraryState current) {
+    return current is GetFavouritesSuccessState ||
+        current is GetFavouritesFailureState ||
+        current is GetFavouritesLoadingState;
+  }
 }
 
 class DiscoverContents extends StatefulWidget {

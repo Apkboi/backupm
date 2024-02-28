@@ -33,6 +33,7 @@ class _FavoriteActionButtonState extends State<FavoriteActionButton> {
       listener: (context, state) {
         if (state is UpdateFavouritesSuccessState) {
           isFavorite = state.response.data.inFavourite;
+          injector.get<WellnessLibraryBloc>().add(const GetFavouriteCoursesEvent());
           setState(() {});
         }
         if (state is UpdateFavouritesFailureState) {

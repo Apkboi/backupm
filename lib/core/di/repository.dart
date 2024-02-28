@@ -37,4 +37,6 @@ void setup(GetIt getIt) {
       () => SubscriptionRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<PasswordResetRepository>(
       () => PasswordResetRepositoryImpl(getIt.get()));
+  // getIt.registerLazySingleton<WellnessLibraryRepository>(
+  //     () => WellnessLibraryRepositoryImpl(getIt.get()));
 }

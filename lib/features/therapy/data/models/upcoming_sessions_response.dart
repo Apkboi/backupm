@@ -6,9 +6,11 @@ import 'dart:convert';
 
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 
-UpcomingSessionsResponse upcomingSessionsResponseFromJson(String str) => UpcomingSessionsResponse.fromJson(json.decode(str));
+UpcomingSessionsResponse upcomingSessionsResponseFromJson(String str) =>
+    UpcomingSessionsResponse.fromJson(json.decode(str));
 
-String upcomingSessionsResponseToJson(UpcomingSessionsResponse data) => json.encode(data.toJson());
+String upcomingSessionsResponseToJson(UpcomingSessionsResponse data) =>
+    json.encode(data.toJson());
 
 class UpcomingSessionsResponse {
   final String message;
@@ -36,19 +38,21 @@ class UpcomingSessionsResponse {
         code: code ?? this.code,
       );
 
-  factory UpcomingSessionsResponse.fromJson(Map<String, dynamic> json) => UpcomingSessionsResponse(
-    message: json["message"],
-    data: Data.fromJson(json["data"]),
-    success: json["success"],
-    code: json["code"],
-  );
+  factory UpcomingSessionsResponse.fromJson(Map<String, dynamic> json) =>
+      UpcomingSessionsResponse(
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
+        success: json["success"],
+        code: json["code"],
+      );
 
-  Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": data.toJson(),
-    "success": success,
-    "code": code,
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        "message": message,
+        "data": data.toJson(),
+        "success": success,
+        "code": code,
+      };
 }
 
 class Data {
@@ -69,15 +73,18 @@ class Data {
         data: data ?? this.data,
       );
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    paginationMeta: PaginationMeta.fromJson(json["pagination_meta"]),
-    data: List<TherapySession>.from(json["data"].map((x) => TherapySession.fromJson(x))),
-  );
+  factory Data.fromJson(Map<String, dynamic> json) =>
+      Data(
+        paginationMeta: PaginationMeta.fromJson(json["pagination_meta"]),
+        data: List<TherapySession>.from(
+            json["data"].map((x) => TherapySession.fromJson(x))),
+      );
 
-  Map<String, dynamic> toJson() => {
-    "pagination_meta": paginationMeta.toJson(),
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        "pagination_meta": paginationMeta.toJson(),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
 }
 
 class TherapySession {
@@ -142,37 +149,39 @@ class TherapySession {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory TherapySession.fromJson(Map<String, dynamic> json) => TherapySession(
-    id: json["id"],
-    user: User.fromJson(json["user"]),
-    therapist: DatumTherapist.fromJson(json["therapist"]),
-    reference: json["reference"],
-    focus: json["focus"],
-    duration: json["duration"],
-    startsAt: DateTime.parse(json["starts_at"]),
-    endsAt: json["ends_at"],
-    note: json["note"],
-    status: json["status"],
-    mesiboGroupId: json["mesibo_group_id"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-  );
+  factory TherapySession.fromJson(Map<String, dynamic> json) =>
+      TherapySession(
+        id: json["id"],
+        user: User.fromJson(json["user"]),
+        therapist: DatumTherapist.fromJson(json["therapist"]),
+        reference: json["reference"],
+        focus: json["focus"],
+        duration: json["duration"],
+        startsAt: DateTime.parse(json["starts_at"]),
+        endsAt: json["ends_at"],
+        note: json["note"],
+        status: json["status"],
+        mesiboGroupId: json["mesibo_group_id"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "user": user.toJson(),
-    "therapist": therapist.toJson(),
-    "reference": reference,
-    "focus": focus,
-    "duration": duration,
-    "starts_at": startsAt.toIso8601String(),
-    "ends_at": endsAt,
-    "note": note,
-    "status": status,
-    "mesibo_group_id": mesiboGroupId,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        "id": id,
+        "user": user.toJson(),
+        "therapist": therapist.toJson(),
+        "reference": reference,
+        "focus": focus,
+        "duration": duration,
+        "starts_at": startsAt.toIso8601String(),
+        "ends_at": endsAt,
+        "note": note,
+        "status": status,
+        "mesibo_group_id": mesiboGroupId,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+      };
 }
 
 class DatumTherapist {
@@ -193,17 +202,18 @@ class DatumTherapist {
         therapist: therapist ?? this.therapist,
       );
 
-  factory DatumTherapist.fromJson(Map<String, dynamic> json) => DatumTherapist(
-    user: User.fromJson(json["user"]),
-    therapist: Therapist.fromJson(json["therapist"]),
-  );
+  factory DatumTherapist.fromJson(Map<String, dynamic> json) =>
+      DatumTherapist(
+        user: User.fromJson(json["user"]),
+        therapist: Therapist.fromJson(json["therapist"]),
+      );
 
-  Map<String, dynamic> toJson() => {
-    "user": user.toJson(),
-    "therapist": therapist.toJson(),
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        "user": user.toJson(),
+        "therapist": therapist.toJson(),
+      };
 }
-
 
 
 class User {
@@ -257,7 +267,8 @@ class User {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
-        avatarBackgroundColor: avatarBackgroundColor ?? this.avatarBackgroundColor,
+        avatarBackgroundColor: avatarBackgroundColor ??
+            this.avatarBackgroundColor,
         username: username ?? this.username,
         email: email ?? this.email,
         stripeCustomerId: stripeCustomerId ?? this.stripeCustomerId,
@@ -268,37 +279,39 @@ class User {
         birthYear: birthYear ?? this.birthYear,
       );
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    avatar: json["avatar"],
-    name: json["name"],
-    role: json["role"],
-    avatarBackgroundColor: json["avatar_background_color"],
-    username: json["username"],
-    email: json["email"],
-    stripeCustomerId: json["stripe_customer_id"],
-    mesiboUserId: json["mesibo_user_id"],
-    mesiboUserToken: json["mesibo_user_token"],
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    birthYear: json["birth_year"],
-  );
+  factory User.fromJson(Map<String, dynamic> json) =>
+      User(
+        id: json["id"],
+        avatar: json["avatar"],
+        name: json["name"],
+        role: json["role"],
+        avatarBackgroundColor: json["avatar_background_color"],
+        username: json["username"],
+        email: json["email"],
+        stripeCustomerId: json["stripe_customer_id"],
+        mesiboUserId: json["mesibo_user_id"],
+        mesiboUserToken: json["mesibo_user_token"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+        birthYear: json["birth_year"],
+      );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "avatar": avatar,
-    "name": name,
-    "role": role,
-    "avatar_background_color": avatarBackgroundColor,
-    "username": username,
-    "email": email,
-    "stripe_customer_id": stripeCustomerId,
-    "mesibo_user_id": mesiboUserId,
-    "mesibo_user_token": mesiboUserToken,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
-    "birth_year": birthYear,
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        "id": id,
+        "avatar": avatar,
+        "name": name,
+        "role": role,
+        "avatar_background_color": avatarBackgroundColor,
+        "username": username,
+        "email": email,
+        "stripe_customer_id": stripeCustomerId,
+        "mesibo_user_id": mesiboUserId,
+        "mesibo_user_token": mesiboUserToken,
+        "created_at": createdAt.toIso8601String(),
+        "updated_at": updatedAt.toIso8601String(),
+        "birth_year": birthYear,
+      };
 }
 
 class PaginationMeta {
@@ -359,33 +372,35 @@ class PaginationMeta {
         canLoadMore: canLoadMore ?? this.canLoadMore,
       );
 
-  factory PaginationMeta.fromJson(Map<String, dynamic> json) => PaginationMeta(
-    currentPage: json["current_page"],
-    firstPageUrl: json["first_page_url"],
-    from: json["from"],
-    lastPage: json["last_page"],
-    lastPageUrl: json["last_page_url"],
-    nextPageUrl: json["next_page_url"],
-    path: json["path"],
-    perPage: json["per_page"],
-    prevPageUrl: json["prev_page_url"],
-    to: json["to"],
-    total: json["total"],
-    canLoadMore: json["can_load_more"],
-  );
+  factory PaginationMeta.fromJson(Map<String, dynamic> json) =>
+      PaginationMeta(
+        currentPage: json["current_page"],
+        firstPageUrl: json["first_page_url"],
+        from: json["from"],
+        lastPage: json["last_page"],
+        lastPageUrl: json["last_page_url"],
+        nextPageUrl: json["next_page_url"],
+        path: json["path"],
+        perPage: json["per_page"],
+        prevPageUrl: json["prev_page_url"],
+        to: json["to"],
+        total: json["total"],
+        canLoadMore: json["can_load_more"],
+      );
 
-  Map<String, dynamic> toJson() => {
-    "current_page": currentPage,
-    "first_page_url": firstPageUrl,
-    "from": from,
-    "last_page": lastPage,
-    "last_page_url": lastPageUrl,
-    "next_page_url": nextPageUrl,
-    "path": path,
-    "per_page": perPage,
-    "prev_page_url": prevPageUrl,
-    "to": to,
-    "total": total,
-    "can_load_more": canLoadMore,
-  };
+  Map<String, dynamic> toJson() =>
+      {
+        "current_page": currentPage,
+        "first_page_url": firstPageUrl,
+        "from": from,
+        "last_page": lastPage,
+        "last_page_url": lastPageUrl,
+        "next_page_url": nextPageUrl,
+        "path": path,
+        "per_page": perPage,
+        "prev_page_url": prevPageUrl,
+        "to": to,
+        "total": total,
+        "can_load_more": canLoadMore,
+      };
 }
