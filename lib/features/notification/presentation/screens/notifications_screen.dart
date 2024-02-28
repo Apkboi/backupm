@@ -10,36 +10,25 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/success_dialog.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/notification/presentation/widget/notification_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
-class CreateJournalScreen extends StatefulWidget {
-  const CreateJournalScreen({super.key});
+class NotificationsScreen extends StatefulWidget {
+  const NotificationsScreen({super.key});
 
   @override
-  State<CreateJournalScreen> createState() => _CreateJournalScreenState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
-class _CreateJournalScreenState extends State<CreateJournalScreen> {
+class _NotificationsScreenState extends State<NotificationsScreen> {
   final TextEditingController _noteController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(
-        tittleText: '',
-        actions: [
-          CustomNeumorphicButton(
-            onTap: () {
-              _delete();
-              // if (selectedImageId == null) {
-            },
-            color: Pallets.primary,
-            expanded: false,
-            padding: const EdgeInsets.all(12),
-            text: 'Save',
-          )
-        ],
+      appBar: const CustomAppBar(
+        tittleText: 'Notifications',
       ),
       body: Stack(
         children: [
@@ -51,32 +40,10 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
             padding: const EdgeInsets.all(17.0),
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      color: Pallets.promptMilkCOlor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextView(
-                        text:
-                            'Explore a hobby or activity that brings you joy. Why do you enjoy it?',
-                        fontWeight: FontWeight.w600,
-                        color: Pallets.promptDarkMilkColor,
-                      ),
-                    ],
-                  ),
-                ),
                 Expanded(
-                  child: FilledTextField(
-                    hint: 'Write your notes here...',
-                    fillColor: Colors.transparent,
-                    controller: _noteController,
-                    hasBorder: false,
-                    maxLine: 100,
-                  ),
-                )
+                    child: ListView.builder(
+                  itemBuilder: (context, index) => const NotificationItem(),
+                ))
               ],
             ),
           ))

@@ -4,6 +4,7 @@ import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
@@ -25,4 +26,6 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<SettingsBloc>(() => SettingsBloc(injector.get()));
   getIt.registerLazySingleton<WellnessLibraryBloc>(
       () => WellnessLibraryBloc(injector.get()));
+  getIt.registerLazySingleton<JournalBloc>(
+      () => JournalBloc(injector.get()));
 }

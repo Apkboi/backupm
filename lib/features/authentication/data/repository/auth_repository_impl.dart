@@ -44,7 +44,7 @@ class AuthRepositoryImpl extends AuthRepository {
       );
 
       return AuthSuccessResponse.fromJson(response.data);
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.i(e.toString());
       logger.i(stack.toString());
       rethrow;
@@ -109,8 +109,6 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       await googleAuthService.signOut();
       final response = await googleAuthService.signIn();
-
-
 
       final res = await response?.authentication;
 

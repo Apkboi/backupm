@@ -12,7 +12,7 @@ class CustomNeumorphicButton extends StatelessWidget {
       this.expanded = true,
       this.child,
       this.padding,
-      this.mainAxisAlignment = MainAxisAlignment.center});
+      this.mainAxisAlignment = MainAxisAlignment.center, this.shape});
 
   final String? text;
   final Widget? child;
@@ -22,6 +22,7 @@ class CustomNeumorphicButton extends StatelessWidget {
   final bool? expanded;
   final EdgeInsetsGeometry? padding;
   final MainAxisAlignment? mainAxisAlignment;
+  final ShapeBorder? shape;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,8 @@ class CustomNeumorphicButton extends StatelessWidget {
       child: Container(
         decoration: ShapeDecoration(
           color: color,
-          shape: RoundedRectangleBorder(
+
+          shape: shape?? RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(150),
           ),
         ),
@@ -49,16 +51,16 @@ class CustomNeumorphicButton extends StatelessWidget {
                 color.withOpacity(0.9)
               ],
             ),
-            shape: RoundedRectangleBorder(
+            shape: shape ?? RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(150),
                 side: BorderSide(color: color)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(2.5),
             child: Container(
-              decoration: ShapeDecoration(
+              decoration:  ShapeDecoration(
                 color: color,
-                shape: RoundedRectangleBorder(
+                shape: shape?? RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(150),
                 ),
               ),

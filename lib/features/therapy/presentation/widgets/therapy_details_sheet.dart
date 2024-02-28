@@ -243,8 +243,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
         uid: int.parse(widget.session.therapist.user.mesiboUserId),
         selfProfile: false,
         hash_id: 0);
-    MesiboProfile profile = await Mesibo()
-        .getUserProfile(widget.session.therapist.user.email);
+    MesiboProfile profile =
+        await Mesibo().getUserProfile(widget.session.therapist.user.email);
     profile.setImageUrl(widget.session.therapist.user.avatar);
     // profile.address = ;
     profile.save();

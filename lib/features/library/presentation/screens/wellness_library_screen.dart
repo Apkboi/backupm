@@ -141,7 +141,7 @@ class _FavoriteContentsState extends State<FavoriteContents>
             onTap: () {
               injector
                   .get<WellnessLibraryBloc>()
-                  .add(GetLibraryCategoriesEvent());
+                  .add(const GetFavouriteCoursesEvent());
             },
           );
         }

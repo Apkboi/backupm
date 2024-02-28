@@ -1,0 +1,72 @@
+import 'dart:async';
+
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:mentra/features/journal/data/repository/journals_repository.dart';
+
+part 'journal_event.dart';
+
+part 'journal_state.dart';
+
+class JournalBloc extends Bloc<JournalEvent, JournalState> {
+  final JournalsRepository _journalRepository;
+
+  JournalBloc(this._journalRepository) : super(JournalInitial()) {
+    on<CreateJournalEvent>(_mapCreateJournalEventToState);
+    on<GetPromptsEvent>(_mapGetPromptsEventToState);
+    on<GetJournalsEvent>(_mapGetJournalsEventToState);
+    on<DeleteJournalsEvent>(_mapDeleteJournalsEventToState);
+  }
+
+  Future<void> _mapCreateJournalEventToState(
+    CreateJournalEvent event,
+    Emitter<JournalState> emit,
+  ) async {
+    emit(CreateJournalLoadingState());
+    try {
+      final response = await _journalRepository.createJournal(event.payload);
+      emit(CreateJournalSuccessState(response: response));
+    } catch (e) {
+      emit(CreateJournalFailureState(error: e.toString()));
+    }
+  }
+
+  Future<void> _mapGetPromptsEventToState(
+    GetPromptsEvent event,
+    Emitter<JournalState> emit,
+  ) async {
+    emit(GetPromptsLoadingState());
+    try {
+      final response = await _journalRepository.getPrompts();
+      emit(GetPromptsSuccessState(response: response));
+    } catch (e) {
+      emit(GetPromptsFailureState(error: e.toString()));
+    }
+  }
+
+  Future<void> _mapGetJournalsEventToState(
+    GetJournalsEvent event,
+    Emitter<JournalState> emit,
+  ) async {
+    emit(GetJournalsLoadingState());
+    try {
+      final response = await _journalRepository.getJournals();
+      emit(GetJournalsSuccessState(response: response));
+    } catch (e) {
+      emit(GetJournalsFailureState(error: e.toString()));
+    }
+  }
+
+  Future<void> _mapDeleteJournalsEventToState(
+    DeleteJournalsEvent event,
+    Emitter<JournalState> emit,
+  ) async {
+    emit(DeleteJournalsLoadingState());
+    try {
+      final response = await _journalRepository.deleteJournals(event.id);
+      emit(DeleteJournalsSuccessState(response: response));
+    } catch (e) {
+      emit(DeleteJournalsFailureState(error: e.toString()));
+    }
+  }
+}

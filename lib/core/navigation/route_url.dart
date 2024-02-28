@@ -19,7 +19,8 @@ class PageUrl {
   static const newLoginScreen = 'newLoginScreen';
   static const loginPreview = 'loginPreview';
   static const passwordResetEmailScreen = 'passwordResetEmailScreen';
-  static const passwordResetEmailVerificationScreen = 'passwordResetEmailVerificationScreen';
+  static const passwordResetEmailVerificationScreen =
+      'passwordResetEmailVerificationScreen';
   static const passwordResetScreen = 'passwordResetScreen';
   static const passwordResetSuccessScreen = 'passwordResetSuccessScreen';
 
@@ -47,7 +48,9 @@ class PageUrl {
   static const changeTherapistScreen = 'changeTherapistScreen';
   static const matchTherapistScreen = 'matchTherapistScreen';
   static const acceptTherapistScreen = 'acceptTherapistScreen';
+  static const guidedJournalScreen = 'guidedJournalScreen';
   static const createJournalScreen = 'createJournalScreen';
+  static const notificationsScreen = 'notificationsScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

@@ -76,6 +76,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get insight =>
       const AssetGenImage('assets/images/pngs/insight.png');
 
+  /// File path: assets/images/pngs/launcher.png
+  AssetGenImage get launcher =>
+      const AssetGenImage('assets/images/pngs/launcher.png');
+
   /// File path: assets/images/pngs/mentra.png
   AssetGenImage get mentra =>
       const AssetGenImage('assets/images/pngs/mentra.png');
@@ -149,6 +153,7 @@ class $AssetsImagesPngsGen {
         gJournal,
         homeBg,
         insight,
+        launcher,
         mentra,
         mentraBig,
         onboarding1,
@@ -211,6 +216,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/combined_shape.svg
   String get combinedShape => 'assets/images/svgs/combined_shape.svg';
 
+  /// File path: assets/images/svgs/edit_filled.svg
+  String get editFilled => 'assets/images/svgs/edit_filled.svg';
+
   /// File path: assets/images/svgs/facebook.svg
   String get facebook => 'assets/images/svgs/facebook.svg';
 
@@ -261,6 +269,9 @@ class $AssetsImagesSvgsGen {
 
   /// File path: assets/images/svgs/p_therapy.svg
   String get pTherapy => 'assets/images/svgs/p_therapy.svg';
+
+  /// File path: assets/images/svgs/refresh_icon.svg
+  String get refreshIcon => 'assets/images/svgs/refresh_icon.svg';
 
   /// File path: assets/images/svgs/settings.svg
   String get settings => 'assets/images/svgs/settings.svg';
@@ -323,6 +334,7 @@ class $AssetsImagesSvgsGen {
         bulb,
         calender,
         combinedShape,
+        editFilled,
         facebook,
         forward,
         forwardButton,
@@ -340,6 +352,7 @@ class $AssetsImagesSvgsGen {
         messageIcon,
         onboarding1,
         pTherapy,
+        refreshIcon,
         settings,
         share,
         shareFilled,

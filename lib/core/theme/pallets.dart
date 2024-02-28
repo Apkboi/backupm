@@ -6,7 +6,10 @@ abstract class Pallets {
   static const primary = Color(0xFF1A6A73);
   static const brandColor = Color(0xFF07271A);
   static const secondary = Color(0xFFFADE93);
+  static const gold = Color(0xFFFAE19D);
   static const milkColor = Color(0xFFFFD8A3);
+  static const promptDarkMilkColor = Color(0xFF9E6F0E);
+  static const promptMilkCOlor = Color(0xFFFAE19D);
   static const bottomSheetColor = Color(0xFFf7f7f7);
   static const lightSecondary = Color(0xFFC7D69F);
   static const turquoise1 = Color(0xFF99BEB7);
@@ -83,7 +86,6 @@ abstract class Pallets {
 
   // static const secondary = Color(0xFFCC9933);
   static const avatarBackgrounds = [
-
     Colors.amber,
     Colors.cyan,
     Colors.pink,

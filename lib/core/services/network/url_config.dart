@@ -32,6 +32,12 @@ class UrlConfig {
   static const String getLibraryCoursesEndpoint =
       "/wellness-library/courses/list";
 
+  static const  String getNotificationDetailsEndpoint = "/getNotificationDetailsEndpoint";
+
+  static String readNotificationEndpoint = "getNotificationDetailsEndpoint";
+
+  static String getNotificationsEndpoint='';
+
   static String getCourseDetails(String id) =>
       "/wellness-library/courses/show/$id";
   static const String getFavourites = "/wellness-library/courses/favourites";

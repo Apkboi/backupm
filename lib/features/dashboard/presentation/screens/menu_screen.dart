@@ -58,9 +58,18 @@ class _MenuScreenState extends State<MenuScreen> {
           leadingWidth: 80,
           height: 80,
           actions: [
-            CircleAvatar(
-              backgroundColor: Pallets.white,
-              child: ImageWidget(imageUrl: Assets.images.svgs.bell),
+            InkWell(
+              onTap: () {
+                context.pushNamed(PageUrl.notificationsScreen);
+              },
+              child: CircleAvatar(
+                backgroundColor: Pallets.white,
+                child: ImageWidget(
+                    onTap: () {
+                      context.pushNamed(PageUrl.notificationsScreen);
+                    },
+                    imageUrl: Assets.images.svgs.bell),
+              ),
             ),
             10.horizontalSpace,
             InkWell(
@@ -152,13 +161,18 @@ class _MenuScreenState extends State<MenuScreen> {
                         children: [
                           Expanded(
                               child: MenuItem(
-                                  textColor: Pallets.brown,
-                                  bgColor: Pallets.lightOrange,
-                                  image: Assets.images.pngs.gJournal.path,
-                                  text: "Guided Journal"
-                                  // image: Assets.images.pngs.summary.path,
-                                  // text: "Summaries"
-                                  )),
+                            textColor: Pallets.brown,
+                            bgColor: Pallets.lightOrange,
+                            image: Assets.images.pngs.gJournal.path,
+                            text: "Guided Journal",
+
+                            onTap: () {
+                              context.pushNamed(PageUrl.guidedJournalScreen);
+                            },
+
+                            // image: Assets.images.pngs.summary.path,
+                            // text: "Summaries"
+                          )),
                           16.horizontalSpace,
                           Expanded(
                               child: MenuItem(

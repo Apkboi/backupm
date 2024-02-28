@@ -29,12 +29,14 @@ import 'package:mentra/features/dashboard/presentation/screens/emergency_sos_scr
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
 import 'package:mentra/features/journal/presentation/screens/create_journal_screen.dart';
+import 'package:mentra/features/journal/presentation/screens/journal_screen.dart';
 import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
 import 'package:mentra/features/library/presentation/screens/article_details_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
+import 'package:mentra/features/notification/presentation/screens/notifications_screen.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/screens/change_passcode_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/delete_account_screen.dart';
@@ -326,9 +328,19 @@ class CustomRoutes {
         builder: (context, state) => const CreateJournalScreen(),
       ),
       GoRoute(
+        path: '/guidedJournalScreen',
+        name: PageUrl.guidedJournalScreen,
+        builder: (context, state) => const JournalScreen(),
+      ),
+      GoRoute(
         path: '/passwordResetSuccessScreen',
         name: PageUrl.passwordResetSuccessScreen,
         builder: (context, state) => const PasswordResetSuccessScreen(),
+      ),
+      GoRoute(
+        path: '/notificationsScreen',
+        name: PageUrl.notificationsScreen,
+        builder: (context, state) => const NotificationsScreen(),
       ),
     ],
   );
