@@ -14,6 +14,8 @@ class GetMatchedTherapistResponse {
   final bool success;
   final int code;
 
+
+
   GetMatchedTherapistResponse({
     required this.message,
     required this.data,
