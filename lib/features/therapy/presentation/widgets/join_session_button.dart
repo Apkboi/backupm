@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -222,9 +223,12 @@ class _SessionButtonState extends State<SessionButton> {
     logger.i(injector.get<UserBloc>().appUser?.mesiboUserToken);
     logger.i(injector.get<UserBloc>().appUser?.email);
     MesiboProfile profile = MesiboProfile(
-        groupId: int.parse(widget.session.mesiboGroupId.toString()),
+        groupId: widget.session.mesiboGroupId != null
+            ? int.parse(widget.session.mesiboGroupId)
+            : 6456580,
         uid: int.parse(injector.get<UserBloc>().appUser?.mesiboUserId),
-        selfProfile: false);
+        selfProfile: false,
+        hash_id: 0);
 
     _mesiboUi.groupCall(profile, true, true, false, false);
   }

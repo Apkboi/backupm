@@ -136,7 +136,7 @@ dependencies:
   chewie: ^1.7.5
   video_thumbnail: ^0.5.3
 #  flutter_stripe: ^10.0.0
-  mesibo_flutter_sdk: ^2.2.0
+  mesibo_flutter_sdk: ^2.2.7
   change_app_package_name: ^1.1.0
   flutter_gen: ^5.4.0
 

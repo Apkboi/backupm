@@ -273,7 +273,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
                       hasBg: false,
                       tittle: 'No upcoming session.',
                       subtittle:
-                          "You have no upcoming sessions. start by booking a session with a therapist",
+                          "You have no upcoming sessions. Start by booking a session with a therapist",
                     ),
                   ],
                 ),
@@ -374,7 +374,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
                       hasBg: false,
                       tittle: 'No session history.',
                       subtittle:
-                          "You have no previous session history. start by booking a session with a therapist",
+                          "You have no previous session history. Start by booking a session with a therapist",
                     ),
                   ],
                 ),

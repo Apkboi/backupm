@@ -208,6 +208,7 @@ class _InputBarState extends State<_InputBar> {
       context.read<UserPreferenceCubit>().answerQuestion(
           id: context.read<UserPreferenceCubit>().currentQuestion?.id ?? -1,
           answer: controller.text.trim());
+      controller.clear();
     }
   }
 

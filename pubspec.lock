@@ -1265,10 +1265,10 @@ packages:
     dependency: "direct main"
     description:
       name: mesibo_flutter_sdk
-      sha256: "10c8044b55061391f3faf53c41fd88fb417408968bb900b7f726514e319774d9"
+      sha256: bf1ebb4a43917151a6082cd30abac291a6cac2b458d171171b2a411dad53b340
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.7"
   meta:
     dependency: transitive
     description:

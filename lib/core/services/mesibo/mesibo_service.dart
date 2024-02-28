@@ -1,6 +1,6 @@
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/features/mesibo/presentation/bloc/mesibo_cubit.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
+import 'package:uuid/uuid.dart';
 
 class MesiboService {
   static final MesiboService _instance = MesiboService._internal();
@@ -72,9 +72,12 @@ class MesiboService {
     buttons.endToEndEncryptionInfo = false; // e2ee should be enabled
     _mesiboUi.setupBasicCustomization(buttons, null);
 
-    await Future.delayed(Duration(milliseconds: 500));
-    MesiboProfile profile =
-        MesiboProfile(groupId: 2988983, uid: 6361887, selfProfile: false);
+    await Future.delayed(const Duration(milliseconds: 500));
+    MesiboProfile profile = MesiboProfile(
+        groupId: 2988983,
+        uid: 6361887,
+        selfProfile: false,
+        hash_id: int.parse(const Uuid().v1()));
     _mesiboUi.groupCall(profile, true, true, false, false);
   }
 }
