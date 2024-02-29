@@ -7,10 +7,14 @@ abstract class JournalsRepository {
   Future<SaveJournalResponse> createJournal(
       {required String? promptId, required String body});
 
+  Future<SaveJournalResponse> updateJournal(
+      {required String journalId, String? promptId, required String body});
+
   Future<GetPromptsResponse> getPrompts();
 
   Future<GetJournalsResponse> getJournals();
 
-  Future<SuccessResponse> deleteJournal(
-      {required String id, });
+  Future<SuccessResponse> deleteJournal({
+    required String id,
+  });
 }

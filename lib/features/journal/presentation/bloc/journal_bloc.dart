@@ -7,6 +7,7 @@ import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/dormain/repository/journals_repository.dart';
 
 part 'journal_event.dart';
+
 part 'journal_state.dart';
 
 class JournalBloc extends Bloc<JournalEvent, JournalState> {
@@ -17,6 +18,24 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<GetPromptsEvent>(_mapGetPromptsEventToState);
     on<GetJournalsEvent>(_mapGetJournalsEventToState);
     on<DeleteJournalsEvent>(_mapDeleteJournalsEventToState);
+    on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
+  }
+
+  Future<void> _mapUpdateJournalEventToState(
+    UpdateJournalEvent event,
+    Emitter<JournalState> emit,
+  ) async {
+    emit(UpdateJournalLoadingState());
+    try {
+      final response = await _journalRepository.updateJournal(
+        journalId: event.journalId,
+        promptId: event.promptId,
+        body: event.body,
+      );
+      emit(UpdateJournalSuccessState(response: response));
+    } catch (e) {
+      emit(UpdateJournalFailureState(error: e.toString()));
+    }
   }
 
   Future<void> _mapCreateJournalEventToState(

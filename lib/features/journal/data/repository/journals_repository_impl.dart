@@ -64,4 +64,19 @@ class JournalsRepositoryImpl extends JournalsRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<SaveJournalResponse> updateJournal(
+      {required String journalId,
+      String? promptId,
+      required String body}) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.updateJournal(journalId.toString()), RequestMethod.post,
+          data: {"guided_prompt_id": promptId, "body": body});
+      return SaveJournalResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

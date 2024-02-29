@@ -33,3 +33,18 @@ class DeleteJournalsEvent extends JournalEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class UpdateJournalEvent extends JournalEvent {
+  final String journalId;
+  final String? promptId;
+  final String body;
+
+  UpdateJournalEvent({
+    required this.journalId,
+    this.promptId,
+    required this.body,
+  });
+
+  @override
+  List<Object?> get props => [journalId, promptId, body];
+}

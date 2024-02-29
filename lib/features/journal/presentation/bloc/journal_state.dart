@@ -102,3 +102,26 @@ class DeleteJournalsFailureState extends JournalState {
   @override
   List<Object?> get props => [error];
 }
+
+class UpdateJournalLoadingState extends JournalState {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class UpdateJournalSuccessState extends JournalState {
+  final dynamic response;
+
+  UpdateJournalSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class UpdateJournalFailureState extends JournalState {
+  final String error;
+
+  UpdateJournalFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}

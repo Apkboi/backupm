@@ -30,8 +30,11 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
 
   @override
   void initState() {
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => _prefillJournal(),
+    );
     _prefillJournal();
-
     super.initState();
   }
 
@@ -114,7 +117,11 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
             promptId:
                 widget.prompt != null ? widget.prompt!.id.toString() : null));
       } else {
-        //   TODO EDIT JOURNAL
+        _bloc.add(UpdateJournalEvent(
+            body: _noteController.text,
+            promptId:
+                widget.prompt != null ? widget.prompt!.id.toString() : null,
+            journalId: widget.journal!.id.toString()));
       }
     } else {
       CustomDialogs.error('Journal must not be empty');
@@ -122,7 +129,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
   }
 
   void _listenToJournalBloc(BuildContext context, JournalState state) {
-    if (state is CreateJournalLoadingState) {
+    if (state is CreateJournalLoadingState || state is UpdateJournalLoadingState) {
       CustomDialogs.showLoading(context);
     }
     if (state is CreateJournalFailureState) {
@@ -136,11 +143,24 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       CustomDialogs.success('Journal Created Successfully');
       injector.get<JournalBloc>().add(GetJournalsEvent());
     }
+
+    if (state is UpdateJournalFailureState) {
+      context.pop();
+      CustomDialogs.error(state.error);
+    }
+
+    if (state is UpdateJournalSuccessState) {
+      context.pop();
+      context.pop();
+      CustomDialogs.success('Journal Updated Successfully');
+      injector.get<JournalBloc>().add(GetJournalsEvent());
+    }
   }
 
   void _prefillJournal() {
     if (widget.journal != null) {
       _noteController.text = widget.journal!.body;
+      setState(() {});
     }
   }
 }
