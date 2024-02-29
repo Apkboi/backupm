@@ -2,18 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/library/presentation/widgets/article_notification_detail.dart';
+import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/notification/presentation/widget/notification_details_screen.dart';
+import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
 
-class NotificationItem extends StatelessWidget {
-  const NotificationItem({super.key});
+class NotificationItem extends StatefulWidget {
+  const NotificationItem({super.key, required this.notification});
 
+  final MentraNotification notification;
+
+  @override
+  State<NotificationItem> createState() => _NotificationItemState();
+}
+
+class _NotificationItemState extends State<NotificationItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        CustomDialogs.showCupertinoBottomSheet(
-            context, const NotificationDetailsSheet());
+        _handleNotificationClick(context);
       },
       child: Column(
         children: [
@@ -22,33 +32,33 @@ class NotificationItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(
-                  radius: 6,
-                  backgroundColor: Pallets.red,
-                ),
+                if (widget.notification.readAt == null)
+                  const CircleAvatar(
+                    radius: 6,
+                    backgroundColor: Pallets.red,
+                  ),
                 12.horizontalSpace,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Row(
+                      Row(
                         children: [
                           Expanded(
                             child: TextView(
-                              text: '🎉 New Feature Alert!',
+                              text: widget.notification.title,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           TextView(
-                            text: '6 days ago',
+                            text: timeago.format(widget.notification.createdAt),
                             color: Pallets.grey,
                           )
                         ],
                       ),
                       6.verticalSpace,
-                      const TextView(
-                        text:
-                            'Explore our latest guided meditation series to relax and recharge. Tap to start!',
+                      TextView(
+                        text: widget.notification.message,
                         color: Pallets.black80,
                       ),
                     ],
@@ -64,5 +74,24 @@ class NotificationItem extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _handleNotificationClick(BuildContext context) {
+    widget.notification.readAt = DateTime.now();
+    setState(() {});
+    injector
+        .get<NotificationsBloc>()
+        .add(ReadNotificationEvent(id: widget.notification.id));
+    switch (widget.notification.type) {
+      case 'session':
+      case "welness_course":
+        context.pop();
+        CustomDialogs.showCupertinoBottomSheet(
+            context,
+            ArticleNotificationDetailsSheet(
+              notification: widget.notification,
+            ));
+        break;
+    }
   }
 }

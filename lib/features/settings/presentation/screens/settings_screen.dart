@@ -127,10 +127,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   child: Padding(
                                 padding: const EdgeInsets.all(17),
                                 child: SettingListTile(
-                                  leadingIconUrl:
-                                      Assets.images.svgs.sub,
+                                  leadingIconUrl: Assets.images.svgs.sub,
                                   onTap: () {
-                                    context.pushNamed(PageUrl.selectPlanScreen);
+                                    if (injector
+                                            .get<UserBloc>()
+                                            .appUser
+                                            ?.activeSubscription ==
+                                        null) {
+                                      context
+                                          .pushNamed(PageUrl.selectPlanScreen);
+                                    } else {
+                                      context.pushNamed(
+                                          PageUrl.manageSubscriptionScreen);
+                                    }
                                   },
                                   tittle: 'Subscription',
                                   trailingWidget: Row(

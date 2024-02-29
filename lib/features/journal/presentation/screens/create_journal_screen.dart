@@ -68,11 +68,12 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
             bloc: _bloc,
             listener: _listenToJournalBloc,
             builder: (context, state) {
+              var prompt = widget.prompt ?? widget.journal?.guidedPrompt;
               return Padding(
                 padding: const EdgeInsets.all(17.0),
                 child: Column(
                   children: [
-                    if (widget.prompt != null)
+                    if ( prompt != null)
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
@@ -83,7 +84,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             TextView(
-                              text: widget.prompt!.content,
+                              text: prompt.content,
                               fontWeight: FontWeight.w600,
                               color: Pallets.promptDarkMilkColor,
                             ),
@@ -110,17 +111,19 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
   }
 
   _validateAndCreateJournal() {
+    var prompt = widget.prompt ?? widget.journal?.guidedPrompt;
+
     if (_noteController.text.isNotEmpty) {
       if (widget.journal == null) {
         _bloc.add(CreateJournalEvent(
             body: _noteController.text,
             promptId:
-                widget.prompt != null ? widget.prompt!.id.toString() : null));
+                prompt != null ? prompt!.id.toString() : null));
       } else {
         _bloc.add(UpdateJournalEvent(
             body: _noteController.text,
             promptId:
-                widget.prompt != null ? widget.prompt!.id.toString() : null,
+                prompt != null ?prompt!.id.toString() : null,
             journalId: widget.journal!.id.toString()));
       }
     } else {
@@ -129,7 +132,8 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
   }
 
   void _listenToJournalBloc(BuildContext context, JournalState state) {
-    if (state is CreateJournalLoadingState || state is UpdateJournalLoadingState) {
+    if (state is CreateJournalLoadingState ||
+        state is UpdateJournalLoadingState) {
       CustomDialogs.showLoading(context);
     }
     if (state is CreateJournalFailureState) {

@@ -35,9 +35,13 @@ class UrlConfig {
   static const String getNotificationDetailsEndpoint =
       "/getNotificationDetailsEndpoint";
 
-  static String readNotificationEndpoint = "getNotificationDetailsEndpoint";
+  static String readNotificationEndpoint(String id) => "/notifications/$id/show";
 
-  static String getNotificationsEndpoint = '';
+  static String getNotificationsEndpoint = '/notifications/list';
+
+  static String deleteAccountEndpoint =  '';
+
+  static String eraseDataEndpoint = '';
 
   static String getCourseDetails(String id) =>
       "/wellness-library/courses/show/$id";

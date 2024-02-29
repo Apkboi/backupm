@@ -41,6 +41,9 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<GetMatchedTherapistEvent>(_mapGetMatchedTherapistEventToState);
   }
 
+  List<TherapySession>? upComingSessions;
+  List<TherapySession>? sessionsHistory;
+
   final scrollController = ItemScrollController();
 
   void _scrollToLast() async {
@@ -61,6 +64,8 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     emit(GetUpcomingSessionsLoadingState());
     try {
       final sessions = await _therapyRepository.getUpcomingSessions();
+      upComingSessions = sessions.data.data;
+
       emit(GetUpcomingSessionsSuccessState(response: sessions));
     } catch (e, stack) {
       logger.e(stack);
@@ -74,6 +79,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     emit(GetSessionsHistoryLoadingState());
     try {
       final response = await _therapyRepository.getSessionsHistory();
+      sessionsHistory = response.data.data;
       emit(GetSessionsHistorySuccessState(response: response));
     } catch (e, stack) {
       logger.e(stack);

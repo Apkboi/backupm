@@ -25,6 +25,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UpdatePasscodeEvent>(_mapUpdatePasscodeEventToState);
     on<GetAvatarsEvent>(_mapGetAvatarsEventToState);
     on<UploadImageEvent>(_mapUploadImageEventToState);
+    on<DeleteAccountEvent>(_mapDeleteAccountEventToState);
+    on<EraseDataEvent>(_mapEraseDataEventToState);
   }
 
   Future<void> _mapUpdateProfileEventToState(
@@ -93,6 +95,34 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       emit(UploadImagesSuccessState(response: response));
     } catch (e) {
       emit(UploadImageFailureState(error: e.toString()));
+    }
+  }
+
+  Future<void> _mapDeleteAccountEventToState(
+    DeleteAccountEvent event,
+    Emitter<SettingsState> emit,
+  ) async {
+    emit(DeleteAccountLoadingState());
+    try {
+      // Call repository method to delete account
+      final response = await _settingsRepository.deleteAccount(event.reason);
+      emit(DeleteAccountSuccessState(response));
+    } catch (e) {
+      emit(DeleteAccountFailureState(e.toString()));
+    }
+  }
+
+  Future<void> _mapEraseDataEventToState(
+    EraseDataEvent event,
+    Emitter<SettingsState> emit,
+  ) async {
+    emit(EraseDataLoadingState());
+    try {
+      // Call repository method to erase data
+      final response = await _settingsRepository.eraseData();
+      emit(EraseDataSuccessState(response));
+    } catch (e) {
+      emit(EraseDataFailureState(e.toString()));
     }
   }
 }

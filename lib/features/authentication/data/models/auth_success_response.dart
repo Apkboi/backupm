@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
+
 AuthSuccessResponse authSuccessResponseFromJson(String str) =>
     AuthSuccessResponse.fromJson(json.decode(str));
 
@@ -84,7 +86,7 @@ class AuthSuccessData {
 
 class ActiveSubscription {
   final int id;
-  final Plan plan;
+  final SubscriptionPlan plan;
   final dynamic stripeSubscriptionId;
   final dynamic stripeClientSecret;
   final String status;
@@ -103,7 +105,7 @@ class ActiveSubscription {
 
   ActiveSubscription copyWith({
     int? id,
-    Plan? plan,
+    SubscriptionPlan? plan,
     String? stripeSubscriptionId,
     dynamic stripeClientSecret,
     String? status,
@@ -123,7 +125,7 @@ class ActiveSubscription {
   factory ActiveSubscription.fromJson(Map<String, dynamic> json) =>
       ActiveSubscription(
         id: json["id"],
-        plan: Plan.fromJson(json["plan"]),
+        plan: SubscriptionPlan.fromJson(json["plan"]),
         stripeSubscriptionId: json["stripe_subscription_id"],
         stripeClientSecret: json["stripe_client_secret"],
         status: json["status"],
@@ -142,208 +144,7 @@ class ActiveSubscription {
       };
 }
 
-class Plan {
-  final int id;
-  final String name;
-  final String description;
-  final String frequency;
-  final int price;
-  final int discount;
-  final String status;
-  final bool isActiveSubscription;
-  final List<Duration> durations;
-  final List<Benefit> benefits;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
-  Plan({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.frequency,
-    required this.price,
-    required this.discount,
-    required this.status,
-    required this.isActiveSubscription,
-    required this.durations,
-    required this.benefits,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  Plan copyWith({
-    int? id,
-    String? name,
-    String? description,
-    String? frequency,
-    int? price,
-    int? discount,
-    String? status,
-    bool? isActiveSubscription,
-    List<Duration>? durations,
-    List<Benefit>? benefits,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      Plan(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description,
-        frequency: frequency ?? this.frequency,
-        price: price ?? this.price,
-        discount: discount ?? this.discount,
-        status: status ?? this.status,
-        isActiveSubscription: isActiveSubscription ?? this.isActiveSubscription,
-        durations: durations ?? this.durations,
-        benefits: benefits ?? this.benefits,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory Plan.fromJson(Map<String, dynamic> json) => Plan(
-        id: json["id"],
-        name: json["name"],
-        description: json["description"],
-        frequency: json["frequency"],
-        price: json["price"],
-        discount: json["discount"],
-        status: json["status"],
-        isActiveSubscription: json["is_active_subscription"],
-        durations: List<Duration>.from(
-            json["durations"].map((x) => Duration.fromJson(x))),
-        benefits: List<Benefit>.from(
-            json["benefits"].map((x) => Benefit.fromJson(x))),
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "description": description,
-        "frequency": frequency,
-        "price": price,
-        "discount": discount,
-        "status": status,
-        "is_active_subscription": isActiveSubscription,
-        "durations": List<dynamic>.from(durations.map((x) => x.toJson())),
-        "benefits": List<dynamic>.from(benefits.map((x) => x.toJson())),
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}
-
-class Benefit {
-  final int id;
-  final String title;
-  final String key;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  Benefit({
-    required this.id,
-    required this.title,
-    required this.key,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  Benefit copyWith({
-    int? id,
-    String? title,
-    String? key,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      Benefit(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        key: key ?? this.key,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory Benefit.fromJson(Map<String, dynamic> json) => Benefit(
-        id: json["id"],
-        title: json["title"],
-        key: json["key"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "key": key,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}
-
-class Duration {
-  final dynamic id;
-  final dynamic frequency;
-  final dynamic duration;
-  final dynamic price;
-  final dynamic discount;
-  final dynamic stripePriceId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  Duration({
-    required this.id,
-    required this.frequency,
-    required this.duration,
-    required this.price,
-    required this.discount,
-    required this.stripePriceId,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  Duration copyWith({
-    int? id,
-    String? frequency,
-    String? duration,
-    int? price,
-    int? discount,
-    String? stripePriceId,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      Duration(
-        id: id ?? this.id,
-        frequency: frequency ?? this.frequency,
-        duration: duration ?? this.duration,
-        price: price ?? this.price,
-        discount: discount ?? this.discount,
-        stripePriceId: stripePriceId ?? this.stripePriceId,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory Duration.fromJson(Map<String, dynamic> json) => Duration(
-        id: json["id"],
-        frequency: json["frequency"],
-        duration: json["duration"],
-        price: json["price"],
-        discount: json["discount"],
-        stripePriceId: json["stripe_price_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "frequency": frequency,
-        "duration": duration,
-        "price": price,
-        "discount": discount,
-        "stripe_price_id": stripePriceId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}
 
 MentraUser mentraUserFromJson(String str) =>
     MentraUser.fromJson(json.decode(str));

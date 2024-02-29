@@ -89,4 +89,20 @@ class SettingsRepositoryImpl extends SettingsRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<dynamic> deleteAccount(String reason) async {
+    final response = await networkService.call(
+        UrlConfig.deleteAccountEndpoint, RequestMethod.post,
+        data: {"reason": reason});
+
+    return response.data;
+  }
+
+  @override
+  Future<dynamic> eraseData() async {
+    final response = await networkService.call(
+        UrlConfig.eraseDataEndpoint, RequestMethod.post);
+    return response.data;
+  }
 }

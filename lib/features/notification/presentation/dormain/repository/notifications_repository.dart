@@ -1,5 +1,10 @@
-abstract class NotificationsRepository{
-  Future<dynamic> getNotifications();
-  Future<dynamic> readNotification(String id);
+import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
+import 'package:mentra/features/notification/data/models/read_notification_response.dart';
+
+abstract class NotificationsRepository {
+  Future<GetNotificationsResponse> getNotifications();
+
+  Future<ReadNotificationResponse> readNotification(String id);
+
   Future<dynamic> getNotificationDetails(String id);
 }

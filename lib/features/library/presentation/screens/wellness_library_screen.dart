@@ -116,7 +116,6 @@ class _FavoriteContentsState extends State<FavoriteContents>
   @override
   void initState() {
     injector.get<WellnessLibraryBloc>().add(const GetFavouriteCoursesEvent());
-
     super.initState();
   }
 
@@ -211,18 +210,21 @@ class DiscoverContents extends StatefulWidget {
 
 class _DiscoverContentsState extends State<DiscoverContents>
     with AutomaticKeepAliveClientMixin {
-  final bloc = WellnessLibraryBloc(injector.get());
+  // final bloc = WellnessLibraryBloc(injector.get());
 
   @override
   void initState() {
-    bloc.add(GetLibraryCategoriesEvent());
+    if (injector.get<WellnessLibraryBloc>().libraryCategories == null) {
+      injector.get<WellnessLibraryBloc>().add(GetLibraryCategoriesEvent());
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<WellnessLibraryBloc, WellnessLibraryState>(
-      bloc: bloc,
+      bloc: injector.get(),
+      buildWhen: _buildWhen,
       listener: (context, state) {},
       builder: (context, state) {
         if (state is GetLibraryCategoriesLoadingState) {
@@ -236,24 +238,35 @@ class _DiscoverContentsState extends State<DiscoverContents>
             retryTextColor: Pallets.navy,
             textColor: Pallets.navy,
             onTap: () {
-              bloc.add(GetLibraryCategoriesEvent());
+              injector
+                  .get<WellnessLibraryBloc>()
+                  .add(GetLibraryCategoriesEvent());
             },
           );
         }
 
-        if (bloc.libraryCategories.isNotEmpty) {
+        if (injector.get<WellnessLibraryBloc>().libraryCategories?.isNotEmpty ??
+            false) {
           return RefreshIndicator(
             onRefresh: () async {
-              bloc.add(GetLibraryCategoriesEvent());
+              injector
+                  .get<WellnessLibraryBloc>()
+                  .add(GetLibraryCategoriesEvent());
             },
             child: ListView.builder(
               padding: EdgeInsets.zero,
-              itemCount: bloc.libraryCategories.length,
+              itemCount: injector
+                      .get<WellnessLibraryBloc>()
+                      .libraryCategories
+                      ?.length ??
+                  0,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: LibraryItem(
-                    category: bloc.libraryCategories[index],
+                    category: injector
+                        .get<WellnessLibraryBloc>()
+                        .libraryCategories![index],
                   ),
                 );
               },
@@ -262,7 +275,9 @@ class _DiscoverContentsState extends State<DiscoverContents>
         } else {
           return RefreshIndicator(
             onRefresh: () async {
-              bloc.add(GetLibraryCategoriesEvent());
+              injector
+                  .get<WellnessLibraryBloc>()
+                  .add(GetLibraryCategoriesEvent());
             },
             child: Center(
               child: ListView(
@@ -284,4 +299,10 @@ class _DiscoverContentsState extends State<DiscoverContents>
 
   @override
   bool get wantKeepAlive => true;
+
+  bool _buildWhen(WellnessLibraryState previous, WellnessLibraryState current) {
+    return current is GetLibraryCategoriesFailureState ||
+        current is GetLibraryCategoriesLoadingState ||
+        current is GetLibraryCategoriesSuccessState;
+  }
 }

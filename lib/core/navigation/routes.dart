@@ -57,6 +57,8 @@ import 'package:mentra/features/therapy/presentation/screens/therapist_chat_scre
 import 'package:mentra/features/therapy/presentation/screens/therapist_profile_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
 
+import '../../features/subscription/presentation/screens/manage_subscription_screen.dart';
+
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
 // final _shellNavigatorAKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
 // final _shellNavigatorBKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
@@ -245,6 +247,11 @@ class CustomRoutes {
         path: '/settingsScreen',
         name: PageUrl.settingsScreen,
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/manageSubscriptionScreen',
+        name: PageUrl.manageSubscriptionScreen,
+        builder: (context, state) => const ManageSubscriptionScreen(),
       ),
       GoRoute(
         path: '/editProfileScreen',

@@ -16,7 +16,6 @@ import 'package:mentra/features/library/data/models/library_courses_response.dar
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/library/presentation/widgets/favorite_acction_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
-
 import 'package:flutter_html/flutter_html.dart';
 
 class ArticleDetailsScreen extends StatefulWidget {

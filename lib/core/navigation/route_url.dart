@@ -51,6 +51,7 @@ class PageUrl {
   static const guidedJournalScreen = 'guidedJournalScreen';
   static const createJournalScreen = 'createJournalScreen';
   static const notificationsScreen = 'notificationsScreen';
+  static const manageSubscriptionScreen = 'manageSubscriptionScreen';
 
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';

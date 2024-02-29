@@ -123,3 +123,49 @@ class UploadImageFailureState extends SettingsState {
   @override
   List<Object?> get props => [error];
 }
+
+class DeleteAccountLoadingState extends SettingsState {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class DeleteAccountSuccessState extends SettingsState {
+  final dynamic response;
+
+  const DeleteAccountSuccessState(this.response);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class DeleteAccountFailureState extends SettingsState {
+  final String error;
+
+  DeleteAccountFailureState(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class EraseDataLoadingState extends SettingsState {
+  @override
+  List<Object?> get props => [];
+}
+
+class EraseDataSuccessState extends SettingsState {
+  final dynamic response;
+
+  const EraseDataSuccessState(this.response);
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class EraseDataFailureState extends SettingsState {
+  final String error;
+
+  const EraseDataFailureState(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

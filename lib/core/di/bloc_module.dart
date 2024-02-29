@@ -10,6 +10,7 @@ import 'package:mentra/features/settings/presentation/blocs/settings/settings_bl
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
+import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 
 void setup(GetIt getIt) {
   getIt.registerLazySingleton<RegistrationBloc>(
@@ -26,6 +27,7 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<SettingsBloc>(() => SettingsBloc(injector.get()));
   getIt.registerLazySingleton<WellnessLibraryBloc>(
       () => WellnessLibraryBloc(injector.get()));
-  getIt.registerLazySingleton<JournalBloc>(
-      () => JournalBloc(injector.get()));
+  getIt.registerLazySingleton<JournalBloc>(() => JournalBloc(injector.get()));
+  getIt.registerLazySingleton<NotificationsBloc>(
+      () => NotificationsBloc(injector.get()));
 }

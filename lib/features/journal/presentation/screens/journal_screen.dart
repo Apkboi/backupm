@@ -32,7 +32,7 @@ class _JournalScreenState extends State<JournalScreen> {
 
   @override
   void initState() {
-    injector.get<JournalBloc>().add(GetJournalsEvent());
+    _getJournals();
     super.initState();
   }
 
@@ -115,50 +115,48 @@ class _JournalScreenState extends State<JournalScreen> {
                         );
                       }
 
-                      if (state is GetJournalsSuccessState) {
-                        if (state.response.data.isNotEmpty) {
-                          return RefreshIndicator(
-                            onRefresh: () async {
-                              injector
-                                  .get<JournalBloc>()
-                                  .add(GetJournalsEvent());
-                            },
-                            child: ListView.builder(
-                              itemCount: state.response.data.length,
+                      // if (state is GetJournalsSuccessState) {
+                      if (injector.get<JournalBloc>().journals?.isNotEmpty ??
+                          false) {
+                        var journals = injector.get<JournalBloc>().journals;
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            injector.get<JournalBloc>().add(GetJournalsEvent());
+                          },
+                          child: ListView.builder(
+                            itemCount: journals?.length ?? 0,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: JournalItem(
+                                journal: journals![index],
+                                // prompt: state.response.data[index],
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            injector.get<JournalBloc>().add(GetJournalsEvent());
+                          },
+                          child: Center(
+                            child: ListView(
+                              shrinkWrap: true,
                               padding: EdgeInsets.zero,
-                              itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: JournalItem(
-                                  journal: state.response.data[index],
-                                  // prompt: state.response.data[index],
+                              children: [
+                                AppEmptyState(
+                                  hasBg: false,
+                                  tittleColor: Pallets.black,
+                                  image: Assets.images.pngs.journalNote.path,
                                 ),
-                              ),
+                                // Spacer(),
+                              ],
                             ),
-                          );
-                        } else {
-                          return RefreshIndicator(
-                            onRefresh: () async {
-                              injector
-                                  .get<JournalBloc>()
-                                  .add(GetPromptsEvent());
-                            },
-                            child: Center(
-                              child: ListView(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                children: [
-                                  AppEmptyState(
-                                    hasBg: false,
-                                    tittleColor: Pallets.black,
-                                    image: Assets.images.pngs.journalNote.path,
-                                  ),
-                                  // Spacer(),
-                                ],
-                              ),
-                            ),
-                          );
-                        }
+                          ),
+                        );
                       }
+                      // }
 
                       return Container();
                     },
@@ -201,4 +199,9 @@ class _JournalScreenState extends State<JournalScreen> {
         current is GetJournalsSuccessState;
   }
 
+  void _getJournals() {
+    if (injector.get<JournalBloc>().journals == null) {
+      injector.get<JournalBloc>().add(GetJournalsEvent());
+    }
+  }
 }

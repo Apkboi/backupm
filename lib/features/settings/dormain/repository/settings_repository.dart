@@ -21,4 +21,6 @@ abstract class SettingsRepository {
     required int? avatarId,
     required String bgColor,
   });
+  Future<dynamic> deleteAccount(String reason);
+  Future<dynamic> eraseData();
 }

@@ -9,19 +9,21 @@ class GetNotificationsLoadingState extends NotificationsState {
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
-}class NotificationsInitial extends NotificationsState {
+}
+
+class NotificationsInitial extends NotificationsState {
   @override
   // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }
 
 class GetNotificationsSuccessState extends NotificationsState {
-  final List<dynamic> notifications;
+  final GetNotificationsResponse response;
 
-  GetNotificationsSuccessState({required this.notifications});
+  GetNotificationsSuccessState({required this.response});
 
   @override
-  List<Object?> get props => [notifications];
+  List<Object?> get props => [response];
 }
 
 class GetNotificationsFailureState extends NotificationsState {
@@ -34,9 +36,9 @@ class GetNotificationsFailureState extends NotificationsState {
 }
 
 class ReadNotificationSuccessState extends NotificationsState {
-  final dynamic response;
+  final ReadNotificationResponse response;
 
-  ReadNotificationSuccessState({required this.response});
+  const ReadNotificationSuccessState({required this.response});
 
   @override
   List<Object?> get props => [response];

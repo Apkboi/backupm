@@ -1,5 +1,7 @@
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
+import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
+import 'package:mentra/features/notification/data/models/read_notification_response.dart';
 import 'package:mentra/features/notification/presentation/dormain/repository/notifications_repository.dart';
 
 class NotificationRepositoryImpl extends NotificationsRepository {
@@ -8,20 +10,20 @@ class NotificationRepositoryImpl extends NotificationsRepository {
   NotificationRepositoryImpl(this._networkService);
 
   @override
-  Future<dynamic> getNotifications() async {
+  Future<GetNotificationsResponse> getNotifications() async {
     final response = await _networkService.call(
         UrlConfig.getNotificationsEndpoint, RequestMethod.get);
 
-    return response.data;
+    return GetNotificationsResponse.fromJson(response.data);
   }
 
   @override
-  Future<dynamic> readNotification(String id) async {
+  Future<ReadNotificationResponse> readNotification(String id) async {
     final response = await _networkService.call(
-        UrlConfig.readNotificationEndpoint, RequestMethod.post,
+        UrlConfig.readNotificationEndpoint(id), RequestMethod.get,
         data: {"id": id});
 
-    return response.data;
+    return ReadNotificationResponse.fromJson(response.data);
   }
 
   @override

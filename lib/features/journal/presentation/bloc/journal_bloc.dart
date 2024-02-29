@@ -21,6 +21,9 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
   }
 
+  List<GuidedJournal>? journals;
+  // final
+
   Future<void> _mapUpdateJournalEventToState(
     UpdateJournalEvent event,
     Emitter<JournalState> emit,
@@ -72,6 +75,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     emit(GetJournalsLoadingState());
     try {
       final response = await _journalRepository.getJournals();
+      journals = response.data;
       emit(GetJournalsSuccessState(response: response));
     } catch (e) {
       emit(GetJournalsFailureState(error: e.toString()));

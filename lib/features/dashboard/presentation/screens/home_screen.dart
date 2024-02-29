@@ -15,7 +15,6 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
-import 'package:mentra/features/subscription/presentation/widget/card_details_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
@@ -107,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen>
                         builder: (context, state) {
                           if (state is GetConversationStarterFailureState) {
                             return SizedBox(
-                              height: 200,
+                              height: 300,
                               child: AppPromptWidget(
                                 retryTextColor: Pallets.white,
                                 textColor: Pallets.white,
@@ -176,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen>
       ),
     );
   }
+
   //
   // void _showCardDialog(BuildContext context) {
   //   CustomDialogs.showBottomSheet(

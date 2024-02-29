@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
+import 'package:mentra/features/notification/data/models/read_notification_response.dart';
 import 'package:mentra/features/notification/presentation/dormain/repository/notifications_repository.dart';
 
 part 'notification_event.dart';
@@ -26,7 +28,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     emit(GetNotificationsLoadingState());
     try {
       final notifications = await _notificationsRepository.getNotifications();
-      emit(GetNotificationsSuccessState(notifications: notifications));
+      emit(GetNotificationsSuccessState(response: notifications));
     } catch (e) {
       emit(GetNotificationsFailureState(error: e.toString()));
     }
@@ -36,7 +38,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     ReadNotificationEvent event,
     Emitter<NotificationsState> emit,
   ) async {
-    emit(GetNotificationsLoadingState());
+    // emit(ReadNotificationLoading());
     try {
       final response =
           await _notificationsRepository.readNotification(event.id);

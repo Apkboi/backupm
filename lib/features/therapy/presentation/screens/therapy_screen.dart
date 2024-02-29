@@ -212,7 +212,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
 
   @override
   void initState() {
-    injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+    _getUpcomingTherapy();
     super.initState();
   }
 
@@ -242,44 +242,45 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
           );
         }
 
-        if (state is GetUpcomingSessionsSuccessState) {
-          if (state.response.data.data.isNotEmpty) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
-              },
-              child: ListView.builder(
+        // if (state is GetUpcomingSessionsSuccessState) {
+        if (injector.get<TherapyBloc>().upComingSessions?.isNotEmpty ?? false) {
+          var sessions = injector.get<TherapyBloc>().upComingSessions;
+          return RefreshIndicator(
+            onRefresh: () async {
+              injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+            },
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: sessions?.length ?? 0,
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, index) => TherapyItem(
+                session: sessions![index],
+              ),
+            ),
+          );
+        } else {
+          return RefreshIndicator(
+            onRefresh: () async {
+              injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+            },
+            child: Center(
+              child: ListView(
                 shrinkWrap: true,
-                itemCount: state.response.data.data.length,
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, index) => TherapyItem(
-                  session: state.response.data.data[index],
-                ),
+                children: [
+                  16.verticalSpace,
+                  const AppEmptyState(
+                    hasBg: false,
+                    tittle: 'No upcoming session.',
+                    subtittle:
+                        "You have no upcoming sessions. Start by booking a session with a therapist",
+                  ),
+                ],
               ),
-            );
-          } else {
-            return RefreshIndicator(
-              onRefresh: () async {
-                injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
-              },
-              child: Center(
-                child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    16.verticalSpace,
-                    const AppEmptyState(
-                      hasBg: false,
-                      tittle: 'No upcoming session.',
-                      subtittle:
-                          "You have no upcoming sessions. Start by booking a session with a therapist",
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
+            ),
+          );
         }
+        // }
 
         return Container();
       },
@@ -295,6 +296,12 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
 
   @override
   bool get wantKeepAlive => true;
+
+  void _getUpcomingTherapy() {
+    if (injector.get<TherapyBloc>().upComingSessions == null) {
+      injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+    }
+  }
 }
 
 class TherapyHistory extends StatefulWidget {
@@ -310,7 +317,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
 
   @override
   void initState() {
-    injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
+    _getSessionHistory();
     super.initState();
   }
 
@@ -341,45 +348,47 @@ class _TherapyHistoryState extends State<TherapyHistory>
           );
         }
 
-        if (state is GetSessionsHistorySuccessState) {
-          if (state.response.data.data.isNotEmpty) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
-              },
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: state.response.data.data.length,
-                padding: EdgeInsets.zero,
+        // if (state is GetSessionsHistorySuccessState) {
+        if (injector.get<TherapyBloc>().sessionsHistory?.isNotEmpty ?? false) {
+          var sessions = injector.get<TherapyBloc>().upComingSessions;
 
-                // padding: const EdgeInsets.only(top: 10),
-                itemBuilder: (context, index) => TherapyItem(
-                  session: state.response.data.data[index],
-                ),
+          return RefreshIndicator(
+            onRefresh: () async {
+              injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
+            },
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: sessions?.length ?? 0,
+              padding: EdgeInsets.zero,
+
+              // padding: const EdgeInsets.only(top: 10),
+              itemBuilder: (context, index) => TherapyItem(
+                session: sessions![index],
               ),
-            );
-          } else {
-            return RefreshIndicator(
-              onRefresh: () async {
-                injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
-              },
-              child: Center(
-                child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    16.verticalSpace,
-                    const AppEmptyState(
-                      hasBg: false,
-                      tittle: 'No session history.',
-                      subtittle:
-                          "You have no previous session history. Start by booking a session with a therapist",
-                    ),
-                  ],
-                ),
+            ),
+          );
+        } else {
+          return RefreshIndicator(
+            onRefresh: () async {
+              injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
+            },
+            child: Center(
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                children: [
+                  16.verticalSpace,
+                  const AppEmptyState(
+                    hasBg: false,
+                    tittle: 'No session history.',
+                    subtittle:
+                        "You have no previous session history. Start by booking a session with a therapist",
+                  ),
+                ],
               ),
-            );
-          }
+            ),
+          );
+          // }
         }
 
         return Container();
@@ -396,4 +405,10 @@ class _TherapyHistoryState extends State<TherapyHistory>
       current is GetSessionsHistoryLoadingState ||
       current is GetSessionsHistorySuccessState ||
       current is GetSessionsHistoryFailureState;
+
+  void _getSessionHistory() {
+    if (injector.get<TherapyBloc>().sessionsHistory == null) {
+      injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
+    }
+  }
 }

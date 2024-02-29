@@ -51,3 +51,17 @@ class UploadImageEvent extends SettingsEvent {
   @override
   List<Object?> get props => [imageId, bgColor];
 }
+
+class DeleteAccountEvent extends SettingsEvent {
+  final String reason;
+
+  const DeleteAccountEvent(this.reason);
+
+  @override
+  List<Object?> get props => [reason];
+}
+
+class EraseDataEvent extends SettingsEvent {
+  @override
+  List<Object?> get props => [];
+}

@@ -68,13 +68,13 @@ class ConfirmSheet extends StatelessWidget {
             CustomNeumorphicButton(
               onTap: onCancel,
               color: cancelButtonColor ?? Pallets.primary,
-              text: "No, keep it.",
+              text: cancelText ?? "No, keep it.",
             ),
             17.verticalSpace,
             CustomNeumorphicButton(
               onTap: onConfirm,
               color: confirmButtonColor ?? Pallets.red,
-              text: "Yes, I want to delete it.",
+              text: confirmText ?? "Yes, I want to delete it.",
             ),
             17.verticalSpace,
           ],

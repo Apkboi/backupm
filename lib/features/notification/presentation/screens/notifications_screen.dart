@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/confirm_sheet.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
-import 'package:mentra/common/widgets/filled_textfield.dart';
-import 'package:mentra/common/widgets/neumorphic_button.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/success_dialog.dart';
-import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:mentra/features/notification/presentation/widget/notification_item.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -22,6 +24,12 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
   final TextEditingController _noteController = TextEditingController();
+
+  @override
+  void initState() {
+    injector.get<NotificationsBloc>().add(GetNotificationsEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +49,76 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: Column(
               children: [
                 Expanded(
-                    child: ListView.builder(
-                  itemBuilder: (context, index) => const NotificationItem(),
+                    child: BlocConsumer<NotificationsBloc, NotificationsState>(
+                  buildWhen: _buildWhen,
+                  listener: _listenToJournalBloc,
+                  bloc: injector.get<NotificationsBloc>(),
+                  builder: (context, state) {
+                    if (state is GetNotificationsLoadingState) {
+                      return Center(
+                        child: CustomDialogs.getLoading(size: 30),
+                      );
+                    }
+
+                    if (state is GetNotificationsFailureState) {
+                      return Center(
+                        child: AppPromptWidget(
+                          onTap: () {
+                            injector
+                                .get<NotificationsBloc>()
+                                .add(GetNotificationsEvent());
+                          },
+                        ),
+                      );
+                    }
+
+                    if (state is GetNotificationsSuccessState) {
+                      if (state.response.data.isNotEmpty) {
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            injector
+                                .get<NotificationsBloc>()
+                                .add(GetNotificationsEvent());
+                          },
+                          child: ListView.builder(
+                            itemCount: state.response.data.length,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: NotificationItem(
+                                notification: state.response.data[index],
+                                // prompt: state.response.data[index],
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return RefreshIndicator(
+                          onRefresh: () async {
+                            injector
+                                .get<NotificationsBloc>()
+                                .add(GetNotificationsEvent());
+                          },
+                          child: Center(
+                            child: ListView(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              children: [
+                                AppEmptyState(
+                                  hasBg: false,
+                                  tittleColor: Pallets.black,
+                                  image: Assets.images.pngs.journalNote.path,
+                                ),
+                                // Spacer(),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    }
+
+                    return Container();
+                  },
                 ))
               ],
             ),
@@ -73,5 +149,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           },
           onCancel: () {},
         ));
+  }
+
+  // bool _buildWhen(NotificationsState previous, NotificationsState current) {}
+
+  void _listenToJournalBloc(BuildContext context, NotificationsState state) {}
+
+  bool _buildWhen(NotificationsState previous, NotificationsState current) {
+    return current is GetNotificationsLoadingState ||
+        current is GetNotificationsFailureState ||
+        current is GetNotificationsSuccessState;
   }
 }
