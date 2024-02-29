@@ -7,11 +7,18 @@ import 'package:mentra/gen/assets.gen.dart';
 
 class AppEmptyState extends StatelessWidget {
   const AppEmptyState(
-      {super.key, this.tittle, this.subtittle, this.hasBg = true});
+      {super.key,
+      this.tittle,
+      this.subtittle,
+      this.hasBg = true,
+      this.tittleColor,
+      this.image});
 
   final String? tittle;
   final String? subtittle;
   final bool? hasBg;
+  final Color? tittleColor;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class AppEmptyState extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ImageWidget(
-            imageUrl: Assets.images.pngs.emptyBascket.path,
+            imageUrl: image ?? Assets.images.pngs.emptyBascket.path,
             size: 120,
           ),
           15.verticalSpace,
@@ -34,7 +41,7 @@ class AppEmptyState extends StatelessWidget {
             text: tittle ?? "Your Favorites Space Awaits",
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Pallets.primary,
+            color: tittleColor ?? Pallets.primary,
           ),
           5.verticalSpace,
           TextView(

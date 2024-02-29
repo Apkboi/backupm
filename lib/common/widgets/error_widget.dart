@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/neumorphic_button.dart';
+import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class AppPromptWidget extends StatelessWidget {
   final String? message;
@@ -13,7 +17,8 @@ class AppPromptWidget extends StatelessWidget {
 
   const AppPromptWidget({
     Key? key,
-    this.message = 'Ooops an error occured',
+    this.message =
+        'Ooops something went wrong ensure you have a good network and retry.',
     this.title,
     this.onTap,
     this.imagePath,
@@ -32,9 +37,9 @@ class AppPromptWidget extends StatelessWidget {
           child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if(imagePath!= null)
+          // if (imagePath != null)
           Image.asset(
-            imagePath ?? "assets/pngs/sorry.png",
+            imagePath ?? Assets.images.pngs.sorry.path,
             height: 150,
           ),
           if (title != null)
@@ -60,9 +65,10 @@ class AppPromptWidget extends StatelessWidget {
           if (message != null)
             Column(
               children: [
-                Text(
-                  message!,
-                  textAlign: TextAlign.center,
+                TextView(
+                  text: message!,
+                  align: TextAlign.center,
+                  fontSize: 14,
                   style: TextStyle(color: textColor ?? Colors.blueGrey),
                 ),
                 // const SizedBox(
@@ -76,20 +82,10 @@ class AppPromptWidget extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                OutlinedButton(
-                  onPressed: onTap,
-                  style: OutlinedButton.styleFrom(
-                      foregroundColor: retryTextColor ??
-                          Theme.of(context).colorScheme.secondary,
-                      side: BorderSide(
-                        color: retryTextColor ??
-                            Theme.of(context).colorScheme.primary,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.blue, width: 2),
-                          borderRadius: BorderRadius.circular(16))),
-                  child: Text(retryText!),
-                )
+                CustomNeumorphicButton(
+                    text: retryText,
+                    onTap: onTap ?? () {},
+                    color: Pallets.primary),
               ],
             )
         ],

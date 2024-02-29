@@ -15,6 +15,8 @@ class PathParam {
   static const userPreferenceFlow = 'userPreferenceFlow';
   static const updatedPreference = 'updatedPreference';
   static const therapist = 'therapist';
+  static const prompt = 'prompt';
+  static const journal = 'journal';
 
 // static const chatId = 'chatId';
 }

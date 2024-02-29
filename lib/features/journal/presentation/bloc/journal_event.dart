@@ -5,12 +5,13 @@ abstract class JournalEvent extends Equatable {
 }
 
 class CreateJournalEvent extends JournalEvent {
-  final dynamic payload;
+  final String? promptId;
+  final String body;
 
-  CreateJournalEvent({required this.payload});
+  CreateJournalEvent({this.promptId, required this.body});
 
   @override
-  List<Object?> get props => [payload];
+  List<Object?> get props => [promptId, body];
 }
 
 class GetPromptsEvent extends JournalEvent {
@@ -22,11 +23,12 @@ class GetJournalsEvent extends JournalEvent {
   @override
   List<Object?> get props => [];
 }
+
 // Event class
 class DeleteJournalsEvent extends JournalEvent {
   final String id;
 
-  DeleteJournalsEvent({required this.id});
+  const DeleteJournalsEvent({required this.id});
 
   @override
   List<Object?> get props => [id];

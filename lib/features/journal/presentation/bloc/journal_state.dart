@@ -39,9 +39,9 @@ class GetPromptsLoadingState extends JournalState {
 }
 
 class GetPromptsSuccessState extends JournalState {
-  final dynamic response;
+  final GetPromptsResponse response;
 
-  GetPromptsSuccessState({required this.response});
+  const GetPromptsSuccessState({required this.response});
 
   @override
   List<Object?> get props => [response];
@@ -50,7 +50,7 @@ class GetPromptsSuccessState extends JournalState {
 class GetPromptsFailureState extends JournalState {
   final String error;
 
-  GetPromptsFailureState({required this.error});
+  const GetPromptsFailureState({required this.error});
 
   @override
   List<Object?> get props => [error];
@@ -62,7 +62,7 @@ class GetJournalsLoadingState extends JournalState {
 }
 
 class GetJournalsSuccessState extends JournalState {
-  final dynamic response;
+  final GetJournalsResponse response;
 
   GetJournalsSuccessState({required this.response});
 

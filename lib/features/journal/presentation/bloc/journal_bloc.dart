@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mentra/features/journal/data/repository/journals_repository.dart';
+import 'package:mentra/features/journal/data/models/get_journals_response.dart';
+import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
+import 'package:mentra/features/journal/dormain/repository/journals_repository.dart';
 
 part 'journal_event.dart';
-
 part 'journal_state.dart';
 
 class JournalBloc extends Bloc<JournalEvent, JournalState> {
@@ -24,7 +25,8 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   ) async {
     emit(CreateJournalLoadingState());
     try {
-      final response = await _journalRepository.createJournal(event.payload);
+      final response = await _journalRepository.createJournal(
+          promptId: event.promptId, body: event.body);
       emit(CreateJournalSuccessState(response: response));
     } catch (e) {
       emit(CreateJournalFailureState(error: e.toString()));
@@ -63,7 +65,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   ) async {
     emit(DeleteJournalsLoadingState());
     try {
-      final response = await _journalRepository.deleteJournals(event.id);
+      final response = await _journalRepository.deleteJournal(id: event.id);
       emit(DeleteJournalsSuccessState(response: response));
     } catch (e) {
       emit(DeleteJournalsFailureState(error: e.toString()));

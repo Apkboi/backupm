@@ -76,6 +76,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get insight =>
       const AssetGenImage('assets/images/pngs/insight.png');
 
+  /// File path: assets/images/pngs/journal_note.png
+  AssetGenImage get journalNote =>
+      const AssetGenImage('assets/images/pngs/journal_note.png');
+
   /// File path: assets/images/pngs/launcher.png
   AssetGenImage get launcher =>
       const AssetGenImage('assets/images/pngs/launcher.png');
@@ -120,6 +124,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get smallMentra =>
       const AssetGenImage('assets/images/pngs/small_mentra.png');
 
+  /// File path: assets/images/pngs/sorry.png
+  AssetGenImage get sorry =>
+      const AssetGenImage('assets/images/pngs/sorry.png');
+
   /// File path: assets/images/pngs/splash_logo.png
   AssetGenImage get splashLogo =>
       const AssetGenImage('assets/images/pngs/splash_logo.png');
@@ -153,6 +161,7 @@ class $AssetsImagesPngsGen {
         gJournal,
         homeBg,
         insight,
+        journalNote,
         launcher,
         mentra,
         mentraBig,
@@ -164,6 +173,7 @@ class $AssetsImagesPngsGen {
         productivity,
         sleep,
         smallMentra,
+        sorry,
         splashLogo,
         summary,
         videoThumbail,
@@ -215,6 +225,9 @@ class $AssetsImagesSvgsGen {
 
   /// File path: assets/images/svgs/combined_shape.svg
   String get combinedShape => 'assets/images/svgs/combined_shape.svg';
+
+  /// File path: assets/images/svgs/delete.svg
+  String get delete => 'assets/images/svgs/delete.svg';
 
   /// File path: assets/images/svgs/edit_filled.svg
   String get editFilled => 'assets/images/svgs/edit_filled.svg';
@@ -282,6 +295,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/share_filled.svg
   String get shareFilled => 'assets/images/svgs/share_filled.svg';
 
+  /// File path: assets/images/svgs/sorry.svg
+  String get sorry => 'assets/images/svgs/sorry.svg';
+
   /// File path: assets/images/svgs/splash_logo.svg
   String get splashLogo => 'assets/images/svgs/splash_logo.svg';
 
@@ -334,6 +350,7 @@ class $AssetsImagesSvgsGen {
         bulb,
         calender,
         combinedShape,
+        delete,
         editFilled,
         facebook,
         forward,
@@ -356,6 +373,7 @@ class $AssetsImagesSvgsGen {
         settings,
         share,
         shareFilled,
+        sorry,
         splashLogo,
         star,
         sub,

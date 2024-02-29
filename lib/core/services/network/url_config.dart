@@ -32,11 +32,12 @@ class UrlConfig {
   static const String getLibraryCoursesEndpoint =
       "/wellness-library/courses/list";
 
-  static const  String getNotificationDetailsEndpoint = "/getNotificationDetailsEndpoint";
+  static const String getNotificationDetailsEndpoint =
+      "/getNotificationDetailsEndpoint";
 
   static String readNotificationEndpoint = "getNotificationDetailsEndpoint";
 
-  static String getNotificationsEndpoint='';
+  static String getNotificationsEndpoint = '';
 
   static String getCourseDetails(String id) =>
       "/wellness-library/courses/show/$id";
@@ -95,4 +96,11 @@ class UrlConfig {
   //  Subscription
   static const String getPlans = '/finance/plans';
   static const String subscribe = '/finance/subscriptions/initiate';
+
+  //  Subscription
+  static const String getPrompts = '/guided-prompts';
+  static const String getJournals = '/guided-journals';
+  static const String saveJournals = '/guided-journals/save';
+  static String deleteJournal(String id) => '/guided-journals/$id/delete';
+  static String updateJournal(String id) => '/guided-journals/$id/update';
 }

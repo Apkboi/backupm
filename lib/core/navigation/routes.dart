@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
@@ -28,6 +29,7 @@ import 'package:mentra/features/authentication/registration/presentation/screens
 import 'package:mentra/features/dashboard/presentation/screens/emergency_sos_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
+import 'package:mentra/features/journal/data/models/get_journals_response.dart';
 import 'package:mentra/features/journal/presentation/screens/create_journal_screen.dart';
 import 'package:mentra/features/journal/presentation/screens/journal_screen.dart';
 import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
@@ -325,7 +327,19 @@ class CustomRoutes {
       GoRoute(
         path: '/createJournalScreen',
         name: PageUrl.createJournalScreen,
-        builder: (context, state) => const CreateJournalScreen(),
+        builder: (context, state) => CreateJournalScreen(
+          prompt: state.uri.queryParameters[PathParam.prompt] != null
+              ? GuidedPrompt.fromJson(
+                  jsonDecode(state.uri.queryParameters[PathParam.prompt] ?? ''),
+                )
+              : null,
+          journal: state.uri.queryParameters[PathParam.journal] != null
+              ? GuidedJournal.fromJson(
+                  jsonDecode(
+                      state.uri.queryParameters[PathParam.journal] ?? ''),
+                )
+              : null,
+        ),
       ),
       GoRoute(
         path: '/guidedJournalScreen',

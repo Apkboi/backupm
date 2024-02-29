@@ -111,10 +111,61 @@ class TimeUtil {
     return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
   }
 
+ static String formDateTimeForJournal(DateTime dateTime) {
+    // Format the date part
+    String formattedDate = "${_getMonth(dateTime.month)} ${dateTime.day}, ${dateTime.year}";
+
+    // Format the time part
+    String formattedTime = _formatTime(dateTime.hour, dateTime.minute);
+
+    // Combine the date and time parts
+    return "$formattedDate - $formattedTime";
+  }
+
+  static String _getMonth(int month) {
+    switch (month) {
+      case 1:
+        return "January";
+      case 2:
+        return "February";
+      case 3:
+        return "March";
+      case 4:
+        return "April";
+      case 5:
+        return "May";
+      case 6:
+        return "June";
+      case 7:
+        return "July";
+      case 8:
+        return "August";
+      case 9:
+        return "September";
+      case 10:
+        return "October";
+      case 11:
+        return "November";
+      case 12:
+        return "December";
+      default:
+        return "";
+    }
+  }
+
+  static String _formatTime(int hour, int minute) {
+    String period = (hour >= 12) ? "PM" : "AM";
+    int formattedHour = (hour > 12) ? hour - 12 : hour;
+    String formattedMinute = (minute < 10) ? "0$minute" : minute.toString();
+    return "$formattedHour:$formattedMinute $period";
+  }
 
 
 
-  // String formatDateString(String dateString) {
+
+
+
+// String formatDateString(String dateString) {
   //   DateTime dateTime = DateTime.parse(dateString);
   //   DateTime now = DateTime.now();
   //
