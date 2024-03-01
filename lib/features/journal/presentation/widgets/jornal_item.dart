@@ -16,88 +16,110 @@ import 'package:mentra/features/journal/data/models/get_journals_response.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
-class JournalItem extends StatelessWidget {
+class JournalItem extends StatefulWidget {
   const JournalItem({super.key, required this.journal});
 
   final GuidedJournal journal;
 
   @override
+  State<JournalItem> createState() => _JournalItemState();
+}
+
+class _JournalItemState extends State<JournalItem> {
+  bool isExpanded = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-          color: Pallets.white, borderRadius: BorderRadius.circular(10)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                  child: TextView(
-                text: TimeUtil.formDateTimeForJournal(journal.createdAt),
-                fontSize: 13.sp,
-              )),
-              PopupMenuButton(
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 160),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16)),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                      onTap: () {
-                        context.pushNamed(PageUrl.createJournalScreen,
-                            queryParameters: {
-                              PathParam.journal: jsonEncode(journal.toJson())
-                            });
-                      },
-                      child: Row(
-                        children: [
-                          ImageWidget(
-                            imageUrl: Assets.images.svgs.editFilled,
-                            color: Pallets.black,
-                            size: 20,
-                          ),
-                          8.horizontalSpace,
-                          const TextView(
-                            text: 'Edit',
-                            fontWeight: FontWeight.w500,
-                          )
-                        ],
-                      )),
-                  PopupMenuItem(
-                      onTap: () {
-                        _delete(journal.id.toString(), context);
-                      },
-                      child: Row(
-                        children: [
-                          ImageWidget(
-                            imageUrl: Assets.images.svgs.delete,
-                            color: Pallets.black,
-                            size: 20,
-                          ),
-                          8.horizontalSpace,
-                          const TextView(
-                            text: 'Delete',
-                            fontWeight: FontWeight.w500,
-                          )
-                        ],
-                      )),
-                ],
-                child: const Icon(Icons.more_vert),
-              )
-            ],
-          ),
-          16.verticalSpace,
-          _PromptWidget(
-            prompt: journal.guidedPrompt,
-          ),
-          12.verticalSpace,
-          TextView(
-            text: journal.body,
-            fontWeight: FontWeight.w500,
-            lineHeight: 1.5,
-          )
-        ],
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+            color: Pallets.white, borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                    child: TextView(
+                  text:
+                      TimeUtil.formDateTimeForJournal(widget.journal.createdAt),
+                  fontSize: 13.sp,
+                )),
+                PopupMenuButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 160),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                        onTap: () {
+                          context.pushNamed(PageUrl.createJournalScreen,
+                              queryParameters: {
+                                PathParam.journal:
+                                    jsonEncode(widget.journal.toJson())
+                              });
+                        },
+                        child: Row(
+                          children: [
+                            ImageWidget(
+                              imageUrl: Assets.images.svgs.editFilled,
+                              color: Pallets.black,
+                              size: 20,
+                            ),
+                            8.horizontalSpace,
+                            const TextView(
+                              text: 'Edit',
+                              fontWeight: FontWeight.w500,
+                            )
+                          ],
+                        )),
+                    PopupMenuItem(
+                        onTap: () {
+                          _delete(widget.journal.id.toString(), context);
+                        },
+                        child: Row(
+                          children: [
+                            ImageWidget(
+                              imageUrl: Assets.images.svgs.delete,
+                              color: Pallets.black,
+                              size: 20,
+                            ),
+                            8.horizontalSpace,
+                            const TextView(
+                              text: 'Delete',
+                              fontWeight: FontWeight.w500,
+                            )
+                          ],
+                        )),
+                  ],
+                  child: const Icon(Icons.more_vert),
+                )
+              ],
+            ),
+            16.verticalSpace,
+            _PromptWidget(
+              prompt: widget.journal.guidedPrompt,
+            ),
+            12.verticalSpace,
+            TextView(
+              text: widget.journal.body,
+              fontWeight: FontWeight.w500,
+              lineHeight: 1.5,
+              textOverflow: TextOverflow.ellipsis,
+              maxLines: widget.journal.body.toString().length > 6
+                  ? isExpanded
+                      ? widget.journal.body.toString().length ~/ 5
+                      : 2
+                  : null,
+            )
+          ],
+        ),
       ),
     );
   }

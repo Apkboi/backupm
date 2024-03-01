@@ -28,6 +28,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     UpdateJournalEvent event,
     Emitter<JournalState> emit,
   ) async {
+
     emit(UpdateJournalLoadingState());
     try {
       final response = await _journalRepository.updateJournal(

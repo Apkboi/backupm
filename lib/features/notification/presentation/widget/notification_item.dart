@@ -3,6 +3,7 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/library/presentation/widgets/article_notification_detail.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -84,8 +85,10 @@ class _NotificationItemState extends State<NotificationItem> {
         .add(ReadNotificationEvent(id: widget.notification.id));
     switch (widget.notification.type) {
       case 'session':
+        // context.pushNamed(PageUrl.)
+        break;
       case "welness_course":
-        context.pop();
+        // context.pop();
         CustomDialogs.showCupertinoBottomSheet(
             context,
             ArticleNotificationDetailsSheet(
