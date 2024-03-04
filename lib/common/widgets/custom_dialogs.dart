@@ -362,6 +362,7 @@ class CustomDialogs {
   static success(String message) {
     // show a notification at top of screen.
     showSimpleNotification(
+      slideDismissDirection: DismissDirection.horizontal,
       duration: const Duration(seconds: 3),
       Container(
         padding: const EdgeInsets.all(16.0),
@@ -405,7 +406,8 @@ class CustomDialogs {
 
     // show a notification at top of screen.
     showSimpleNotification(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 2),
+      slideDismissDirection: DismissDirection.horizontal,
       Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -429,7 +431,7 @@ class CustomDialogs {
                 fontSize: 14,
                 color: Pallets.red,
                 fontWeight: FontWeight.w500,
-                maxLines: 2,
+                maxLines: 3,
                 textOverflow: TextOverflow.ellipsis,
                 align: TextAlign.left,
               ),
@@ -466,7 +468,7 @@ class CustomDialogs {
           ),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.check_circle,
                 size: 24.0,
                 color: Pallets.primary,
@@ -495,7 +497,7 @@ class CustomDialogs {
       Flushbar(
         message: message,
         messageColor: Pallets.primary,
-        icon: Icon(
+        icon: const Icon(
           Icons.check_circle,
           size: 24.0,
           color: Pallets.primary,
@@ -504,10 +506,10 @@ class CustomDialogs {
         borderWidth: .5,
         borderColor: Pallets.primary,
         backgroundColor: Pallets.primaryLight,
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
         flushbarPosition: FlushbarPosition.TOP,
         borderRadius: BorderRadius.circular(8),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       ).show(context);
     }
   }

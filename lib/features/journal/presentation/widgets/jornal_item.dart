@@ -47,8 +47,8 @@ class _JournalItemState extends State<JournalItem> {
               children: [
                 Expanded(
                     child: TextView(
-                  text:
-                      TimeUtil.formDateTimeForJournal(widget.journal.createdAt),
+                  text: TimeUtil.formDateTimeForJournal(
+                      (widget.journal.createdAt as DateTime).toLocal()),
                   fontSize: 13.sp,
                 )),
                 PopupMenuButton(

@@ -127,9 +127,8 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                           ),
                           24.verticalSpace,
                           ImageWidget(
-                            imageUrl:
-                                course.attachments!.firstOrNull?.file.url ??
-                                    Assets.images.pngs.videoThumbail.path,
+                            imageUrl: course.cover?.url??
+                                Assets.images.pngs.videoThumbail.path,
                             height: 213.h,
                             // fit: BoxFit.cover,
                             borderRadius: BorderRadius.circular(10),

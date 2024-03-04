@@ -35,13 +35,14 @@ class UrlConfig {
   static const String getNotificationDetailsEndpoint =
       "/getNotificationDetailsEndpoint";
 
-  static String readNotificationEndpoint(String id) => "/notifications/$id/show";
+  static String readNotificationEndpoint(String id) =>
+      "/notifications/$id/show";
 
   static String getNotificationsEndpoint = '/notifications/list';
 
-  static String deleteAccountEndpoint =  '';
+  static String deleteAccountEndpoint = '/user/profile/delete-account';
 
-  static String eraseDataEndpoint = '';
+  static String eraseDataEndpoint = '/user/profile/erase-account-data';
 
   static String getCourseDetails(String id) =>
       "/wellness-library/courses/show/$id";
@@ -105,6 +106,8 @@ class UrlConfig {
   static const String getPrompts = '/guided-prompts';
   static const String getJournals = '/guided-journals';
   static const String saveJournals = '/guided-journals/save';
+
   static String deleteJournal(String id) => '/guided-journals/$id/delete';
+
   static String updateJournal(String id) => '/guided-journals/$id/update';
 }

@@ -136,6 +136,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get summary =>
       const AssetGenImage('assets/images/pngs/summary.png');
 
+  /// File path: assets/images/pngs/vertical_logo.png
+  AssetGenImage get verticalLogo =>
+      const AssetGenImage('assets/images/pngs/vertical_logo.png');
+
   /// File path: assets/images/pngs/video_thumbail.png
   AssetGenImage get videoThumbail =>
       const AssetGenImage('assets/images/pngs/video_thumbail.png');
@@ -176,6 +180,7 @@ class $AssetsImagesPngsGen {
         sorry,
         splashLogo,
         summary,
+        verticalLogo,
         videoThumbail,
         wLibrary
       ];

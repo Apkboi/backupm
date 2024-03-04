@@ -70,7 +70,8 @@ class _SplashPageState extends State<SplashPage>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ImageWidget(width: 1.sw, imageUrl: Assets.images.svgs.splashLogo)
+              ImageWidget(
+                  width: 1.sw, imageUrl: Assets.images.pngs.verticalLogo.path)
             ],
           ),
         ),

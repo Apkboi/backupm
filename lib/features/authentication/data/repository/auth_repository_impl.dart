@@ -39,7 +39,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       final response = await _networkService.call(
         UrlConfig.register, RequestMethod.post,
-        formData: formData,
+        data: payload.toJson(),
         // data: formData
       );
 

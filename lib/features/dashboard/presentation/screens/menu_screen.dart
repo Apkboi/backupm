@@ -145,6 +145,28 @@ class _MenuScreenState extends State<MenuScreen> {
                           16.horizontalSpace,
                           Expanded(
                               child: MenuItem(
+                                textColor: Pallets.brown,
+                                bgColor: Pallets.lightOrange,
+                                image: Assets.images.pngs.gJournal.path,
+                                text: "Guided Journal",
+
+                                onTap: () {
+                                  context.pushNamed(PageUrl.guidedJournalScreen);
+                                },
+
+                                // image: Assets.images.pngs.summary.path,
+                                // text: "Summaries"
+                              )),
+
+                        ],
+                      ),
+                      const SizedBox(height: 16.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+
+                          Expanded(
+                              child: MenuItem(
                                   onTap: () {
                                     context.pushNamed(
                                         PageUrl.wellnessLibraryScreen);
@@ -153,26 +175,6 @@ class _MenuScreenState extends State<MenuScreen> {
                                   bgColor: Pallets.lightGreen,
                                   image: Assets.images.pngs.wLibrary.path,
                                   text: "Wellness Library")),
-                        ],
-                      ),
-                      const SizedBox(height: 16.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                              child: MenuItem(
-                            textColor: Pallets.brown,
-                            bgColor: Pallets.lightOrange,
-                            image: Assets.images.pngs.gJournal.path,
-                            text: "Guided Journal",
-
-                            onTap: () {
-                              context.pushNamed(PageUrl.guidedJournalScreen);
-                            },
-
-                            // image: Assets.images.pngs.summary.path,
-                            // text: "Summaries"
-                          )),
                           16.horizontalSpace,
                           Expanded(
                               child: MenuItem(

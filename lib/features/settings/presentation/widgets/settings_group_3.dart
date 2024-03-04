@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/utils/helper_utils.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
 
 class SettingsGroup3 extends StatelessWidget {
@@ -23,9 +24,20 @@ class SettingsGroup3 extends StatelessWidget {
             },
           ),
           24.verticalSpace,
-          const SettingListTile(tittle: 'Privacy Policy'),
+          SettingListTile(
+            tittle: 'Privacy Policy',
+            onTap: () {
+              Helpers.launchRawUrl('https://yourmentra.com/privacy-policy');
+            },
+          ),
           24.verticalSpace,
-          const SettingListTile(tittle: 'Terms and Conditions'),
+          SettingListTile(
+            tittle: 'Terms and Conditions',
+            onTap: () {
+              Helpers.launchRawUrl(
+                  'https://yourmentra.com/terms-and-conditions');
+            },
+          ),
         ],
       ),
     ));

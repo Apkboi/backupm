@@ -45,7 +45,8 @@ class GetLibraryCoursesResponse {
         code: json["code"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "message": message,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "success": success,
@@ -96,7 +97,8 @@ class Attachment {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
+  factory Attachment.fromJson(Map<String, dynamic> json) =>
+      Attachment(
         id: json["id"],
         course: LibraryCourse.fromJson(json["course"]),
         file: Image.fromJson(json["file"]),
@@ -105,7 +107,8 @@ class Attachment {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "id": id,
         "course": course.toJson(),
         "file": file.toJson(),
@@ -122,6 +125,7 @@ class LibraryCourse {
   final dynamic readTime;
   final dynamic courseType;
   final dynamic status;
+  CoverImage? cover;
   final Category? category;
   final List<Attachment>? attachments;
   final bool favourite;
@@ -136,6 +140,7 @@ class LibraryCourse {
     required this.status,
     this.category,
     this.attachments,
+    required this.cover,
     required this.favourite,
     required this.readTime,
     required this.createdAt,
@@ -152,6 +157,7 @@ class LibraryCourse {
     Category? category,
     List<Attachment>? attachments,
     bool? favourite,
+    CoverImage? cover,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
@@ -163,32 +169,36 @@ class LibraryCourse {
         courseType: courseType ?? this.courseType,
         status: status ?? this.status,
         category: category ?? this.category,
+        cover: cover ?? this.cover,
         attachments: attachments ?? this.attachments,
         favourite: favourite ?? this.favourite,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory LibraryCourse.fromJson(Map<String, dynamic> json) => LibraryCourse(
+  factory LibraryCourse.fromJson(Map<String, dynamic> json) =>
+      LibraryCourse(
         id: json["id"],
         title: json["title"],
         body: json["body"],
         courseType: json["course_type"],
         status: json["status"],
+        cover: CoverImage.fromJson(json["cover"]),
         category: json["category"] == null
             ? null
             : Category.fromJson(json["category"]),
         attachments: json["attachments"] == null
             ? []
             : List<Attachment>.from(
-                json["attachments"]!.map((x) => Attachment.fromJson(x))),
+            json["attachments"]!.map((x) => Attachment.fromJson(x))),
         favourite: json["favourite"],
         readTime: json["read_time"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "id": id,
         "title": title,
         "body": body,
@@ -196,6 +206,7 @@ class LibraryCourse {
         "status": status,
         "read_time": readTime,
         "category": category?.toJson(),
+        "cover": cover?.toJson(),
         "attachments": attachments == null
             ? []
             : List<dynamic>.from(attachments!.map((x) => x.toJson())),
@@ -243,7 +254,8 @@ class Image {
         createdAt: createdAt ?? this.createdAt,
       );
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
+  factory Image.fromJson(Map<String, dynamic> json) =>
+      Image(
         id: json["id"],
         name: json["name"],
         url: json["url"],
@@ -253,7 +265,8 @@ class Image {
         createdAt: DateTime.parse(json["created_at"]),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "id": id,
         "name": name,
         "url": url,
@@ -266,13 +279,13 @@ class Image {
 
 class Category {
   final int id;
-  final String name;
-  final String description;
-  final String backgroundColor;
-  final String status;
-  final Image image;
+  final dynamic name;
+  final dynamic description;
+  final dynamic backgroundColor;
+  final dynamic status;
+  final dynamic image;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final dynamic updatedAt;
 
   Category({
     required this.id,
@@ -306,25 +319,95 @@ class Category {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      Category(
         id: json["id"],
         name: json["name"],
         description: json["description"],
         backgroundColor: json["background_color"],
         status: json["status"],
-        image: Image.fromJson(json["image"]),
+        image: json["image"] == null ? null : Image.fromJson(json["image"]),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "id": id,
         "name": name,
         "description": description,
         "background_color": backgroundColor,
         "status": status,
-        "image": image.toJson(),
+        "image": image?.toJson(),
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+      };
+}
+
+
+
+CoverImage coverImageFromJson(String str) =>
+    CoverImage.fromJson(json.decode(str));
+
+String coverImageToJson(CoverImage data) => json.encode(data.toJson());
+
+class CoverImage {
+  final dynamic id;
+  final dynamic name;
+  final dynamic url;
+  final dynamic mimeType;
+  final dynamic size;
+  final dynamic formattedSize;
+  final DateTime createdAt;
+
+  CoverImage({
+    required this.id,
+    required this.name,
+    required this.url,
+    required this.mimeType,
+    required this.size,
+    required this.formattedSize,
+    required this.createdAt,
+  });
+
+  CoverImage copyWith({
+    int? id,
+    dynamic name,
+    String? url,
+    String? mimeType,
+    String? size,
+    String? formattedSize,
+    DateTime? createdAt,
+  }) =>
+      CoverImage(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        url: url ?? this.url,
+        mimeType: mimeType ?? this.mimeType,
+        size: size ?? this.size,
+        formattedSize: formattedSize ?? this.formattedSize,
+        createdAt: createdAt ?? this.createdAt,
+      );
+
+  factory CoverImage.fromJson(Map<String, dynamic> json) =>
+      CoverImage(
+        id: json["id"],
+        name: json["name"],
+        url: json["url"],
+        mimeType: json["mime_type"],
+        size: json["size"],
+        formattedSize: json["formatted_size"],
+        createdAt: DateTime.parse(json["created_at"]),
+      );
+
+  Map<String, dynamic> toJson() =>
+      {
+        "id": id,
+        "name": name,
+        "url": url,
+        "mime_type": mimeType,
+        "size": size,
+        "formatted_size": formattedSize,
+        "created_at": createdAt.toIso8601String(),
       };
 }

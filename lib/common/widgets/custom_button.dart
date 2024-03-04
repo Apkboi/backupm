@@ -13,19 +13,18 @@ class CustomButton extends StatefulWidget {
   final MainAxisAlignment? mainAxisAlignment;
   final MainAxisSize? mainAxisSize;
 
-  const CustomButton(
-      {Key? key,
-      required this.child,
-      required this.onPressed,
-      this.bgColor,
-      this.padding,
-      this.isExpanded = true,
-      this.foregroundColor,
-      this.borderRadius,
-      this.elevation,
-      this.btnText,
-      this.mainAxisAlignment = MainAxisAlignment.center,
-      this.mainAxisSize = MainAxisSize.min})
+  const CustomButton({Key? key,
+    required this.child,
+    required this.onPressed,
+    this.bgColor,
+    this.padding,
+    this.isExpanded = true,
+    this.foregroundColor,
+    this.borderRadius,
+    this.elevation,
+    this.btnText,
+    this.mainAxisAlignment = MainAxisAlignment.center,
+    this.mainAxisSize = MainAxisSize.min})
       : super(key: key);
 
   @override
@@ -41,14 +40,24 @@ class _CustomButtonState extends State<CustomButton> {
         elevation: widget.elevation,
         padding: widget.padding ?? const EdgeInsets.all(13),
         foregroundColor:
-            widget.foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
+        widget.foregroundColor ?? Theme
+            .of(context)
+            .colorScheme
+            .onPrimary,
         shape: RoundedRectangleBorder(
             borderRadius: widget.borderRadius ?? BorderRadius.circular(5)),
         disabledBackgroundColor: widget.bgColor == null
-            ? Theme.of(context).colorScheme.primary.withAlpha(-200)
+            ? Theme
+            .of(context)
+            .colorScheme
+            .primary
+            .withAlpha(-200)
             : widget.bgColor!.withAlpha(-200),
         backgroundColor:
-            widget.bgColor ?? Theme.of(context).colorScheme.primary,
+        widget.bgColor ?? Theme
+            .of(context)
+            .colorScheme
+            .primary,
       ),
       child: Row(
         mainAxisAlignment: widget.mainAxisAlignment!,

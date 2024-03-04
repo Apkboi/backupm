@@ -85,7 +85,7 @@ class _NotificationItemState extends State<NotificationItem> {
         .add(ReadNotificationEvent(id: widget.notification.id));
     switch (widget.notification.type) {
       case 'session':
-        // context.pushNamed(PageUrl.)
+        context.pushNamed(PageUrl.therapyScreen);
         break;
       case "welness_course":
         // context.pop();

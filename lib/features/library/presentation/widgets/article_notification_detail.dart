@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -140,8 +139,7 @@ class _ArticleNotificationDetailsSheetState
                                 ),
                                 24.verticalSpace,
                                 ImageWidget(
-                                  imageUrl: state.response.data.attachments!
-                                          .firstOrNull?.file.url ??
+                                  imageUrl: state.response.data.cover?.url??
                                       Assets.images.pngs.videoThumbail.path,
                                   height: 213.h,
                                   // fit: BoxFit.cover,

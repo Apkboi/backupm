@@ -53,13 +53,14 @@ class TherapyItem extends StatelessWidget {
                     ),
                     8.verticalSpace,
                     TextView(
-                      text: TimeUtil.formartToDayTime(session.startsAt),
+                      text:
+                          TimeUtil.formartToDayTime(session.startsAt.toLocal()),
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
                     SessionButton(
-                      startDate: session.startsAt,
-                      endDate: session.endsAt ?? DateTime.now(),
+                      startDate: session.startsAt.toLocal(),
+                      endDate: (session.endsAt ?? session.startsAt.add(const Duration(hours: 1))).toLocal(),
                       session: session,
                     )
                   ],

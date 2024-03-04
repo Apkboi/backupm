@@ -50,7 +50,7 @@ class RegistrationPayload {
         email: json["email"],
         birthYear: json["birth_year"],
         password: json["password"],
-        avatar: json["avatar"],
+        avatar: json["avatar_id"],
         role: json["role"],
       );
 
@@ -62,7 +62,7 @@ class RegistrationPayload {
         "email": email,
         "birth_year": birthYear,
         "password": password,
-        // "avatar": avatar,
+        "avatar_id": avatar,
         "role": role,
       };
 }

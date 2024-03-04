@@ -4,13 +4,16 @@
 
 import 'dart:convert';
 
-SuccessResponse successResponseFromJson(String str) => SuccessResponse.fromJson(json.decode(str));
+SuccessResponse successResponseFromJson(String str) =>
+    SuccessResponse.fromJson(json.decode(str));
 
-String successResponseToJson(SuccessResponse data) => json.encode(data.toJson());
+String successResponseToJson(SuccessResponse data) =>
+    json.encode(data.toJson());
 
 class SuccessResponse {
   final String message;
   final dynamic data;
+
   final bool success;
   final int code;
 
@@ -34,17 +37,18 @@ class SuccessResponse {
         code: code ?? this.code,
       );
 
-  factory SuccessResponse.fromJson(Map<String, dynamic> json) => SuccessResponse(
-    message: json["message"],
-    data: json["data"],
-    success: json["success"],
-    code: json["code"],
-  );
+  factory SuccessResponse.fromJson(Map<String, dynamic> json) =>
+      SuccessResponse(
+        message: json["message"],
+        data: json["data"],
+        success: json["success"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": data,
-    "success": success,
-    "code": code,
-  };
+        "message": message,
+        "data": data,
+        "success": success,
+        "code": code,
+      };
 }

@@ -76,6 +76,12 @@ class LibraryItem extends StatelessWidget {
               ),
               ImageWidget(
                 // imageUrl: Assets.images.pngs.sleep.path,
+                onTap: () {
+                  context.pushNamed(PageUrl.allArticlesScreen, queryParameters: {
+                    PathParam.libraryCategory: jsonEncode(category.toJson()),
+                  });
+                },
+                canPreview: false,
                 imageUrl: category.image.url,
                 width: 120.w,
                 height: 120.h,

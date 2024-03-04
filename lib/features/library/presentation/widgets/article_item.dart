@@ -40,7 +40,7 @@ class ArticleItem extends StatelessWidget {
               child: Stack(
                 children: [
                   ImageWidget(
-                    imageUrl: course.attachments?.firstOrNull?.file.url ??
+                    imageUrl: course.cover?.url??
                         Assets.images.pngs.videoThumbail.path,
                     height: 126.h,
                     // fit: BoxFit.cover,
