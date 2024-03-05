@@ -42,7 +42,7 @@ class _MentraMessageItemState extends State<MentraMessageItem> {
               children: List.generate(
                 widget.message.length,
                 (index) => Container(
-                  margin: const EdgeInsets.only(bottom: 7),
+                  margin: const EdgeInsets.only(bottom: 5),
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width / 2 + 40),
                   padding:

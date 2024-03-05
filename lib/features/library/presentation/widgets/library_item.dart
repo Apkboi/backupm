@@ -28,7 +28,7 @@ class LibraryItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(17),
-            color: category.backgroundColor.toColor()),
+            color: category.backgroundColor.toString().toColor()),
         child: Padding(
           padding: const EdgeInsets.all(17),
           child: Row(
@@ -82,7 +82,7 @@ class LibraryItem extends StatelessWidget {
                   });
                 },
                 canPreview: false,
-                imageUrl: category.image.url,
+                imageUrl: category.image?.url??Assets.images.pngs.sleep.path,
                 width: 120.w,
                 height: 120.h,
                 fit: BoxFit.fill,

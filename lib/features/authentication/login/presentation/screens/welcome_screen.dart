@@ -21,6 +21,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   int countdown = 5;
+  int countdown2 = 1;
+
+  bool _isExhaling = true;
 
   @override
   void initState() {
@@ -35,12 +38,15 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           _updateTimer();
+          _isExhaling = !_isExhaling;
           _controller.reverse().then((value) {
+            _isExhaling = !_isExhaling;
             _updateTimer();
             _controller.reset();
             _controller.forward();
           });
-          log(countdown.toString());
+
+          // log(countdown.toString());
 
           // Animation completed, restart the countdown and scale animation
           // if(countdown == 5){
@@ -91,7 +97,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                     child: CircleAvatar(
                                       radius: 0.5.sw - 50,
                                       backgroundColor: Pallets.white,
-
                                       child: Stack(
                                         children: [
                                           Center(
@@ -101,7 +106,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                                 radius: 0.5.sw - 60,
                                                 backgroundColor:
                                                     Pallets.secondary,
-
                                               ),
                                             ),
                                           ),
@@ -110,11 +114,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                             child: Text(
                                               countdown.toString(),
                                               style: GoogleFonts.fraunces(
-                                                fontWeight:
-                                                FontWeight.w700,
-                                                fontSize: 32.0,
-                                                color: Pallets.black
-                                              ),
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 32.0,
+                                                  color: Pallets.black),
                                             ),
                                           )
                                         ],
@@ -138,7 +140,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       align: TextAlign.center,
                       fontSize: 15.sp,
                       text:
-                          'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}. \nInhale positivity, exhale stress',
+                          'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}.\n ${_isExhaling ? "Exhale stress" : " Inhale positivity,"} ',
                       fontWeight: FontWeight.w500,
                     ),
                     50.verticalSpace,

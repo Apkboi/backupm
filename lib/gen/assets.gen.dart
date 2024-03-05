@@ -13,6 +13,7 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   $AssetsImagesPngsGen get pngs => const $AssetsImagesPngsGen();
+
   $AssetsImagesSvgsGen get svgs => const $AssetsImagesSvgsGen();
 }
 
@@ -46,7 +47,6 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/avatar2.png
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/images/pngs/avatar2.png');
-
 
   /// File path: assets/images/pngs/background.png
   AssetGenImage get background =>
@@ -83,6 +83,10 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/launcher.png
   AssetGenImage get launcher =>
       const AssetGenImage('assets/images/pngs/launcher.png');
+
+  /// File path: assets/images/pngs/main_logo.png
+  AssetGenImage get mainLogo =>
+      const AssetGenImage('assets/images/pngs/main_logo.png');
 
   /// File path: assets/images/pngs/mentra.png
   AssetGenImage get mentra =>
@@ -167,6 +171,7 @@ class $AssetsImagesPngsGen {
         insight,
         journalNote,
         launcher,
+        mainLogo,
         mentra,
         mentraBig,
         onboarding1,

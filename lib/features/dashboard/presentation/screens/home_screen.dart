@@ -95,6 +95,9 @@ class _HomeScreenState extends State<HomeScreen>
                     Positioned(
                         top: -100,
                         child: ImageWidget(
+                          width: 254,
+                          height: 254,
+                            fit: BoxFit.scaleDown,
                             imageUrl: Assets.images.svgs.combinedShape)),
                     Container(
                       width: 1.sw,

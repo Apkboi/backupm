@@ -45,8 +45,7 @@ class GetLibraryCoursesResponse {
         code: json["code"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "message": message,
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "success": success,
@@ -97,8 +96,7 @@ class Attachment {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Attachment.fromJson(Map<String, dynamic> json) =>
-      Attachment(
+  factory Attachment.fromJson(Map<String, dynamic> json) => Attachment(
         id: json["id"],
         course: LibraryCourse.fromJson(json["course"]),
         file: Image.fromJson(json["file"]),
@@ -107,8 +105,7 @@ class Attachment {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "course": course.toJson(),
         "file": file.toJson(),
@@ -176,29 +173,28 @@ class LibraryCourse {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory LibraryCourse.fromJson(Map<String, dynamic> json) =>
-      LibraryCourse(
+  factory LibraryCourse.fromJson(Map<String, dynamic> json) => LibraryCourse(
         id: json["id"],
         title: json["title"],
         body: json["body"],
         courseType: json["course_type"],
         status: json["status"],
-        cover: CoverImage.fromJson(json["cover"]),
+        cover:
+            json["cover"] == null ? null : CoverImage.fromJson(json["cover"]),
         category: json["category"] == null
             ? null
             : Category.fromJson(json["category"]),
         attachments: json["attachments"] == null
             ? []
             : List<Attachment>.from(
-            json["attachments"]!.map((x) => Attachment.fromJson(x))),
+                json["attachments"]!.map((x) => Attachment.fromJson(x))),
         favourite: json["favourite"],
         readTime: json["read_time"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
         "body": body,
@@ -254,8 +250,7 @@ class Image {
         createdAt: createdAt ?? this.createdAt,
       );
 
-  factory Image.fromJson(Map<String, dynamic> json) =>
-      Image(
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
         id: json["id"],
         name: json["name"],
         url: json["url"],
@@ -265,8 +260,7 @@ class Image {
         createdAt: DateTime.parse(json["created_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "url": url,
@@ -319,8 +313,7 @@ class Category {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      Category(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
         id: json["id"],
         name: json["name"],
         description: json["description"],
@@ -331,8 +324,7 @@ class Category {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "description": description,
@@ -343,8 +335,6 @@ class Category {
         "updated_at": updatedAt.toIso8601String(),
       };
 }
-
-
 
 CoverImage coverImageFromJson(String str) =>
     CoverImage.fromJson(json.decode(str));
@@ -389,8 +379,7 @@ class CoverImage {
         createdAt: createdAt ?? this.createdAt,
       );
 
-  factory CoverImage.fromJson(Map<String, dynamic> json) =>
-      CoverImage(
+  factory CoverImage.fromJson(Map<String, dynamic> json) => CoverImage(
         id: json["id"],
         name: json["name"],
         url: json["url"],
@@ -400,8 +389,7 @@ class CoverImage {
         createdAt: DateTime.parse(json["created_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "url": url,

@@ -36,7 +36,7 @@ class _UserMessageItemState extends State<UserMessageItem> {
                     fontWeight: FontWeight.w500),
               ),
         ),
-        5.verticalSpace
+        // 2.5.verticalSpace
       ],
     );
   }

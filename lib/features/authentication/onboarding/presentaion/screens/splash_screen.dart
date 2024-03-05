@@ -65,13 +65,15 @@ class _SplashPageState extends State<SplashPage>
       body: Container(
         height: 1.sh,
         width: 1.sw,
-        decoration: const BoxDecoration(color: Pallets.primary),
+        decoration: const BoxDecoration(color: Pallets.turquoise1),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ImageWidget(
-                  width: 1.sw, imageUrl: Assets.images.pngs.verticalLogo.path)
+                  size: 120,
+                  fit: BoxFit.scaleDown,
+                  imageUrl: Assets.images.pngs.verticalLogo.path)
             ],
           ),
         ),

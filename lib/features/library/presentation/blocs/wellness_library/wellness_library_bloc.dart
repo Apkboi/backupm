@@ -18,7 +18,7 @@ class WellnessLibraryBloc
     extends Bloc<WellnessLibraryEvent, WellnessLibraryState> {
   final WellnessLibraryRepository _wellnessLibraryRepository;
 
-  List<LibraryCategory>? libraryCategories ;
+  List<LibraryCategory>? libraryCategories;
 
   WellnessLibraryBloc(this._wellnessLibraryRepository)
       : super(WellnessLibraryInitial()) {

@@ -54,11 +54,11 @@ class GetLibraryCategoriesResponse {
 
 class LibraryCategory {
   final int id;
-  final String name;
-  final String description;
-  final String backgroundColor;
-  final String status;
-  final Image image;
+  final dynamic name;
+  final dynamic description;
+  final dynamic backgroundColor;
+  final dynamic status;
+  final Image? image;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -100,7 +100,7 @@ class LibraryCategory {
         description: json["description"],
         backgroundColor: json["background_color"],
         status: json["status"],
-        image: Image.fromJson(json["image"]),
+        image: json["image"]== null? null:Image.fromJson(json["image"]),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
@@ -111,7 +111,7 @@ class LibraryCategory {
         "description": description,
         "background_color": backgroundColor,
         "status": status,
-        "image": image.toJson(),
+        "image": image?.toJson(),
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

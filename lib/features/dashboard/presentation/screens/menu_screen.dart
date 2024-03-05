@@ -108,7 +108,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      20.verticalSpace,
+                      16.verticalSpace,
                       // const TextView(
                       //   text: 'Upcoming Session',
                       //   fontSize: 16,
@@ -119,14 +119,14 @@ class _MenuScreenState extends State<MenuScreen> {
                       // const UpcomingSession(),
                       // const UnlockPremiumWidget(),
                       const NewUserPrompt(),
-                      48.verticalSpace,
+                      20.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Pallets.primary,
                       ),
-                      24.verticalSpace,
+                      20.verticalSpace,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -181,7 +181,7 @@ class _MenuScreenState extends State<MenuScreen> {
                             textColor: Pallets.indigo,
                             bgColor: Pallets.lightBlue,
                             image: Assets.images.pngs.pTherapy.path,
-                            text: "Professional Therapy",
+                            text: "Professional Support",
                             onTap: () async {
                               _checkSubscription(context);
                             },

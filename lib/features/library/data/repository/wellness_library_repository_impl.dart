@@ -15,19 +15,31 @@ class WellnessLibraryRepositoryImpl extends WellnessLibraryRepository {
 
   @override
   Future<GetLibraryCategoriesResponse> getLibraryCategories() async {
-    final response = await _networkService.call(
-        UrlConfig.getLibraryCategoriesEndpoint, RequestMethod.get);
+    try {
+      final response = await _networkService.call(
+          UrlConfig.getLibraryCategoriesEndpoint, RequestMethod.get);
 
-    return GetLibraryCategoriesResponse.fromJson(response.data);
+      return GetLibraryCategoriesResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.e(stack);
+      logger.e(e.toString());
+      rethrow;
+    }
   }
 
   @override
   Future<GetLibraryCoursesResponse> getLibraryCourses(String id) async {
-    final response = await _networkService.call(
-        UrlConfig.getLibraryCoursesEndpoint, RequestMethod.get,
-        queryParams: {"id": id});
+    try {
+      final response = await _networkService.call(
+          UrlConfig.getLibraryCoursesEndpoint, RequestMethod.get,
+          queryParams: {"id": id});
 
-    return GetLibraryCoursesResponse.fromJson(response.data);
+      return GetLibraryCoursesResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.e(stack);
+      logger.e(e.toString());
+      rethrow;
+    }
   }
 
   @override

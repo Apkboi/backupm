@@ -27,7 +27,7 @@ class MenuItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 230.h,
+          height:( 0.53/2).sh,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22),
               color: bgColor ?? Pallets.white),
@@ -47,13 +47,14 @@ class MenuItem extends StatelessWidget {
               Expanded(
                 child: ImageWidget(
                   imageUrl: image,
+
                   onTap: () {
                     if (onTap != null) {
                       onTap!();
                     }
                   },
                   canPreview: false,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.scaleDown,
                   height: 120.h,
                   width: 1.sw,
                 ),
