@@ -1,32 +1,38 @@
-class BotChatModel {
+class BotChatmessageModel {
   String message;
   bool isFromBot;
-  String id;
+  int id;
   bool? isTyping;
   AnswerType answerType;
-  MessageType messageType;
+  LoginStage loginStage;
+  SignupStage signupStage;
   String? answer;
   DateTime time;
+  DateTime? answerTime;
 
-  BotChatModel(
+  BotChatmessageModel(
       {required this.message,
       required this.isFromBot,
       required this.id,
       this.isTyping = false,
       required this.answerType,
-      required this.messageType,
+      this.loginStage = LoginStage.NONE,
       required this.time,
+       this.answerTime,
+      this.signupStage = SignupStage.NONE,
       this.answer});
 
-  factory BotChatModel.botTyping() => BotChatModel(
+  factory BotChatmessageModel.botTyping() => BotChatmessageModel(
       message: '',
       isFromBot: true,
-      id: '',
+      id: 0,
       isTyping: true,
       answerType: AnswerType.NONE,
-      messageType: MessageType.Test,
+      loginStage: LoginStage.NONE,
       answer: null,
-      time: DateTime.now());
+      time: DateTime.now(),
+      answerTime: DateTime.now(),
+      signupStage: SignupStage.NONE);
 }
 
 enum AnswerType {
@@ -40,4 +46,15 @@ enum AnswerType {
   NONE,
 }
 
-enum MessageType { Test }
+enum LoginStage {
+  NONE,
+  INITIAL,
+  EMAILPREVIEW,
+  USERNAME,
+  AVARTER,
+  EMAIL,
+  OTP,
+  PASSCODE
+}
+
+enum SignupStage { NONE, USERNAME, AVARTER, YEAR, EMAIL, OTP, PASSCODE }

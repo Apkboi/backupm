@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/login_question_datasource.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/signup_question_data_source.dart';
@@ -9,24 +8,31 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 part 'bot_chat_state.dart';
 
-enum BotChatFlow { welcome, signup, login }
+enum BotChatFlow { welcome, signup, login, talkToMentra }
 
 class BotChatCubit extends Cubit<BotChatState> {
   BotChatCubit() : super(BotChatInitial());
-  List<BotChatModel> stagedMessages = [];
-  BotChatModel? currentQuestion;
+  List<BotChatmessageModel> stagedMessages = [];
+  BotChatmessageModel? currentQuestion;
   LoginQuestionDataSource loginDataSource = LoginQuestionDataSource();
   SignupQuestionDataSource signupDataSource = SignupQuestionDataSource();
-  WelcomeMessageDataSource welcomeMessageDataSource =
-      WelcomeMessageDataSource();
+  WelcomeMessageDataSource welcomeMessageDataSource = WelcomeMessageDataSource();
+  BotChatFlow currentChatFlow = BotChatFlow.welcome;
 
-  void startMessage() {
-    stagedMessages.clear();
-    stagedMessages
-        .add(welcomeMessageDataSource.questions.first..time = DateTime.now());
-    currentQuestion = welcomeMessageDataSource.questions.first;
-    logger.i(stagedMessages.length);
-    emit(QuestionUpdatedState());
+  void startMessage(BotChatFlow flow) async {
+    if (flow != BotChatFlow.talkToMentra) {
+      stagedMessages.clear();
+      for (var message in welcomeMessageDataSource.messages) {
+        _addTyping();
+        await Future.delayed(const Duration(seconds: 2));
+        _removeTyping();
+        stagedMessages.add(message..time = DateTime.now());
+        currentQuestion = message;
+      }
+      logger.i(stagedMessages.length);
+      emit(QuestionUpdatedState());
+    } else {}
+
     // _scrollToLast();
   }
 
@@ -48,48 +54,98 @@ class BotChatCubit extends Cubit<BotChatState> {
     // emit(state.copyWith(highlightIndex: event.index));
   }
 
-  void answerQuestion({required int id, required String answer}) {
-    //   Update the question with the answer
+  void answerQuestion({
+    required int id,
+    required String answer,
+    BotChatFlow? nextFlow,
+    LoginStage? nextLoginStage,
+    SignupStage? nextSignupStage,
+  }) {
+    // Update the question with the answer
+    stagedMessages.last.answer = answer;
+    stagedMessages.last.answerTime = DateTime.now();
+    logger.i(answer);
 
-    // stagedMessages.where((element) => element.id == id).first.answer = answer;
-    // stagedMessages.where((element) => element.id == id).first.answerTime =
-    //     DateTime.now();
-    // //   Check if the answered question is the last question in the list to get next question
-    // if (id == stagedMessages.last.id) {
-    //   //   Get NextQuestion
-    //   getNextQuestion();
-    // } else {
-    //   currentQuestion = stagedMessages.last;
-    //   if (stagedMessages.length == loginDataSource.therapyQuestions.length) {
-    //     // emit(QuestionsCompletedState());
-    //   } else {
-    //     emit(QuestionUpdatedState());
-    //   }
-    // }
-
+    getNextQuestion(
+        nextFlow: nextFlow,
+        nextLoginStage: nextLoginStage,
+        nextSignUpStage: nextSignupStage);
   }
 
-  getNextQuestion() {
+  getNextQuestion({
+    BotChatFlow? nextFlow,
+    LoginStage? nextLoginStage,
+    SignupStage? nextSignUpStage,
+  }) {
+    logger.i(currentChatFlow.name);
+    if (nextFlow != null) {
+      currentChatFlow = nextFlow;
+    }
+    switch (currentChatFlow) {
+      case BotChatFlow.welcome:
+        break;
+      case BotChatFlow.signup:
+        _getNextSignupMessage(nextSignupStage: nextSignUpStage);
+        break;
 
-    // stagedMessages.add(loginDataSource.therapyQuestions[currentQuestion!.id + 1]
-    //   ..questionTime = DateTime.now());
-    // currentQuestion = stagedMessages.last;
-    // // Check if questions are complete
-    // if (stagedMessages.length == loginDataSource.therapyQuestions.length) {
-    //   emit(QuestionsCompletedState());
-    // } else {
-    //   emit(QuestionUpdatedState());
-    // }
-    // _scrollToLast();
+      case BotChatFlow.login:
+        logger.i('IN login stage');
+        _getNextLoginMessage(nextLoginStage: nextLoginStage);
+        break;
 
+      case BotChatFlow.talkToMentra:
+        break;
+    }
   }
 
-  void updateCurrentQuestion(BotChatModel question) {
+  void updateCurrentQuestion(BotChatmessageModel question) {
     currentQuestion = question;
     emit(QuestionUpdatedState());
   }
 
-  void _getNextLoginMessage() {}
+  void _getNextLoginMessage({
+    LoginStage? nextLoginStage,
+  }) {
+    logger.i('IN login stage');
+    if (nextLoginStage == null) {
+      stagedMessages.add(loginDataSource.messages.first..time = DateTime.now());
+    } else {
+      stagedMessages.add(loginDataSource.messages
+          .where((element) => element.loginStage == nextLoginStage)
+          .first
+        ..time = DateTime.now());
+    }
+    updateCurrentQuestion(stagedMessages.last);
+    // emit(QuestionUpdatedState());
+    _scrollToLast();
+  }
 
-  void _getNextSignupMessage() {}
+  void _getNextSignupMessage({
+    SignupStage? nextSignupStage,
+  }) {
+    logger.i('IN login stage');
+    if (nextSignupStage == null) {
+      stagedMessages
+          .add(signupDataSource.questions.first..time = DateTime.now());
+    } else {
+      stagedMessages.add(loginDataSource.messages
+          .where((element) => element.signupStage == nextSignupStage)
+          .first
+        ..time = DateTime.now());
+    }
+    updateCurrentQuestion(stagedMessages.last);
+
+    _scrollToLast();
+  }
+
+  void _addTyping() {
+    stagedMessages.add(BotChatmessageModel.botTyping());
+    currentQuestion = BotChatmessageModel.botTyping();
+    emit(QuestionUpdatedState());
+  }
+
+  void _removeTyping() {
+    stagedMessages.removeWhere((element) => element.isTyping == true);
+    emit(QuestionUpdatedState());
+  }
 }

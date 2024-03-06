@@ -1,6 +1,6 @@
 part of 'bot_chat_cubit.dart';
 
-abstract class BotChatState extends Equatable {
+abstract class BotChatState  {
   const BotChatState();
 }
 

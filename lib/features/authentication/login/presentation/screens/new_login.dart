@@ -77,7 +77,6 @@ class _NewLoginScreenState extends State<NewLoginScreen> {
                               Column(
                                 children: [
                                   16.verticalSpace,
-
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: CustomButton(

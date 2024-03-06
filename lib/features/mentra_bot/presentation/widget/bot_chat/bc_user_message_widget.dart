@@ -36,7 +36,7 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
                     fontWeight: FontWeight.w500),
               ),
         ),
-        // 2.5.verticalSpace
+        2.5.verticalSpace
       ],
     );
   }
