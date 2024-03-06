@@ -95,10 +95,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       color: Pallets.primary,
                       text: 'Talk to mentra',
                       onTap: () {
-                        injector
-                            .get<RegistrationBloc>()
-                            .updateFields(role: 'User');
-                        context.pushNamed(PageUrl.onboardingIntro);
+                        injector.get<RegistrationBloc>().updateFields(role: 'User');
+                        context.pushNamed(PageUrl.botChatScreen);
+                        // context.pushNamed(PageUrl.onboardingIntro);
                       },
                     ),
                     // 10.verticalSpace,

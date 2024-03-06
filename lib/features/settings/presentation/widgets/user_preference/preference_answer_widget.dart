@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/settings/data/data_sources/preference_questions.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
@@ -23,9 +22,7 @@ class PreferenceAnswerBox extends StatefulWidget {
 class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
   @override
   Widget build(BuildContext context) {
-    return (widget.question.answer != null &&
-            context.read<UserPreferenceCubit>().currentQuestion?.id !=
-                widget.question.id)
+    return (widget.question.answer != null && context.read<UserPreferenceCubit>().currentQuestion?.id != widget.question.id)
         ? InkWell(
             onTap: () {
               context
@@ -68,12 +65,9 @@ class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
               ],
             ),
           )
-        : (widget.question.options.isNotEmpty &&
-                context.read<UserPreferenceCubit>().currentQuestion?.id ==
-                    widget.question.id)
+        : (widget.question.options.isNotEmpty && context.read<UserPreferenceCubit>().currentQuestion?.id == widget.question.id)
             ? OptionsWidget(question: widget.question)
-            : widget.question.id !=
-                    PreferenceQuestionsDataSource().therapyQuestions.last.id
+            : widget.question.id != PreferenceQuestionsDataSource().therapyQuestions.last.id
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -37,6 +37,7 @@ import 'package:mentra/features/library/presentation/screens/article_details_scr
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
+import 'package:mentra/features/mentra_bot/presentation/screens/bot_chat_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
 import 'package:mentra/features/notification/presentation/screens/notifications_screen.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
@@ -178,6 +179,11 @@ class CustomRoutes {
         path: '/talkToMentraScreen',
         name: PageUrl.talkToMentraScreen,
         builder: (context, state) => const TalkToMentraScreen(),
+      ),
+      GoRoute(
+        path: '/botChatScreen',
+        name: PageUrl.botChatScreen,
+        builder: (context, state) => const BotChatScreen(),
       ),
       GoRoute(
         path: '/therapistProfile',

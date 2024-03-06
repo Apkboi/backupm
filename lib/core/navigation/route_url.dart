@@ -53,6 +53,7 @@ class PageUrl {
   static const notificationsScreen = 'notificationsScreen';
   static const manageSubscriptionScreen = 'manageSubscriptionScreen';
 
+  static const botChatScreen = 'botChatScreen';
   static const talkToMentraScreen = 'talkToMentraScreen';
   static const otpPage = 'otpPage';
   static const passwordReset = 'passwordReset';
