@@ -125,6 +125,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     SignupStage? nextSignupStage,
   }) {
     logger.i('IN login stage');
+   SignupQuestionDataSource dataSource = SignupQuestionDataSource();
     if (nextSignupStage == null) {
       stagedMessages
           .add(signupDataSource.questions.first..time = DateTime.now());
