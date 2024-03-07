@@ -1,4 +1,5 @@
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
 
 class WelcomeMessageDataSource {
   List<BotChatmessageModel> messages = [
@@ -11,6 +12,7 @@ class WelcomeMessageDataSource {
         answerType: AnswerType.NONE,
         loginStage: LoginStage.NONE,
         time: DateTime.now(),
+        flow: BotChatFlow.welcome,
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
@@ -20,6 +22,7 @@ class WelcomeMessageDataSource {
         isTyping: false,
         answerType: AnswerType.NONE,
         loginStage: LoginStage.NONE,
+        flow: BotChatFlow.welcome,
         time: DateTime.now(),
         answerTime: DateTime.now()),
     BotChatmessageModel(
@@ -31,6 +34,7 @@ class WelcomeMessageDataSource {
         answerType: AnswerType.WELCOME_OPTIONS,
         loginStage: LoginStage.NONE,
         time: DateTime.now(),
+        flow: BotChatFlow.welcome,
         answerTime: DateTime.now()),
 
     // BotChatmessageModel(

@@ -98,6 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         injector
                             .get<RegistrationBloc>()
                             .updateFields(role: 'User');
+
                         context.pushNamed(PageUrl.botChatScreen);
                         // context.pushNamed(PageUrl.onboardingIntro);
                       },

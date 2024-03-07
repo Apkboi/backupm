@@ -62,7 +62,7 @@ class RegistrationPayload {
         "email": email,
         "birth_year": birthYear,
         "password": password,
-        "avatar_id": avatar,
+        "avatar": avatar,
         "role": role,
       };
 }

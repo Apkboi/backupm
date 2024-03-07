@@ -1,3 +1,5 @@
+import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+
 class BotChatmessageModel {
   String message;
   bool isFromBot;
@@ -6,9 +8,11 @@ class BotChatmessageModel {
   AnswerType answerType;
   LoginStage loginStage;
   SignupStage signupStage;
+  PermissionsStage permissionsStage;
   String? answer;
   DateTime time;
   DateTime? answerTime;
+  BotChatFlow flow;
 
   BotChatmessageModel(
       {required this.message,
@@ -17,8 +21,10 @@ class BotChatmessageModel {
       this.isTyping = false,
       required this.answerType,
       this.loginStage = LoginStage.NONE,
+      this.permissionsStage = PermissionsStage.NONE,
       required this.time,
       this.answerTime,
+      required this.flow,
       this.signupStage = SignupStage.NONE,
       this.answer});
 
@@ -29,10 +35,12 @@ class BotChatmessageModel {
       isTyping: true,
       answerType: AnswerType.NONE,
       loginStage: LoginStage.NONE,
+      permissionsStage: PermissionsStage.NONE,
       answer: null,
       time: DateTime.now(),
       answerTime: DateTime.now(),
-      signupStage: SignupStage.NONE);
+      signupStage: SignupStage.NONE,
+      flow: BotChatFlow.welcome);
 }
 
 enum AnswerType {
@@ -50,7 +58,8 @@ enum AnswerType {
   SET_PASSCODE,
   NUMBER,
   AVATAR,
-  ACTION_OPTION,
+  BIOMETRIC_OPTIONS,
+  NOTIFICATION_OPTIONS,
   NONE,
 }
 
@@ -65,6 +74,8 @@ enum LoginStage {
   PASSCODE
 }
 
+enum PermissionsStage { BIOMETRIC, NOTIFICATION, NONE }
+
 enum SignupStage {
   NONE,
   EMAIL_VERIFICATION,
@@ -75,4 +86,5 @@ enum SignupStage {
   OTP,
   PASSCODE,
   PASSCODE_CONFIRM,
+  SIGNUP_OPTION,
 }

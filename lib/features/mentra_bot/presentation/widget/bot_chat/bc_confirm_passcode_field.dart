@@ -44,11 +44,9 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
               _registrationBloc.add(RegisterEvent(
                   payload:
                       injector.get<RegistrationBloc>().registrationPayload));
-
-              context.read<BotChatCubit>().answerQuestion(
-                  id: widget.message.id,
-                  answer: answer,
-                  nextSignupStage: SignupStage.PASSCODE_CONFIRM);
+            } else {
+              context.read<BotChatCubit>().revertBack();
+              CustomDialogs.error('Password mismatch');
             }
           },
         );
@@ -65,6 +63,11 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
       injector.get<RegistrationBloc>().clear();
 
       context.pop();
+      context.read<BotChatCubit>().answerQuestion(
+          id: widget.message.id,
+          answer: '****',
+          nextPermissionStage: PermissionsStage.BIOMETRIC,
+          nextFlow: BotChatFlow.permissions);
       // context.pushNamed(PageUrl.biometricAccess);
     }
 

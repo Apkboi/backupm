@@ -1,6 +1,6 @@
 part of 'bot_chat_cubit.dart';
 
-abstract class BotChatState  {
+abstract class BotChatState {
   const BotChatState();
 }
 

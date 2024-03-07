@@ -9,6 +9,7 @@ import 'package:mentra/common/widgets/success_dialog.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/settings/presentation/widgets/delete_account_reason.dart';
@@ -120,6 +121,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
       CustomDialogs.error(state.error);
     }
     if (state is EraseDataSuccessState) {
+      SessionManager().logOut();
       context.pop();
       await CustomDialogs.showBottomSheet(
           context,
@@ -142,6 +144,8 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
       CustomDialogs.error(state.error);
     }
     if (state is DeleteAccountSuccessState) {
+      context.pop();
+      SessionManager().logOut();
       await CustomDialogs.showBottomSheet(
           context,
           SuccessDialog(

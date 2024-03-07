@@ -12,6 +12,7 @@ import 'package:mentra/features/settings/presentation/widgets/avatar_selector_wi
 
 class BCAvatarField extends StatefulWidget {
   const BCAvatarField({super.key, required this.message});
+
   final BotChatmessageModel message;
 
   @override
@@ -39,7 +40,7 @@ class _BCAvatarFieldState extends State<BCAvatarField> {
               onBackgroundSelector: (p0) {},
               onAvatarSelected: (p0) {
                 setState(() {
-                  // selectedAvatar = p0.image.url;
+                  selectedAvatar = p0.image.id.toString();
                 });
               },
             ),
@@ -63,7 +64,8 @@ class _BCAvatarFieldState extends State<BCAvatarField> {
       context.read<BotChatCubit>().answerQuestion(
           id: widget.message.id,
           answer: "*******",
-          nextSignupStage: SignupStage.YEAR);
+          nextSignupStage: SignupStage.SIGNUP_OPTION);
+
       // context.pushNamed(PageUrl.selectYearScreen);
       // context.pushNamed(PageUrl.signupOptionScreen);
     } else {

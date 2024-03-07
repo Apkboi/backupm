@@ -49,18 +49,18 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget> {
                   constraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width / 2 + 40),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Pallets.primary),
+                      color: Pallets.navy),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         widget.isTyping
-                            ? '....'
+                            ? 'Mentra is typing...'
                             : widget.message.reversed.toList()[index],
-                        style: TextStyle(color: Pallets.white, fontSize: 16.sp),
+                        style: TextStyle(color: Pallets.white, fontSize: 16.sp,fontWeight: FontWeight.w500),
                       ),
                       8.verticalSpace,
                       Text(TimeUtil.formatTime(DateTime.now()),

@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/input_bar.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
@@ -31,6 +30,7 @@ class _BCEmailVerificationFieldState extends State<BCEmailVerificationField> {
       builder: (context, state) {
         return InputBar(
           hint: "Enter code",
+          inputType: TextInputType.number,
           validator: RequiredValidator(errorText: 'Enter code').call,
           onAnswer: (answer) {
             _bloc.add(VerifyOtpEvent(
@@ -57,7 +57,7 @@ class _BCEmailVerificationFieldState extends State<BCEmailVerificationField> {
           id: widget.message.id,
           answer: "*******",
           nextSignupStage: SignupStage.YEAR);
-      context.pushNamed(PageUrl.selectYearScreen);
+      // context.pushNamed(PageUrl.selectYearScreen);
     }
 
     if (state is VerifyOtpFailureState) {

@@ -71,7 +71,7 @@ class _UserAvatarScreenState extends State<UserAvatarScreen> {
                             onBackgroundSelector: (p0) {},
                             onAvatarSelected: (p0) {
                               setState(() {
-                                selectedAvatar = p0.image.url;
+                                selectedAvatar = p0.image.id.toString();
                               });
                             },
                           ),

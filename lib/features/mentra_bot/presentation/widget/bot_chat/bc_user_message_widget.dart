@@ -26,13 +26,13 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
               maxWidth: MediaQuery.of(context).size.width / 2 + 40),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15), color: Pallets.navy),
+              borderRadius: BorderRadius.circular(10), color: Pallets.userChatBg),
           child: widget.child ??
               Text(
                 widget.message[0],
                 style: TextStyle(
                     fontSize: 16.sp,
-                    color: Pallets.white,
+                    color: Pallets.black,
                     fontWeight: FontWeight.w500),
               ),
         ),
