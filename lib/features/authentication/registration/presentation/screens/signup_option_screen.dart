@@ -55,41 +55,40 @@ class _SignupOptionScreenState extends State<SignupOptionScreen> {
                             QuestionBox(message: [
                               'Awesome choice, ${injector.get<RegistrationBloc>().registrationPayload.name} 🎉 Would you like to sign up using your email, Google, or Apple?',
                             ], isSender: false),
-                            if(Platform.isIOS)
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: CustomButton(
-                                foregroundColor: Pallets.black,
-                                bgColor: Pallets.white,
-                                isExpanded: false,
-                                elevation: 0,
-                                padding: const EdgeInsets.all(16),
-                                borderRadius: BorderRadius.circular(100),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ImageWidget(
-                                      imageUrl: Assets.images.svgs.apple,
-                                      size: 15,
-                                    ),
-                                    5.horizontalSpace,
-                                    TextView(
-                                      text: 'Continue with Apple',
-                                      style: GoogleFonts.plusJakartaSans(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14.sp),
-                                    )
-                                  ],
+                            if (Platform.isIOS)
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: CustomButton(
+                                  foregroundColor: Pallets.black,
+                                  bgColor: Pallets.white,
+                                  isExpanded: false,
+                                  elevation: 0,
+                                  padding: const EdgeInsets.all(16),
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ImageWidget(
+                                        imageUrl: Assets.images.svgs.apple,
+                                        size: 15,
+                                      ),
+                                      5.horizontalSpace,
+                                      TextView(
+                                        text: 'Continue with Apple',
+                                        style: GoogleFonts.plusJakartaSans(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14.sp),
+                                      )
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    injector
+                                        .get<RegistrationBloc>()
+                                        .add(const AppleAuthEvent());
+                                  },
                                 ),
-                                onPressed: () {
-                                  injector
-                                      .get<RegistrationBloc>()
-                                      .add(const AppleAuthEvent());
-                                },
                               ),
-                            ),
                             16.verticalSpace,
-
                             Align(
                               alignment: Alignment.centerRight,
                               child: CustomButton(

@@ -7,32 +7,27 @@ import 'package:mentra/features/authentication/registration/presentation/bloc/re
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
 
-class BcSelectYearField extends StatefulWidget {
-  const BcSelectYearField({super.key, required this.message});
+class BcUserNameField extends StatefulWidget {
+  const BcUserNameField({super.key, required this.message});
 
   final BotChatmessageModel message;
 
   @override
-  State<BcSelectYearField> createState() => _BcSelectYearFieldState();
+  State<BcUserNameField> createState() => _BcUserNameFieldState();
 }
 
-class _BcSelectYearFieldState extends State<BcSelectYearField> {
+class _BcUserNameFieldState extends State<BcUserNameField> {
   @override
   Widget build(BuildContext context) {
     return InputBar(
-      inputType: TextInputType.number,
-      hint: "Enter birth year",
-      validator: RequiredValidator(errorText: 'Enter birth year').call,
+      hint: "Type name..",
+      validator: RequiredValidator(errorText: 'Enter your name').call,
       onAnswer: (answer) {
-        injector
-            .get<RegistrationBloc>()
-            .updateFields(birthYear: answer.toString());
-
+        injector.get<RegistrationBloc>().updateFields(name: answer.trim());
         context.read<BotChatCubit>().answerQuestion(
             id: widget.message.id,
             answer: answer,
-            nextSignupStage: SignupStage.PASSCODE);
-        // context.pushNamed(PageUrl.setPasscode);
+            nextSignupStage: SignupStage.AVARTER);
       },
     );
   }

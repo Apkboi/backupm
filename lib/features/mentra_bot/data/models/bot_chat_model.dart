@@ -18,7 +18,7 @@ class BotChatmessageModel {
       required this.answerType,
       this.loginStage = LoginStage.NONE,
       required this.time,
-       this.answerTime,
+      this.answerTime,
       this.signupStage = SignupStage.NONE,
       this.answer});
 
@@ -39,7 +39,15 @@ enum AnswerType {
   LOGIN_OPTION,
   WELCOME_OPTIONS,
   SIGNUP_OPTION,
-  TEXT,
+  CHAT,
+  USERNAME,
+  EMAIL_PREVIW,
+  LOGIN_PASSCODE,
+  EMAIL,
+  EMAIL_VERIFICATION,
+  SELECTYEAR,
+  CONFIRMPASSCODE,
+  SET_PASSCODE,
   NUMBER,
   AVATAR,
   ACTION_OPTION,
@@ -57,4 +65,14 @@ enum LoginStage {
   PASSCODE
 }
 
-enum SignupStage { NONE, USERNAME, AVARTER, YEAR, EMAIL, OTP, PASSCODE }
+enum SignupStage {
+  NONE,
+  EMAIL_VERIFICATION,
+  USERNAME,
+  AVARTER,
+  YEAR,
+  EMAIL,
+  OTP,
+  PASSCODE,
+  PASSCODE_CONFIRM,
+}

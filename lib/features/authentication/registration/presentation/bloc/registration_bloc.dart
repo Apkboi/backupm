@@ -1,15 +1,12 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
 import 'package:mentra/features/authentication/data/models/onauth_response.dart';
 import 'package:mentra/features/authentication/data/models/register_payload.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:mentra/features/authentication/dormain/usecase/auth_success_usecase.dart';
-
 part 'registration_event.dart';
 
 part 'registration_state.dart';
@@ -17,6 +14,7 @@ part 'registration_state.dart';
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   final AuthRepository _authRepository;
   RegistrationPayload registrationPayload = RegistrationPayload.empty();
+  String initialPasscode = '';
 
   RegistrationBloc(this._authRepository) : super(RegistrationInitial()) {
     on<RegisterEvent>(_mapRegisterEventToState);
@@ -145,4 +143,6 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       emit(OauthFailureState(error: e.toString()));
     }
   }
+
+  bool confirmPasscode(String passcode)=> initialPasscode == passcode;
 }

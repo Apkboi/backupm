@@ -16,7 +16,8 @@ class BotChatCubit extends Cubit<BotChatState> {
   BotChatmessageModel? currentQuestion;
   LoginQuestionDataSource loginDataSource = LoginQuestionDataSource();
   SignupQuestionDataSource signupDataSource = SignupQuestionDataSource();
-  WelcomeMessageDataSource welcomeMessageDataSource = WelcomeMessageDataSource();
+  WelcomeMessageDataSource welcomeMessageDataSource =
+      WelcomeMessageDataSource();
   BotChatFlow currentChatFlow = BotChatFlow.welcome;
 
   void startMessage(BotChatFlow flow) async {
@@ -128,7 +129,7 @@ class BotChatCubit extends Cubit<BotChatState> {
       stagedMessages
           .add(signupDataSource.questions.first..time = DateTime.now());
     } else {
-      stagedMessages.add(loginDataSource.messages
+      stagedMessages.add(signupDataSource.questions
           .where((element) => element.signupStage == nextSignupStage)
           .first
         ..time = DateTime.now());

@@ -136,6 +136,7 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
       CustomDialogs.showLoading(context);
     }
     if (state is OauthSuccessState) {
+      context.pop();
       if (state.response.data.newUser) {
         injector
             .get<regbloc.RegistrationBloc>()

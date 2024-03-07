@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
-import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
-import 'package:mentra/features/authentication/registration/presentation/widget/date_selector_widget.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
 
 class SelectYearScreen extends StatefulWidget {

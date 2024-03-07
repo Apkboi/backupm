@@ -25,7 +25,7 @@ class LoginQuestionDataSource {
         isFromBot: true,
         id: 0,
         isTyping: false,
-        answerType: AnswerType.TEXT,
+        answerType: AnswerType.CHAT,
         loginStage: LoginStage.EMAILPREVIEW,
         time: DateTime.now(),
         answerTime: DateTime.now()),

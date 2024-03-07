@@ -66,7 +66,6 @@ class _SetPasscodeScreenState extends State<SetPasscodeScreen> {
                               pinMode == PinMode.setPin
                                   ? const QuestionBox(message: [
                                       'Appreciated! Let\'s secure your account. Please create a 4-digit passcode',
-
                                     ], isSender: false)
                                   : const QuestionBox(message: [
                                       'Well done! To ensure it\'s correct, please confirm your passcode.',
