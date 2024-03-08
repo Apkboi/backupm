@@ -40,7 +40,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Exciting! Let\'s get your new account set up. To start, what nickname or pseudonym would you like to use? This will be how you\'re identified within Mentra. (Remember, you can change this at any time',
+            'Let\'s start with a nickname. This is how you\'ll be known in the Mentra community. Remember, you can change this at any time',
         isFromBot: true,
         id: 0,
         isTyping: false,

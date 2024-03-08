@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
@@ -26,17 +27,17 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
               maxWidth: MediaQuery.of(context).size.width / 2 + 40),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Pallets.userChatBg),
+              borderRadius: BorderRadius.circular(10),
+              color: Pallets.userChatBg),
           child: widget.child ??
-              Text(
-                widget.message[0],
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    color: Pallets.black,
-                    fontWeight: FontWeight.w500),
-              ),
+              TextView(
+                  text: widget.message[0],
+                  fontSize: 15.sp,
+                  color: Pallets.black,
+                  lineHeight: 1.5,
+                  fontWeight: FontWeight.w500),
         ),
-        2.5.verticalSpace
+        5.verticalSpace
       ],
     );
   }

@@ -31,7 +31,7 @@ class _BcSetPasscodeFieldState extends State<BcSetPasscodeField> {
         injector.get<RegistrationBloc>().initialPasscode = answer;
         context.read<BotChatCubit>().answerQuestion(
             id: widget.message.id,
-            answer: answer,
+            answer: '****',
             nextSignupStage: SignupStage.PASSCODE_CONFIRM);
       },
     );

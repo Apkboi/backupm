@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
@@ -34,7 +36,7 @@ class BCPermissionsField extends StatelessWidget {
                   fontWeight: FontWeight.w600, fontSize: 14.sp),
             ),
             onPressed: () async {
-              _requestPermission();
+              _requestPermission(context);
 
               // context.pushNamed(PageUrl.notificationAccess);
             },
@@ -74,24 +76,34 @@ class BCPermissionsField extends StatelessWidget {
             nextPermissionStage: PermissionsStage.NOTIFICATION);
       case PermissionsStage.NOTIFICATION:
         context.read<BotChatCubit>().answerQuestion(
-              id: message.id,
-              answer: 'Not now',
-              nextFlow: BotChatFlow.talkToMentra,
-            );
+          id: message.id,
+          answer: 'Not now',
+          nextFlow: BotChatFlow.talkToMentra,
+        );
       case PermissionsStage.NONE:
         break;
     }
   }
 
-  void _requestPermission() async {
+  void _requestPermission(BuildContext context) async {
     switch (message.permissionsStage) {
       case PermissionsStage.BIOMETRIC:
         await PermissionHandlerService().requestPermission(Permission.camera);
+        context.read<BotChatCubit>().answerQuestion(id: message.id,
+            answer: 'Yes, please!',
+            nextPermissionStage: PermissionsStage.NOTIFICATION);
       case PermissionsStage.NOTIFICATION:
         await PermissionHandlerService()
             .requestPermission(Permission.notification);
+        context.read<BotChatCubit>().answerQuestion(id: message.id,
+            answer: 'Yes, please!',
+            nextFlow: BotChatFlow.talkToMentra);
+         context.goNamed(PageUrl.welcomeScreen);
       case PermissionsStage.NONE:
         break;
     }
+
+
+
   }
 }

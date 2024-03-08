@@ -32,8 +32,10 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
+    _startMentraChat();
     DashboardUsecase().execute();
     _initMesibo();
+    // _startMentraChat();
     super.initState();
   }
 
@@ -95,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen>
                     Positioned(
                         top: -100,
                         child: ImageWidget(
-                          width: 254,
-                          height: 254,
+                            width: 254,
+                            height: 254,
                             fit: BoxFit.scaleDown,
                             imageUrl: Assets.images.svgs.combinedShape)),
                     Container(
@@ -202,6 +204,12 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void Mesibo_onConnectionStatus(int status) {
     logger.i(status);
+  }
+
+  void _startMentraChat() {
+    Future.delayed(const Duration(seconds: 1), () {
+      context.pushNamed(PageUrl.talkToMentraScreen,);
+    });
   }
 }
 

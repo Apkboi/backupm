@@ -46,7 +46,9 @@ class BotChatCubit extends Cubit<BotChatState> {
 
   bool get canNotRevert =>
       currentChatFlow == BotChatFlow.welcome ||
-      (currentChatFlow == BotChatFlow.permissions && currentQuestion!.permissionsStage == PermissionsStage.BIOMETRIC);
+      currentChatFlow == BotChatFlow.talkToMentra ||
+      (currentChatFlow == BotChatFlow.permissions &&
+          currentQuestion!.permissionsStage == PermissionsStage.BIOMETRIC);
 
   bool revertBack() {
     if (canNotRevert) {
@@ -198,6 +200,6 @@ class BotChatCubit extends Cubit<BotChatState> {
   }
 
   void _startMentraChat() {
-    stagedMessages.add(BotChatmessageModel.botTyping());
+    // stagedMessages.add(BotChatmessageModel.botTyping());
   }
 }

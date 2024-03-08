@@ -178,7 +178,12 @@ class CustomRoutes {
       GoRoute(
         path: '/talkToMentraScreen',
         name: PageUrl.talkToMentraScreen,
-        builder: (context, state) => const TalkToMentraScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
+          context: context,
+          state: state,
+          child: const TalkToMentraScreen(),
+        ),
+        // builder: (context, state) => const TalkToMentraScreen(),
       ),
       GoRoute(
         path: '/botChatScreen',
@@ -371,4 +376,17 @@ class CustomRoutes {
       ),
     ],
   );
+
+  static CustomTransitionPage buildPageWithDefaultTransition<T>({
+    required BuildContext context,
+    required GoRouterState state,
+    required Widget child,
+  }) {
+    return CustomTransitionPage<T>(
+      key: state.pageKey,
+      child: child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
+    );
+  }
 }

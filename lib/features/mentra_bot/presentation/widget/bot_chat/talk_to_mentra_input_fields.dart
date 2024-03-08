@@ -34,7 +34,7 @@ class _TalkToMentraInputFieldsState extends State<TalkToMentraInputFields> {
       AnswerType.AVATAR => BCAvatarField(
           message: widget.currentMessage,
         ),
-      AnswerType.BIOMETRIC_OPTIONS => const Text('Login Option'),
+      AnswerType.BIOMETRIC_OPTIONS => 0.verticalSpace,
       AnswerType.NONE => 0.horizontalSpace,
       AnswerType.EMAIL => BcUserEmailField(
           message: widget.currentMessage,

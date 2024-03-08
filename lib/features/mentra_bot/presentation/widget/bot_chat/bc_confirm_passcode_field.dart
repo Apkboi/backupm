@@ -44,6 +44,8 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
               _registrationBloc.add(RegisterEvent(
                   payload:
                       injector.get<RegistrationBloc>().registrationPayload));
+
+
             } else {
               context.read<BotChatCubit>().revertBack();
               CustomDialogs.error('Password mismatch');

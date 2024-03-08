@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
@@ -10,6 +11,10 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_message_box.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/talk_to_mentra_input_fields.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -72,20 +77,24 @@ class _BotChatScreenState extends State<BotChatScreen> {
                     onSelected: (value) {
                       switch (value) {
                         case "end":
-                          // _endSession(context);
+                          if (SessionManager.instance.isLoggedIn) {
+                            _endSession(context);
+                          } else {
+                            context.pop();
+                          }
                           break;
                       }
                     },
                     itemBuilder: (context) {
                       return [
-                        // PopupMenuItem<String>(
-                        //   value: 'end',
-                        //   height: 30,
-                        //   child: Text(
-                        //     'End Session',
-                        //     style: TextStyle(fontSize: 14.sp),
-                        //   ),
-                        // ),
+                        PopupMenuItem<String>(
+                          value: 'end',
+                          height: 30,
+                          child: Text(
+                            'End Session',
+                            style: TextStyle(fontSize: 14.sp),
+                          ),
+                        ),
                       ];
                     },
                     child: const CircleAvatar(
@@ -153,6 +162,54 @@ class _BotChatScreenState extends State<BotChatScreen> {
       }
     } else {
       context.read<BotChatCubit>().revertBack();
+    }
+  }
+
+  void _endSession(BuildContext context) async {
+    final bool? sessionEnded =
+        await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            )),
+            constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+    if (sessionEnded ?? false) {
+      final bool? writeReview = await CustomDialogs.showBottomSheet(
+          context, const SessionEndedSheet(),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          )),
+          constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+      if (writeReview ?? false) {
+        final bool? wroteFeedback =
+            await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                )),
+                constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+        if (wroteFeedback ?? false) {
+          await CustomDialogs.showBottomSheet(
+              context, const FeedbackSuccessDialog(),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )),
+              constraints: BoxConstraints(maxHeight: 0.9.sh));
+          context.pop();
+        }
+        context.pop();
+      } else {
+        context.pop();
+      }
     }
   }
 }

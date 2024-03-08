@@ -56,18 +56,18 @@ class _SecurityPrivacyScreenState extends State<SecurityPrivacyScreen> {
                       ),
                     )),
                 10.verticalSpace,
-                Container(
-                  decoration: BoxDecoration(
-                      color: Pallets.white,
-                      borderRadius: BorderRadius.circular(17)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(17),
-                    child: SettingListTile(
-                        onTap: () {},
-                        leadingWidget: 0.horizontalSpace,
-                        tittle: 'Change Language'),
-                  ),
-                )
+                // Container(
+                //   decoration: BoxDecoration(
+                //       color: Pallets.white,
+                //       borderRadius: BorderRadius.circular(17)),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(17),
+                //     child: SettingListTile(
+                //         onTap: () {},
+                //         leadingWidget: 0.horizontalSpace,
+                //         tittle: 'Change Language'),
+                //   ),
+                // )
               ],
             ),
           ),

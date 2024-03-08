@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -51,24 +52,27 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular( !widget.isTyping?15:100),
                       color: Pallets.navy),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.isTyping
-                            ? 'Mentra is typing...'
-                            : widget.message.reversed.toList()[index],
-                        style: TextStyle(color: Pallets.white, fontSize: 16.sp,fontWeight: FontWeight.w500),
-                      ),
-                      8.verticalSpace,
-                      Text(TimeUtil.formatTime(DateTime.now()),
-                          style: TextStyle(
-                            fontSize: 11.sp,
-                            color: Pallets.white,
-                            fontWeight: FontWeight.w600,
-                          ))
+                      TextView(
+                          text: widget.isTyping
+                              ? 'Mentra is typing....'
+                              : widget.message.reversed.toList()[index],
+                          lineHeight: 1.5,
+                          color: Pallets.white,
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500),
+                      if (!widget.isTyping) 8.verticalSpace,
+                      if (!widget.isTyping)
+                        Text(TimeUtil.formatTime(DateTime.now()),
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              color: Pallets.white,
+                              fontWeight: FontWeight.w600,
+                            ))
                     ],
                   ),
                 ),
