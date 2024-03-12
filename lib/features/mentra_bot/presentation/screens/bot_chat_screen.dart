@@ -116,7 +116,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
                         children: [
                           Expanded(
                               child: ScrollablePositionedList.builder(
-                                  reverse: true,
+                                  // reverse: true,
                                   padding: EdgeInsets.zero,
                                   physics: const BouncingScrollPhysics(),
                                   itemScrollController: context
@@ -130,7 +130,6 @@ class _BotChatScreenState extends State<BotChatScreen> {
                                         message: context
                                             .watch<BotChatCubit>()
                                             .stagedMessages
-                                            .reversed
                                             .toList()[index],
                                       ))),
                           16.verticalSpace,

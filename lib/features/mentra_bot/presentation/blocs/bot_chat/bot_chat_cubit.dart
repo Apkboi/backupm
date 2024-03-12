@@ -66,7 +66,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     // emit(state.copyWith(highlightIndex: -1));
     scrollController.scrollTo(
       alignment: 0.5,
-      index: 0, duration: const Duration(microseconds: 1),
+      index: stagedMessages.length, duration: const Duration(microseconds: 1),
       curve: Curves.easeInOut,
       // curve: Curves.easeOut,
       // duration: kTabScrollDuration,
