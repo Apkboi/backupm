@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/time_util.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
-class SessionEndedDialog extends StatelessWidget {
-  const SessionEndedDialog({super.key});
+class TherapySessionEndedDialog extends StatelessWidget {
+  const TherapySessionEndedDialog(
+      {super.key, required this.sessionDetails, this.tittle});
+
+  final TherapySession sessionDetails;
+  final String? tittle;
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +40,18 @@ class SessionEndedDialog extends StatelessWidget {
           ),
           10.verticalSpace,
           TextView(
-            text: 'Session Scheduled!',
+            text: tittle ?? 'Session Ended!',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
-                color: Pallets.navy,
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w600),
+                fontSize: 24.sp, fontWeight: FontWeight.w600),
           ),
-          16.verticalSpace,
+          10.verticalSpace,
           const TextView(
-            text:
-                'We hope this session with Nour brought you insights and comfort. Remember, every step is a part of your journey towards well-being.',
-            align: TextAlign.center,
-            color: Pallets.ink,
-          ),
+              text:
+                  'We hope this session with Nour brought you insights and comfort. Remember, every step is a part of your journey towards well-being.',
+              align: TextAlign.center,
+              color: Pallets.ink,
+              fontWeight: FontWeight.w500),
           16.verticalSpace,
           Container(
             decoration: BoxDecoration(
@@ -55,40 +60,50 @@ class SessionEndedDialog extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                ImageWidget(imageUrl: Assets.images.svgs.avatar1),
+                ImageWidget(
+                  imageUrl: sessionDetails.therapist.user.avatar,
+                  size: 60,
+                  borderRadius: BorderRadius.circular(50),
+                ),
                 10.verticalSpace,
                 const TextView(
-                  text: 'Therapy session with',
+                  text: 'Session with',
                   align: TextAlign.center,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                 ),
                 10.verticalSpace,
-                const TextView(
-                  text: 'Nour Martin, Ph.D.',
+                TextView(
+                  text: sessionDetails.therapist.user.name,
                   align: TextAlign.center,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Pallets.primary,
                 ),
                 10.verticalSpace,
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageWidget(imageUrl: ''),
+                    ImageWidget(imageUrl: Assets.images.svgs.icCalender),
+                    10.horizontalSpace,
                     TextView(
-                      text: ' Saturday, 02 December 2023',
+                      text: TimeUtil.formatToFullDate(DateTime.parse(
+                          sessionDetails.startsAt.toIso8601String())),
                       fontWeight: FontWeight.w600,
                     ),
                   ],
                 ),
                 10.verticalSpace,
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ImageWidget(imageUrl: ''),
+                    ImageWidget(imageUrl: Assets.images.svgs.icClock),
+                    10.horizontalSpace,
                     TextView(
-                      text: ' 9:00 am',
+                      text: "${TimeUtil.formatTime(
+                        DateTime.parse(
+                            sessionDetails.startsAt.toIso8601String()),
+                      )} - ${TimeUtil.formatTime(sessionDetails.endsAt ?? DateTime.now())}",
                       fontWeight: FontWeight.w600,
                     ),
                   ],
@@ -98,9 +113,11 @@ class SessionEndedDialog extends StatelessWidget {
           ),
           16.verticalSpace,
           CustomNeumorphicButton(
-            onTap: () {},
+            onTap: () {
+              context.pop(true);
+            },
             color: Pallets.primary,
-            text: 'Done',
+            text: 'Write a review',
           )
         ],
       ),

@@ -7,8 +7,8 @@ import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
-class MentraSessionEndedSheet extends StatelessWidget {
-  const MentraSessionEndedSheet({Key? key}) : super(key: key);
+class SessionEndedSheet extends StatelessWidget {
+  const SessionEndedSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/therapy/data/models/accept_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/change_therapist_message_model.dart';
@@ -39,6 +40,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<SelectTherapistEvent>(_mapSelectTherapistEventToState);
     on<TherapistAcceptedEvent>(_mapStartChangeTherapistConversationToState);
     on<GetMatchedTherapistEvent>(_mapGetMatchedTherapistEventToState);
+    on<CreateReviewEvent>(_mapCreateReviewEventToState);
   }
 
   List<TherapySession>? upComingSessions;
@@ -280,4 +282,20 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
 
   FutureOr<void> _mapGetMatchedTherapistEventToState(
       GetMatchedTherapistEvent event, Emitter<TherapyState> emit) {}
+
+  FutureOr<void> _mapCreateReviewEventToState(
+      CreateReviewEvent event, Emitter<TherapyState> emit) async {
+    emit(const CreateReviewLoadingState());
+    try {
+      final response = await _therapyRepository.createReview(
+          sessionId: event.sessionId,
+          comment: event.comment,
+
+          rating: event.rating);
+      clearPayload();
+      emit(CreateReviewSuccessState(response: response));
+    } catch (e) {
+      emit(CreateReviewFailureState(error: e.toString()));
+    }
+  }
 }

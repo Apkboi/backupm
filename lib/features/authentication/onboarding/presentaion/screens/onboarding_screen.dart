@@ -45,10 +45,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 1.sh,
                       autoPlay: true,
                       // scrollDirection: Axis.horizontal,
-                      autoPlayCurve: Curves.easeInCirc,
-                      autoPlayInterval: const Duration(seconds: 3),
-                      autoPlayAnimationDuration:
-                          const Duration(milliseconds: 300),
+                      autoPlayCurve: Curves.easeInOut,
+                      autoPlayInterval: const Duration(seconds: 5),
+                      autoPlayAnimationDuration: const Duration(seconds: 2),
                       onPageChanged: (index, reason) {
                         setState(() {
                           _currentIndex = index;

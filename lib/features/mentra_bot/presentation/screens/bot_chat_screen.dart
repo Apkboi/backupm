@@ -122,7 +122,8 @@ class _BotChatScreenState extends State<BotChatScreen> {
 
                                   // addAutomaticKeepAlives: true,
                                   padding: EdgeInsets.zero,
-                                  physics: const BouncingScrollPhysics(),
+                                  // physics:
+                                  //     const AlwaysScrollableScrollPhysics(),
                                   itemScrollController: context
                                       .read<BotChatCubit>()
                                       .scrollController,
@@ -180,7 +181,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
 
     if (sessionEnded ?? false) {
       final bool? writeReview = await CustomDialogs.showBottomSheet(
-          context, const SessionEndedSheet(),
+          context, const MentraSessionEndedSheet(),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),

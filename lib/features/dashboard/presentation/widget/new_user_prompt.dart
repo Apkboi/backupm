@@ -17,50 +17,46 @@ class NewUserPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimationConfiguration.synchronized(
       duration: const Duration(milliseconds: 500),
-      child: SlideAnimation(
-        verticalOffset: 60,
-        // duration: Duration(milliseconds: 300),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          decoration: ShapeDecoration(
-              color: Pallets.white.withOpacity(0.55),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-          child: IntrinsicHeight(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TextView(
-                        text: 'Connect with Mentra',
-                        style: GoogleFonts.fraunces(
-                            fontSize: 20.sp, fontWeight: FontWeight.w600),
-                      ),
-                      8.verticalSpace,
-                      const TextView(
-                        text:
-                            'Click below to \'Talk to Mentra\' and share how you\'re doing, ask questions, or just have a friendly chat.  Ready when you are!',
-                        color: Pallets.ink,
-                        align: TextAlign.center,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      10.verticalSpace,
-                      CustomNeumorphicButton(
-                          expanded: true,
-                          text: 'Talk to Mentra',
-                          fgColor: Pallets.white,
-                          padding: const EdgeInsets.all(16),
-                          onTap: () {
-                            context.pushNamed(PageUrl.talkToMentraScreen);
-                          },
-                          color: Pallets.primary)
-                    ],
-                  ),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        decoration: ShapeDecoration(
+            color: Pallets.white.withOpacity(0.55),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+        child: IntrinsicHeight(
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextView(
+                      text: 'Connect with Mentra',
+                      style: GoogleFonts.fraunces(
+                          fontSize: 20.sp, fontWeight: FontWeight.w600),
+                    ),
+                    8.verticalSpace,
+                    const TextView(
+                      text:
+                          'Click below to \'Talk to Mentra\' and share how you\'re doing, ask questions, or just have a friendly chat.  Ready when you are!',
+                      color: Pallets.ink,
+                      align: TextAlign.center,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    10.verticalSpace,
+                    CustomNeumorphicButton(
+                        expanded: true,
+                        text: 'Talk to Mentra',
+                        fgColor: Pallets.white,
+                        padding: const EdgeInsets.all(16),
+                        onTap: () {
+                          context.pushNamed(PageUrl.talkToMentraScreen);
+                        },
+                        color: Pallets.primary)
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -286,7 +286,8 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
                   const AppEmptyState(
                     hasBg: false,
                     tittle: 'No upcoming session.',
-                    subtittle: "You have no upcoming sessions. Start by booking a session with a therapist",
+                    subtittle:
+                        "You have no upcoming sessions. Start by booking a session with a therapist",
                   ),
                 ],
               ),

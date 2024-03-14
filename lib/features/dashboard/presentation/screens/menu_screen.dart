@@ -132,7 +132,7 @@ class _MenuScreenState extends State<MenuScreen> {
                         child: SizedBox(
                           child: Column(
                             children: AnimationConfiguration.toStaggeredList(
-                              duration: const Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 600),
                               childAnimationBuilder: (widget) => SlideAnimation(
                                 verticalOffset: 40.0,
                                 delay: const Duration(milliseconds: 100),

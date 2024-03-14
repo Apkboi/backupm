@@ -40,6 +40,7 @@ abstract class Pallets {
   static const videoButtonColor = Color(0xFFF9C16C);
   static const buttonBlack = Color(0xFF242628);
   static const skyBlue = Color(0xFF0666EB);
+  // static const buttonBlack = Color(0xFF0666EB);
 
   static const primaryDark = Color(0xFF0E5A63);
   static const errorRed = Color(0xFFC62C2C);

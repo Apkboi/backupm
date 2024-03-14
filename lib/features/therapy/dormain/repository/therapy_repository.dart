@@ -1,3 +1,4 @@
+import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/features/therapy/data/models/accept_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
@@ -22,6 +23,8 @@ abstract class TherapyRepository {
 
   Future<GetMatchedTherapistResponse> getMatchedTherapist();
 
+  Future<dynamic> getTherapistReview();
+
   Future<CreateSessionResponse> cancelSession(
       {required String sessionId, String? note});
 
@@ -29,5 +32,11 @@ abstract class TherapyRepository {
 
   Future<AcceptTherapistResponse> acceptTherapist({
     required String therapistId,
+  });
+
+  Future<SuccessResponse> createReview({
+    required String sessionId,
+    required String comment,
+    required int rating,
   });
 }

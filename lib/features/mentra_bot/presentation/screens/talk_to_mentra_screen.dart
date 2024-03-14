@@ -112,7 +112,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
 
     if (sessionEnded ?? false) {
       final bool? writeReview = await CustomDialogs.showBottomSheet(
-          context, const SessionEndedSheet(),
+          context, const MentraSessionEndedSheet(),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),

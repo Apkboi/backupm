@@ -1,3 +1,4 @@
+import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
@@ -142,6 +143,42 @@ class TherapyRepositoryImpl extends TherapyRepository {
         RequestMethod.get,
       );
       return GetMatchedTherapistResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.e(e);
+      logger.e(stack);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<SuccessResponse> createReview({
+    required String sessionId,
+    required String comment,
+    required int rating,
+  }) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.createReview, RequestMethod.post, data: {
+        "therapy_session_id": sessionId,
+        "comment": comment,
+        "rating": rating.toString()
+      });
+      return SuccessResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.e(e);
+      logger.e(stack);
+      rethrow;
+    }
+  }
+
+  @override
+  Future getTherapistReview() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.getReviews,
+        RequestMethod.get,
+      );
+      return response.data;
     } catch (e, stack) {
       logger.e(e);
       logger.e(stack);

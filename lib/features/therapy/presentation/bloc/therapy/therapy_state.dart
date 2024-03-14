@@ -247,3 +247,53 @@ class GetMatchedTherapistLoadingState extends TherapyState {
   @override
   List<Object?> get props => [];
 }
+
+class CreateReviewSuccessState extends TherapyState {
+  final SuccessResponse response;
+
+  const CreateReviewSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class CreateReviewFailureState extends TherapyState {
+  final String error;
+
+  const CreateReviewFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class CreateReviewLoadingState extends TherapyState {
+  const CreateReviewLoadingState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetTherapistReviewsSuccessState extends TherapyState {
+  final SuccessResponse response;
+
+  const GetTherapistReviewsSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class GetTherapistReviewsFailureState extends TherapyState {
+  final String error;
+
+  const GetTherapistReviewsFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class GetTherapistReviewsLoadingState extends TherapyState {
+  const GetTherapistReviewsLoadingState();
+
+  @override
+  List<Object?> get props => [];
+}

@@ -9,6 +9,11 @@ class BotChatInitial extends BotChatState {
   List<Object> get props => [];
 }
 
+class RemoveTypingState extends BotChatState {
+  @override
+  List<Object> get props => [];
+}
+
 class QuestionUpdatedState extends BotChatState {
   @override
   List<Object> get props => [];

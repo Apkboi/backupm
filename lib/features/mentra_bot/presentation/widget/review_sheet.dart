@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 
 class ReviewSheet extends StatefulWidget {
   const ReviewSheet({Key? key}) : super(key: key);
@@ -124,7 +127,6 @@ class _ReviewSheetState extends State<ReviewSheet> {
           43.verticalSpace,
           CustomNeumorphicButton(
             onTap: () {
-              context.pop(true);
               // context.pop();
               // CustomDialogs.showBottomSheet(
               //     context, const EndSessionDialog(),
@@ -142,5 +144,17 @@ class _ReviewSheetState extends State<ReviewSheet> {
         ],
       ),
     );
+  }
+
+  void _listenToTherapyBloc(BuildContext context, TherapyState state) {
+    if (state is CreateReviewLoadingState) {
+      CustomDialogs.showLoading(context);
+    }
+    if (state is CreateReviewSuccessState) {
+      context.pop();
+      context.pop(true);
+
+      // CustomDialogs.success('');
+    }
   }
 }

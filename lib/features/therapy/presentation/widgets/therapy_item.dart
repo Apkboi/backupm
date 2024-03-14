@@ -5,6 +5,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
@@ -24,6 +25,7 @@ class TherapyItem extends StatelessWidget {
             TherapyDetailsSheet(
               session: session,
             ));
+        // context.pushNamed(PageUrl.therapistChatScreen);
       },
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -60,7 +62,9 @@ class TherapyItem extends StatelessWidget {
                     8.verticalSpace,
                     SessionButton(
                       startDate: session.startsAt.toLocal(),
-                      endDate: (session.endsAt ?? session.startsAt.add(const Duration(hours: 1))).toLocal(),
+                      endDate: (session.endsAt ??
+                              session.startsAt.add(const Duration(hours: 1)))
+                          .toLocal(),
                       session: session,
                     )
                   ],

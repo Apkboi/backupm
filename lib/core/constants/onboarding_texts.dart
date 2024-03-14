@@ -24,4 +24,10 @@ const registrationSuccesMessage =
 const lorem =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo';
 
-const newFeatureMessage = "This feature is available exclusively under our subscription plan, unlocking a world of premium benefits.\n \nReady to explore? Click below to discover our subscription plans and take your experience to the next level!";
+const endTherapySessionMessage =
+    "Would you like to end your session now? If you have any final questions or points to discuss, now is a good time.";
+
+const newFeatureMessage =
+    "This feature is available exclusively under our subscription plan, unlocking a world of premium benefits.\n \nReady to explore? Click below to discover our subscription plans and take your experience to the next level!";
+const feedbackSuccessMessage =
+    "Thank you for your feedback! It helps us continually enhance our services and support.";

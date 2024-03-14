@@ -4,8 +4,10 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
+import 'package:mentra/common/widgets/success_dialog.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
+import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
@@ -15,9 +17,13 @@ import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.d
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'end_therapy_session_dialog.dart';
 
 class TherapyDetailsSheet extends StatefulWidget {
   const TherapyDetailsSheet({super.key, required this.session});
@@ -183,7 +189,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               Center(
                 child: CustomNeumorphicButton(
                   onTap: () {
-                    _reScheduleTherapy(context);
+                    _endSession(context);
+                    // _reScheduleTherapy(context);
                   },
                   color: Pallets.primary,
                   expanded: false,
@@ -233,9 +240,9 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
   }
 
   void launchMessage() async {
-    PermissionHandlerService().requestPermission(Permission.microphone);
-    PermissionHandlerService().requestPermission(Permission.mediaLibrary);
-    PermissionHandlerService().requestPermission(Permission.camera);
+    // PermissionHandlerService().requestPermission(Permission.microphone);
+    // PermissionHandlerService().requestPermission(Permission.mediaLibrary);
+    // PermissionHandlerService().requestPermission(Permission.camera);
     logger.i(widget.session.therapist.user.mesiboUserToken);
 
     MesiboProfile pro = MesiboProfile(
@@ -272,5 +279,61 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
     buttons.endToEndEncryptionInfo = true; // e2// ee should be enabled
     _mesiboUi.setupBasicCustomization(buttons, null);
     _mesiboUi.launchMessaging(profile);
+  }
+
+  void _endSession(BuildContext context) async {
+    final bool? sessionEnded = await CustomDialogs.showBottomSheet(
+        context,
+        EndTherapySessionDialog(
+          session: widget.session,
+        ),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        )),
+        constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+    if (sessionEnded ?? false) {
+      final bool? writeReview = await CustomDialogs.showCustomDialog(
+          TherapySessionEndedDialog(sessionDetails: widget.session), context);
+
+      logger.i(writeReview);
+
+      if (writeReview ?? false) {
+        final bool? wroteFeedback = await CustomDialogs.showBottomSheet(
+            context,
+            TherapyReviewSheet(
+              session: widget.session,
+            ),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            )),
+            constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+        if (wroteFeedback ?? false) {
+          await CustomDialogs.showBottomSheet(
+              context,
+              SuccessDialog(
+                tittle: feedbackSuccessMessage,
+                onClose: () {
+                  context.pop();
+                },
+              ),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )),
+              constraints: BoxConstraints(maxHeight: 0.9.sh));
+          // context.pop();
+        }
+        context.pop();
+      } else {
+        context.pop();
+      }
+    }
   }
 }

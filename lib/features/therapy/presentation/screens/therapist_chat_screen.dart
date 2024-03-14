@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/success_dialog.dart';
+import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/features/therapy/data/models/chat_message.dart';
+import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/session/session_bloc.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
+import 'package:mentra/features/therapy/presentation/widgets/end_therapy_session_dialog.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
+import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:uuid/uuid.dart';
@@ -19,14 +30,14 @@ DemoUser user2 = DemoUser(
     'joel@gmail.com');
 
 class TherapistChatScreen extends StatefulWidget {
-  const TherapistChatScreen({Key? key}) : super(key: key);
+  const TherapistChatScreen({super.key, });
+
 
   @override
   State<TherapistChatScreen> createState() => _TherapistChatScreenState();
 }
 
-class _TherapistChatScreenState extends State<TherapistChatScreen>
-    implements MesiboMessageListener, MesiboConnectionListener {
+class _TherapistChatScreenState extends State<TherapistChatScreen> {
   final controller = TextEditingController();
 
   final List<String> messages = [
@@ -41,7 +52,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen>
 
   @override
   void initState() {
-    _listenForMessages();
+    // _listenForMessages();
     // bloc.add(GetMessagesEvent());
     super.initState();
   }
@@ -58,6 +69,9 @@ class _TherapistChatScreenState extends State<TherapistChatScreen>
           ImageWidget(
             imageUrl: Assets.images.pngs.avatar2.path,
             height: 50.h,
+            onTap: () {
+              // _endSession(context);
+            },
             fit: BoxFit.cover,
             shape: BoxShape.circle,
             width: 50.w,
@@ -113,41 +127,13 @@ class _TherapistChatScreenState extends State<TherapistChatScreen>
     );
   }
 
-  @override
-  void Mesibo_onMessage(MesiboMessage message) {
-    // TODO: implement Mesibo_onMessage
-    logger.i("Mesibo_onMessag : ${message.message}");
-
-    var uid = Uuid().v1();
-
-    Allmessages = Allmessages
-      ..add(TherapyChatMessage(
-          message: message.message.toString(),
-          time: DateTime.now(),
-          isTherapist: !(message.profile?.selfProfile ?? true),
-          id: uid));
-
-    logger.i(Allmessages.length);
-    setState(() {});
-  }
-
-  @override
-  void Mesibo_onMessageStatus(MesiboMessage message) {
-    logger.i("Mesibo_onMessageStatus : ${message.status}");
-  }
-
-  @override
-  void Mesibo_onMessageUpdate(MesiboMessage message) {
-    logger.i("Mesibo_onMessageUpdate : ${message.title}");
-  }
-
   Future<void> _listenForMessages() async {
-    Mesibo.getInstance().setListener(this);
-    MesiboProfile profile =
-        await Mesibo.getInstance().getUserProfile(user2.token);
-    MesiboReadSession rs = MesiboReadSession.createReadSummarySession(this);
-    rs.read(4);
-    var session = profile.createReadSession(this);
+    // Mesibo.getInstance().setListener(this);
+    // MesiboProfile profile =
+    //     await Mesibo.getInstance().getUserProfile(user2.token);
+    // MesiboReadSession rs = MesiboReadSession.createReadSummarySession(this);
+    // rs.read(4);
+    // var session = profile.createReadSession(this);
     // var read = await session.read(4);
     // logger.i(await session.getTotalMessageCount());
     // sendMessage();
@@ -163,11 +149,9 @@ class _TherapistChatScreenState extends State<TherapistChatScreen>
     controller.clear();
   }
 
-  @override
-  void Mesibo_onConnectionStatus(int status) {
-    logger.i('Connection Wa oh');
-  }
 }
+
+
 
 class _InputBar extends StatefulWidget {
   const _InputBar({Key? key}) : super(key: key);

@@ -94,6 +94,8 @@ class UrlConfig {
   static const String matchTherapist = '/user/session/therapist/match';
   static const String selectTherapist = '/user/session/therapist/select';
   static const String getMatchedTherapist = '/user/session/therapist/select';
+  static const String createReview = '/user/session/reviews/create';
+  static const String getReviews = '/user/session/reviews/list';
 
 //  NOtification
   static const String getNotifications = '/notifications/list';

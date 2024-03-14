@@ -32,15 +32,19 @@ class BotChatCubit extends Cubit<BotChatState> {
   void startMessage(BotChatFlow flow) async {
     if (flow != BotChatFlow.talkToMentra) {
       stagedMessages.clear();
+      // _addTyping();
+
       for (var message in welcomeMessageDataSource.messages) {
         _addTyping();
-        await Future.delayed(const Duration(seconds: 1));
-        _removeTyping();
+        await Future.delayed(const Duration(seconds: 2));
+        await _removeTyping();
+        await Future.delayed(const Duration(milliseconds: 300));
         stagedMessages.add(message..time = DateTime.now());
         currentQuestion = message;
       }
       logger.i(stagedMessages.length);
       emit(QuestionUpdatedState());
+      await Future.delayed(const Duration(seconds: 5));
     } else {}
   }
 
@@ -67,7 +71,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     // emit(state.copyWith(highlightIndex: -1));
     scrollController.scrollTo(
       alignment: 0.5,
-      index: stagedMessages.length, duration: const Duration(microseconds: 1),
+      index: stagedMessages.length, duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
       // curve: Curves.easeOut,
       // duration: kTabScrollDuration,
@@ -89,14 +93,13 @@ class BotChatCubit extends Cubit<BotChatState> {
     stagedMessages.last.answerTime = DateTime.now();
     logger.i(answer);
     emit(QuestionUpdatedState());
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
     _addTyping();
     _scrollToLast();
-
     await Future.delayed(
       const Duration(seconds: 1),
-      () {
-        _removeTyping();
+      () async {
+        await _removeTyping();
       },
     );
     getNextQuestion(
@@ -179,15 +182,21 @@ class BotChatCubit extends Cubit<BotChatState> {
     // _scrollToLast();
   }
 
-  void _addTyping() {
+  void _addTyping() async {
+    // await Future.delayed(const Duration(seconds: 1));
     stagedMessages.add(BotChatmessageModel.botTyping());
     currentQuestion = BotChatmessageModel.botTyping();
     emit(QuestionUpdatedState());
+    await Future.delayed(const Duration(seconds: 1));
   }
 
-  void _removeTyping() {
+  Future _removeTyping() async {
+    emit(RemoveTypingState());
+    await Future.delayed(const Duration(milliseconds: 400));
+
     stagedMessages.removeWhere((element) => element.isTyping == true);
-    emit(QuestionUpdatedState());
+
+    // await Future.delayed(const Duration(milliseconds: 300));
   }
 
   void _getNextPermissionsMessage(

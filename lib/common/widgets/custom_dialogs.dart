@@ -205,7 +205,7 @@ class CustomDialogs {
     );
   }
 
-  static void showCustomDialog(Widget child, BuildContext context,
+  static Future showCustomDialog(Widget child, BuildContext context,
       {String title = 'loading...',
       VoidCallback? onYes,
       bool? useRootNavigator = false,
@@ -214,17 +214,17 @@ class CustomDialogs {
       backgroundColor: Colors.white,
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(25.r),
       ),
       child: ClipRRect(borderRadius: BorderRadius.circular(12), child: child),
     );
 
-    await showDialog(
+    return await showDialog(
       context: context,
       useRootNavigator: useRootNavigator!,
       builder: (BuildContext context) => dialog,
       barrierDismissible: barrierDismissible!,
-      barrierColor: Pallets.black.withOpacity(0.2),
+      barrierColor: Pallets.black.withOpacity(0.4),
     );
   }
 
