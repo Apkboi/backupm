@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/bullet_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 
@@ -10,8 +11,11 @@ class TherapistAboutWidget extends StatelessWidget {
 
   final SuggestedTherapist therapist;
 
+
+
   @override
   Widget build(BuildContext context) {
+    logger.i(therapist.toJson());
     return Container(
       width: 1.sw,
       padding: const EdgeInsets.all(16),

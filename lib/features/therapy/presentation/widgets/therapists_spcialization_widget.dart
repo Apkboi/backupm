@@ -22,6 +22,7 @@ class TherapistSpecializationWidget extends StatelessWidget {
           ...List.generate(
               suggestedTherapist.therapist.techniquesOfExpertise.length,
               (index) => Padding(
+
                     padding: const EdgeInsets.all(5.0),
                     child: BulletWidget(
                         text: suggestedTherapist

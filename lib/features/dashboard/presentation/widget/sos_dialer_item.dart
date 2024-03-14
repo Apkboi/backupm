@@ -33,7 +33,11 @@ class SosDialerItem extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: (iconBg ?? Pallets.skyBlue).withOpacity(0.4),
                   radius: 24,
-                  child: Center(child: ImageWidget(size: 20, imageUrl: icon,)),
+                  child: Center(
+                      child: ImageWidget(
+                    size: 20,
+                    imageUrl: icon,
+                  )),
                 ),
                 12.horizontalSpace,
                 Expanded(

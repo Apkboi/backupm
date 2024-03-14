@@ -145,7 +145,8 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                                     16.verticalSpace,
                                     InkWell(
                                       onTap: () {
-                                        logger.i(widget.suggestedTherapist.toJson());
+                                        logger.i(
+                                            widget.suggestedTherapist.toJson());
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(

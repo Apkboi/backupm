@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -127,69 +128,91 @@ class _MenuScreenState extends State<MenuScreen> {
                         color: Pallets.primary,
                       ),
                       20.verticalSpace,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                              child: MenuItem(
-                            textColor: Pallets.orangePink,
-                            bgColor: Pallets.lighterPink,
-                            image: Assets.images.pngs.summary.path,
-                            text: "My Activities",
-                            onTap: () {
-                              context.pushNamed(PageUrl.summariesScreen);
-                            },
-                            // image: Assets.images.pngs.pTherapy.path,
-                            // text: "Professional Therapy"
-                          )),
-                          16.horizontalSpace,
-                          Expanded(
-                              child: MenuItem(
-                                textColor: Pallets.brown,
-                                bgColor: Pallets.lightOrange,
-                                image: Assets.images.pngs.gJournal.path,
-                                text: "Guided Journal",
+                      AnimationLimiter(
+                        child: SizedBox(
+                          child: Column(
+                            children: AnimationConfiguration.toStaggeredList(
+                              duration: const Duration(milliseconds: 500),
+                              childAnimationBuilder: (widget) => SlideAnimation(
+                                verticalOffset: 40.0,
+                                delay: const Duration(milliseconds: 100),
+                                child: FadeInAnimation(
+                                  child: widget,
+                                ),
+                              ),
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                        child: MenuItem(
+                                      textColor: Pallets.orangePink,
+                                      bgColor: Pallets.lighterPink,
+                                      image: Assets.images.pngs.summary.path,
+                                      text: "My Activities",
+                                      onTap: () {
+                                        context
+                                            .pushNamed(PageUrl.summariesScreen);
+                                      },
+                                      // image: Assets.images.pngs.pTherapy.path,
+                                      // text: "Professional Therapy"
+                                    )),
+                                    16.horizontalSpace,
+                                    Expanded(
+                                        child: MenuItem(
+                                      textColor: Pallets.brown,
+                                      bgColor: Pallets.lightOrange,
+                                      image: Assets.images.pngs.gJournal.path,
+                                      text: "Guided Journal",
 
-                                onTap: () {
-                                  context.pushNamed(PageUrl.guidedJournalScreen);
-                                },
+                                      onTap: () {
+                                        context.pushNamed(
+                                            PageUrl.guidedJournalScreen);
+                                      },
 
-                                // image: Assets.images.pngs.summary.path,
-                                // text: "Summaries"
-                              )),
-
-                        ],
+                                      // image: Assets.images.pngs.summary.path,
+                                      // text: "Summaries"
+                                    )),
+                                  ],
+                                ),
+                                const SizedBox(height: 16.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                        child: MenuItem(
+                                            onTap: () {
+                                              context.pushNamed(PageUrl
+                                                  .wellnessLibraryScreen);
+                                            },
+                                            textColor: Pallets.mildGreen,
+                                            bgColor: Pallets.lightGreen,
+                                            image: Assets
+                                                .images.pngs.wLibrary.path,
+                                            text: "Wellness Library")),
+                                    16.horizontalSpace,
+                                    Expanded(
+                                        child: MenuItem(
+                                      textColor: Pallets.indigo,
+                                      bgColor: Pallets.lightBlue,
+                                      image: Assets.images.pngs.pTherapy.path,
+                                      text: "Professional Support",
+                                      onTap: () async {
+                                        _checkSubscription(context);
+                                      },
+                                      // image: Assets.images.pngs.gJournal.path,
+                                      // text: "Guided Journal"
+                                    )),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
-                      const SizedBox(height: 16.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
 
-                          Expanded(
-                              child: MenuItem(
-                                  onTap: () {
-                                    context.pushNamed(
-                                        PageUrl.wellnessLibraryScreen);
-                                  },
-                                  textColor: Pallets.mildGreen,
-                                  bgColor: Pallets.lightGreen,
-                                  image: Assets.images.pngs.wLibrary.path,
-                                  text: "Wellness Library")),
-                          16.horizontalSpace,
-                          Expanded(
-                              child: MenuItem(
-                            textColor: Pallets.indigo,
-                            bgColor: Pallets.lightBlue,
-                            image: Assets.images.pngs.pTherapy.path,
-                            text: "Professional Support",
-                            onTap: () async {
-                              _checkSubscription(context);
-                            },
-                            // image: Assets.images.pngs.gJournal.path,
-                            // text: "Guided Journal"
-                          )),
-                        ],
-                      ),
                       100.verticalSpace
                     ],
                   ),

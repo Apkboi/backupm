@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mesibo_flutter_sdk/mesibo.dart';
 
 class BCMentraMessageWidget extends StatefulWidget {
   const BCMentraMessageWidget({
@@ -49,6 +52,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
     );
 
     Future.delayed(const Duration(milliseconds: 300), () {
+      // if (widget.isTyping) {
       _controller.forward();
     });
   }
@@ -61,6 +65,9 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
 
   @override
   Widget build(BuildContext context) {
+    // if (widget.isTyping) {
+    //   _controller.forward();
+    // }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

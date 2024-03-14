@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -253,23 +254,35 @@ class _DiscoverContentsState extends State<DiscoverContents>
                   .get<WellnessLibraryBloc>()
                   .add(GetLibraryCategoriesEvent());
             },
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: injector
-                      .get<WellnessLibraryBloc>()
-                      .libraryCategories
-                      ?.length ??
-                  0,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: LibraryItem(
-                    category: injector
+            child: AnimationLimiter(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: injector
                         .get<WellnessLibraryBloc>()
-                        .libraryCategories![index],
-                  ),
-                );
-              },
+                        .libraryCategories
+                        ?.length ??
+                    0,
+                itemBuilder: (context, index) {
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 500),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: SlideAnimation(
+                        horizontalOffset: 50.0,
+                        child: FadeInAnimation(
+                          duration: const Duration(milliseconds: 300),
+                          child: LibraryItem(
+                            category: injector
+                                .get<WellnessLibraryBloc>()
+                                .libraryCategories![index],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           );
         } else {

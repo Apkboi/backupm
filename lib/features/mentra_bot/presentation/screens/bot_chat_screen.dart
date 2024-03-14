@@ -117,6 +117,10 @@ class _BotChatScreenState extends State<BotChatScreen> {
                           Expanded(
                               child: ScrollablePositionedList.builder(
                                   // reverse: true,
+
+                                  // shrinkWrap: true,
+
+                                  // addAutomaticKeepAlives: true,
                                   padding: EdgeInsets.zero,
                                   physics: const BouncingScrollPhysics(),
                                   itemScrollController: context

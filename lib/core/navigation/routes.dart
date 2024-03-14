@@ -198,12 +198,18 @@ class CustomRoutes {
       GoRoute(
         path: '/welcomeScreen',
         name: PageUrl.welcomeScreen,
-        builder: (context, state) => WelcomeScreen(),
+        pageBuilder: (context, state) {
+          return buildPageWithDefaultTransition(
+              context: context, state: state, child: WelcomeScreen());
+        },
+        // builder: (context, state) => ,
       ),
       GoRoute(
         path: '/therapyScreen',
         name: PageUrl.therapyScreen,
-        builder: (context, state) => const TherapyScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const TherapyScreen()),
+        // builder: (context, state) => const TherapyScreen(),
       ),
       GoRoute(
         path: '/summariesScreen',
@@ -213,7 +219,9 @@ class CustomRoutes {
       GoRoute(
         path: '/therapistChatScreen',
         name: PageUrl.therapistChatScreen,
-        builder: (context, state) => const TherapistChatScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const TherapistChatScreen()),
+        // builder: (context, state) => const TherapistChatScreen(),
       ),
       GoRoute(
         path: '/selectPlanScreen',
@@ -237,7 +245,11 @@ class CustomRoutes {
       GoRoute(
         path: '/wellnessLibraryScreen',
         name: PageUrl.wellnessLibraryScreen,
-        builder: (context, state) => const WellnessLibraryScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context,
+            state: state,
+            child: const WellnessLibraryScreen()),
+        // builder: (context, state) => const WellnessLibraryScreen(),
       ),
       GoRoute(
         path: '/allArticlesScreen',
@@ -257,7 +269,9 @@ class CustomRoutes {
       GoRoute(
         path: '/settingsScreen',
         name: PageUrl.settingsScreen,
-        builder: (context, state) => const SettingsScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const SettingsScreen()),
+        // builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
         path: '/manageSubscriptionScreen',
@@ -267,7 +281,9 @@ class CustomRoutes {
       GoRoute(
         path: '/editProfileScreen',
         name: PageUrl.editProfileScreen,
-        builder: (context, state) => const EditProfileScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const EditProfileScreen()),
+        // builder: (context, state) => const EditProfileScreen(),
       ),
       GoRoute(
         path: '/deleteAccountScreen',
@@ -362,7 +378,9 @@ class CustomRoutes {
       GoRoute(
         path: '/guidedJournalScreen',
         name: PageUrl.guidedJournalScreen,
-        builder: (context, state) => const JournalScreen(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const JournalScreen()),
+        // builder: (context, state) => const JournalScreen(),
       ),
       GoRoute(
         path: '/passwordResetSuccessScreen',

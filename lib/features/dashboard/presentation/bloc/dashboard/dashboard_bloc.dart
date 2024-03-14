@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/dashboard/data/models/conversation_starter_response.dart';
 import 'package:mentra/features/dashboard/data/models/emergency_contacts.dart';
 import 'package:mentra/features/dashboard/dormain/repository/dashboard_repository.dart';
@@ -40,7 +41,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final response = await _dashboardRepository.getEmergencyContacts();
       emit(GetEmergencyContactSuccessState(data: response));
-    } catch (e) {
+    } catch (e,stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
       emit(GetEmergencyContactFailureState(error: e.toString()));
     }
   }

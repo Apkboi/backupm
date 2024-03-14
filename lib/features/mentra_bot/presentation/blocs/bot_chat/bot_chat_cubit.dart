@@ -58,6 +58,7 @@ class BotChatCubit extends Cubit<BotChatState> {
       stagedMessages.last.answer = null;
 
       updateCurrentQuestion(stagedMessages.last);
+      _scrollToLast();
       return true;
     }
   }
@@ -88,9 +89,10 @@ class BotChatCubit extends Cubit<BotChatState> {
     stagedMessages.last.answerTime = DateTime.now();
     logger.i(answer);
     emit(QuestionUpdatedState());
-    // _scrollToLast();
     await Future.delayed(const Duration(milliseconds: 500));
     _addTyping();
+    _scrollToLast();
+
     await Future.delayed(
       const Duration(seconds: 1),
       () {
@@ -102,6 +104,7 @@ class BotChatCubit extends Cubit<BotChatState> {
         nextLoginStage: nextLoginStage,
         nextPermissionStage: nextPermissionStage,
         nextSignUpStage: nextSignupStage);
+    _scrollToLast();
   }
 
   getNextQuestion({

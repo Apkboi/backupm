@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -123,14 +124,26 @@ class _JournalScreenState extends State<JournalScreen> {
                           onRefresh: () async {
                             injector.get<JournalBloc>().add(GetJournalsEvent());
                           },
-                          child: ListView.builder(
-                            itemCount: journals?.length ?? 0,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: JournalItem(
-                                journal: journals![index],
-                                // prompt: state.response.data[index],
+                          child: AnimationLimiter(
+                            child: ListView.builder(
+                              itemCount: journals?.length ?? 0,
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) =>
+                                  AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 500),
+                                child: SlideAnimation(
+                                  verticalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: JournalItem(
+                                        journal: journals![index],
+                                        // prompt: state.response.data[index],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),

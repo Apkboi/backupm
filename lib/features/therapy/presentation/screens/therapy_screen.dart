@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -249,12 +250,25 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
             onRefresh: () async {
               injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
             },
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: sessions?.length ?? 0,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => TherapyItem(
-                session: sessions![index],
+            child: AnimationLimiter(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: sessions?.length ?? 0,
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) =>
+                    AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 500),
+                  child: SlideAnimation(
+                    horizontalOffset: 60.0,
+                    child: FadeInAnimation(
+                      duration: const Duration(milliseconds: 600),
+                      child: TherapyItem(
+                        session: sessions![index],
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           );
@@ -272,8 +286,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
                   const AppEmptyState(
                     hasBg: false,
                     tittle: 'No upcoming session.',
-                    subtittle:
-                        "You have no upcoming sessions. Start by booking a session with a therapist",
+                    subtittle: "You have no upcoming sessions. Start by booking a session with a therapist",
                   ),
                 ],
               ),
