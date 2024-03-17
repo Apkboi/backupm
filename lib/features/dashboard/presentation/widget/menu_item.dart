@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -26,7 +25,7 @@ class MenuItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: (0.53 / 2).sh,
+          height: (0.5 / 2).sh,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22),
               color: bgColor ?? Pallets.white),
@@ -42,7 +41,7 @@ class MenuItem extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              16.verticalSpace,
+              10.verticalSpace,
               Expanded(
                 child: ImageWidget(
                   imageUrl: image,
@@ -52,8 +51,8 @@ class MenuItem extends StatelessWidget {
                     }
                   },
                   canPreview: false,
-                  fit: BoxFit.scaleDown,
-                  height: 120.h,
+                  fit: BoxFit.fitHeight,
+                  // height: 120.h,
                   width: 1.sw,
                 ),
               )

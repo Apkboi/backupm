@@ -13,7 +13,6 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   $AssetsImagesPngsGen get pngs => const $AssetsImagesPngsGen();
-
   $AssetsImagesSvgsGen get svgs => const $AssetsImagesSvgsGen();
 }
 
@@ -47,6 +46,8 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/avatar2.png
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/images/pngs/avatar2.png');
+
+
 
   /// File path: assets/images/pngs/background.png
   AssetGenImage get background =>
@@ -275,6 +276,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/lock_open.svg
   String get lockOpen => 'assets/images/svgs/lock_open.svg';
 
+  /// File path: assets/images/svgs/logo1.svg
+  String get logo1 => 'assets/images/svgs/logo1.svg';
+
   /// File path: assets/images/svgs/logout.svg
   String get logout => 'assets/images/svgs/logout.svg';
 
@@ -373,6 +377,7 @@ class $AssetsImagesSvgsGen {
         insights,
         instagram,
         lockOpen,
+        logo1,
         logout,
         mentra,
         menuIcon,

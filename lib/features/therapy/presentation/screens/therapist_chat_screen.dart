@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/common/widgets/success_dialog.dart';
-import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/features/therapy/data/models/chat_message.dart';
-import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/session/session_bloc.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
-import 'package:mentra/features/therapy/presentation/widgets/end_therapy_session_dialog.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
-import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
-import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
-import 'package:uuid/uuid.dart';
 
 DemoUser user2 = DemoUser(
     '72907e6a689c61c1d5f1572ff97116a28dee3e911a5c673d234eee4ad2f6ja9a4a4cd39a',
@@ -90,9 +78,10 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
+                      reverse: true,
                   itemCount: Allmessages.length,
                   itemBuilder: (context, index) => TherapyMessageBox(
-                    message: Allmessages[index],
+                    message: Allmessages.reversed.toList()[index],
                     isSender: !index.isEven,
                   ),
                 )),

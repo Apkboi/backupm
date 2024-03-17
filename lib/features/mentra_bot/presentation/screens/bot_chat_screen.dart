@@ -43,6 +43,10 @@ class _BotChatScreenState extends State<BotChatScreen> {
       child: BlocConsumer<BotChatCubit, BotChatState>(
         listener: (context, state) {},
         builder: (context, state) {
+          var _shouldShowBotIcon =
+              context.watch<BotChatCubit>().currentChatFlow ==
+                      BotChatFlow.welcome &&
+                  context.watch<BotChatCubit>().stagedMessages.length < 3;
           context.watch<BotChatCubit>();
           return WillPopScope(
             onWillPop: () async {
@@ -56,7 +60,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
             child: Scaffold(
               extendBodyBehindAppBar: true,
               appBar: CustomAppBar(
-                tittleText: 'Talk to Mentra',
+                tittleText: '',
                 leading: CustomBackButton(
                   icon: context.watch<BotChatCubit>().canNotRevert
                       ? null
@@ -116,7 +120,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
                         children: [
                           Expanded(
                               child: ScrollablePositionedList.builder(
-                                  // reverse: true,
+                                  reverse: true,
 
                                   // shrinkWrap: true,
 
@@ -130,11 +134,14 @@ class _BotChatScreenState extends State<BotChatScreen> {
                                   itemCount: context
                                       .watch<BotChatCubit>()
                                       .stagedMessages
+                                      .reversed
+                                      .toList()
                                       .length,
                                   itemBuilder: (context, index) => BCMessageBox(
                                         message: context
                                             .watch<BotChatCubit>()
                                             .stagedMessages
+                                            .reversed
                                             .toList()[index],
                                       ))),
                           16.verticalSpace,

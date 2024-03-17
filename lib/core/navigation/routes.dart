@@ -50,7 +50,6 @@ import 'package:mentra/features/settings/presentation/screens/settings_screen.da
 import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
-import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 import 'package:mentra/features/therapy/presentation/screens/accept_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/change_therapist_screen.dart';
@@ -149,7 +148,9 @@ class CustomRoutes {
       GoRoute(
         path: '/onboardingIntro',
         name: PageUrl.onboardingIntro,
-        builder: (context, state) => const OnboardingIntro(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const OnboardingIntro()),
+        // builder: (context, state) => const OnboardingIntro(),
       ),
       GoRoute(
         path: '/newLoginScreen',
@@ -221,10 +222,7 @@ class CustomRoutes {
         path: '/therapistChatScreen',
         name: PageUrl.therapistChatScreen,
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
-            context: context, state: state, child:  TherapistChatScreen(
-
-
-        )),
+            context: context, state: state, child: TherapistChatScreen()),
         // builder: (context, state) => const TherapistChatScreen(),
       ),
       GoRoute(

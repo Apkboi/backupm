@@ -2,6 +2,7 @@ import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
 
 class WelcomeMessageDataSource {
+  var now = DateTime.now();
   List<BotChatmessageModel> messages = [
     BotChatmessageModel(
         message:
@@ -11,7 +12,7 @@ class WelcomeMessageDataSource {
         isTyping: false,
         answerType: AnswerType.NONE,
         loginStage: LoginStage.NONE,
-        time: DateTime.now(),
+        time:  DateTime.now(),
         flow: BotChatFlow.welcome,
         answerTime: DateTime.now()),
     BotChatmessageModel(

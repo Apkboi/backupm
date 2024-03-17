@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     _startMentraChat();
     DashboardUsecase().execute();
-    _initMesibo();
+    // _initMesibo();
     // _startMentraChat();
     super.initState();
   }
@@ -208,7 +208,9 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _startMentraChat() {
     Future.delayed(const Duration(seconds: 1), () {
-      context.pushNamed(PageUrl.talkToMentraScreen,);
+      context.pushNamed(
+        PageUrl.talkToMentraScreen,
+      );
     });
   }
 }

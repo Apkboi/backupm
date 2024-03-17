@@ -54,7 +54,6 @@ class _SessionButtonState extends State<SessionButton> {
     super.initState();
 
     _checkButtonVisibility();
-
     // Update button visibility every second to reflect real-time
     timer = Timer.periodic(const Duration(seconds: 1), (_) => _checkButtonVisibility());
   }

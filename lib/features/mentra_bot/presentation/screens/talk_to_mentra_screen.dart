@@ -39,7 +39,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
       appBar: CustomAppBar(
         // canGoBack: false,
         // leading: 0.horizontalSpace,
-        tittleText: 'Talk to Mentra',
+        tittleText: '',
         actions: [
           PopupMenuButton(
             position: PopupMenuPosition.over,
@@ -85,10 +85,11 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
+                  reverse: true,
                   itemCount: messages.length,
                   itemBuilder: (context, index) => TalkToMentraMessageBox(
-                    message: [messages[index]],
-                    isSender: !index.isEven,
+                    message: [messages.reversed.toList()[index]],
+                    isSender: index.isEven,
                   ),
                 )),
                 const _InputBar()

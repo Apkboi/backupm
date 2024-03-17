@@ -88,3 +88,29 @@ enum SignupStage {
   PASSCODE_CONFIRM,
   SIGNUP_OPTION,
 }
+
+ List<BotChatmessageModel> get testMessages {
+  final List<String> messages = [
+    'Hey Leila! I\'m Mentra, your friendly mental health buddy.',
+    "How's your day going?",
+    "Hi, Mentra! It's been a bit rough lately. Can you lend an ear?",
+    "Absolutely! I'm here to listen and help. What's been bothering you?",
+  ];
+
+  final List<BotChatmessageModel> chatMessages = [];
+
+  for (int i = 0; i < messages.length; i++) {
+    chatMessages.add(
+      BotChatmessageModel(
+        message: messages[i],
+        isFromBot: i.isEven, // Alternate between bot and user
+        id: i,
+        answerType: AnswerType.CHAT,
+        time: DateTime.now().add(Duration(minutes: i)), // Simulate different timestamps
+        flow: BotChatFlow.welcome, // Assuming all messages are part of the welcome flow
+      ),
+    );
+  }
+
+  return chatMessages;
+}

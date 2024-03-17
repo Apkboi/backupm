@@ -41,10 +41,10 @@ class BotChatCubit extends Cubit<BotChatState> {
         await Future.delayed(const Duration(milliseconds: 300));
         stagedMessages.add(message..time = DateTime.now());
         currentQuestion = message;
+        emit(QuestionUpdatedState());
+        logger.i(stagedMessages.length);
+        await Future.delayed(const Duration(seconds: 2));
       }
-      logger.i(stagedMessages.length);
-      emit(QuestionUpdatedState());
-      await Future.delayed(const Duration(seconds: 5));
     } else {}
   }
 
@@ -71,7 +71,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     // emit(state.copyWith(highlightIndex: -1));
     scrollController.scrollTo(
       alignment: 0.5,
-      index: stagedMessages.length, duration: const Duration(milliseconds: 500),
+      index: 0, duration: const Duration(milliseconds: 800),
       curve: Curves.easeInOut,
       // curve: Curves.easeOut,
       // duration: kTabScrollDuration,
@@ -193,7 +193,6 @@ class BotChatCubit extends Cubit<BotChatState> {
   Future _removeTyping() async {
     emit(RemoveTypingState());
     await Future.delayed(const Duration(milliseconds: 400));
-
     stagedMessages.removeWhere((element) => element.isTyping == true);
 
     // await Future.delayed(const Duration(milliseconds: 300));

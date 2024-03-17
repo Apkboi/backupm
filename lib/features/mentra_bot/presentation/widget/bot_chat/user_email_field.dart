@@ -4,7 +4,10 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/input_bar.dart';
+import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
@@ -28,17 +31,39 @@ class _BcUserEmailFieldState extends State<BcUserEmailField> {
       listener: _listenToRegistrationBloc,
       bloc: _bloc,
       builder: (context, state) {
-        return InputBar(
-          hint: "Type email here..",
-          validator: MultiValidator([
-            RequiredValidator(errorText: 'Enter email'),
-            EmailValidator(errorText: 'Invalid email')
-          ]).call,
-          onAnswer: (answer) {
-            email = answer;
-            _bloc.add(SendOtpEvent(email: email));
-
-          },
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InputBar(
+              hint: "Type email here..",
+              validator: MultiValidator([
+                RequiredValidator(errorText: 'Enter email'),
+                EmailValidator(errorText: 'Invalid email')
+              ]).call,
+              onAnswer: (answer) {
+                email = answer;
+                _bloc.add(SendOtpEvent(email: email));
+              },
+            ),
+            10.verticalSpace,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.info_rounded,
+                  size: 18,
+                ),
+                5.horizontalSpace,
+                const TextView(
+                  text: 'Terms and Conditions apply',
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: Pallets.navy,
+                )
+              ],
+            )
+          ],
         );
       },
     );

@@ -57,7 +57,7 @@ class _MenuScreenState extends State<MenuScreen> {
         appBar: CustomAppBar(
           tittleText: '',
           leadingWidth: 80,
-          height: 80,
+          height: 70,
           actions: [
             InkWell(
               onTap: () {
@@ -103,13 +103,14 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:  EdgeInsets.symmetric(horizontal: 16.w),
                 child: SingleChildScrollView(
+                  padding: EdgeInsets.all(0),
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      16.verticalSpace,
+
                       // const TextView(
                       //   text: 'Upcoming Session',
                       //   fontSize: 16,
@@ -120,14 +121,14 @@ class _MenuScreenState extends State<MenuScreen> {
                       // const UpcomingSession(),
                       // const UnlockPremiumWidget(),
                       const NewUserPrompt(),
-                      20.verticalSpace,
+                      10.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Pallets.primary,
                       ),
-                      20.verticalSpace,
+                      10.verticalSpace,
                       AnimationLimiter(
                         child: SizedBox(
                           child: Column(
@@ -176,7 +177,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     )),
                                   ],
                                 ),
-                                const SizedBox(height: 16.0),
+                               10.verticalSpace,
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,

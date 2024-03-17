@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/core/constants/package_exports.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_login_options_widget.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_permissions_field.dart';
@@ -26,7 +25,6 @@ class _BCMessageAnswerWidgetState extends State<BCMessageAnswerWidget>
   @override
   void initState() {
     super.initState();
-    logger.i('forwading');
 
     _controller = AnimationController(
       vsync: this,

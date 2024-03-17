@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -28,10 +26,10 @@ class _SplashPageState extends State<SplashPage>
   void initState() {
     super.initState();
     animationCtrl = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 3),
       vsync: this,
     );
-    animation = Tween<double>(begin: 0, end: 100).animate(
+    animation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: animationCtrl!,
         curve: Curves.easeIn,
@@ -65,15 +63,18 @@ class _SplashPageState extends State<SplashPage>
       body: Container(
         height: 1.sh,
         width: 1.sw,
-        decoration: const BoxDecoration(color: Pallets.turquoise1),
+        decoration: const BoxDecoration(color: Pallets.secondary),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ImageWidget(
-                  size: 120,
-                  fit: BoxFit.scaleDown,
-                  imageUrl: Assets.images.pngs.verticalLogo.path)
+              FadeTransition(
+                opacity: animation,
+                child: ImageWidget(
+                    size: 120,
+                    fit: BoxFit.scaleDown,
+                    imageUrl: Assets.images.svgs.logo1),
+              )
             ],
           ),
         ),

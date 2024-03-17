@@ -29,7 +29,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Now, could you share your email address with us ? We’ll send a verification code to ensure everything’s secure',
+            'Now, could you share your email address with us? We\'ll send a verification code to ensure that everything is secure',
         isFromBot: true,
         id: 0,
         isTyping: false,

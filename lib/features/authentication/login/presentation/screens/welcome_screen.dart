@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -23,7 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   int countdown = 5;
   int countdown2 = 1;
 
-  bool _isExhaling = true;
+  bool _isExhaling = false;
 
   @override
   void initState() {
@@ -140,7 +138,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       align: TextAlign.center,
                       fontSize: 15.sp,
                       text:
-                          'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}.\n ${_isExhaling ? "Exhale stress" : " Inhale positivity,"} ',
+                          'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}.\n ${_isExhaling ? "Exhale stress" : " Inhale positivity"} ',
                       fontWeight: FontWeight.w500,
                     ),
                     50.verticalSpace,
