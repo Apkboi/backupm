@@ -106,6 +106,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                       //         !widget.isTyping ? 15 : 100),
                       //     color: Pallets.navy),
                       child: Column(
+
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [

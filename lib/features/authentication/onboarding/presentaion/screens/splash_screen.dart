@@ -7,6 +7,7 @@ import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -63,7 +64,7 @@ class _SplashPageState extends State<SplashPage>
       body: Container(
         height: 1.sh,
         width: 1.sw,
-        decoration: const BoxDecoration(color: Pallets.secondary),
+        decoration: const BoxDecoration(color: Pallets.primary),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,9 +72,10 @@ class _SplashPageState extends State<SplashPage>
               FadeTransition(
                 opacity: animation,
                 child: ImageWidget(
-                    size: 120,
+                    height: 120,
+                    width: 120,
                     fit: BoxFit.scaleDown,
-                    imageUrl: Assets.images.svgs.logo1),
+                    imageUrl: Assets.images.pngs.logo4.path),
               )
             ],
           ),
@@ -81,6 +83,7 @@ class _SplashPageState extends State<SplashPage>
       ),
     );
   }
+
 
   void _goToNextScreen() {
     // context.pushReplacementNamed(PageUrl.onBoardingPage);
@@ -95,4 +98,6 @@ class _SplashPageState extends State<SplashPage>
       context.pushReplacementNamed(PageUrl.onBoardingPage);
     }
   }
+
+
 }

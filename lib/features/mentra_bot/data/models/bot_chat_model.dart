@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
 
 class BotChatmessageModel {
@@ -12,6 +13,7 @@ class BotChatmessageModel {
   String? answer;
   DateTime time;
   DateTime? answerTime;
+  Widget? child;
   BotChatFlow flow;
 
   BotChatmessageModel(
@@ -26,7 +28,8 @@ class BotChatmessageModel {
       this.answerTime,
       required this.flow,
       this.signupStage = SignupStage.NONE,
-      this.answer});
+      this.answer,
+      this.child});
 
   factory BotChatmessageModel.botTyping() => BotChatmessageModel(
       message: '',
@@ -89,7 +92,7 @@ enum SignupStage {
   SIGNUP_OPTION,
 }
 
- List<BotChatmessageModel> get testMessages {
+List<BotChatmessageModel> get testMessages {
   final List<String> messages = [
     'Hey Leila! I\'m Mentra, your friendly mental health buddy.',
     "How's your day going?",
@@ -103,11 +106,14 @@ enum SignupStage {
     chatMessages.add(
       BotChatmessageModel(
         message: messages[i],
-        isFromBot: i.isEven, // Alternate between bot and user
+        isFromBot: i.isEven,
+        // Alternate between bot and user
         id: i,
         answerType: AnswerType.CHAT,
-        time: DateTime.now().add(Duration(minutes: i)), // Simulate different timestamps
-        flow: BotChatFlow.welcome, // Assuming all messages are part of the welcome flow
+        time: DateTime.now().add(Duration(minutes: i)),
+        // Simulate different timestamps
+        flow: BotChatFlow
+            .welcome, // Assuming all messages are part of the welcome flow
       ),
     );
   }

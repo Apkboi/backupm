@@ -19,10 +19,6 @@ class $AssetsImagesGen {
 class $AssetsImagesPngsGen {
   const $AssetsImagesPngsGen();
 
-  /// File path: assets/images/pngs/Avatar-3.png
-  AssetGenImage get avatar3 =>
-      const AssetGenImage('assets/images/pngs/Avatar-3.png');
-
   /// File path: assets/images/pngs/Avatar-4.png
   AssetGenImage get avatar4 =>
       const AssetGenImage('assets/images/pngs/Avatar-4.png');
@@ -47,7 +43,9 @@ class $AssetsImagesPngsGen {
   AssetGenImage get avatar2 =>
       const AssetGenImage('assets/images/pngs/avatar2.png');
 
-
+  /// File path: assets/images/pngs/avatar3.png
+  AssetGenImage get avatar3 =>
+      const AssetGenImage('assets/images/pngs/avatar3.png');
 
   /// File path: assets/images/pngs/background.png
   AssetGenImage get background =>
@@ -84,6 +82,14 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/launcher.png
   AssetGenImage get launcher =>
       const AssetGenImage('assets/images/pngs/launcher.png');
+
+  /// File path: assets/images/pngs/logo4.png
+  AssetGenImage get logo4 =>
+      const AssetGenImage('assets/images/pngs/logo4.png');
+
+  /// File path: assets/images/pngs/logoF.png
+  AssetGenImage get logoF =>
+      const AssetGenImage('assets/images/pngs/logoF.png');
 
   /// File path: assets/images/pngs/main_logo.png
   AssetGenImage get mainLogo =>
@@ -155,7 +161,6 @@ class $AssetsImagesPngsGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        avatar3,
         avatar4,
         anxiety,
         article,
@@ -172,6 +177,8 @@ class $AssetsImagesPngsGen {
         insight,
         journalNote,
         launcher,
+        logo4,
+        logoF,
         mainLogo,
         mentra,
         mentraBig,
@@ -279,11 +286,17 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/logo1.svg
   String get logo1 => 'assets/images/svgs/logo1.svg';
 
+  /// File path: assets/images/svgs/logo2.svg
+  String get logo2 => 'assets/images/svgs/logo2.svg';
+
   /// File path: assets/images/svgs/logout.svg
   String get logout => 'assets/images/svgs/logout.svg';
 
   /// File path: assets/images/svgs/mentra.svg
   String get mentra => 'assets/images/svgs/mentra.svg';
+
+  /// File path: assets/images/svgs/mentra_text.svg
+  String get mentraText => 'assets/images/svgs/mentra_text.svg';
 
   /// File path: assets/images/svgs/menu_icon.svg
   String get menuIcon => 'assets/images/svgs/menu_icon.svg';
@@ -378,8 +391,10 @@ class $AssetsImagesSvgsGen {
         instagram,
         lockOpen,
         logo1,
+        logo2,
         logout,
         mentra,
+        mentraText,
         menuIcon,
         messageIcon,
         onboarding1,

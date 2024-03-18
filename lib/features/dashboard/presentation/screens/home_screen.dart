@@ -44,7 +44,12 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        tittleText: 'Mentra',
+        tittle: ImageWidget(
+          imageUrl: Assets.images.svgs.mentraText,
+          width: 99.7.w,
+          height: 24.h,
+          color: Pallets.primary,
+        ),
         height: 80,
         leadingWidth: 80,
         actions: [

@@ -33,6 +33,28 @@ class SignupQuestionDataSource {
         isFromBot: true,
         id: 0,
         isTyping: false,
+        // child: RichText(
+        //     text: TextSpan(
+        //         style: GoogleFonts.plusJakartaSans(
+        //             height: 1.5,
+        //             color: Pallets.white,
+        //             fontSize: 15.sp,
+        //             fontWeight: FontWeight.w500),
+        //         children: [
+        //       const TextSpan(
+        //           text:
+        //               'Now, could you share your email address with us? We\'ll send a verification code to ensure that everything is secure,\n'),
+        //       TextSpan(
+        //           text: 'Terms and conditions ',
+        //           recognizer: TapGestureRecognizer()
+        //             ..onTap = () {
+        //               Helpers.launchRawUrl(
+        //                   'https://yourmentra.com/privacy-policy');
+        //             },
+        //           style: GoogleFonts.plusJakartaSans(
+        //               color: Pallets.secondary, fontWeight: FontWeight.w600)),
+        //       TextSpan(text: 'apply.', style: GoogleFonts.plusJakartaSans()),
+        //     ])),
         answerType: AnswerType.EMAIL,
         signupStage: SignupStage.EMAIL,
         flow: BotChatFlow.signup,

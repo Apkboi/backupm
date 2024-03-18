@@ -17,7 +17,6 @@ class BCMentraMessageWidget extends StatefulWidget {
     required this.message,
     this.child,
     this.isTyping = false,
-
   }) : super(key: key);
   final List<dynamic> message;
   final bool isTyping;
@@ -109,21 +108,20 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-
-                    Padding(
-                      padding: !widget.isTyping
-                          ? EdgeInsets.only(top: 45.h, right: 6.w)
-                          : EdgeInsets.only(right: 6.w, top: 8.h),
-                      child: CircleAvatar(
-                        backgroundColor: Pallets.lighterBlue,
-                        radius: 14,
-                        child: ImageWidget(
-                          imageUrl: Assets.images.pngs.mentraBig.path,
-                          fit: BoxFit.cover,
-                          size: 25,
-                        ),
+                  Padding(
+                    padding: !widget.isTyping
+                        ? EdgeInsets.only(top: 45.h, right: 6.w)
+                        : EdgeInsets.only(right: 6.w, top: 8.h),
+                    child: CircleAvatar(
+                      backgroundColor: Pallets.lighterBlue,
+                      radius: 14,
+                      child: ImageWidget(
+                        imageUrl: Assets.images.pngs.mentraBig.path,
+                        fit: BoxFit.cover,
+                        size: 25,
                       ),
                     ),
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: List.generate(
@@ -159,7 +157,8 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                                       size: 14.0,
                                     ),
                                   ),
-                                if (!widget.isTyping)
+                                if (widget.child != null) widget.child!,
+                                if (!widget.isTyping && widget.child == null)
                                   TextView(
                                       text: widget.isTyping
                                           ? 'Mentra is typing....'

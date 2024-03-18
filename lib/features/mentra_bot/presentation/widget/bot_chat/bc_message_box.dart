@@ -27,6 +27,7 @@ class _BCMessageBoxState extends State<BCMessageBox> {
                   child: BCMentraMessageWidget(
                     message: [widget.message.message],
                     isTyping: widget.message.isTyping ?? false,
+                    child: widget.message.child,
                   )),
               Container(
                   alignment: Alignment.centerRight,

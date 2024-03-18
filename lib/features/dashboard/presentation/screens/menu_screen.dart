@@ -103,14 +103,13 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             SafeArea(
               child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 16.w),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       // const TextView(
                       //   text: 'Upcoming Session',
                       //   fontSize: 16,
@@ -177,7 +176,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     )),
                                   ],
                                 ),
-                               10.verticalSpace,
+                                10.verticalSpace,
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
