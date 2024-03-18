@@ -101,7 +101,7 @@ class BCSignupOptionsField extends StatelessWidget {
                     context.read<BotChatCubit>().answerQuestion(
                         id: message.id,
                         answer: "Sign up with Email",
-                        nextSignupStage: SignupStage.EMAIL);
+                        nextSignupStage: SignupStage.EMAIL_MESSAGE);
 
                     // context.pushNamed(PageUrl.userEmailScreen);
                   },

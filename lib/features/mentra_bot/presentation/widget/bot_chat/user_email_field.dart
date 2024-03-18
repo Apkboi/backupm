@@ -46,29 +46,29 @@ class _BcUserEmailFieldState extends State<BcUserEmailField> {
                 _bloc.add(SendOtpEvent(email: email));
               },
             ),
-            10.verticalSpace,
-            InkWell(
-              onTap: () {
-                Helpers.launchRawUrl('https://yourmentra.com/privacy-policy');
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.info_rounded,
-                    size: 18,
-                  ),
-                  5.horizontalSpace,
-                  const TextView(
-                    text: 'Terms and Conditions apply',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Pallets.navy,
-                  )
-                ],
-              ),
-            )
+            // 10.verticalSpace,
+            // InkWell(
+            //   onTap: () {
+            //     Helpers.launchRawUrl('https://yourmentra.com/privacy-policy');
+            //   },
+            //   child: Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     mainAxisAlignment: MainAxisAlignment.start,
+            //     children: [
+            //       const Icon(
+            //         Icons.info_rounded,
+            //         size: 18,
+            //       ),
+            //       5.horizontalSpace,
+            //       const TextView(
+            //         text: 'Terms and Conditions apply',
+            //         fontSize: 14,
+            //         fontWeight: FontWeight.w700,
+            //         color: Pallets.navy,
+            //       )
+            //     ],
+            //   ),
+            // )
           ],
         );
       },

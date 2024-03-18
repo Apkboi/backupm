@@ -36,7 +36,10 @@ class _BCMessageBoxState extends State<BCMessageBox> {
                   ))
             ],
           )
-        : BCUserMessageWidget(message: [widget.message.message]);
+        : BCUserMessageWidget(
+            message: [widget.message.message],
+            child: widget.message.answerWidget,
+          );
   }
 
 // bool get isSender => true;

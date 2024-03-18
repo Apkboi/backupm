@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -21,6 +22,7 @@ class BCAvatarField extends StatefulWidget {
 
 class _BCAvatarFieldState extends State<BCAvatarField> {
   String? selectedAvatar;
+  String? selectedUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,7 @@ class _BCAvatarFieldState extends State<BCAvatarField> {
               onAvatarSelected: (p0) {
                 setState(() {
                   selectedAvatar = p0.image.id.toString();
+                  selectedUrl = p0.image.url;
                 });
               },
             ),
@@ -61,9 +64,15 @@ class _BCAvatarFieldState extends State<BCAvatarField> {
     if (selectedAvatar != null) {
       injector.get<RegistrationBloc>().updateFields(avatarPath: selectedAvatar);
 
+      logger.i(selectedAvatar);
       context.read<BotChatCubit>().answerQuestion(
           id: widget.message.id,
           answer: "*******",
+          answerWidget: ImageWidget(
+            imageUrl: selectedUrl!,
+            size: 25,
+          ),
+          // answerWidget:Container(height: 100,width: 100,color: Colors.red,),
           nextSignupStage: SignupStage.SIGNUP_OPTION);
 
       // context.pushNamed(PageUrl.selectYearScreen);

@@ -59,7 +59,10 @@ class _BCMessageAnswerWidgetState extends State<BCMessageAnswerWidget>
       child: Builder(
         builder: (context) {
           if (widget.messsage.answer != null) {
-            return BCUserMessageWidget(message: [widget.messsage.answer]);
+            return BCUserMessageWidget(
+              message: [widget.messsage.answer],
+              child: widget.messsage.answerWidget,
+            );
           }
           return switch (widget.messsage.answerType) {
             AnswerType.LOGIN_OPTION => BcLoginOptionsWidget(

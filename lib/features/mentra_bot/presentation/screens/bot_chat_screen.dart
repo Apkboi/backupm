@@ -31,7 +31,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
   @override
   void initState() {
     // TODO:ACCEPT BOTFLOW FROM CONSTRUCTOR
-    botChatCubit.startMessage(BotChatFlow.welcome);
+    botChatCubit.displayWelcomeMessages(BotChatFlow.welcome);
     super.initState();
   }
 

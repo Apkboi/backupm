@@ -1,6 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/helper_utils.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/login_question_datasource.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/permissions_message_data_source.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/signup_question_data_source.dart';
@@ -29,11 +34,10 @@ class BotChatCubit extends Cubit<BotChatState> {
   BotChatFlow currentChatFlow = BotChatFlow.welcome;
   final scrollController = ItemScrollController();
 
-  void startMessage(BotChatFlow flow) async {
+  void displayWelcomeMessages(BotChatFlow flow) async {
     if (flow != BotChatFlow.talkToMentra) {
       stagedMessages.clear();
       // _addTyping();
-
       for (var message in welcomeMessageDataSource.messages) {
         _addTyping();
         await Future.delayed(const Duration(seconds: 2));
@@ -84,14 +88,15 @@ class BotChatCubit extends Cubit<BotChatState> {
     required int id,
     required String answer,
     BotChatFlow? nextFlow,
+    Widget? answerWidget,
     LoginStage? nextLoginStage,
     SignupStage? nextSignupStage,
     PermissionsStage? nextPermissionStage,
   }) async {
     // Update the question with the answer
+    stagedMessages.last.answerWidget = answerWidget;
     stagedMessages.last.answer = answer;
     stagedMessages.last.answerTime = DateTime.now();
-    logger.i(answer);
     emit(QuestionUpdatedState());
     await Future.delayed(const Duration(milliseconds: 300));
     _addTyping();
@@ -176,6 +181,10 @@ class BotChatCubit extends Cubit<BotChatState> {
           .where((element) => element.signupStage == nextSignupStage)
           .first
         ..time = DateTime.now());
+
+      if (nextSignupStage == SignupStage.EMAIL_MESSAGE) {
+        _addTermsAndConditionMessage();
+      }
     }
     updateCurrentQuestion(stagedMessages.last);
 
@@ -194,7 +203,6 @@ class BotChatCubit extends Cubit<BotChatState> {
     emit(RemoveTypingState());
     await Future.delayed(const Duration(milliseconds: 400));
     stagedMessages.removeWhere((element) => element.isTyping == true);
-
     // await Future.delayed(const Duration(milliseconds: 300));
   }
 
@@ -212,5 +220,38 @@ class BotChatCubit extends Cubit<BotChatState> {
 
   void _startMentraChat() {
     // stagedMessages.add(BotChatmessageModel.botTyping());
+  }
+
+  void _addTermsAndConditionMessage() async {
+    var termsMessage = BotChatmessageModel(
+        message: 'Terms and condition',
+        isFromBot: true,
+        id: 0,
+        isTyping: false,
+        child: InkWell(
+          onTap: () {
+            Helpers.launchRawUrl('https://yourmentra.com/privacy-policy');
+          },
+          child: const TextView(
+            text: 'Terms and conditions apply',
+            color: Pallets.secondary,
+            fontWeight: FontWeight.w600,
+            decoration: TextDecoration.underline,
+            decorationColor: Pallets.secondary,
+          ),
+        ),
+        answerType: AnswerType.EMAIL,
+        signupStage: SignupStage.TERMS,
+        time: DateTime.now(),
+        flow: BotChatFlow.signup,
+        answerTime: DateTime.now());
+
+    _addTyping();
+    await Future.delayed(const Duration(seconds: 2));
+    await _removeTyping();
+    await Future.delayed(const Duration(milliseconds: 300));
+    stagedMessages.add(termsMessage);
+    currentQuestion = termsMessage;
+    emit(QuestionUpdatedState());
   }
 }

@@ -8,6 +8,7 @@ class TextView extends StatelessWidget {
   final TextOverflow? textOverflow;
   final TextAlign? align;
   final Color? color;
+  final Color? decorationColor;
   final double? fontSize;
   final double? lineHeight;
   final FontWeight? fontWeight;
@@ -32,6 +33,7 @@ class TextView extends StatelessWidget {
     this.fontWeight = FontWeight.normal,
     this.decoration,
     this.fontStyle = FontStyle.normal,
+    this.decorationColor,
   });
 
   @override
@@ -47,6 +49,7 @@ class TextView extends StatelessWidget {
             GoogleFonts.plusJakartaSans(
               color: color,
               decoration: decoration,
+              decorationColor: decorationColor,
               fontWeight: fontWeight,
               fontSize: fontSize?.sp ?? 14.sp,
               fontStyle: fontStyle,
@@ -54,6 +57,7 @@ class TextView extends StatelessWidget {
             ).copyWith(inherit: true),
         textAlign: align,
         overflow: textOverflow,
+
         maxLines: maxLines,
       ),
     );

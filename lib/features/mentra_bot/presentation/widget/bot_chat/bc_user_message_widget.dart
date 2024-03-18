@@ -42,7 +42,6 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
               //     : null,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
-
                 children: [
                   widget.child ??
                       TextView(
@@ -51,8 +50,7 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
                           color: Pallets.black,
                           lineHeight: 1.5,
                           fontWeight: FontWeight.w500),
-                  Text(
-                      TimeUtil.formatTime(DateTime.now()),
+                  Text(TimeUtil.formatTime(DateTime.now()),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 11.sp,

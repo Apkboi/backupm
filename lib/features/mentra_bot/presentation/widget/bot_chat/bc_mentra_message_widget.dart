@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -140,6 +141,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                             padding: widget.isTyping
                                 ? const EdgeInsets.all(4)
                                 : null,
+
                             // decoration: BoxDecoration(
                             //     borderRadius: BorderRadius.circular(
                             //         !widget.isTyping ? 15 : 100),
@@ -160,13 +162,21 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                                 if (widget.child != null) widget.child!,
                                 if (!widget.isTyping && widget.child == null)
                                   TextView(
-                                      text: widget.isTyping
-                                          ? 'Mentra is typing....'
-                                          : widget.message.toList()[index],
-                                      lineHeight: 1.5,
+                                    text: widget.isTyping
+                                        ? 'Mentra is typing....'
+                                        : widget.message.toList()[index],
+                                    // lineHeight: 1.5,
+
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontWeight: FontWeight.w500,
                                       color: Pallets.white,
                                       fontSize: 15.sp,
-                                      fontWeight: FontWeight.w500),
+                                      height: 1.5,
+                                      wordSpacing: 1.5,
+
+                                      // letterSpacing: 2
+                                    ),
+                                  ),
                                 if (!widget.isTyping) 8.verticalSpace,
                                 if (!widget.isTyping)
                                   Align(

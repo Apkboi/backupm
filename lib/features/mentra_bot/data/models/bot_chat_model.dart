@@ -14,6 +14,7 @@ class BotChatmessageModel {
   DateTime time;
   DateTime? answerTime;
   Widget? child;
+  Widget? answerWidget;
   BotChatFlow flow;
 
   BotChatmessageModel(
@@ -29,7 +30,8 @@ class BotChatmessageModel {
       required this.flow,
       this.signupStage = SignupStage.NONE,
       this.answer,
-      this.child});
+      this.child,
+      this.answerWidget});
 
   factory BotChatmessageModel.botTyping() => BotChatmessageModel(
       message: '',
@@ -82,6 +84,8 @@ enum PermissionsStage { BIOMETRIC, NOTIFICATION, NONE }
 enum SignupStage {
   NONE,
   EMAIL_VERIFICATION,
+  EMAIL_MESSAGE,
+  TERMS,
   USERNAME,
   AVARTER,
   YEAR,
