@@ -28,7 +28,7 @@ class WelcomeMessageDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Before we proceed, do you already have a Mentra account, or would you like to create a new one ?',
+            'Before we proceed, do you already have a Mentra account, or would you like to create a new one?',
         isFromBot: true,
         id: 2,
         isTyping: false,
