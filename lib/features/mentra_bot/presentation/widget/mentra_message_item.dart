@@ -7,7 +7,6 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
-
 import '../../../../core/utils/time_util.dart';
 
 class MentraMessageItem extends StatefulWidget {
@@ -38,7 +37,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 300),
     );
 
     _fadeAnimation = CurvedAnimation(
@@ -51,8 +50,8 @@ class _MentraMessageItemState extends State<MentraMessageItem>
       curve: Curves.easeInOut,
     );
 
-    Future.delayed(const Duration(seconds: 2), () {
-      // _controller.forward();
+    Future.delayed(const Duration(milliseconds: 300), () {
+      _controller.forward();
     });
   }
 
@@ -67,86 +66,88 @@ class _MentraMessageItemState extends State<MentraMessageItem>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Padding(
-              padding: !widget.isTyping
-                  ? EdgeInsets.only(top: 45.h, right: 6.w)
-                  : EdgeInsets.only(right: 6.w, top: 8.h),
-              child: CircleAvatar(
-                backgroundColor: Pallets.lighterBlue,
-                radius: 14,
-                child: ImageWidget(
-                  imageUrl: Assets.images.pngs.mentraBig.path,
-                  fit: BoxFit.cover,
-                  size: 25,
+        FadeTransition(
+          opacity: _fadeAnimation,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Padding(
+                padding: !widget.isTyping
+                    ? EdgeInsets.only(top: 45.h, right: 6.w)
+                    : EdgeInsets.only(right: 6.w, top: 8.h),
+                child: CircleAvatar(
+                  backgroundColor: Pallets.lighterBlue,
+                  radius: 14,
+                  child: ImageWidget(
+                    imageUrl: Assets.images.pngs.mentraBig.path,
+                    fit: BoxFit.cover,
+                    size: 25,
+                  ),
                 ),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(
-                widget.message.length,
-                (index) => Container(
-                  constraints: BoxConstraints(maxWidth: 0.75.sw),
-                  // margin: const EdgeInsets.only(bottom: ),
-                  child: ChatBubble(
-                    // margin: EdgeInsets.zero,
-                    backGroundColor: Pallets.navy,
-                    clipper: ChatBubbleClipper3(
-                        type: BubbleType.receiverBubble,
-                        nipSize: !widget.isTyping ? 5 : 3,
-                        radius: !widget.isTyping ? 15 : 15),
-                    child: Container(
-                      padding:
-                          widget.isTyping ? const EdgeInsets.all(4) : null,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(
-                      //         !widget.isTyping ? 15 : 100),
-                      //     color: Pallets.navy),
-                      child: Column(
-
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (widget.isTyping)
-                            SizedBox(
-                              width: 35.w,
-                              height: 5.h,
-                              child: const SpinKitThreeBounce(
-                                color: Pallets.white,
-                                size: 14.0,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  widget.message.length,
+                  (index) => Container(
+                    constraints: BoxConstraints(maxWidth: 0.75.sw),
+                    // margin: const EdgeInsets.only(bottom: ),
+                    child: ChatBubble(
+                      // margin: EdgeInsets.zero,
+                      backGroundColor: Pallets.navy,
+                      clipper: ChatBubbleClipper3(
+                          type: BubbleType.receiverBubble,
+                          nipSize: !widget.isTyping ? 5 : 3,
+                          radius: !widget.isTyping ? 15 : 15),
+                      child: Container(
+                        padding:
+                            widget.isTyping ? const EdgeInsets.all(4) : null,
+                        // decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(
+                        //         !widget.isTyping ? 15 : 100),
+                        //     color: Pallets.navy),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (widget.isTyping)
+                              SizedBox(
+                                width: 35.w,
+                                height: 5.h,
+                                child: const SpinKitThreeBounce(
+                                  color: Pallets.white,
+                                  size: 14.0,
+                                ),
                               ),
-                            ),
-                          if (!widget.isTyping)
-                            TextView(
-                                text: widget.isTyping
-                                    ? 'Mentra is typing....'
-                                    : widget.message.reversed.toList()[index],
-                                lineHeight: 1.5,
-                                color: Pallets.white,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500),
-                          if (!widget.isTyping) 8.verticalSpace,
-                          if (!widget.isTyping)
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text(TimeUtil.formatTime(DateTime.now()),
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    color: Pallets.white,
-                                    fontWeight: FontWeight.w600,
-                                  )),
-                            )
-                        ],
+                            if (!widget.isTyping)
+                              TextView(
+                                  text: widget.isTyping
+                                      ? 'Mentra is typing....'
+                                      : widget.message.reversed.toList()[index],
+                                  lineHeight: 1.5,
+                                  color: Pallets.white,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500),
+                            if (!widget.isTyping) 8.verticalSpace,
+                            if (!widget.isTyping)
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(TimeUtil.formatTime(DateTime.now()),
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      color: Pallets.white,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                              )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         6.verticalSpace,
       ],

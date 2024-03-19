@@ -29,7 +29,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Now, could you share your email address with us? We\'ll send a verification code to ensure that everything is secure',
+            'Now, could you share your email address with us? We\'ll send a verification code to ensure that everything is secure.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -62,7 +62,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Let\'s start with a nickname. This is how you\'ll be known in the Mentra community. Remember, you can change this at any time',
+            'Let\'s start with a nickname. This is how you\'ll be known in the Mentra community. Remember, you can change this at any time.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -73,7 +73,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Appreciated! Let\'s secure your account. Please create a 4-digit passcode',
+            'Appreciated! Let\'s secure your account. Please create a 4-digit passcode.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -84,7 +84,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Appreciated! Let\'s secure your account. Please create a 4-digit passcode',
+            'Appreciated! Let\'s secure your account. Please create a 4-digit passcode.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -106,7 +106,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Great choice, ${injector.get<RegistrationBloc>().registrationPayload.name}! Next, please choose an avatar that best represents you. We’re constantly adding more options to ensure you find the perfect match',
+            'Great choice, ${injector.get<RegistrationBloc>().registrationPayload.name}! Next, please choose an avatar that best represents you. We’re constantly adding more options to ensure you find the perfect match.',
         isFromBot: true,
         id: 0,
         isTyping: false,

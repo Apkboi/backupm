@@ -4,15 +4,17 @@ import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_
 class WelcomeMessageDataSource {
   var now = DateTime.now();
   List<BotChatmessageModel> messages = [
+
+
     BotChatmessageModel(
         message:
-            '🎉 Welcome! It\'s wonderful to have you on board. I’m Mentra, your 24/7 emotional and mental well-being buddy, tailored just for you',
+            '🎉 Welcome! It\'s wonderful to have you on board. I’m Mentra, your 24/7 emotional and mental well-being buddy, tailored just for you.',
         isFromBot: true,
         id: 0,
         isTyping: false,
         answerType: AnswerType.NONE,
         loginStage: LoginStage.NONE,
-        time:  DateTime.now(),
+        time: DateTime.now(),
         flow: BotChatFlow.welcome,
         answerTime: DateTime.now()),
     BotChatmessageModel(

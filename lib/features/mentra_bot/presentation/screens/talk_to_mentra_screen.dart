@@ -20,12 +20,13 @@ class TalkToMentraScreen extends StatefulWidget {
 }
 
 class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
-  final List<String> messages = [
-    'Hey Leila! I\'m Mentra, your friendly mental health buddy. ',
-    "How's your day going?",
-    "Hi, Mentra! It's been a bit rough lately. Can you lend an ear?",
-    "Absolutely! I'm here to listen and help. What's been bothering you?"
-  ];
+  final List<String> messages = [];
+
+  @override
+  void initState() {
+    _simulate();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
           PopupMenuButton(
             position: PopupMenuPosition.over,
             // constraints: const BoxConstraints(maxHeight: 60,),
-            constraints: BoxConstraints(maxWidth: 150),
+            constraints: const BoxConstraints(maxWidth: 150),
             padding: EdgeInsets.zero,
             // shape:
             //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -85,11 +86,12 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
-                  reverse: true,
+                  // reverse: true,
                   itemCount: messages.length,
                   itemBuilder: (context, index) => TalkToMentraMessageBox(
-                    message: [messages.reversed.toList()[index]],
-                    isSender: index.isEven,
+                    message: [messages.toList()[index]],
+                    isSender: !index.isEven,
+
                   ),
                 )),
                 const _InputBar()
@@ -146,6 +148,22 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
       } else {
         context.pop();
       }
+    }
+  }
+
+  void _simulate() async {
+    final List<String> myMessages = [
+      'Hey Leila! I\'m Mentra, your friendly mental health buddy.\nHow\'s your day going?',
+      // "How's your day going?",
+      "Hi, Mentra! It's been a bit rough lately. Can you lend an ear?",
+      "Absolutely! I'm here to listen and help. What's been bothering you?"
+    ];
+    for (var message in myMessages) {
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+      messages.add(message);
+      setState(() {});
     }
   }
 }
