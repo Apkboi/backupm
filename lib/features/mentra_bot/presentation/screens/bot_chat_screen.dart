@@ -43,11 +43,11 @@ class _BotChatScreenState extends State<BotChatScreen> {
       child: BlocConsumer<BotChatCubit, BotChatState>(
         listener: (context, state) {},
         builder: (context, state) {
-          var _shouldShowBotIcon =
-              context.watch<BotChatCubit>().currentChatFlow ==
-                      BotChatFlow.welcome &&
-                  context.watch<BotChatCubit>().stagedMessages.length < 3;
-          context.watch<BotChatCubit>();
+          // var _shouldShowBotIcon =
+          //     context.watch<BotChatCubit>().currentChatFlow ==
+          //             BotChatFlow.welcome &&
+          //         context.watch<BotChatCubit>().stagedMessages.length < 3;
+          // context.watch<BotChatCubit>();
           return WillPopScope(
             onWillPop: () async {
               if (SessionManager.instance.isLoggedIn) {

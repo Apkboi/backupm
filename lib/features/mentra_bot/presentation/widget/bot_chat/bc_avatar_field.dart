@@ -68,12 +68,13 @@ class _BCAvatarFieldState extends State<BCAvatarField> {
       context.read<BotChatCubit>().answerQuestion(
           id: widget.message.id,
           answer: "*******",
+          nextFlow: BotChatFlow.signup,
           answerWidget: ImageWidget(
             imageUrl: selectedUrl!,
             size: 25,
           ),
           // answerWidget:Container(height: 100,width: 100,color: Colors.red,),
-          nextSignupStage: SignupStage.SIGNUP_OPTION);
+          nextSignupStage: SignupStage.EMAIL_MESSAGE);
 
       // context.pushNamed(PageUrl.selectYearScreen);
       // context.pushNamed(PageUrl.signupOptionScreen);

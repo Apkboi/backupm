@@ -92,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     20.verticalSpace,
                     CustomNeumorphicButton(
                       color: Pallets.primary,
-                      text: 'Talk to mentra',
+                      text: 'Talk to Mentra',
                       onTap: () {
                         injector
                             .get<RegistrationBloc>()

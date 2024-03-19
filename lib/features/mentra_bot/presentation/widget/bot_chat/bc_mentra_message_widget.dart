@@ -128,10 +128,12 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                     children: List.generate(
                       widget.message.length,
                       (index) => Container(
-                        constraints: BoxConstraints(maxWidth: 0.75.sw),
+                        constraints: BoxConstraints(maxWidth: 0.75.sw,),
                         // margin: const EdgeInsets.only(bottom: ),
+                        padding: EdgeInsets.zero,
                         child: ChatBubble(
-                          // margin: EdgeInsets.zero,
+                          margin: EdgeInsets.zero,
+
                           backGroundColor: Pallets.navy,
                           clipper: ChatBubbleClipper3(
                               type: BubbleType.receiverBubble,
@@ -159,7 +161,10 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                                       size: 14.0,
                                     ),
                                   ),
-                                if (widget.child != null) widget.child!,
+                                if (widget.child != null) Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: widget.child!,
+                                ),
                                 if (!widget.isTyping && widget.child == null)
                                   TextView(
                                     text: widget.isTyping

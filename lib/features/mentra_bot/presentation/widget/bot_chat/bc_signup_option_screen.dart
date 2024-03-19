@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -98,10 +97,11 @@ class BCSignupOptionsField extends StatelessWidget {
               children: [
                 CustomNeumorphicButton(
                   onTap: () {
+
                     context.read<BotChatCubit>().answerQuestion(
                         id: message.id,
                         answer: "Sign up with Email",
-                        nextSignupStage: SignupStage.EMAIL_MESSAGE);
+                        nextSignupStage: SignupStage.EMAIL);
 
                     // context.pushNamed(PageUrl.userEmailScreen);
                   },

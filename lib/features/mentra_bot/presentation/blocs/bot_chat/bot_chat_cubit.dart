@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -107,6 +109,7 @@ class BotChatCubit extends Cubit<BotChatState> {
         await _removeTyping();
       },
     );
+
     getNextQuestion(
         nextFlow: nextFlow,
         nextLoginStage: nextLoginStage,
@@ -121,7 +124,6 @@ class BotChatCubit extends Cubit<BotChatState> {
     SignupStage? nextSignUpStage,
     PermissionsStage? nextPermissionStage,
   }) {
-    logger.i(currentChatFlow.name);
 
     if (nextFlow != null) {
       currentChatFlow = nextFlow;
@@ -147,6 +149,9 @@ class BotChatCubit extends Cubit<BotChatState> {
   }
 
   void updateCurrentQuestion(BotChatmessageModel question) {
+    // CustomDialogs.showToast(question.flow.name);
+    // CustomDialogs.showToast(question.message);
+
     currentChatFlow = question.flow;
     currentQuestion = question;
     emit(QuestionUpdatedState());
@@ -172,21 +177,25 @@ class BotChatCubit extends Cubit<BotChatState> {
   void _getNextSignupMessage({
     SignupStage? nextSignupStage,
   }) {
-    logger.i('IN login stage');
+
     SignupQuestionDataSource dataSource = SignupQuestionDataSource();
     if (nextSignupStage == null) {
       stagedMessages.add(dataSource.questions.first..time = DateTime.now());
+
     } else {
       stagedMessages.add(dataSource.questions
           .where((element) => element.signupStage == nextSignupStage)
           .first
         ..time = DateTime.now());
-
-      if (nextSignupStage == SignupStage.EMAIL_MESSAGE) {
-        _addTermsAndConditionMessage();
-      }
+      // CustomDialogs.showToast(stagedMessages.last.flow.name);
     }
-    updateCurrentQuestion(stagedMessages.last);
+
+    if (nextSignupStage == SignupStage.EMAIL_MESSAGE) {
+      _addTermsAndConditionMessage();
+    }else{
+      updateCurrentQuestion(stagedMessages.last);
+
+    }
 
     // _scrollToLast();
   }
@@ -230,17 +239,28 @@ class BotChatCubit extends Cubit<BotChatState> {
         isTyping: false,
         child: InkWell(
           onTap: () {
-            Helpers.launchRawUrl('https://yourmentra.com/privacy-policy');
+            Helpers.launchRawUrl('https://yourmentra.com/terms-and-conditions');
           },
-          child: const TextView(
+          child:  TextView(
             text: 'Terms and conditions apply',
-            color: Pallets.secondary,
-            fontWeight: FontWeight.w600,
-            decoration: TextDecoration.underline,
-            decorationColor: Pallets.secondary,
+            // color: Pallets.secondary,
+            // fontWeight: FontWeight.w600,
+            // lineHeight: 1.5,
+            style: GoogleFonts.plusJakartaSans(
+              fontWeight: FontWeight.w600,
+              color: Pallets.secondary,
+              fontSize: 15,
+              height: 1.5.h,
+
+              wordSpacing: 1.5,
+              decoration: TextDecoration.underline,
+              decorationColor: Pallets.secondary,
+              // letterSpacing: 2
+            )
+
           ),
         ),
-        answerType: AnswerType.EMAIL,
+        answerType: AnswerType.SIGNUP_OPTION,
         signupStage: SignupStage.TERMS,
         time: DateTime.now(),
         flow: BotChatFlow.signup,
@@ -252,6 +272,8 @@ class BotChatCubit extends Cubit<BotChatState> {
     await Future.delayed(const Duration(milliseconds: 300));
     stagedMessages.add(termsMessage);
     currentQuestion = termsMessage;
+    // updateCurrentQuestion(termsMessage);
     emit(QuestionUpdatedState());
+
   }
 }
