@@ -85,7 +85,7 @@ class AppPromptWidget extends StatelessWidget {
                 CustomNeumorphicButton(
                     text: retryText,
                     onTap: onTap ?? () {},
-                    color: Pallets.primary),
+                    color: Pallets.secondary),
               ],
             )
         ],

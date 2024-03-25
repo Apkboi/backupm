@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen>
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -300.h,
+                        top: -270.h,
                         right: 0,
                         left: 0,
                         child: ImageWidget(

@@ -75,6 +75,7 @@ class _SplashPageState extends State<SplashPage>
                     width: 120,
                     fit: BoxFit.scaleDown,
                     imageUrl: Assets.images.pngs.logo4.path),
+                
               )
             ],
           ),
