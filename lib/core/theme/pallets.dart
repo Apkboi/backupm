@@ -6,6 +6,7 @@ abstract class Pallets {
   static const primary = Color(0xFF1A6A73);
   static const brandColor = Color(0xFF07271A);
   static const secondary = Color(0xFFFADE93);
+  static const secondaryDark = Color(0xFFE5C572);
   static const gold = Color(0xFFFAE19D);
   static const milkColor = Color(0xFFFFD8A3);
   static const promptDarkMilkColor = Color(0xFF9E6F0E);
@@ -40,6 +41,7 @@ abstract class Pallets {
   static const videoButtonColor = Color(0xFFF9C16C);
   static const buttonBlack = Color(0xFF242628);
   static const skyBlue = Color(0xFF0666EB);
+
   // static const buttonBlack = Color(0xFF0666EB);
 
   static const primaryDark = Color(0xFF0E5A63);
@@ -52,7 +54,7 @@ abstract class Pallets {
   static const transparentOrage = Color(0xFFFFF8EC);
 
   // static const secondary = Color(0xFFC1A269);
-  static const secondaryDark = Color(0xFFA47A46);
+  // static const secondaryDark = Color(0xFFA47A46);
   static const seconDaryLight = Color(0xFFF4EFE1);
   static const bgDark = Color(0xFF121212);
   static const surfaceDark = Color(0xff232325);

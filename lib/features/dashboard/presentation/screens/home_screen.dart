@@ -90,12 +90,12 @@ class _HomeScreenState extends State<HomeScreen>
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -310.h,
+                        top: -270.h,
                         right: 0,
                         left: 0,
                         child: ImageWidget(
                           imageUrl: Assets.images.pngs.mentraBig.path,
-                          height: 300.h,
+                          height: 250.h,
                           width: 254,
                           fit: BoxFit.contain,
                         )),
