@@ -22,7 +22,7 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           constraints: BoxConstraints(maxWidth: 0.7.sw),
@@ -50,18 +50,19 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
                           color: Pallets.black,
                           lineHeight: 1.5,
                           fontWeight: FontWeight.w500),
-                  Text(TimeUtil.formatTime(DateTime.now()),
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                        color: Pallets.black,
-                        fontWeight: FontWeight.w600,
-                      ))
                 ],
               ),
             ),
           ),
         ),
+        5.verticalSpace,
+        Text(TimeUtil.formatTime(DateTime.now()),
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              fontSize: 11.sp,
+              color: Pallets.black,
+              fontWeight: FontWeight.w600,
+            )),
         6.verticalSpace
       ],
     );

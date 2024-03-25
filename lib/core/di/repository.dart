@@ -11,6 +11,8 @@ import 'package:mentra/features/journal/data/repository/journals_repository_impl
 import 'package:mentra/features/journal/dormain/repository/journals_repository.dart';
 import 'package:mentra/features/library/data/repository/wellness_library_repository_impl.dart';
 import 'package:mentra/features/library/dormain/repository/wellness_library_repository.dart';
+import 'package:mentra/features/mentra_bot/data/repository/mentra_chat_repository_impl.dart';
+import 'package:mentra/features/mentra_bot/dormain/repository/mentra_chat_repository.dart';
 import 'package:mentra/features/notification/presentation/data/repository/notifications_repository_impl.dart';
 import 'package:mentra/features/notification/presentation/dormain/repository/notifications_repository.dart';
 import 'package:mentra/features/settings/data/repository/settings_repository_impl.dart';
@@ -45,6 +47,8 @@ void setup(GetIt getIt) {
       () => JournalsRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<NotificationsRepository>(
       () => NotificationRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<MentraChatRepository>(
+      () => MentraChatRepositoryImpl(getIt.get()));
 
 
 }

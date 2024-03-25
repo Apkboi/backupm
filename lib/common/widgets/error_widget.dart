@@ -69,7 +69,7 @@ class AppPromptWidget extends StatelessWidget {
                   text: message!,
                   align: TextAlign.center,
                   fontSize: 14,
-                  style: TextStyle(color: textColor ?? Colors.blueGrey),
+                  style: TextStyle(color: textColor ?? Pallets.navy),
                 ),
                 // const SizedBox(
                 //   height: 16,
@@ -84,8 +84,11 @@ class AppPromptWidget extends StatelessWidget {
                 ),
                 CustomNeumorphicButton(
                     text: retryText,
+                    expanded: false,
+                    padding: const EdgeInsets.all(12),
+                    fgColor: Pallets.black,
                     onTap: onTap ?? () {},
-                    color: Pallets.primary),
+                    color: Pallets.secondary),
               ],
             )
         ],

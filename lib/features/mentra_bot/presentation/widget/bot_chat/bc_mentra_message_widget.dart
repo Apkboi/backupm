@@ -9,7 +9,7 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class BCMentraMessageWidget extends StatefulWidget {
@@ -185,17 +185,6 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                                     ),
                                   ),
                                 if (!widget.isTyping) 8.verticalSpace,
-                                if (!widget.isTyping)
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                        TimeUtil.formatTime(DateTime.now()),
-                                        style: TextStyle(
-                                          fontSize: 11.sp,
-                                          color: Pallets.white,
-                                          fontWeight: FontWeight.w600,
-                                        )),
-                                  )
                               ],
                             ),
                           ),
@@ -206,6 +195,22 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                 ],
               ),
             ),
+            if (!widget.isTyping)
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth: 0.75.sw,
+                ),
+                padding: EdgeInsets.only(top: 5.h, left: 37.w),
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(TimeUtil.formatTime(DateTime.now()),
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Pallets.navy,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
+              ),
             6.verticalSpace,
           ],
         );

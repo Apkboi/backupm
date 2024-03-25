@@ -8,7 +8,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
 class BCLoginPasscodeField extends StatefulWidget {
   const BCLoginPasscodeField({super.key, required this.message});

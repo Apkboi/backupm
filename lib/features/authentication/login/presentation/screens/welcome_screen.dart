@@ -32,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: const Duration(seconds: 5),
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.7).animate(_controller)
+    _scaleAnimation = Tween<double>(begin: 0.7, end:1 ).animate(_controller)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           _updateTimer();

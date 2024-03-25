@@ -6,6 +6,7 @@ import 'package:mentra/features/authentication/registration/presentation/bloc/re
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
@@ -30,4 +31,6 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<JournalBloc>(() => JournalBloc(injector.get()));
   getIt.registerLazySingleton<NotificationsBloc>(
       () => NotificationsBloc(injector.get()));
+  getIt.registerLazySingleton<MentraChatBloc>(
+      () => MentraChatBloc(injector.get()));
 }

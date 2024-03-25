@@ -7,11 +7,9 @@ import 'package:mentra/common/widgets/input_bar.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/core/utils/helper_utils.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
 class BcUserEmailField extends StatefulWidget {
   const BcUserEmailField({super.key, required this.message});

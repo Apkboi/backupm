@@ -167,7 +167,9 @@ class _HomeScreenState extends State<HomeScreen>
                                   context.pushNamed(PageUrl.talkToMentraScreen);
                                 },
                                 color: Pallets.secondary,
-                                fgColor: Pallets.black,
+                                fgColor: Pallets.navy,
+
+                                padding: EdgeInsets.symmetric(vertical: 19.h),
                                 text: "Talk to Mentra",
                               ),
                               50.verticalSpace

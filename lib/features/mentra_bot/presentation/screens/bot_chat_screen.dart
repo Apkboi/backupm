@@ -8,7 +8,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_message_box.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/talk_to_mentra_input_fields.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';

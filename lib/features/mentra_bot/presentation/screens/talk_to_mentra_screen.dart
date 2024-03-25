@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/talk_to_mentra_message_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class TalkToMentraScreen extends StatefulWidget {
   const TalkToMentraScreen({Key? key}) : super(key: key);
@@ -21,84 +26,114 @@ class TalkToMentraScreen extends StatefulWidget {
 
 class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
   final List<String> messages = [];
+  var bloc = MentraChatBloc(injector.get());
 
   @override
   void initState() {
     _simulate();
+    bloc.add(GetCurrentSessionEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(bottom: 90.0),
-      //   child: FloatingActionButton(
-      //       onPressed: () {}, backgroundColor: Pallets.error),
-      // ),
-      appBar: CustomAppBar(
-        // canGoBack: false,
-        // leading: 0.horizontalSpace,
-        tittleText: '',
-        actions: [
-          PopupMenuButton(
-            position: PopupMenuPosition.over,
-            // constraints: const BoxConstraints(maxHeight: 60,),
-            constraints: const BoxConstraints(maxWidth: 150),
-            padding: EdgeInsets.zero,
-            // shape:
-            //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            onSelected: (value) {
-              switch (value) {
-                case "end":
-                  _endSession(context);
-                  break;
-              }
-            },
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem<String>(
-                  value: 'end',
-                  height: 30,
-                  child: Text(
-                    'End Session',
-                    style: TextStyle(fontSize: 14.sp),
+    return BlocProvider<MentraChatBloc>(
+      create: (context) => bloc,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        // floatingActionButton: Padding(
+        //   padding: const EdgeInsets.only(bottom: 90.0),
+        //   child: FloatingActionButton(
+        //       onPressed: () {}, backgroundColor: Pallets.error),
+        // ),
+        appBar: CustomAppBar(
+          // canGoBack: false,
+          // leading: 0.horizontalSpace,
+          tittleText: '',
+          actions: [
+            PopupMenuButton(
+              position: PopupMenuPosition.over,
+              // constraints: const BoxConstraints(maxHeight: 60,),
+              constraints: const BoxConstraints(maxWidth: 150),
+              padding: EdgeInsets.zero,
+              // shape:
+              //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              onSelected: (value) {
+                switch (value) {
+                  case "end":
+                    _endSession(context);
+                    break;
+                }
+              },
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem<String>(
+                    value: 'end',
+                    height: 30,
+                    child: Text(
+                      'End Session',
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
                   ),
-                ),
-              ];
-            },
-            child: const CircleAvatar(
-                backgroundColor: Pallets.white,
-                foregroundColor: Pallets.black,
-                child: Icon(Icons.more_vert)),
-          )
-        ],
-      ),
-      body: Stack(
-        children: [
-          AppBg(
-            image: Assets.images.pngs.homeBg.path,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Expanded(
-                    child: ListView.builder(
-                  // reverse: true,
-                  itemCount: messages.length,
-                  itemBuilder: (context, index) => TalkToMentraMessageBox(
-                    message: [messages.toList()[index]],
-                    isSender: !index.isEven,
-
-                  ),
-                )),
-                const _InputBar()
-              ],
+                ];
+              },
+              child: const CircleAvatar(
+                  backgroundColor: Pallets.white,
+                  foregroundColor: Pallets.black,
+                  child: Icon(Icons.more_vert)),
+            )
+          ],
+        ),
+        body: Stack(
+          children: [
+            AppBg(
+              image: Assets.images.pngs.homeBg.path,
             ),
-          ),
-        ],
+            SafeArea(
+              child: BlocConsumer<MentraChatBloc, MentraChatState>(
+                listener: _listenToMentraChatBloc,
+                builder: (context, state) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        Expanded(
+                            child: state is GetCurrentSessionFailureState
+                                ? Center(
+                                    child: AppPromptWidget(
+                                      onTap: () {
+                                        bloc.add(GetCurrentSessionEvent());
+                                      },
+                                    ),
+                                  )
+                                : ScrollablePositionedList.builder(
+                                    reverse: true,
+                                    itemScrollController: context
+                                        .read<MentraChatBloc>()
+                                        .scrollController,
+                                    // reverse: true,
+                                    itemCount: context
+                                        .watch<MentraChatBloc>()
+                                        .allMessage
+                                        .length,
+                                    itemBuilder: (context, index) =>
+                                        TalkToMentraMessageBox(
+                                      message: context
+                                          .watch<MentraChatBloc>()
+                                          .allMessage
+                                          .reversed
+                                          .toList()[index],
+                                    ),
+                                  )),
+                        _InputBar()
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -166,10 +201,17 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
       setState(() {});
     }
   }
+
+  void _listenToMentraChatBloc(BuildContext context, MentraChatState state) {
+    if (state is RetryMessageFailureState) {
+      CustomDialogs.error(state.error);
+    }
+  }
 }
 
 class _InputBar extends StatelessWidget {
-  const _InputBar({Key? key}) : super(key: key);
+  _InputBar({Key? key}) : super(key: key);
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -190,11 +232,22 @@ class _InputBar extends StatelessWidget {
         // ),
         // 10.horizontalSpace,
         Expanded(
-            child: FilledTextField(
+            child: BlocConsumer<MentraChatBloc, MentraChatState>(
+          listener: (context, state) {
+          },
+          builder: (context, state) {
+            return FilledTextField(
                 hasBorder: false,
+                controller: controller,
+                enabled: state is! GetCurrentSessionLoading &&
+                    state is! ContinueSessionLoading,
                 hasElevation: false,
                 suffix: InkWell(
-                  onTap: () async {},
+                  onTap: () async {
+                    context.read<MentraChatBloc>().add(ContinueSessionEvent(
+                        context.read<MentraChatBloc>().sessionId,
+                        controller.text));
+                  },
                   child: const Icon(
                     Icons.send_rounded,
                     size: 25,
@@ -203,7 +256,9 @@ class _InputBar extends StatelessWidget {
                 fillColor: Pallets.white,
                 contentPadding: const EdgeInsets.all(16),
                 radius: 45,
-                hint: 'Message'))
+                hint: 'Message');
+          },
+        ))
       ],
     );
   }

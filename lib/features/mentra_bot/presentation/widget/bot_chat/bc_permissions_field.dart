@@ -9,7 +9,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BCPermissionsField extends StatelessWidget {

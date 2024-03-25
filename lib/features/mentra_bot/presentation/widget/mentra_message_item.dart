@@ -15,10 +15,12 @@ class MentraMessageItem extends StatefulWidget {
     required this.message,
     this.child,
     this.isTyping = false,
+    required this.time,
   }) : super(key: key);
   final List<dynamic> message;
   final Widget? child;
   final bool isTyping;
+  final DateTime time;
 
   @override
   State<MentraMessageItem> createState() => _MentraMessageItemState();
@@ -50,7 +52,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
       curve: Curves.easeInOut,
     );
 
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       _controller.forward();
     });
   }
@@ -129,16 +131,6 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                                   fontSize: 15.sp,
                                   fontWeight: FontWeight.w500),
                             if (!widget.isTyping) 8.verticalSpace,
-                            if (!widget.isTyping)
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Text(TimeUtil.formatTime(DateTime.now()),
-                                    style: TextStyle(
-                                      fontSize: 11.sp,
-                                      color: Pallets.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                              )
                           ],
                         ),
                       ),
@@ -149,6 +141,22 @@ class _MentraMessageItemState extends State<MentraMessageItem>
             ],
           ),
         ),
+        if (!widget.isTyping)
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: 0.75.sw,
+            ),
+            padding: EdgeInsets.only(top: 5.h, left: 37.w),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(TimeUtil.formatTime(DateTime.now()),
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    color: Pallets.navy,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ),
+          ),
         6.verticalSpace,
       ],
     );

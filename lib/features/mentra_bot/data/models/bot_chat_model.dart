@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
 class BotChatmessageModel {
   String message;

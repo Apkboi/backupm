@@ -124,7 +124,6 @@ class BotChatCubit extends Cubit<BotChatState> {
     SignupStage? nextSignUpStage,
     PermissionsStage? nextPermissionStage,
   }) {
-
     if (nextFlow != null) {
       currentChatFlow = nextFlow;
     }
@@ -177,11 +176,9 @@ class BotChatCubit extends Cubit<BotChatState> {
   void _getNextSignupMessage({
     SignupStage? nextSignupStage,
   }) {
-
     SignupQuestionDataSource dataSource = SignupQuestionDataSource();
     if (nextSignupStage == null) {
       stagedMessages.add(dataSource.questions.first..time = DateTime.now());
-
     } else {
       stagedMessages.add(dataSource.questions
           .where((element) => element.signupStage == nextSignupStage)
@@ -192,9 +189,8 @@ class BotChatCubit extends Cubit<BotChatState> {
 
     if (nextSignupStage == SignupStage.EMAIL_MESSAGE) {
       _addTermsAndConditionMessage();
-    }else{
+    } else {
       updateCurrentQuestion(stagedMessages.last);
-
     }
 
     // _scrollToLast();
@@ -241,24 +237,22 @@ class BotChatCubit extends Cubit<BotChatState> {
           onTap: () {
             Helpers.launchRawUrl('https://yourmentra.com/terms-and-conditions');
           },
-          child:  TextView(
-            text: 'Terms and conditions apply',
-            // color: Pallets.secondary,
-            // fontWeight: FontWeight.w600,
-            // lineHeight: 1.5,
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.w600,
-              color: Pallets.secondary,
-              fontSize: 15,
-              height: 1.5.h,
+          child: TextView(
+              text: 'Terms and conditions apply',
+              // color: Pallets.secondary,
+              // fontWeight: FontWeight.w600,
+              // lineHeight: 1.5,
+              style: GoogleFonts.plusJakartaSans(
+                fontWeight: FontWeight.w600,
+                color: Pallets.secondary,
+                fontSize: 15,
+                height: 1.5.h,
 
-              wordSpacing: 1.5,
-              decoration: TextDecoration.underline,
-              decorationColor: Pallets.secondary,
-              // letterSpacing: 2
-            )
-
-          ),
+                wordSpacing: 1.5,
+                decoration: TextDecoration.underline,
+                decorationColor: Pallets.secondary,
+                // letterSpacing: 2
+              )),
         ),
         answerType: AnswerType.SIGNUP_OPTION,
         signupStage: SignupStage.TERMS,
@@ -274,6 +268,5 @@ class BotChatCubit extends Cubit<BotChatState> {
     currentQuestion = termsMessage;
     // updateCurrentQuestion(termsMessage);
     emit(QuestionUpdatedState());
-
   }
 }

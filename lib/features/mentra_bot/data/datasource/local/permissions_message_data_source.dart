@@ -1,5 +1,5 @@
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
 class PermissionMessageDataSource {
   List<BotChatmessageModel> messages = [

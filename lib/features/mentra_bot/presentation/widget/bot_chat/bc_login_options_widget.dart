@@ -17,7 +17,7 @@ import 'package:mentra/features/authentication/login/presentation/bloc/login_blo
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart'
     as regbloc;
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
-import 'package:mentra/features/mentra_bot/presentation/blocs/bot_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class BcLoginOptionsWidget extends StatefulWidget {
