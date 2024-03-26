@@ -4,6 +4,7 @@ import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_ch
 class BotChatmessageModel {
   String message;
   bool isFromBot;
+  bool? showIcon;
   int id;
   bool? isTyping;
   AnswerType answerType;
@@ -31,6 +32,7 @@ class BotChatmessageModel {
       this.signupStage = SignupStage.NONE,
       this.answer,
       this.child,
+      this.showIcon = true,
       this.answerWidget});
 
   factory BotChatmessageModel.botTyping() => BotChatmessageModel(

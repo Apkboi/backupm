@@ -10,7 +10,7 @@ import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
@@ -84,8 +84,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       padding: const EdgeInsets.all(10),
                       onTap: () async {
                         // injector.get<MesiboCubit>().startGroupCall();
-                        _startMessaging();
-                        // context.pushNamed(PageUrl.therapistChatScreen);
+                        // _startMessaging();
+                        context.pushNamed(PageUrl.therapistChatScreen);
                       },
                       text: "Message ${widget.session.therapist.user.name}",
                       color: Pallets.milkColor),

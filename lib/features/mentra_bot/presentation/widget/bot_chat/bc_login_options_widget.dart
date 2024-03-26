@@ -46,7 +46,7 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
                   onTap: () {
                     context.read<BotChatCubit>().answerQuestion(
                         id: widget.message.id,
-                        answer: "Continue with email",
+                        answer: "Continue with Email",
                         // nextFlow: BotChatFlow.signup,
                         nextLoginStage: LoginStage.EMAILPREVIEW);
                     // context.pushNamed(PageUrl.loginPreview);
@@ -54,7 +54,7 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
                   expanded: false,
                   // fgColor: Pallets.black,
                   color: Pallets.primary,
-                  text: "Continue with email",
+                  text: "Continue with Email",
                 ),
               ],
             ),

@@ -6,6 +6,7 @@ abstract class Pallets {
   static const primary = Color(0xFF1A6A73);
   static const brandColor = Color(0xFF07271A);
   static const secondary = Color(0xFFFADE93);
+  static const splash = Color(0xFF002C3C);
   static const secondaryDark = Color(0xFFE5C572);
   static const gold = Color(0xFFFAE19D);
   static const milkColor = Color(0xFFFFD8A3);

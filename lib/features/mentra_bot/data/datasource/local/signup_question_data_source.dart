@@ -117,10 +117,11 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Awesome choice, ${injector.get<RegistrationBloc>().registrationPayload.name} 🎉 Would you like to sign up using your email, Google, or Apple?',
+            'Awesome choice, ${injector.get<RegistrationBloc>().registrationPayload.name} Would you like to sign up using your email, Google, or Apple?',
         isFromBot: true,
         id: 0,
         isTyping: false,
+        showIcon: false,
         answerType: AnswerType.NONE,
         signupStage: SignupStage.EMAIL_MESSAGE,
         flow: BotChatFlow.signup,

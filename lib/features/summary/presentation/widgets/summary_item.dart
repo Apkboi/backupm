@@ -41,7 +41,7 @@ class SummaryItem extends StatelessWidget {
               ),
               16.verticalSpace,
               const TextView(
-                fontSize: 13,
+                fontSize: 14,
                 text:
                     'Recap: Strategies for managing stress, mindfulness techniques. See suggestions and resources.',
                 fontWeight: FontWeight.w500,

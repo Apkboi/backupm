@@ -22,7 +22,8 @@ class NewUserPrompt extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5),
         decoration: ShapeDecoration(
             color: Pallets.white.withOpacity(0.55),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20))),
         child: IntrinsicHeight(
           child: Row(
             children: [
@@ -37,6 +38,7 @@ class NewUserPrompt extends StatelessWidget {
                     ),
                     8.verticalSpace,
                     const TextView(
+                      fontSize: 15,
                       text:
                           'Click below to \'Talk to Mentra\' and share how you\'re doing, ask questions, or just have a friendly chat.  Ready when you are!',
                       color: Pallets.ink,

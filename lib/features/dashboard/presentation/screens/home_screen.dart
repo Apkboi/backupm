@@ -15,6 +15,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
@@ -93,12 +94,7 @@ class _HomeScreenState extends State<HomeScreen>
                         top: -270.h,
                         right: 0,
                         left: 0,
-                        child: ImageWidget(
-                          imageUrl: Assets.images.pngs.mentraBig.path,
-                          height: 250.h,
-                          width: 254,
-                          fit: BoxFit.contain,
-                        )),
+                        child: HomeBotImage()),
                     Positioned(
                         top: -100,
                         child: ImageWidget(
@@ -162,15 +158,18 @@ class _HomeScreenState extends State<HomeScreen>
                                           .message ??
                                       ''),
                               69.verticalSpace,
-                              CustomNeumorphicButton(
-                                onTap: () {
-                                  context.pushNamed(PageUrl.talkToMentraScreen);
-                                },
-                                color: Pallets.secondary,
-                                fgColor: Pallets.navy,
-
-                                padding: EdgeInsets.symmetric(vertical: 19.h),
-                                text: "Talk to Mentra",
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
+                                child: CustomNeumorphicButton(
+                                  onTap: () {
+                                    context
+                                        .pushNamed(PageUrl.talkToMentraScreen);
+                                  },
+                                  color: Pallets.secondary,
+                                  fgColor: Pallets.navy,
+                                  padding: EdgeInsets.symmetric(vertical: 19.h),
+                                  text: "Talk to Mentra",
+                                ),
                               ),
                               50.verticalSpace
                             ],

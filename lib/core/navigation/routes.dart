@@ -30,10 +30,12 @@ import 'package:mentra/features/dashboard/presentation/screens/emergency_sos_scr
 import 'package:mentra/features/dashboard/presentation/screens/home_screen.dart';
 import 'package:mentra/features/dashboard/presentation/screens/menu_screen.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
+import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/presentation/screens/create_journal_screen.dart';
 import 'package:mentra/features/journal/presentation/screens/journal_screen.dart';
 import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
 import 'package:mentra/features/library/presentation/screens/article_details_screen.dart';
+import 'package:mentra/features/library/presentation/screens/audio_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
@@ -216,7 +218,7 @@ class CustomRoutes {
       GoRoute(
         path: '/summariesScreen',
         name: PageUrl.summariesScreen,
-        builder: (context, state) => const SummariesScreen(),
+        builder: (context, state) => const MyActivitiesScreen(),
       ),
       GoRoute(
         path: '/therapistChatScreen',
@@ -234,6 +236,13 @@ class CustomRoutes {
         path: '/videoPlayerScreen',
         name: PageUrl.videoPlayerScreen,
         builder: (context, state) => VideoPlayerScreen(
+          courseJson: state.uri.queryParameters[PathParam.libraryCourse] ?? "",
+        ),
+      ),
+      GoRoute(
+        path: '/audioArticleScreen',
+        name: PageUrl.audioArticleScreen,
+        builder: (context, state) => AudioArticleScreen(
           courseJson: state.uri.queryParameters[PathParam.libraryCourse] ?? "",
         ),
       ),
@@ -365,7 +374,7 @@ class CustomRoutes {
         name: PageUrl.createJournalScreen,
         builder: (context, state) => CreateJournalScreen(
           prompt: state.uri.queryParameters[PathParam.prompt] != null
-              ? GuidedPrompt.fromJson(
+              ? JournalPrompt.fromJson(
                   jsonDecode(state.uri.queryParameters[PathParam.prompt] ?? ''),
                 )
               : null,

@@ -64,7 +64,7 @@ class _UserMessageItemState extends State<UserMessageItem>
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           constraints: BoxConstraints(maxWidth: 0.7.sw),
@@ -96,13 +96,16 @@ class _UserMessageItemState extends State<UserMessageItem>
           ),
         ),
         5.verticalSpace,
-        Text(TimeUtil.formatTime(widget.time),
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontSize: 11.sp,
-              color: Pallets.black,
-              fontWeight: FontWeight.w600,
-            )),
+        Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: Text(TimeUtil.formatTime(widget.time),
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 11.sp,
+                color: Pallets.black,
+                fontWeight: FontWeight.w600,
+              )),
+        ),
         if (widget.message.sendingState == SendingState.failed)
           Align(
             alignment: Alignment.bottomRight,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,28 +15,55 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
+import 'package:mentra/features/library/presentation/widgets/audio_player_widget.dart';
 import 'package:mentra/features/library/presentation/widgets/favorite_acction_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:flutter_html/flutter_html.dart';
 
-class ArticleDetailsScreen extends StatefulWidget {
-  const ArticleDetailsScreen({Key? key, required this.courseJson})
+class AudioArticleScreen extends StatefulWidget {
+  const AudioArticleScreen({Key? key, required this.courseJson})
       : super(key: key);
   final String courseJson;
 
   @override
-  State<ArticleDetailsScreen> createState() => _ArticleDetailsScreenState();
+  State<AudioArticleScreen> createState() => _AudioArticleScreenState();
 }
 
-class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
+class _AudioArticleScreenState extends State<AudioArticleScreen> {
   late LibraryCourse course;
+  late AudioPlayer player = AudioPlayer();
   final libraryBloc = WellnessLibraryBloc(injector.get());
 
   @override
   void initState() {
+    super.initState();
+
     course = LibraryCourse.fromJson(jsonDecode(widget.courseJson));
     libraryBloc.add(GetCourseDetailEvent(course.id.toString()));
-    super.initState();
+
+    // Create the audio player.
+    player = AudioPlayer();
+
+    // Set the release mode to keep the source after playback has completed.
+    player.setReleaseMode(ReleaseMode.stop);
+
+    // Start the player as soon as the app is displayed.
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // await player.setSource(
+      //     UrlSource(course.attachments!.first.file.url));
+      await player.setSource(
+          UrlSource("https://webaudioapi.com/samples/audio-tag/chrono.mp3"));
+      // await player.resume();
+    });
+  }
+
+
+  @override
+  void dispose() {
+    // Release all sources and dispose the player.
+    player.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -135,14 +163,7 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                             width: 1.sw,
                           ),
                           24.verticalSpace,
-                          // TextView(
-                          //   text: '1. Deep Breathing',
-                          //   style: GoogleFonts.fraunces(
-                          //     fontSize: 20,
-                          //     fontWeight: FontWeight.w600,
-                          //   ),
-                          // ),
-                          // 16.verticalSpace,
+
                           Html(data: state.response.data.body, style: {
                             "p": Style(
                                 fontSize: FontSize(
@@ -158,19 +179,9 @@ class _ArticleDetailsScreenState extends State<ArticleDetailsScreen> {
                                 height: Height(15),
                                 fontWeight: FontWeight.w500),
                           }),
+                          AudioPlayerWidget(player: player),
                           29.verticalSpace,
-                          // TextView(
-                          //   text: '2. Mindfulness Meditation',
-                          //   style: GoogleFonts.fraunces(
-                          //     fontSize: 20,
-                          //     fontWeight: FontWeight.w600,
-                          //   ),
-                          // ),
-                          // 16.verticalSpace,
-                          // const TextView(
-                          //   text:
-                          //       'When anxiety hits, try deep breathing exercises. Inhale slowly for a count of four, hold for four, and exhale for four. This can help calm your nervous system.',
-                          // ),
+                          // AudioPlayerWidget(player: player)
                         ],
                       );
                     }

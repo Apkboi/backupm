@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
+
 GetJournalsResponse getJournalsResponseFromJson(String str) =>
     GetJournalsResponse.fromJson(json.decode(str));
 
@@ -55,7 +57,7 @@ class GetJournalsResponse {
 
 class GuidedJournal {
   final int id;
-  final GuidedPrompt? guidedPrompt;
+  final JournalPrompt? guidedPrompt;
   final dynamic body;
   final dynamic status;
   final dynamic createdAt;
@@ -72,7 +74,7 @@ class GuidedJournal {
 
   GuidedJournal copyWith({
     int? id,
-    GuidedPrompt? guidedPrompt,
+    JournalPrompt? guidedPrompt,
     String? body,
     String? status,
     DateTime? createdAt,
@@ -91,7 +93,7 @@ class GuidedJournal {
         id: json["id"],
         guidedPrompt: json["guided_prompt"] == null
             ? null
-            : GuidedPrompt.fromJson(json["guided_prompt"]),
+            : JournalPrompt.fromJson(json["guided_prompt"]),
         body: json["body"],
         status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -108,55 +110,4 @@ class GuidedJournal {
       };
 }
 
-class GuidedPrompt {
-  final int id;
-  final String title;
-  final String content;
-  final String status;
-  final DateTime createdAt;
-  final DateTime updatedAt;
 
-  GuidedPrompt({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.status,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  GuidedPrompt copyWith({
-    int? id,
-    String? title,
-    String? content,
-    String? status,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      GuidedPrompt(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        content: content ?? this.content,
-        status: status ?? this.status,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory GuidedPrompt.fromJson(Map<String, dynamic> json) => GuidedPrompt(
-        id: json["id"],
-        title: json["title"],
-        content: json["content"],
-        status: json["status"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "title": title,
-        "content": content,
-        "status": status,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}

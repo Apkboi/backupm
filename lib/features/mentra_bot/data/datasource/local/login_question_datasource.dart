@@ -14,7 +14,7 @@ class LoginQuestionDataSource {
         time: DateTime.now(),
         answerTime: DateTime.now()),
     BotChatmessageModel(
-        message: 'Hey there!\nHow will you like to access your account.',
+        message: 'Fantastic! Let\'s get you logged in.\nHow will you like to access your account.',
         isFromBot: true,
         id: 0,
         isTyping: false,

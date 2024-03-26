@@ -35,6 +35,7 @@ class PageUrl {
   static const wellnessLibraryScreen = 'wellnessLibraryScreen';
   static const articleDetailsScreen = 'articleDetailsScreen';
   static const videoPlayerScreen = 'videoPlayerScreen';
+  static const audioArticleScreen = 'audioArticleScreen';
   static const allArticlesScreen = 'allArticlesScreen';
   static const videoArticleScreen = 'videoArticleScreen';
   static const settingsScreen = 'settingsScreen';

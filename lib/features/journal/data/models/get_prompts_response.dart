@@ -56,6 +56,7 @@ class JournalPrompt {
   final dynamic status;
   final dynamic createdAt;
   final dynamic updatedAt;
+  final dynamic backgroundColor;
 
   JournalPrompt({
     required this.id,
@@ -64,6 +65,7 @@ class JournalPrompt {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.backgroundColor,
   });
 
   JournalPrompt copyWith({
@@ -73,6 +75,7 @@ class JournalPrompt {
     String? status,
     DateTime? createdAt,
     DateTime? updatedAt,
+    dynamic backgroundColor,
   }) =>
       JournalPrompt(
         id: id ?? this.id,
@@ -81,6 +84,7 @@ class JournalPrompt {
         status: status ?? this.status,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
       );
 
   factory JournalPrompt.fromJson(Map<String, dynamic> json) => JournalPrompt(
@@ -90,6 +94,7 @@ class JournalPrompt {
     status: json["status"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
+    backgroundColor: json["background_color"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -99,5 +104,6 @@ class JournalPrompt {
     "status": status,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
+    "background_color": backgroundColor,
   };
 }

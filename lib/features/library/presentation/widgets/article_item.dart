@@ -21,8 +21,12 @@ class ArticleItem extends StatelessWidget {
         if (course.courseType == 'Video') {
           context.pushNamed(PageUrl.videoArticleScreen,
               queryParameters: {PathParam.id: course.id.toString()});
-        } else {
+        } else if (course.courseType == 'Article') {
           context.pushNamed(PageUrl.articleDetailsScreen, queryParameters: {
+            PathParam.libraryCourse: jsonEncode(course.toJson())
+          });
+        } else if (course.courseType == 'Audio') {
+          context.pushNamed(PageUrl.audioArticleScreen, queryParameters: {
             PathParam.libraryCourse: jsonEncode(course.toJson())
           });
         }
@@ -40,7 +44,7 @@ class ArticleItem extends StatelessWidget {
               child: Stack(
                 children: [
                   ImageWidget(
-                    imageUrl: course.cover?.url??
+                    imageUrl: course.cover?.url ??
                         Assets.images.pngs.videoThumbail.path,
                     height: 126.h,
                     // fit: BoxFit.cover,
@@ -69,9 +73,9 @@ class ArticleItem extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 2.verticalSpace,
-                const TextView(
+                TextView(
                   // text: course.courseType == 'text' ? 'Article' : 'Video',
-                  text: 'Article',
+                  text: course.courseType,
                   fontSize: 13,
                 ),
               ],

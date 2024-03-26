@@ -4,14 +4,13 @@ import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_ch
 class WelcomeMessageDataSource {
   var now = DateTime.now();
   List<BotChatmessageModel> messages = [
-
-
     BotChatmessageModel(
         message:
-            '🎉 Welcome! It\'s wonderful to have you on board. I’m Mentra, your 24/7 emotional and mental well-being buddy, tailored just for you.',
+            'Welcome! It\'s wonderful to have you on board. I’m Mentra, your 24/7 emotional and mental well-being buddy!',
         isFromBot: true,
         id: 0,
         isTyping: false,
+        showIcon: false,
         answerType: AnswerType.NONE,
         loginStage: LoginStage.NONE,
         time: DateTime.now(),
@@ -19,10 +18,11 @@ class WelcomeMessageDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Your privacy is a big deal for me. Every chat here is private and anonymous, meaning you can truly be yourself without any worries.\nYour data? It’s yours and yours alone – safe, secure, and respected.',
+            'Your privacy is a big deal for me. Every chat here is private, secure and anonymous, meaning you can truly be yourself without any worries.',
         isFromBot: true,
         id: 1,
         isTyping: false,
+        showIcon: false,
         answerType: AnswerType.NONE,
         loginStage: LoginStage.NONE,
         flow: BotChatFlow.welcome,

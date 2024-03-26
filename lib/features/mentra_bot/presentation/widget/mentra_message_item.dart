@@ -75,16 +75,20 @@ class _MentraMessageItemState extends State<MentraMessageItem>
             children: [
               Padding(
                 padding: !widget.isTyping
-                    ? EdgeInsets.only(top: 45.h, right: 6.w)
-                    : EdgeInsets.only(right: 6.w, top: 8.h),
+                    ? EdgeInsets.only(top: 45.h,)
+                    : EdgeInsets.only(top: 8.h),
                 child: CircleAvatar(
-                  backgroundColor: Pallets.lighterBlue,
-                  radius: 14,
+                  backgroundColor: Colors.transparent,
+                  radius: 13,
                   child: ImageWidget(
-                    imageUrl: Assets.images.pngs.mentraBig.path,
+                    imageUrl: Assets.images.pngs.launcherIcon.path,
                     fit: BoxFit.cover,
-                    size: 25,
-                  ),
+
+                    width: 35,
+                    height: 60,
+                    // size: 40,
+                  )
+
                 ),
               ),
               Column(
@@ -144,11 +148,11 @@ class _MentraMessageItemState extends State<MentraMessageItem>
         if (!widget.isTyping)
           Container(
             constraints: BoxConstraints(
-              maxWidth: 0.75.sw,
+              maxWidth: 0.8.sw,
             ),
             padding: EdgeInsets.only(top: 5.h, left: 37.w),
             child: Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.bottomRight,
               child: Text(TimeUtil.formatTime(DateTime.now()),
                   style: TextStyle(
                     fontSize: 11.sp,

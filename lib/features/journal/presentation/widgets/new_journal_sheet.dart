@@ -41,18 +41,19 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
           // backgroundColor: Pallets.bottomSheetColor,
           // topRadius: Radius.circular(50),
           body: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 23.0, vertical: 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Align(
                   alignment: Alignment.topLeft,
-                  child: IconButton(
-                    icon: const Icon(
+                  child: GestureDetector(
+                    child: const Icon(
                       Icons.close,
                       color: Pallets.black,
                     ),
-                    onPressed: () {
+                    onTap: () {
                       context.pop();
                     },
                   ),
@@ -65,6 +66,7 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                       PageUrl.createJournalScreen,
                     );
                   },
+                  padding: const EdgeInsets.symmetric(vertical: 18),
                   color: Pallets.primary,
                   child: Row(
                     children: [
@@ -78,14 +80,14 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                     ],
                   ),
                 ),
-                20.verticalSpace,
+                16.verticalSpace,
                 const TextView(
                   text: 'Guided Prompts',
                   fontSize: 16,
                   color: Pallets.primary,
                   fontWeight: FontWeight.w600,
                 ),
-                20.verticalSpace,
+                16.verticalSpace,
                 Expanded(
                     child: BlocConsumer<JournalBloc, JournalState>(
                   listener: _listenToJournalBloc,
@@ -117,7 +119,7 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                             itemCount: state.response.data.length,
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.only(bottom: 12.0),
                               child: GuidedPromptsItem(
                                 prompt: state.response.data[index],
                               ),

@@ -18,9 +18,11 @@ class BCMentraMessageWidget extends StatefulWidget {
     required this.message,
     this.child,
     this.isTyping = false,
+    this.showBot = false,
   }) : super(key: key);
   final List<dynamic> message;
   final bool isTyping;
+  final bool showBot;
 
   final Widget? child;
 
@@ -32,12 +34,10 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
-  late Animation<double> _scaleAnimation;
 
-  bool get _canForward =>
+  bool get _canFowardAnimation =>
       widget.isTyping ||
-      context
-              .read<BotChatCubit>()
+      context.read<BotChatCubit>()
               .stagedMessages
               .reversed
               .toList()
@@ -60,13 +60,8 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
       curve: Curves.easeIn,
     );
 
-    _scaleAnimation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeInOut,
-    );
-
     Future.delayed(const Duration(milliseconds: 200), () {
-      if (_canForward) {
+      if (_canFowardAnimation) {
         _controller.forward();
       }
     });
@@ -80,9 +75,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.isTyping) {
-    //   _controller.forward();
-    // }
+
     return BlocConsumer<BotChatCubit, BotChatState>(
       bloc: context.read(),
       listener: (context, state) {
@@ -93,8 +86,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
         if (state is QuestionUpdatedState) {
           _controller.forward();
         }
-        // logger.i('cubit message'+context.read<BotChatCubit>().currentQuestion!.message.toString());
-        // logger.i('this message' + widget.message.reversed.toList()[0]);
+
       },
       builder: (context, state) {
         return Column(
@@ -111,16 +103,25 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                 children: [
                   Padding(
                     padding: !widget.isTyping
-                        ? EdgeInsets.only(top: 45.h, right: 6.w)
-                        : EdgeInsets.only(right: 6.w, top: 8.h),
+                        ? EdgeInsets.only(
+                            top: 45.h,
+                          )
+                        : EdgeInsets.only(top: 9.h),
                     child: CircleAvatar(
-                      backgroundColor: Pallets.lighterBlue,
-                      radius: 14,
-                      child: ImageWidget(
-                        imageUrl: Assets.images.pngs.mentraBig.path,
-                        fit: BoxFit.cover,
-                        size: 25,
-                      ),
+                      backgroundColor: Colors.transparent,
+                      radius: 13,
+                      child: widget.showBot
+                          ? ImageWidget(
+                              imageUrl: Assets.images.pngs.launcherIcon.path,
+                              fit: BoxFit.cover,
+
+                              width: 35,
+                              height: 60,
+                              // size: 40,
+                            )
+                          : const SizedBox(
+                              width: 60,
+                            ),
                     ),
                   ),
                   Column(
@@ -133,62 +134,39 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                         ),
                         // margin: const EdgeInsets.only(bottom: ),
                         padding: EdgeInsets.zero,
-                        child: ChatBubble(
-                          margin: EdgeInsets.zero,
-                          backGroundColor: Pallets.navy,
-                          clipper: ChatBubbleClipper3(
-                              type: BubbleType.receiverBubble,
-                              nipSize: !widget.isTyping ? 5 : 3,
-                              radius: !widget.isTyping ? 15 : 15),
-                          child: Container(
-                            padding: widget.isTyping
-                                ? const EdgeInsets.all(4)
-                                : null,
-
-                            // decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(
-                            //         !widget.isTyping ? 15 : 100),
-                            //     color: Pallets.navy),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (widget.isTyping)
-                                  SizedBox(
-                                    width: 35.w,
-                                    height: 5.h,
-                                    child: const SpinKitThreeBounce(
-                                      color: Pallets.white,
-                                      size: 14.0,
-                                    ),
-                                  ),
-                                if (widget.child != null)
-                                  Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: widget.child!,
-                                  ),
-                                if (!widget.isTyping && widget.child == null)
-                                  TextView(
-                                    text: widget.isTyping
-                                        ? 'Mentra is typing....'
-                                        : widget.message.toList()[index],
-                                    // lineHeight: 1.5,
-
-                                    style: GoogleFonts.plusJakartaSans(
-                                      fontWeight: FontWeight.w500,
-                                      color: Pallets.white,
-                                      fontSize: 15.sp,
-                                      height: 1.5,
-                                      wordSpacing: 1.5,
-
-                                      // letterSpacing: 2
-                                    ),
-                                  ),
-                                if (!widget.isTyping) 8.verticalSpace,
-                              ],
-                            ),
-                          ),
-                        ),
+                        child: widget.showBot
+                            ? ChatBubble(
+                                margin: EdgeInsets.zero,
+                                backGroundColor: Pallets.navy,
+                                clipper: ChatBubbleClipper3(
+                                    type: BubbleType.receiverBubble,
+                                    nipSize: !widget.isTyping ? 5 : 3,
+                                    radius: !widget.isTyping ? 15 : 15),
+                                child: Container(
+                                  padding: widget.isTyping
+                                      ? const EdgeInsets.all(4)
+                                      : null,
+                                  child: _MessageContent(
+                                      message: widget.message[index],
+                                      isTyping: widget.isTyping,
+                                      showBot: widget.showBot,
+                                      child: widget.child),
+                                ),
+                              )
+                            : Container(
+                                padding: widget.isTyping
+                                    ? const EdgeInsets.all(4)
+                                    : const EdgeInsets.all(14),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        !widget.isTyping ? 15 : 100),
+                                    color: Pallets.navy),
+                                child: _MessageContent(
+                                    message: widget.message[index],
+                                    isTyping: widget.isTyping,
+                                    showBot: widget.showBot,
+                                    child: widget.child),
+                              ),
                       ),
                     ),
                   ),
@@ -198,11 +176,11 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
             if (!widget.isTyping)
               Container(
                 constraints: BoxConstraints(
-                  maxWidth: 0.75.sw,
+                  maxWidth: 0.8.sw,
                 ),
-                padding: EdgeInsets.only(top: 5.h, left: 37.w),
+                padding: EdgeInsets.only(top: 5.h),
                 child: Align(
-                  alignment: Alignment.bottomLeft,
+                  alignment: Alignment.bottomRight,
                   child: Text(TimeUtil.formatTime(DateTime.now()),
                       style: TextStyle(
                         fontSize: 11.sp,
@@ -215,6 +193,67 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
           ],
         );
       },
+    );
+  }
+}
+
+class _MessageContent extends StatefulWidget {
+  const _MessageContent({
+    super.key,
+    required this.message,
+    this.child,
+    this.isTyping = false,
+    this.showBot = false,
+  });
+
+  final dynamic message;
+  final bool isTyping;
+  final bool showBot;
+
+  final Widget? child;
+
+  @override
+  State<_MessageContent> createState() => _MessageContentState();
+}
+
+class _MessageContentState extends State<_MessageContent> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.isTyping)
+          SizedBox(
+            width: 35.w,
+            height: 5.h,
+            child: const SpinKitThreeBounce(
+              color: Pallets.white,
+              size: 14.0,
+            ),
+          ),
+        if (widget.child != null)
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: widget.child!,
+          ),
+        if (!widget.isTyping && widget.child == null)
+          TextView(
+            text: widget.isTyping ? 'Mentra is typing....' : widget.message,
+            // lineHeight: 1.5,
+
+            style: GoogleFonts.plusJakartaSans(
+              fontWeight: FontWeight.w500,
+              color: Pallets.white,
+              fontSize: 15.sp,
+              height: 1.5,
+              wordSpacing: 1.5,
+
+              // letterSpacing: 2
+            ),
+          ),
+        if (!widget.isTyping) 8.verticalSpace,
+      ],
     );
   }
 }

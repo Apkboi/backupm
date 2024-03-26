@@ -11,13 +11,14 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
+import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class CreateJournalScreen extends StatefulWidget {
   const CreateJournalScreen({super.key, this.prompt, this.journal});
 
-  final GuidedPrompt? prompt;
+  final JournalPrompt? prompt;
   final GuidedJournal? journal;
 
   @override

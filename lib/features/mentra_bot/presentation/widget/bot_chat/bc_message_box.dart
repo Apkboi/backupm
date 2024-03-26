@@ -21,25 +21,26 @@ class _BCMessageBoxState extends State<BCMessageBox> {
   Widget build(BuildContext context) {
     return widget.message.isFromBot
         ? Column(
-            children: [
-              Container(
-                  alignment: Alignment.centerLeft,
-                  child: BCMentraMessageWidget(
-                    message: [widget.message.message],
-                    isTyping: widget.message.isTyping ?? false,
-                    child: widget.message.child,
-                  )),
-              Container(
-                  alignment: Alignment.centerRight,
-                  child: BCMessageAnswerWidget(
-                    messsage: widget.message,
-                  ))
-            ],
-          )
+      children: [
+        Container(
+            alignment: Alignment.centerLeft,
+            child: BCMentraMessageWidget(
+              message: [widget.message.message],
+              isTyping: widget.message.isTyping ?? false,
+              showBot: widget.message.showIcon ?? false,
+              child: widget.message.child,
+            )),
+        Container(
+            alignment: Alignment.centerRight,
+            child: BCMessageAnswerWidget(
+              messsage: widget.message,
+            ))
+      ],
+    )
         : BCUserMessageWidget(
-            message: [widget.message.message],
-            child: widget.message.answerWidget,
-          );
+      message: [widget.message.message],
+      child: widget.message.answerWidget,
+    );
   }
 
 // bool get isSender => true;

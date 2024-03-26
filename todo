@@ -1,11 +1,8 @@
-2. Avatar id on register
-3.Professional therapy interchange with guarded journal
-
-
-My activities =>Engagement numbers, number of interaction, streacks,Summaries,
-wellness library
-journal library,
-Professional therapy
+Refactoring bc_mentra chat widget
+Refactoring end session flows
+Language texts translation
+Correct login flow for google auth for when a user is registered already buh goes through create account.
+Optimize bot chat cubit
 
 
  ===== Slide =======

@@ -60,6 +60,7 @@ class _NotificationItemState extends State<NotificationItem> {
                       6.verticalSpace,
                       TextView(
                         text: widget.notification.message,
+                        fontSize: 15,
                         color: Pallets.black80,
                       ),
                     ],

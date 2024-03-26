@@ -50,7 +50,7 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       emit(MessageUpdatedState(allMessage));
       _scrollToLast();
 
-      // emit(GetCurrentSessionSuccessState(response));
+      emit(GetCurrentSessionSuccessState(response));
     } catch (e) {
       emit(GetCurrentSessionFailureState(e.toString()));
     }

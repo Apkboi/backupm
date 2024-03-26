@@ -13,6 +13,7 @@ import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
+import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -36,14 +37,16 @@ class _JournalItemState extends State<JournalItem> {
           isExpanded = !isExpanded;
         });
       },
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-            color: Pallets.white, borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 6, right: 10, left: 16, bottom: 12.h),
+            decoration: BoxDecoration(
+                color: Pallets.white.withOpacity(0.85),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: Row(
               children: [
                 Expanded(
                     child: TextView(
@@ -102,24 +105,38 @@ class _JournalItemState extends State<JournalItem> {
                 )
               ],
             ),
-            16.verticalSpace,
-            _PromptWidget(
-              prompt: widget.journal.guidedPrompt,
+          ),
+          Container(
+            padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
+            width: 1.sw,
+            decoration: const BoxDecoration(
+                color: Pallets.white,
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10))),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                10.verticalSpace,
+                _PromptWidget(
+                  prompt: widget.journal.guidedPrompt,
+                ),
+                12.verticalSpace,
+                TextView(
+                  text: widget.journal.body,
+                  fontWeight: FontWeight.w500,
+                  lineHeight: 1.5,
+                  textOverflow: TextOverflow.ellipsis,
+                  maxLines: widget.journal.body.toString().length > 6
+                      ? isExpanded
+                          ? widget.journal.body.toString().length ~/ 5
+                          : 2
+                      : null,
+                )
+              ],
             ),
-            12.verticalSpace,
-            TextView(
-              text: widget.journal.body,
-              fontWeight: FontWeight.w500,
-              lineHeight: 1.5,
-              textOverflow: TextOverflow.ellipsis,
-              maxLines: widget.journal.body.toString().length > 6
-                  ? isExpanded
-                      ? widget.journal.body.toString().length ~/ 5
-                      : 2
-                  : null,
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -146,7 +163,7 @@ class _JournalItemState extends State<JournalItem> {
 class _PromptWidget extends StatelessWidget {
   const _PromptWidget({super.key, this.prompt});
 
-  final GuidedPrompt? prompt;
+  final JournalPrompt? prompt;
 
   @override
   Widget build(BuildContext context) {
@@ -155,19 +172,20 @@ class _PromptWidget extends StatelessWidget {
             width: 1.sw,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-                color: Pallets.promptMilkCOlor,
+                color: prompt?.backgroundColor.toString().toColor(),
                 borderRadius: BorderRadius.circular(10)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextView(
                   text: prompt!.title.toString(),
-                  fontSize: 13.sp,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Pallets.navy,
                 ),
-                16.verticalSpace,
+                9.verticalSpace,
                 TextView(
+                  fontSize: 15,
                   text: prompt!.content.toString(),
                   fontWeight: FontWeight.w600,
                   color: Pallets.navy,

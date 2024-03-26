@@ -223,6 +223,7 @@ class _DiscoverContentsState extends State<DiscoverContents>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocConsumer<WellnessLibraryBloc, WellnessLibraryState>(
       bloc: injector.get(),
       buildWhen: _buildWhen,

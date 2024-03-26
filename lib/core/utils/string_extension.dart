@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:mentra/core/theme/pallets.dart';
+
 import '_utils.dart';
 
 extension StringExtension on String {
@@ -8,13 +10,17 @@ extension StringExtension on String {
 
 
   Color toColor() {
-    String hexCode = replaceAll('#', '');
+    try {
+      String hexCode = replaceAll('#', '');
 
-    if (hexCode.length == 6) {
-      hexCode = 'FF$hexCode'; // Add alpha value if not provided
+      if (hexCode.length == 6) {
+        hexCode = 'FF$hexCode'; // Add alpha value if not provided
+      }
+
+      return Color(int.parse(hexCode, radix: 16));
+    }  catch (e) {
+      return Pallets.promptMilkCOlor;
     }
-
-    return Color(int.parse(hexCode, radix: 16));
   }
 
 

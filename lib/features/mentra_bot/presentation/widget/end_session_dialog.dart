@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -63,7 +62,7 @@ class EndSessionDialog extends StatelessWidget {
                 //     constraints: BoxConstraints(maxHeight: 0.9.sh));
               },
               color: Pallets.primary,
-              text: "Yes, end session",
+              text: "Yes, End Session",
             ),
             17.verticalSpace,
             CustomOutlinedButton(

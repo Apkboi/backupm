@@ -66,9 +66,13 @@ class BotChatCubit extends Cubit<BotChatState> {
     } else {
       stagedMessages.removeLast();
       stagedMessages.last.answer = null;
+      if (stagedMessages.last.signupStage == SignupStage.EMAIL_MESSAGE) {
+        revertBack();
+      } else {
+        updateCurrentQuestion(stagedMessages.last);
+        _scrollToLast();
+      }
 
-      updateCurrentQuestion(stagedMessages.last);
-      _scrollToLast();
       return true;
     }
   }

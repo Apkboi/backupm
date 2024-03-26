@@ -9,6 +9,16 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsAudioGen {
+  const $AssetsAudioGen();
+
+  /// File path: assets/audio/dummy.mp3
+  String get dummy => 'assets/audio/dummy.mp3';
+
+  /// List of all assets
+  List<String> get values => [dummy];
+}
+
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
@@ -83,9 +93,17 @@ class $AssetsImagesPngsGen {
   AssetGenImage get launcher =>
       const AssetGenImage('assets/images/pngs/launcher.png');
 
+  /// File path: assets/images/pngs/launcher_icon.png
+  AssetGenImage get launcherIcon =>
+      const AssetGenImage('assets/images/pngs/launcher_icon.png');
+
   /// File path: assets/images/pngs/logo4.png
   AssetGenImage get logo4 =>
       const AssetGenImage('assets/images/pngs/logo4.png');
+
+  /// File path: assets/images/pngs/logo5.png
+  AssetGenImage get logo5 =>
+      const AssetGenImage('assets/images/pngs/logo5.png');
 
   /// File path: assets/images/pngs/logoF.png
   AssetGenImage get logoF =>
@@ -177,7 +195,9 @@ class $AssetsImagesPngsGen {
         insight,
         journalNote,
         launcher,
+        launcherIcon,
         logo4,
+        logo5,
         logoF,
         mainLogo,
         mentra,
@@ -310,6 +330,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/p_therapy.svg
   String get pTherapy => 'assets/images/svgs/p_therapy.svg';
 
+  /// File path: assets/images/svgs/refresh.svg
+  String get refresh => 'assets/images/svgs/refresh.svg';
+
   /// File path: assets/images/svgs/refresh_icon.svg
   String get refreshIcon => 'assets/images/svgs/refresh_icon.svg';
 
@@ -399,6 +422,7 @@ class $AssetsImagesSvgsGen {
         messageIcon,
         onboarding1,
         pTherapy,
+        refresh,
         refreshIcon,
         settings,
         share,
@@ -422,6 +446,7 @@ class $AssetsImagesSvgsGen {
 class Assets {
   Assets._();
 
+  static const $AssetsAudioGen audio = $AssetsAudioGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }
 

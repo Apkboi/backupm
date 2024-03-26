@@ -233,8 +233,7 @@ class _InputBar extends StatelessWidget {
         // 10.horizontalSpace,
         Expanded(
             child: BlocConsumer<MentraChatBloc, MentraChatState>(
-          listener: (context, state) {
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             return FilledTextField(
                 hasBorder: false,
