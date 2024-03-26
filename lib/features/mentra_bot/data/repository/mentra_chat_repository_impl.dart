@@ -44,7 +44,7 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
     try {
       final response = await _networkService.call(
         UrlConfig.currentSession,
-        RequestMethod.post,
+        RequestMethod.get,
       );
 
       return GetCurrentSessionRsponse.fromJson(response.data);

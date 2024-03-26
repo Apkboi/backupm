@@ -114,6 +114,6 @@ class UrlConfig {
   static String updateJournal(String id) => '/guided-journals/$id/update';
 
 //   Mentra chat
-  static const String currentSession = '/user/ai-sessions/start';
+  static const String currentSession = '/user/ai-sessions/current';
   static const String continueSession = '/user/ai-sessions/send-message';
 }
