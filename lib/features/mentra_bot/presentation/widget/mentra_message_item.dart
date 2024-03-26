@@ -75,21 +75,21 @@ class _MentraMessageItemState extends State<MentraMessageItem>
             children: [
               Padding(
                 padding: !widget.isTyping
-                    ? EdgeInsets.only(top: 45.h,)
+                    ? EdgeInsets.only(
+                        top: 45.h,
+                      )
                     : EdgeInsets.only(top: 8.h),
                 child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  radius: 13,
-                  child: ImageWidget(
-                    imageUrl: Assets.images.pngs.launcherIcon.path,
-                    fit: BoxFit.cover,
+                    backgroundColor: Colors.transparent,
+                    radius: 13,
+                    child: ImageWidget(
+                      imageUrl: Assets.images.pngs.launcherIcon.path,
+                      fit: BoxFit.cover,
 
-                    width: 35,
-                    height: 60,
-                    // size: 40,
-                  )
-
-                ),
+                      width: 35,
+                      height: 60,
+                      // size: 40,
+                    )),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +129,10 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                               TextView(
                                   text: widget.isTyping
                                       ? 'Mentra is typing....'
-                                      : widget.message.reversed.toList()[index],
+                                      : widget.message.reversed
+                                          .toList()[index]
+                                          .toString()
+                                          .trim(),
                                   lineHeight: 1.5,
                                   color: Pallets.white,
                                   fontSize: 15.sp,

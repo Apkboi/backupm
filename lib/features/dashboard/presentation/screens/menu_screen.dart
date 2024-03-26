@@ -59,6 +59,18 @@ class _MenuScreenState extends State<MenuScreen> {
           leadingWidth: 80,
           height: 70,
           actions: [
+            Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomNeumorphicButton(
+              onTap: () {
+                context.pushNamed(PageUrl.emergencySosScreen);
+              },
+              color: Pallets.primary,
+              padding: EdgeInsets.zero,
+              text: 'SOS',
+            ),
+          ),
+            16.horizontalSpace,
             InkWell(
               onTap: () {
                 context.pushNamed(PageUrl.notificationsScreen);
@@ -84,15 +96,13 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             16.horizontalSpace,
           ],
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomNeumorphicButton(
-              onTap: () {
-                context.pushNamed(PageUrl.emergencySosScreen);
-              },
-              color: Pallets.primary,
-              padding: EdgeInsets.zero,
-              text: 'SOS',
+          leading:InkWell(
+            onTap: () {
+
+            },
+            child: CircleAvatar(
+              backgroundColor: Pallets.white,
+              child: ImageWidget(imageUrl: Assets.images.svgs.settings),
             ),
           ),
         ),

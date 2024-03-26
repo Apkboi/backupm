@@ -78,6 +78,8 @@ class _BotChatScreenState extends State<BotChatScreen> {
                     position: PopupMenuPosition.over,
                     constraints: const BoxConstraints(maxWidth: 150),
                     padding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r)),
                     onSelected: (value) {
                       switch (value) {
                         case "end":

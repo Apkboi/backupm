@@ -57,6 +57,8 @@ class _HomeScreenState extends State<HomeScreen>
           InkWell(
             onTap: () {
               context.pushNamed(PageUrl.menuScreen);
+              // DashboardUsecase().execute();
+
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
@@ -93,14 +95,18 @@ class _HomeScreenState extends State<HomeScreen>
                     Positioned(
                         top: -270.h,
                         right: 0,
+
                         left: 0,
                         child: HomeBotImage()),
                     Positioned(
-                        top: -100,
+                        top: -98,
+                        right: 0,
+
+                        left: 0,
                         child: ImageWidget(
-                            width: 254,
+                            width: 1.sw,
                             height: 254,
-                            fit: BoxFit.scaleDown,
+                            fit: BoxFit.fitWidth,
                             imageUrl: Assets.images.svgs.combinedShape)),
                     Container(
                       width: 1.sw,
@@ -126,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen>
                           }
                           if (state is GetConversationStarterLoadingState) {
                             return SizedBox(
-                              height: 200,
+                              height: 250,
                               child: CustomDialogs.getLoading(
                                   size: 30, color: Pallets.white),
                             );

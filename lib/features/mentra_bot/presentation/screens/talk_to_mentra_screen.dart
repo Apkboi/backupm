@@ -54,10 +54,10 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
             PopupMenuButton(
               position: PopupMenuPosition.over,
               // constraints: const BoxConstraints(maxHeight: 60,),
-              constraints: const BoxConstraints(maxWidth: 150),
+              constraints: const BoxConstraints(maxWidth: 103),
               padding: EdgeInsets.zero,
-              // shape:
-              //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
               onSelected: (value) {
                 switch (value) {
                   case "end":

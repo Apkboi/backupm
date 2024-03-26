@@ -64,7 +64,7 @@ class _UserMessageItemState extends State<UserMessageItem>
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           constraints: BoxConstraints(maxWidth: 0.7.sw),
