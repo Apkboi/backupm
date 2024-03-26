@@ -1,6 +1,29 @@
+import 'dart:ui';
+
+import 'package:mentra/core/theme/pallets.dart';
+
 import '_utils.dart';
 
 extension StringExtension on String {
+
+
+
+
+  Color toColor() {
+    try {
+      String hexCode = replaceAll('#', '');
+
+      if (hexCode.length == 6) {
+        hexCode = 'FF$hexCode'; // Add alpha value if not provided
+      }
+
+      return Color(int.parse(hexCode, radix: 16));
+    }  catch (e) {
+      return Pallets.promptMilkCOlor;
+    }
+  }
+
+
   String formatAmount() {
     if ((int.tryParse(this) ?? 0) > 1) {
       String amount = replaceAllMapped(

@@ -17,9 +17,11 @@ class AppTheme extends ChangeNotifier {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Pallets.primary,
+    useMaterial3: false,
+
     hintColor: Pallets.grey,
-    scaffoldBackgroundColor: Colors.white,
-    fontFamily: GoogleFonts.notoSans().fontFamily,
+    scaffoldBackgroundColor: Pallets.bgLight,
+    fontFamily: GoogleFonts.plusJakartaSans().fontFamily,
     sliderTheme: const SliderThemeData(
       showValueIndicator: ShowValueIndicator.always,
     ),

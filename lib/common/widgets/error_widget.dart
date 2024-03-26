@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/neumorphic_button.dart';
+import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/gen/assets.gen.dart';
 
 class AppPromptWidget extends StatelessWidget {
   final String? message;
@@ -8,16 +12,21 @@ class AppPromptWidget extends StatelessWidget {
   final String? imagePath;
   final bool? isSvgResource;
   final bool? canTryAgain;
+  final Color? textColor;
+  final Color? retryTextColor;
 
   const AppPromptWidget({
     Key? key,
-    this.message = 'Ooops an error occured',
+    this.message =
+        'Ooops something went wrong ensure you have a good network and retry.',
     this.title,
     this.onTap,
     this.imagePath,
     this.isSvgResource = false,
     this.canTryAgain = true,
     this.retryText = 'Try again',
+    this.textColor,
+    this.retryTextColor,
   }) : super(key: key);
 
   @override
@@ -28,8 +37,9 @@ class AppPromptWidget extends StatelessWidget {
           child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // if (imagePath != null)
           Image.asset(
-            imagePath ?? "assets/pngs/sorry.png",
+            imagePath ?? Assets.images.pngs.sorry.path,
             height: 150,
           ),
           if (title != null)
@@ -44,7 +54,8 @@ class AppPromptWidget extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onBackground),
+                      color: textColor ??
+                          Theme.of(context).colorScheme.onBackground),
                 ),
                 const SizedBox(
                   height: 10,
@@ -54,10 +65,11 @@ class AppPromptWidget extends StatelessWidget {
           if (message != null)
             Column(
               children: [
-                Text(
-                  message!,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.blueGrey),
+                TextView(
+                  text: message!,
+                  align: TextAlign.center,
+                  fontSize: 14,
+                  style: TextStyle(color: textColor ?? Pallets.navy),
                 ),
                 // const SizedBox(
                 //   height: 16,
@@ -70,18 +82,13 @@ class AppPromptWidget extends StatelessWidget {
                 const SizedBox(
                   height: 16,
                 ),
-                OutlinedButton(
-                  onPressed: onTap,
-                  style: OutlinedButton.styleFrom(
-                      foregroundColor: Theme.of(context).colorScheme.secondary,
-                      side: BorderSide(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.blue, width: 2),
-                          borderRadius: BorderRadius.circular(16))),
-                  child: Text(retryText!),
-                )
+                CustomNeumorphicButton(
+                    text: retryText,
+                    expanded: false,
+                    padding: const EdgeInsets.all(12),
+                    fgColor: Pallets.black,
+                    onTap: onTap ?? () {},
+                    color: Pallets.secondary),
               ],
             )
         ],

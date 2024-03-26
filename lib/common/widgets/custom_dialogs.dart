@@ -6,6 +6,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:fluttertoast/fluttertoast.dart' as toast;
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mbs;
 import 'package:overlay_support/overlay_support.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -37,24 +38,79 @@ class CustomDialogs {
       useRootNavigator: useRootNavigator!,
       builder: (BuildContext context) => dialog,
       barrierDismissible: true,
-      barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.1),
+      barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.2),
       // barrierColor: barrierColor,
     );
   }
 
-  static Future<T?> showBottomSheet<T>(BuildContext context, Widget child,
-      {Color? barrierColor}) {
+  static Future<T?> showBottomSheet<T>(
+    BuildContext context,
+    Widget child, {
+    Color? barrierColor,
+    BoxConstraints? constraints,
+    ShapeBorder? shape,
+  }) {
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,
         context: context,
         barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.3),
         useRootNavigator: true,
         isScrollControlled: true,
+        shape: shape,
+        constraints: constraints,
         builder: (context) {
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: child,
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: child,
+            ),
+          );
+        });
+  }
+
+  static Future<T?> showCupertinoBottomSheet<T>(
+    BuildContext context,
+    Widget child, {
+    Color? barrierColor,
+    BoxConstraints? constraints,
+    bool? useRootNavigator,
+    ShapeBorder? shape,
+  }) {
+    return mbs.showCupertinoModalBottomSheet(
+      expand: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+      useRootNavigator: useRootNavigator ?? false,
+      builder: (context) => Material(
+        child: CupertinoPageScaffold(child: child),
+      ),
+    );
+
+    return showModalBottomSheet<T>(
+        backgroundColor: Colors.transparent,
+        context: context,
+        barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.3),
+        useRootNavigator: true,
+        isScrollControlled: true,
+        shape: shape,
+        constraints: constraints,
+        builder: (context) {
+          return ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: child,
+            ),
           );
         });
   }
@@ -142,16 +198,14 @@ class CustomDialogs {
 
     await showDialog(
       context: context,
-      builder: (BuildContext context) => Builder(
-        builder: (context) {
-          return dialog;
-        }
-      ),
+      builder: (BuildContext context) => Builder(builder: (context) {
+        return dialog;
+      }),
       barrierDismissible: true,
     );
   }
 
-  static void showCustomDialog(Widget child, BuildContext context,
+  static Future showCustomDialog(Widget child, BuildContext context,
       {String title = 'loading...',
       VoidCallback? onYes,
       bool? useRootNavigator = false,
@@ -160,17 +214,17 @@ class CustomDialogs {
       backgroundColor: Colors.white,
       elevation: 5,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(25.r),
       ),
       child: ClipRRect(borderRadius: BorderRadius.circular(12), child: child),
     );
 
-    await showDialog(
+    return await showDialog(
       context: context,
       useRootNavigator: useRootNavigator!,
       builder: (BuildContext context) => dialog,
       barrierDismissible: barrierDismissible!,
-      barrierColor: Pallets.black.withOpacity(0.2),
+      barrierColor: Pallets.black.withOpacity(0.4),
     );
   }
 
@@ -274,10 +328,10 @@ class CustomDialogs {
     // }
   }
 
-  static Widget getLoading({double size = 10.0}) => Container(
+  static Widget getLoading({double size = 10.0, Color? color}) => Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(vertical: 10),
-        child: SpinKitDualRing(color: Pallets.primary, size: size),
+        child: SpinKitDualRing(color: color ?? Pallets.primary, size: size),
       );
 
   static void showSnackBar(
@@ -308,6 +362,7 @@ class CustomDialogs {
   static success(String message) {
     // show a notification at top of screen.
     showSimpleNotification(
+      slideDismissDirection: DismissDirection.horizontal,
       duration: const Duration(seconds: 3),
       Container(
         padding: const EdgeInsets.all(16.0),
@@ -351,7 +406,8 @@ class CustomDialogs {
 
     // show a notification at top of screen.
     showSimpleNotification(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 2),
+      slideDismissDirection: DismissDirection.horizontal,
       Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
@@ -361,7 +417,7 @@ class CustomDialogs {
         ),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.cancel,
               size: 24.0,
               color: Pallets.red,
@@ -375,7 +431,7 @@ class CustomDialogs {
                 fontSize: 14,
                 color: Pallets.red,
                 fontWeight: FontWeight.w500,
-                maxLines: 2,
+                maxLines: 3,
                 textOverflow: TextOverflow.ellipsis,
                 align: TextAlign.left,
               ),
@@ -412,7 +468,7 @@ class CustomDialogs {
           ),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.check_circle,
                 size: 24.0,
                 color: Pallets.primary,
@@ -441,7 +497,7 @@ class CustomDialogs {
       Flushbar(
         message: message,
         messageColor: Pallets.primary,
-        icon: Icon(
+        icon: const Icon(
           Icons.check_circle,
           size: 24.0,
           color: Pallets.primary,
@@ -450,10 +506,10 @@ class CustomDialogs {
         borderWidth: .5,
         borderColor: Pallets.primary,
         backgroundColor: Pallets.primaryLight,
-        margin: EdgeInsets.all(8),
+        margin: const EdgeInsets.all(8),
         flushbarPosition: FlushbarPosition.TOP,
         borderRadius: BorderRadius.circular(8),
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       ).show(context);
     }
   }

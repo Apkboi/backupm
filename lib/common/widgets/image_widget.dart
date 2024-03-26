@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/gen/assets.gen.dart';
 import 'image_previewer.dart';
 
 class ImageWidget extends StatefulWidget {
@@ -15,7 +16,9 @@ class ImageWidget extends StatefulWidget {
   final BoxBorder? border;
   final BorderRadius? borderRadius;
   final double? size;
+
   final Color? color;
+  final VoidCallback? onTap;
   final bool? canPreview;
 
   final ImageWidgetType imageType;
@@ -33,6 +36,7 @@ class ImageWidget extends StatefulWidget {
     required this.imageUrl,
     this.imageType = ImageWidgetType.asset,
     this.canPreview = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -71,6 +75,9 @@ class _ImageWidgetState extends State<ImageWidget> {
                   ),
                 );
               }
+              if (widget.onTap != null) {
+                widget.onTap!();
+              }
             },
             child: CachedNetworkImage(
               imageUrl: widget.imageUrl,
@@ -83,7 +90,7 @@ class _ImageWidgetState extends State<ImageWidget> {
                   border: widget.border,
                   image: DecorationImage(
                       image: imageProvider,
-                      fit: BoxFit.cover,
+                      fit: widget.fit ?? BoxFit.cover,
                       onError: (error, trace) {
                         logger.e(trace);
                       }),
@@ -96,6 +103,7 @@ class _ImageWidgetState extends State<ImageWidget> {
             ),
           );
         }
+
         return InkWell(
           onTap: () {
             if (widget.canPreview!) {
@@ -106,6 +114,9 @@ class _ImageWidgetState extends State<ImageWidget> {
                   imageType: ImageType.asset,
                 ),
               );
+            }
+            if (widget.onTap != null) {
+              widget.onTap!();
             }
           },
           child: Container(
@@ -148,7 +159,7 @@ class _ImageWidgetState extends State<ImageWidget> {
         shape: widget.shape ?? BoxShape.rectangle,
         border: widget.border,
         image: DecorationImage(
-            image: AssetImage('Assets.pngsLogoMain'),
+            image: Assets.images.pngs.placeholder.provider(),
             fit: BoxFit.cover,
             onError: (error, trace) {
               // logger.e(trace);

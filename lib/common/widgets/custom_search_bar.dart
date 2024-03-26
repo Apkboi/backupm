@@ -1,6 +1,8 @@
 // import 'package:fops/common/widgets/filled_textfield.dart';
 // import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:mentra/core/theme/pallets.dart';
 
 import 'filled_textfield.dart';
 
@@ -32,9 +34,10 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       onChanged: widget.onChanged,
       onFieldSubmitted: widget.onFieldSubmitted,
       onSaved: widget.onSaved,
-      preffix: const Icon(Icons.search),
-      contentPadding: const EdgeInsets.symmetric(vertical: 20),
-      fillColor: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.2),
+      radius: 43,
+      preffix: const Icon(Iconsax.search_normal4),
+      contentPadding: const EdgeInsets.symmetric(vertical: 0),
+      fillColor: Pallets.grey1,
     );
   }
 }

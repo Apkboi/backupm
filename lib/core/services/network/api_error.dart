@@ -14,7 +14,7 @@ class ApiError {
   int? errorType = 0;
   ApiErrorModel? apiErrorModel;
 
-  /// description of error generated this is similar to convention [Error.message]
+  /// description of error generated this is similar to convention [Error.currentMessage]
   String? errorDescription;
 
   ApiError(this.errorDescription);
@@ -108,7 +108,7 @@ String _setCustomErrorMessage(Response error) {
   if (error.statusCode == 401) {
 
     CustomDialogs.error('Unauthorized');
-    CustomRoutes.goRouter.goNamed(PageUrl.signIn);
+    CustomRoutes.goRouter.goNamed(PageUrl.onBoardingPage);
 
     return 'Unauthorized';
   }

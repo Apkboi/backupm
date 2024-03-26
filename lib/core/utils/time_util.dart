@@ -73,7 +73,129 @@ class TimeUtil {
     return timeago.format(fifteenAgo);
   }
 
-  static String formatFromDate(DateTime date) {
+  static String  formatFromDate(DateTime date) {
     return DateFormat.yMMMMd().format(date);
   }
+
+  static String formatToFullDate(DateTime dateTime) {
+    return DateFormat('EEEE, dd MMMM yyyy').format(dateTime);
+  }
+
+
+
+ static  String formartToDayTime(DateTime dateTime) {
+    DateTime now = DateTime.now();
+    DateTime yesterday = now.subtract(const Duration(days: 1));
+    DateTime tomorrow = now.add(const Duration(days: 1));
+
+    if (isSameDay(dateTime, now)) {
+      return 'Today, at ${formatTime(dateTime)}';
+    } else if (isSameDay(dateTime, yesterday)) {
+      return 'Yesterday, at ${formatTime(dateTime)}';
+    } else if (isSameDay(dateTime, tomorrow)) {
+      return 'Tomorrow, at ${formatTime(dateTime)}';
+    } else {
+      return '${formatDay(dateTime)}, at ${formatTime(dateTime)}';
+    }
+  }
+
+ static String formatDay(DateTime dateTime) {
+    return DateFormat('EEEE').format(dateTime);
+  }
+
+ static String formatTime(DateTime dateTime) {
+    return DateFormat.jm().format(dateTime);
+  }
+
+ static bool isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month && date1.day == date2.day;
+  }
+
+ static String formDateTimeForJournal(DateTime dateTime) {
+    // Format the date part
+    String formattedDate = "${_getMonth(dateTime.month)} ${dateTime.day}, ${dateTime.year}";
+
+    // Format the time part
+    String formattedTime = _formatTime(dateTime.hour, dateTime.minute);
+
+    // Combine the date and time parts
+    return "$formattedDate - $formattedTime";
+  }
+
+  static String _getMonth(int month) {
+    switch (month) {
+      case 1:
+        return "January";
+      case 2:
+        return "February";
+      case 3:
+        return "March";
+      case 4:
+        return "April";
+      case 5:
+        return "May";
+      case 6:
+        return "June";
+      case 7:
+        return "July";
+      case 8:
+        return "August";
+      case 9:
+        return "September";
+      case 10:
+        return "October";
+      case 11:
+        return "November";
+      case 12:
+        return "December";
+      default:
+        return "";
+    }
+  }
+
+  static String _formatTime(int hour, int minute) {
+    String period = (hour >= 12) ? "PM" : "AM";
+    int formattedHour = (hour > 12) ? hour - 12 : hour;
+    String formattedMinute = (minute < 10) ? "0$minute" : minute.toString();
+    return "$formattedHour:$formattedMinute $period";
+  }
+
+
+
+
+
+
+// String formatDateString(String dateString) {
+  //   DateTime dateTime = DateTime.parse(dateString);
+  //   DateTime now = DateTime.now();
+  //
+  //   if (isThisWeek(dateTime, now)) {
+  //     return 'This ${formatDay(dateTime)}, ${formatMonth(dateTime)} ${dateTime.day}, ${dateTime.year}';
+  //   } else {
+  //     return '${formatDay(dateTime)}, ${formatMonth(dateTime)} ${dateTime.day}, ${dateTime.year}';
+  //   }
+  // }
+  //
+  // String formatDay(DateTime dateTime) {
+  //   return DateFormat('EEEE').format(dateTime);
+  // }
+  //
+  // String formatMonth(DateTime dateTime) {
+  //   return DateFormat('MMMM').format(dateTime);
+  // }
+  //
+  // bool isThisWeek(DateTime date, DateTime now) {
+  //   int daysUntilTarget = date.difference(now).inDays;
+  //
+  //   // Check if the date is within the same week (next 6 days including today)
+  //   return daysUntilTarget >= 0 && daysUntilTarget < 7;
+  // }
+  //
+
+
+
+
+
+
+
 }
