@@ -178,6 +178,8 @@ class _BotChatScreenState extends State<BotChatScreen> {
     }
   }
 
+
+
   void _endSession(BuildContext context) async {
     final bool? sessionEnded =
         await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),

@@ -86,6 +86,7 @@ class AppTheme extends ChangeNotifier {
       onSurface: Colors.black,
       surface: Colors.grey[200]!,
     ),
+
   );
 
   static final ThemeData darkTheme = lightTheme.copyWith(

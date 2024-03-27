@@ -48,8 +48,9 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
       );
 
       return GetCurrentSessionRsponse.fromJson(response.data);
-    } catch (e) {
+    } catch (e,stack) {
       logger.i(e.toString());
+      logger.i(stack.toString());
       rethrow;
     }
   }

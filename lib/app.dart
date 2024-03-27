@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/theme/pallets.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:mentra/app_config.dart';
@@ -40,6 +42,17 @@ class _MentraAppState extends State<MentraApp>
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   const SystemUiOverlayStyle(
+    //     statusBarBrightness: Brightness.dark,
+    //     statusBarColor: Pallets.primary,
+    //     systemStatusBarContrastEnforced: true,
+    //     // statusBarIconBrightness: Brightness.dark,
+    //     systemNavigationBarColor: Pallets.primary,
+    //     systemNavigationBarDividerColor: Pallets.primary,
+    //     // systemNavigationBarIconBrightness: Brightness.dark,
+    //   ),
+    // );
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       // designSize: ScreenUtil.defaultSize,
@@ -75,12 +88,12 @@ class _MentraAppState extends State<MentraApp>
     );
   }
 
-  // void _initMesibo() async {
-  //   mesibo.setAccessToken('abcd6582a9d25c85cbf4c9386e5d3529cdbb8f89d911dab801fae224ad1e4ga1499143eaf');
-  //   mesibo.setListener(MesiboCubit());
-  //   mesibo.start();
-  //
-  //   logger.i(await mesibo.getAddress());
-  //   logger.i(await mesibo.getUid());
-  // }
+// void _initMesibo() async {
+//   mesibo.setAccessToken('abcd6582a9d25c85cbf4c9386e5d3529cdbb8f89d911dab801fae224ad1e4ga1499143eaf');
+//   mesibo.setListener(MesiboCubit());
+//   mesibo.start();
+//
+//   logger.i(await mesibo.getAddress());
+//   logger.i(await mesibo.getUid());
+// }
 }

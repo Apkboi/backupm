@@ -60,9 +60,8 @@ class _MenuScreenState extends State<MenuScreen> {
           // leadingWidth: 80,
           // height: 65,
           onBackPressed: () {
-            context.pushNamed(PageUrl.homeScreen,queryParameters: {
-              PathParam.startConvo:'false'
-            });
+            context.pushNamed(PageUrl.homeScreen,
+                queryParameters: {PathParam.startConvo: 'false'});
           },
           actions: [
             Padding(
@@ -72,7 +71,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   context.pushNamed(PageUrl.emergencySosScreen);
                 },
                 color: Pallets.primary,
-                padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.h),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
                 text: 'SOS',
               ),
             ),

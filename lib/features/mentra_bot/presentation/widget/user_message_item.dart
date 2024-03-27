@@ -71,6 +71,9 @@ class _UserMessageItemState extends State<UserMessageItem>
           child: FadeTransition(
             opacity: _fadeAnimation,
             child: ChatBubble(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8.w,vertical: 7
+              ),
               backGroundColor: Pallets.secondary,
               clipper: ChatBubbleClipper3(
                   type: BubbleType.sendBubble, nipSize: 4, radius: 15),

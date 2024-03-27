@@ -163,12 +163,12 @@ class User {
   final String avatarBackgroundColor;
   final String username;
   final String email;
-  final String birthYear;
+  final dynamic birthYear;
   final String stripeCustomerId;
   final String mesiboUserId;
   final String mesiboUserToken;
-  final ActiveSubscription activeSubscription;
-  final MatchedTherapist matchedTherapist;
+  final ActiveSubscription? activeSubscription;
+  final MatchedTherapist? matchedTherapist;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -237,8 +237,8 @@ class User {
     stripeCustomerId: json["stripe_customer_id"],
     mesiboUserId: json["mesibo_user_id"],
     mesiboUserToken: json["mesibo_user_token"],
-    activeSubscription: ActiveSubscription.fromJson(json["active_subscription"]),
-    matchedTherapist: MatchedTherapist.fromJson(json["matched_therapist"]),
+    activeSubscription:json["active_subscription"] == null? null: ActiveSubscription.fromJson(json["active_subscription"]),
+    matchedTherapist: json["matched_therapist"] == null? null:MatchedTherapist.fromJson(json["matched_therapist"]),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -255,8 +255,8 @@ class User {
     "stripe_customer_id": stripeCustomerId,
     "mesibo_user_id": mesiboUserId,
     "mesibo_user_token": mesiboUserToken,
-    "active_subscription": activeSubscription.toJson(),
-    "matched_therapist": matchedTherapist.toJson(),
+    "active_subscription": activeSubscription?.toJson(),
+    "matched_therapist": matchedTherapist?.toJson(),
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
   };

@@ -37,7 +37,8 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
 
   bool get _canFowardAnimation =>
       widget.isTyping ||
-      context.read<BotChatCubit>()
+      context
+              .read<BotChatCubit>()
               .stagedMessages
               .reversed
               .toList()
@@ -75,7 +76,6 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<BotChatCubit, BotChatState>(
       bloc: context.read(),
       listener: (context, state) {
@@ -86,7 +86,6 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
         if (state is QuestionUpdatedState) {
           _controller.forward();
         }
-
       },
       builder: (context, state) {
         return Column(
@@ -124,71 +123,76 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                             ),
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      widget.message.length,
-                      (index) => Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 0.75.sw,
-                        ),
-                        // margin: const EdgeInsets.only(bottom: ),
-                        padding: EdgeInsets.zero,
-                        child: widget.showBot
-                            ? ChatBubble(
-                                margin: EdgeInsets.zero,
-                                backGroundColor: Pallets.navy,
-                                clipper: ChatBubbleClipper3(
-                                    type: BubbleType.receiverBubble,
-                                    nipSize: !widget.isTyping ? 5 : 3,
-                                    radius: !widget.isTyping ? 15 : 15),
-                                child: Container(
-                                  padding: widget.isTyping
-                                      ? const EdgeInsets.all(4)
-                                      : null,
-                                  child: _MessageContent(
-                                      message: widget.message[index],
-                                      isTyping: widget.isTyping,
-                                      showBot: widget.showBot,
-                                      child: widget.child),
-                                ),
-                              )
-                            : Container(
-                                padding: widget.isTyping
-                                    ? const EdgeInsets.all(4)
-                                    : const EdgeInsets.all(14),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        !widget.isTyping ? 15 : 100),
-                                    color: Pallets.navy),
-                                child: _MessageContent(
-                                    message: widget.message[index],
-                                    isTyping: widget.isTyping,
-                                    showBot: widget.showBot,
-                                    child: widget.child),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 0.75.sw,
+                    ),
+                    child: IntrinsicWidth(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          ...List.generate(
+                            widget.message.length,
+                            (index) => Container(
+                              // margin: const EdgeInsets.only(bottom: ),
+                              padding: EdgeInsets.zero,
+                              child: widget.showBot
+                                  ? ChatBubble(
+                                      margin: EdgeInsets.zero,
+                                      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 5),
+                                      backGroundColor: Pallets.navy,
+                                      clipper: ChatBubbleClipper3(
+                                          type: BubbleType.receiverBubble,
+                                          nipSize: !widget.isTyping ? 5 : 3,
+                                          radius: !widget.isTyping ? 15 : 15),
+                                      child: Container(
+                                        padding: widget.isTyping
+                                            ? const EdgeInsets.all(4)
+                                            : EdgeInsets.zero,
+                                        child: _MessageContent(
+                                            message: widget.message[index],
+                                            isTyping: widget.isTyping,
+                                            showBot: widget.showBot,
+                                            child: widget.child),
+                                      ),
+                                    )
+                                  : Container(
+                                      padding: widget.isTyping
+                                          ? const EdgeInsets.all(4)
+                                          : const EdgeInsets.symmetric(horizontal: 12,vertical: 6),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                              !widget.isTyping ? 15 : 100),
+                                          color: Pallets.navy),
+                                      child: _MessageContent(
+                                          message: widget.message[index],
+                                          isTyping: widget.isTyping,
+                                          showBot: widget.showBot,
+                                          child: widget.child),
+                                    ),
+                            ),
+                          ),
+                          3.verticalSpace,
+                          if (!widget.isTyping)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(TimeUtil.formatTime(DateTime.now()),
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      color: Pallets.navy,
+                                      fontWeight: FontWeight.w600,
+                                    )),
                               ),
+                            ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            if (!widget.isTyping)
-              Container(
-                constraints: BoxConstraints(
-                  maxWidth: 0.8.sw,
-                ),
-                padding: EdgeInsets.only(top: 5.h),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Text(TimeUtil.formatTime(DateTime.now()),
-                      style: TextStyle(
-                        fontSize: 11.sp,
-                        color: Pallets.navy,
-                        fontWeight: FontWeight.w600,
-                      )),
-                ),
-              ),
             6.verticalSpace,
           ],
         );

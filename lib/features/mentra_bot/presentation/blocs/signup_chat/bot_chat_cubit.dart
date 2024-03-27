@@ -79,13 +79,14 @@ class BotChatCubit extends Cubit<BotChatState> {
 
   void _scrollToLast() async {
     // emit(state.copyWith(highlightIndex: -1));
-    scrollController.scrollTo(
-      alignment: 0.5,
-      index: 0, duration: const Duration(milliseconds: 800),
-      curve: Curves.easeInOut,
-      // curve: Curves.easeOut,
-      // duration: kTabScrollDuration,
-    );
+    // scrollController.jumpTo(
+    //   alignment: 0.5,
+    //   index: 0,
+    //   // duration: const Duration(milliseconds: 800),
+    //   // curve: Curves.easeInOut,
+    //   // curve: Curves.easeOut,
+    //   // duration: kTabScrollDuration,
+    // );
 
     // emit(state.copyWith(highlightIndex: event.index));
   }

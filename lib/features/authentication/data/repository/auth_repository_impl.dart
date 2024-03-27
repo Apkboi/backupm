@@ -97,11 +97,17 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<LoginPreviewResponse> loginPreview(String email) async {
-    final response = await _networkService.call(
-        UrlConfig.loginPreview, RequestMethod.post,
-        data: {"email": email});
+    try {
+      final response = await _networkService.call(
+          UrlConfig.loginPreview, RequestMethod.post,
+          data: {"email": email});
 
-    return LoginPreviewResponse.fromJson(response.data);
+      return LoginPreviewResponse.fromJson(response.data);
+    }  catch (e,stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
+      rethrow;
+    }
   }
 
   @override

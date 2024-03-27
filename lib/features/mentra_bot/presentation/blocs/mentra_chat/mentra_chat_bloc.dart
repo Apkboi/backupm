@@ -25,12 +25,12 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   }
 
   void _scrollToLast() async {
-    scrollController.scrollTo(
-      alignment: 0.5,
-      index: 0,
-      duration: const Duration(milliseconds: 800),
-      curve: Curves.easeInOut,
-    );
+    // scrollController.scrollTo(
+    //   alignment: 0.5,
+    //   index: 0,
+    //   duration: const Duration(milliseconds: 800),
+    //   curve: Curves.easeInOut,
+    // );
   }
 
   FutureOr<void> _mapGetCurrentSessionEventToState(

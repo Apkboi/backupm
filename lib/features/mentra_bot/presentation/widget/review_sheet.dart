@@ -6,10 +6,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 
 class ReviewSheet extends StatefulWidget {
@@ -54,44 +56,21 @@ class _ReviewSheetState extends State<ReviewSheet> {
             color: Pallets.ink,
           ),
           20.verticalSpace,
-          const TextView(
-            text: 'Star Rating',
-            align: TextAlign.center,
-            fontWeight: FontWeight.w400,
-            color: Pallets.ink,
-          ),
-          10.verticalSpace,
-          RatingBar.builder(
-            initialRating: 3,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: false,
-            glow: false,
-            itemCount: 5,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => Container(
-              decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      side: BorderSide(
-                          color: Colors.grey.withOpacity(
-                            0.5,
-                          ),
-                          width: 0.5))),
-              child: const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Icon(
-                  Icons.star_rounded,
-                  color: Pallets.yellowBase,
-                  // size: 18,
-                ),
-              ),
-            ),
-            onRatingUpdate: (rating) {
-              // if (kDebugMode) {
-              //   print(rating);
-              // }
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(
+                ReviewMoodModel.allMoods.length,
+                (index) => Column(
+                      children: [
+                        ImageWidget(
+                            imageUrl: ReviewMoodModel.allMoods[index].avatar),
+                        5.verticalSpace,
+                        TextView(
+                          text: ReviewMoodModel.allMoods[index].mood,
+                          fontSize: 16,
+                        )
+                      ],
+                    )),
           ),
           22.verticalSpace,
           Container(

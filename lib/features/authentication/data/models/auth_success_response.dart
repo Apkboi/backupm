@@ -159,7 +159,7 @@ class MentraUser {
   final dynamic avatarBackgroundColor;
   final String username;
   final String email;
-  final String birthYear;
+  final dynamic birthYear;
   final dynamic stripeCustomerId;
   final dynamic mesiboUserId;
   final dynamic mesiboUserToken;

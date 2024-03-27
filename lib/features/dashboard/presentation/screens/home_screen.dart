@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: Pallets.primary,
       appBar: CustomAppBar(
         tittle: ImageWidget(
           imageUrl: Assets.images.svgs.mentraText,
@@ -90,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen>
           AppBg(
             image: Assets.images.pngs.homeBg.path,
           ),
-          SafeArea(
+          Container(
+            height: 1.sh,
+            width: 1.sw,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

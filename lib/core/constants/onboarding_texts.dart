@@ -1,10 +1,13 @@
-const String heading1 = "Begin your journey to better mental well-being";
-const String heading2 = "Access resources for mindfulness and self-care";
+const String heading1 = "Begin your journey to better mental and emotional wellbeing";
+const String heading2 = "Personalized Tech-Enabled Support, Anytime, Anywhere";
+
 const String heading3 = "Get matched with a therapist tailored to your needs";
 const String body1 =
-    "Your first step toward improved mental well-being starts here";
+    "Built on evidence-based emotion regulation and psychotherapy techniques";
 const String body2 =
-    "Tap into a world of mindfulness and self-care with our offerings";
+    "Scientific, Safe, and Secure";
+
+
 const String body3 =
     "Get connected with a therapist who understands your specific needs";
 

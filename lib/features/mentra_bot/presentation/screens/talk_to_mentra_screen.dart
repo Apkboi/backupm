@@ -9,6 +9,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/continue_chat_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
@@ -30,7 +31,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
 
   @override
   void initState() {
-    _simulate();
+    // _simulate();
     bloc.add(GetCurrentSessionEvent());
     super.initState();
   }
@@ -56,8 +57,8 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
               // constraints: const BoxConstraints(maxHeight: 60,),
               constraints: const BoxConstraints(maxWidth: 103),
               padding: EdgeInsets.zero,
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r)),
               onSelected: (value) {
                 switch (value) {
                   case "end":
@@ -138,6 +139,21 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
     );
   }
 
+  void _showContinueSessionPrompt(BuildContext context) async {
+    final bool? endSession =
+        await CustomDialogs.showBottomSheet(context, const ContinueChatDialog(),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            )),
+            constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+    if(endSession??false){
+      _endSession(context);
+    }
+  }
+
   void _endSession(BuildContext context) async {
     final bool? sessionEnded =
         await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),
@@ -186,23 +202,10 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
     }
   }
 
-  void _simulate() async {
-    final List<String> myMessages = [
-      'Hey Leila! I\'m Mentra, your friendly mental health buddy.\nHow\'s your day going?',
-      // "How's your day going?",
-      "Hi, Mentra! It's been a bit rough lately. Can you lend an ear?",
-      "Absolutely! I'm here to listen and help. What's been bothering you?"
-    ];
-    for (var message in myMessages) {
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-      messages.add(message);
-      setState(() {});
-    }
-  }
-
   void _listenToMentraChatBloc(BuildContext context, MentraChatState state) {
+    if (state is GetCurrentSessionSuccessState) {
+      _showContinueSessionPrompt(context);
+    }
     if (state is RetryMessageFailureState) {
       CustomDialogs.error(state.error);
     }

@@ -77,6 +77,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get gJournal =>
       const AssetGenImage('assets/images/pngs/g_journal.png');
 
+  /// File path: assets/images/pngs/happy.png
+  AssetGenImage get happy =>
+      const AssetGenImage('assets/images/pngs/happy.png');
+
   /// File path: assets/images/pngs/home_bg.png
   AssetGenImage get homeBg =>
       const AssetGenImage('assets/images/pngs/home_bg.png');
@@ -120,6 +124,14 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/mentra_big.png
   AssetGenImage get mentraBig =>
       const AssetGenImage('assets/images/pngs/mentra_big.png');
+
+  /// File path: assets/images/pngs/moody.png
+  AssetGenImage get moody =>
+      const AssetGenImage('assets/images/pngs/moody.png');
+
+  /// File path: assets/images/pngs/normal.png
+  AssetGenImage get normal =>
+      const AssetGenImage('assets/images/pngs/normal.png');
 
   /// File path: assets/images/pngs/onboarding1.png
   AssetGenImage get onboarding1 =>
@@ -191,6 +203,7 @@ class $AssetsImagesPngsGen {
         calender,
         emptyBascket,
         gJournal,
+        happy,
         homeBg,
         insight,
         journalNote,
@@ -202,6 +215,8 @@ class $AssetsImagesPngsGen {
         mainLogo,
         mentra,
         mentraBig,
+        moody,
+        normal,
         onboarding1,
         onboarding2,
         onboarding3,
