@@ -172,7 +172,9 @@ class CustomRoutes {
       GoRoute(
         path: '/homeScreen',
         name: PageUrl.homeScreen,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) =>  HomeScreen(
+          startConvo: bool.parse(state.uri.queryParameters[PathParam.startConvo] ?? "true") ,
+        ),
       ),
       GoRoute(
         path: '/menuScreen',

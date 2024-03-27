@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
@@ -179,8 +180,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               leadingIconUrl: Assets.images.svgs.logout,
                               tittle: 'Logout',
                               onTap: () {
-                                SessionManager.instance.logOut();
-                                context.goNamed(PageUrl.onBoardingPage);
+                             CustomDialogs.showConfirmDialog(context,onYes: () {
+                               SessionManager.instance.logOut();
+                               context.goNamed(PageUrl.onBoardingPage);
+                             },tittle: 'Logout',);
                               },
                             ),
                           )),

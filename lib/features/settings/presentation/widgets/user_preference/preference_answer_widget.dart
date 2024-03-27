@@ -39,7 +39,7 @@ class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
                         horizontal: 16, vertical: 10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
-                        color: Pallets.userChatBg),
+                        color: Pallets.secondary),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [

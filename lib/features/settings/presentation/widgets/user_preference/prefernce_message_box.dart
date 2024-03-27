@@ -28,9 +28,9 @@ class _PreferenceQuestionBoxState extends State<PreferenceQuestionBox> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 36.h, right: 10),
+              padding: EdgeInsets.only(top: 30.h, right: 0),
               child: ImageWidget(
-                imageUrl: Assets.images.pngs.smallMentra.path,
+                imageUrl: Assets.images.pngs.launcherIcon.path,
                 fit: BoxFit.cover,
                 size: 40,
               ),

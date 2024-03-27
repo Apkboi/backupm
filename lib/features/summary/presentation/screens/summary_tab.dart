@@ -22,7 +22,8 @@ class _SummaryTabState extends State<SummaryTab> {
             padding: EdgeInsets.zero,
             children: const [
               AppEmptyState(
-                tittle: 'Your Summaries Space Awaits',
+                tittle: 'No Summary',
+                subtittle: '',
                 hasBg: false,
               ),
               // Spacer(),

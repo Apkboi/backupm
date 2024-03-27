@@ -66,7 +66,7 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
                       Tab(
                         text: "Summaries",
                       ),
-                      Tab(text: "Work Sheet"),
+                      Tab(text: "Worksheet"),
                     ]),
                     20.verticalSpace,
                     const Expanded(

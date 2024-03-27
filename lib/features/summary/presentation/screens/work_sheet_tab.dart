@@ -22,8 +22,9 @@ class _WorkSheetTabState extends State<WorkSheetTab> {
             padding: EdgeInsets.zero,
             children: const [
               AppEmptyState(
-                tittle: 'Your Work Sheet Space Awaits',
+                tittle: 'No Worksheet',
                 hasBg: false,
+                subtittle: '',
               ),
               // Spacer(),
             ],

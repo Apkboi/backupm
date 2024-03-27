@@ -8,6 +8,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
@@ -56,20 +57,25 @@ class _MenuScreenState extends State<MenuScreen> {
         // ),
         appBar: CustomAppBar(
           tittleText: '',
-          leadingWidth: 80,
-          height: 70,
+          // leadingWidth: 80,
+          // height: 65,
+          onBackPressed: () {
+            context.pushNamed(PageUrl.homeScreen,queryParameters: {
+              PathParam.startConvo:'false'
+            });
+          },
           actions: [
             Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomNeumorphicButton(
-              onTap: () {
-                context.pushNamed(PageUrl.emergencySosScreen);
-              },
-              color: Pallets.primary,
-              padding: EdgeInsets.zero,
-              text: 'SOS',
+              padding: const EdgeInsets.all(4.0),
+              child: CustomNeumorphicButton(
+                onTap: () {
+                  context.pushNamed(PageUrl.emergencySosScreen);
+                },
+                color: Pallets.primary,
+                padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 6.h),
+                text: 'SOS',
+              ),
             ),
-          ),
             16.horizontalSpace,
             InkWell(
               onTap: () {
@@ -96,15 +102,6 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             16.horizontalSpace,
           ],
-          leading:InkWell(
-            onTap: () {
-
-            },
-            child: CircleAvatar(
-              backgroundColor: Pallets.white,
-              child: ImageWidget(imageUrl: Assets.images.svgs.settings),
-            ),
-          ),
         ),
         body: Stack(
           children: [

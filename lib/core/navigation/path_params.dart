@@ -19,5 +19,7 @@ class PathParam {
   static const prompt = 'prompt';
   static const journal = 'journal';
 
+  static const startConvo = 'startConvo';
+
 // static const chatId = 'chatId';
 }

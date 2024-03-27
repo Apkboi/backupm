@@ -21,7 +21,8 @@ import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key,  this.startConvo= true});
+  final bool startConvo;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -33,7 +34,11 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-    _startMentraChat();
+
+    if(widget.startConvo){
+      _startMentraChat();
+
+    }
     DashboardUsecase().execute();
     // _initMesibo();
     // _startMentraChat();

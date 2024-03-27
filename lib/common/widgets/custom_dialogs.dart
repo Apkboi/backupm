@@ -186,6 +186,7 @@ class CustomDialogs {
                   child: ButtonDialog(
                     bgColor: confirmButtonBgColor,
                     title: confirmText,
+                    fgColor: Pallets.white,
                     onTap: onYes,
                   ),
                 ),
