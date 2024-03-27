@@ -10,9 +10,18 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
+
+class MentraReviewModel {
+  String feeling;
+  String comment;
+
+  MentraReviewModel({required this.feeling, required this.comment});
+}
 
 class ReviewSheet extends StatefulWidget {
   const ReviewSheet({Key? key}) : super(key: key);
@@ -22,6 +31,10 @@ class ReviewSheet extends StatefulWidget {
 }
 
 class _ReviewSheetState extends State<ReviewSheet> {
+  final controller = TextEditingController();
+
+  var feeling = 'Happy';
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +55,8 @@ class _ReviewSheetState extends State<ReviewSheet> {
           ),
           10.verticalSpace,
           TextView(
-            text: reviewTittle,
+            text:
+                'Hey ${injector.get<UserBloc>().appUser?.name}! 👋 How was your session with Mentra?',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -60,16 +74,37 @@ class _ReviewSheetState extends State<ReviewSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
                 ReviewMoodModel.allMoods.length,
-                (index) => Column(
-                      children: [
-                        ImageWidget(
-                            imageUrl: ReviewMoodModel.allMoods[index].avatar),
-                        5.verticalSpace,
-                        TextView(
-                          text: ReviewMoodModel.allMoods[index].mood,
-                          fontSize: 16,
-                        )
-                      ],
+                (index) => InkWell(
+                      onTap: () {
+                        feeling = ReviewMoodModel.allMoods[index].mood;
+                        setState(() {});
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: feeling ==
+                                    ReviewMoodModel.allMoods[index].mood
+                                ? Border.all(width: 1, color: Pallets.secondary)
+                                : null),
+                        child: Column(
+                          children: [
+                            ImageWidget(
+                                onTap: () {
+                                  feeling =
+                                      ReviewMoodModel.allMoods[index].mood;
+                                  setState(() {});
+                                },
+                                imageUrl:
+                                    ReviewMoodModel.allMoods[index].avatar),
+                            5.verticalSpace,
+                            TextView(
+                              text: ReviewMoodModel.allMoods[index].mood,
+                              fontSize: 16,
+                            )
+                          ],
+                        ),
+                      ),
                     )),
           ),
           22.verticalSpace,
@@ -92,11 +127,12 @@ class _ReviewSheetState extends State<ReviewSheet> {
                       fontSize: 12, fontWeight: FontWeight.w500),
                 ),
                 7.verticalSpace,
-                const FilledTextField(
+                FilledTextField(
                     maxLine: 5,
                     hasElevation: false,
                     contentPadding: EdgeInsets.zero,
                     hasBorder: false,
+                    controller: controller,
                     fillColor: Colors.transparent,
                     hint:
                         'Share your thoughts! How did Mentra support you today? Your words make a difference.'),
@@ -106,6 +142,11 @@ class _ReviewSheetState extends State<ReviewSheet> {
           43.verticalSpace,
           CustomNeumorphicButton(
             onTap: () {
+              context.pop(MentraReviewModel(
+                comment: controller.text,
+                feeling: feeling,
+              ));
+
               // context.pop();
               // CustomDialogs.showBottomSheet(
               //     context, const EndSessionDialog(),

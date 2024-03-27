@@ -73,7 +73,7 @@ class ContinueChatDialog extends StatelessWidget {
               radius: 100,
               padding: const EdgeInsets.all(20),
               child: const TextView(
-                text: 'No, I want to continue',
+                text: 'No, I Want to Continue',
                 fontWeight: FontWeight.w600,
               ),
             ),

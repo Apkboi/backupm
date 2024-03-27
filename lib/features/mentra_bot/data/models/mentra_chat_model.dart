@@ -42,7 +42,7 @@ class MentraChatModel {
       content: message.prompt,
       isMentraMessage: message.user == "assistant",
       sendingState: SendingState.success,
-      time: DateTime.now());
+      time: message.createdAt.toLocal());
 
   factory MentraChatModel.typing() => MentraChatModel(
       content: '',

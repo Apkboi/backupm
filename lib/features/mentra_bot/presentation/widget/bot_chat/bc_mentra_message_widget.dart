@@ -139,7 +139,8 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                               child: widget.showBot
                                   ? ChatBubble(
                                       margin: EdgeInsets.zero,
-                                      padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 5),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 5),
                                       backGroundColor: Pallets.navy,
                                       clipper: ChatBubbleClipper3(
                                           type: BubbleType.receiverBubble,
@@ -147,7 +148,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                                           radius: !widget.isTyping ? 15 : 15),
                                       child: Container(
                                         padding: widget.isTyping
-                                            ? const EdgeInsets.all(4)
+                                            ? const EdgeInsets.all(7)
                                             : EdgeInsets.zero,
                                         child: _MessageContent(
                                             message: widget.message[index],
@@ -158,8 +159,9 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                                     )
                                   : Container(
                                       padding: widget.isTyping
-                                          ? const EdgeInsets.all(4)
-                                          : const EdgeInsets.symmetric(horizontal: 12,vertical: 6),
+                                          ? const EdgeInsets.all(10)
+                                          : const EdgeInsets.symmetric(
+                                              horizontal: 12, vertical: 6),
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                               !widget.isTyping ? 15 : 100),

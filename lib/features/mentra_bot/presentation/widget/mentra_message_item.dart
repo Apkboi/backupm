@@ -100,7 +100,8 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                     // margin: const EdgeInsets.only(bottom: ),
                     child: ChatBubble(
                       // margin: EdgeInsets.zero,
-                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
+                      padding: const EdgeInsets.only(
+                          right: 15, bottom: 0, left: 15, top: 5),
 
                       backGroundColor: Pallets.navy,
                       clipper: ChatBubbleClipper3(
@@ -109,7 +110,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                           radius: !widget.isTyping ? 15 : 15),
                       child: Container(
                         padding:
-                            widget.isTyping ? const EdgeInsets.all(7) : null,
+                            widget.isTyping ? const EdgeInsets.all(10) : null,
                         // decoration: BoxDecoration(
                         //     borderRadius: BorderRadius.circular(
                         //         !widget.isTyping ? 15 : 100),
@@ -158,7 +159,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
             padding: EdgeInsets.only(top: 5.h, left: 37.w),
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Text(TimeUtil.formatTime(DateTime.now()),
+              child: Text(TimeUtil.formatTime(widget.time),
                   style: TextStyle(
                     fontSize: 11.sp,
                     color: Pallets.navy,

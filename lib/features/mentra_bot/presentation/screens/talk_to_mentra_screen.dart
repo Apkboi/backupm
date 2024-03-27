@@ -13,7 +13,6 @@ import 'package:mentra/features/mentra_bot/presentation/widget/continue_chat_dia
 import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/talk_to_mentra_message_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -27,12 +26,15 @@ class TalkToMentraScreen extends StatefulWidget {
 
 class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
   final List<String> messages = [];
+  bool restartSession = false;
+
   var bloc = MentraChatBloc(injector.get());
 
   @override
   void initState() {
     // _simulate();
     bloc.add(GetCurrentSessionEvent());
+
     super.initState();
   }
 
@@ -42,14 +44,14 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
       create: (context) => bloc,
       child: Scaffold(
         extendBodyBehindAppBar: true,
+
         // floatingActionButton: Padding(
         //   padding: const EdgeInsets.only(bottom: 90.0),
         //   child: FloatingActionButton(
         //       onPressed: () {}, backgroundColor: Pallets.error),
         // ),
+
         appBar: CustomAppBar(
-          // canGoBack: false,
-          // leading: 0.horizontalSpace,
           tittleText: '',
           actions: [
             PopupMenuButton(
@@ -93,6 +95,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
             SafeArea(
               child: BlocConsumer<MentraChatBloc, MentraChatState>(
                 listener: _listenToMentraChatBloc,
+                bloc: bloc,
                 builder: (context, state) {
                   return Padding(
                     padding: const EdgeInsets.all(16),
@@ -149,12 +152,13 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
             )),
             constraints: BoxConstraints(maxHeight: 0.9.sh));
 
-    if(endSession??false){
+    if (endSession ?? false) {
+      restartSession = true;
       _endSession(context);
     }
   }
 
-  void _endSession(BuildContext context) async {
+  void _endSession(BuildContext context, {bool restart = false}) async {
     final bool? sessionEnded =
         await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),
             shape: const RoundedRectangleBorder(
@@ -165,8 +169,85 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
             constraints: BoxConstraints(maxHeight: 0.9.sh));
 
     if (sessionEnded ?? false) {
-      final bool? writeReview = await CustomDialogs.showBottomSheet(
-          context, const MentraSessionEndedSheet(),
+      final MentraReviewModel? review =
+          await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )),
+              constraints: BoxConstraints(maxHeight: 0.9.sh));
+
+      if (review != null) {
+        bloc.add(EndMentraSessionEvent(
+            bloc.sessionId, review.feeling, review.comment));
+      }
+    } else {
+      restartSession = false;
+    }
+
+    // if (sessionEnded ?? false) {
+    //   final bool? writeReview = await CustomDialogs.showBottomSheet(
+    //       context, const MentraSessionEndedSheet(),
+    //       shape: const RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.only(
+    //         topLeft: Radius.circular(16),
+    //         topRight: Radius.circular(16),
+    //       )),
+    //       constraints: BoxConstraints(maxHeight: 0.9.sh));
+    //
+    //   if (writeReview ?? false) {
+    //     final bool? wroteFeedback =
+    //         await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
+    //             shape: const RoundedRectangleBorder(
+    //                 borderRadius: BorderRadius.only(
+    //               topLeft: Radius.circular(16),
+    //               topRight: Radius.circular(16),
+    //             )),
+    //             constraints: BoxConstraints(maxHeight: 0.9.sh));
+    //
+    //     if (wroteFeedback ?? false) {
+    //       await CustomDialogs.showBottomSheet(
+    //           context, const FeedbackSuccessDialog(),
+    //           shape: const RoundedRectangleBorder(
+    //               borderRadius: BorderRadius.only(
+    //             topLeft: Radius.circular(16),
+    //             topRight: Radius.circular(16),
+    //           )),
+    //           constraints: BoxConstraints(maxHeight: 0.9.sh));
+    //       goBack(context, restart: restart);
+    //     }
+    //     goBack(context, restart: restart);
+    //   } else {
+    //     goBack(context, restart: restart);
+    //   }
+    // }
+  }
+
+  void goBack(BuildContext context, {bool restart = false}) {
+    if (!restart) {
+      context.pop();
+    }
+  }
+
+  Future<void> _listenToMentraChatBloc(
+      BuildContext context, MentraChatState state) async {
+    if (state is GetCurrentSessionSuccessState) {
+      if (!state.response.data.isNew) {
+        _showContinueSessionPrompt(context);
+      }
+    }
+    if (state is RetryMessageFailureState) {
+      CustomDialogs.error(state.error);
+    }
+
+    if (state is EndMentraSessionLoading) {
+      CustomDialogs.showLoading(context);
+    }
+    if (state is EndMentraSessionnSuccessState) {
+      context.pop();
+      await CustomDialogs.showBottomSheet(
+          context, const FeedbackSuccessDialog(),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16),
@@ -174,39 +255,20 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
           )),
           constraints: BoxConstraints(maxHeight: 0.9.sh));
 
-      if (writeReview ?? false) {
-        final bool? wroteFeedback =
-            await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                )),
-                constraints: BoxConstraints(maxHeight: 0.9.sh));
+      if (!restartSession) {
+        context.pop();
+      }else{
 
-        if (wroteFeedback ?? false) {
-          await CustomDialogs.showBottomSheet(
-              context, const FeedbackSuccessDialog(),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              )),
-              constraints: BoxConstraints(maxHeight: 0.9.sh));
-          context.pop();
-        }
-        context.pop();
-      } else {
-        context.pop();
+
+        bloc.add(GetCurrentSessionEvent());
+
+
       }
+// CustomDialogs.success();
     }
-  }
 
-  void _listenToMentraChatBloc(BuildContext context, MentraChatState state) {
-    if (state is GetCurrentSessionSuccessState) {
-      _showContinueSessionPrompt(context);
-    }
-    if (state is RetryMessageFailureState) {
+    if (state is EndMentraSessionFailureState) {
+      context.pop();
       CustomDialogs.error(state.error);
     }
   }

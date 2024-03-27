@@ -16,7 +16,7 @@ class GetCurrentSessionLoading extends MentraChatState {
 
 class GetCurrentSessionSuccessState extends MentraChatState {
 
-  final dynamic response;
+  final GetCurrentSessionRsponse response;
   const GetCurrentSessionSuccessState(this.response);
   @override
   List<Object> get props => [response];

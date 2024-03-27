@@ -116,4 +116,6 @@ class UrlConfig {
 //   Mentra chat
   static const String currentSession = '/user/ai-sessions/current';
   static const String continueSession = '/user/ai-sessions/send-message';
+
+  static String endSession = '/user/ai-sessions/end';
 }

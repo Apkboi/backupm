@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/animation.dart';
+import 'package:mentra/features/mentra_bot/data/models/get_current_sessions_response.dart';
 import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 import 'package:mentra/features/mentra_bot/dormain/repository/mentra_chat_repository.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -88,7 +89,10 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
     emit(EndMentraSessionLoading());
     // _addTyping();
     try {
-      final response = await _repository.endSession(event.sessionId);
+      final response = await _repository.endSession(
+          sessionId: event.sessionId,
+          feeling: event.feeling,
+          comment: event.comment);
       emit(EndMentraSessionnSuccessState(response));
     } catch (e) {
       emit(EndMentraSessionFailureState(e.toString()));

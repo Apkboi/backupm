@@ -25,12 +25,17 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
   }
 
   @override
-  Future endSession(String sessionId) async {
+  Future endSession(
+      {required String sessionId,
+      required String feeling,
+       String? comment}) async {
     try {
       final response = await _networkService.call(
-        UrlConfig.continueSession,
-        RequestMethod.post,
-      );
+          UrlConfig.endSession, RequestMethod.post, data: {
+        "ai_session_id": sessionId,
+        "feeling": feeling,
+        "comment": comment
+      });
 
       return response.data;
     } catch (e) {
@@ -48,7 +53,7 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
       );
 
       return GetCurrentSessionRsponse.fromJson(response.data);
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.i(e.toString());
       logger.i(stack.toString());
       rethrow;

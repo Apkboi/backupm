@@ -21,6 +21,8 @@ class GetCurrentSessionRsponse {
     required this.code,
   });
 
+
+
   GetCurrentSessionRsponse copyWith({
     String? message,
     Data? data,
@@ -58,6 +60,7 @@ class Data {
   final dynamic summary;
   final dynamic status;
   final List<AiMessage> messages;
+  final bool isNew;
 
   Data({
     required this.id,
@@ -68,6 +71,7 @@ class Data {
     required this.summary,
     required this.status,
     required this.messages,
+    required this.isNew,
   });
 
   Data copyWith({
@@ -78,6 +82,7 @@ class Data {
     dynamic endsAt,
     dynamic summary,
     dynamic status,
+    bool? isNew,
     List<AiMessage>? messages,
   }) =>
       Data(
@@ -89,6 +94,7 @@ class Data {
         summary: summary ?? this.summary,
         status: status ?? this.status,
         messages: messages ?? this.messages,
+        isNew: isNew ?? this.isNew,
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -99,6 +105,7 @@ class Data {
     endsAt: json["ends_at"],
     summary: json["summary"],
     status: json["status"],
+    isNew: json["is_new"],
     messages: List<AiMessage>.from(json["messages"].map((x) => AiMessage.fromJson(x))),
   );
 
@@ -110,6 +117,7 @@ class Data {
     "ends_at": endsAt,
     "summary": summary,
     "status": status,
+    "is_new": isNew,
     "messages": List<dynamic>.from(messages.map((x) => x.toJson())),
   };
 }
@@ -330,7 +338,7 @@ class Plan {
   final int discount;
   final String status;
   final bool isActiveSubscription;
-  final List<Duration> durations;
+  final List<ChatDuration> durations;
   final List<Benefit> benefits;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -359,7 +367,7 @@ class Plan {
     int? discount,
     String? status,
     bool? isActiveSubscription,
-    List<Duration>? durations,
+    List<ChatDuration>? durations,
     List<Benefit>? benefits,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -388,7 +396,7 @@ class Plan {
     discount: json["discount"],
     status: json["status"],
     isActiveSubscription: json["is_active_subscription"],
-    durations: List<Duration>.from(json["durations"].map((x) => Duration.fromJson(x))),
+    durations: List<ChatDuration>.from(json["durations"].map((x) => ChatDuration.fromJson(x))),
     benefits: List<Benefit>.from(json["benefits"].map((x) => Benefit.fromJson(x))),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
@@ -457,7 +465,7 @@ class Benefit {
   };
 }
 
-class Duration {
+class ChatDuration {
   final int id;
   final String frequency;
   final String duration;
@@ -467,7 +475,7 @@ class Duration {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Duration({
+  ChatDuration({
     required this.id,
     required this.frequency,
     required this.duration,
@@ -478,7 +486,7 @@ class Duration {
     required this.updatedAt,
   });
 
-  Duration copyWith({
+  ChatDuration copyWith({
     int? id,
     String? frequency,
     String? duration,
@@ -488,7 +496,7 @@ class Duration {
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
-      Duration(
+      ChatDuration(
         id: id ?? this.id,
         frequency: frequency ?? this.frequency,
         duration: duration ?? this.duration,
@@ -499,7 +507,7 @@ class Duration {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Duration.fromJson(Map<String, dynamic> json) => Duration(
+  factory ChatDuration.fromJson(Map<String, dynamic> json) => ChatDuration(
     id: json["id"],
     frequency: json["frequency"],
     duration: json["duration"],
