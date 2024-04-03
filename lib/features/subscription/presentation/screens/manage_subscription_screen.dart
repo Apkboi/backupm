@@ -44,7 +44,7 @@ class _ManageSubscriptionScreenState extends State<ManageSubscriptionScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextView(
-                      text: 'Current plan',
+                      text: 'Current Plan',
                       style: GoogleFonts.fraunces(
                           fontSize: 30,
                           fontWeight: FontWeight.w600,

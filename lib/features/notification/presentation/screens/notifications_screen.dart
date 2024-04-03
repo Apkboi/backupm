@@ -10,6 +10,7 @@ import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/success_dialog.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:mentra/features/notification/presentation/widget/notification_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
@@ -87,6 +88,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: NotificationItem(
                                 notification: state.response.data[index],
+                                // notification: MentraNotification(
+                                //     id: 'id',
+                                //     title: 'This is a tittle',
+                                //     message: 'message message message messagemessagemessagemessage message\nmessagemessagemessage',
+                                //     type: '',
+                                //     dataId: 'dataId',
+                                //     readAt: DateTime.now(),
+                                //     createdAt: DateTime.now()),
+                                //
                                 // prompt: state.response.data[index],
                               ),
                             ),
@@ -106,6 +116,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               children: [
                                 AppEmptyState(
                                   hasBg: false,
+                                  tittle: 'You have no notifications',
+                                  subtittle: '',
                                   tittleColor: Pallets.black,
                                   image: Assets.images.pngs.journalNote.path,
                                 ),

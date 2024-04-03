@@ -49,6 +49,7 @@ import 'package:mentra/features/settings/presentation/screens/edit_avatar_screen
 import 'package:mentra/features/settings/presentation/screens/edit_profile_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/security_privacy_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/settings_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/support_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
@@ -172,8 +173,9 @@ class CustomRoutes {
       GoRoute(
         path: '/homeScreen',
         name: PageUrl.homeScreen,
-        builder: (context, state) =>  HomeScreen(
-          startConvo: bool.parse(state.uri.queryParameters[PathParam.startConvo] ?? "true") ,
+        builder: (context, state) => HomeScreen(
+          startConvo: bool.parse(
+              state.uri.queryParameters[PathParam.startConvo] ?? "true"),
         ),
       ),
       GoRoute(
@@ -290,6 +292,11 @@ class CustomRoutes {
         path: '/manageSubscriptionScreen',
         name: PageUrl.manageSubscriptionScreen,
         builder: (context, state) => const ManageSubscriptionScreen(),
+      ),
+      GoRoute(
+        path: '/supportScreen',
+        name: PageUrl.supportScreen,
+        builder: (context, state) => const SupportScreen(),
       ),
       GoRoute(
         path: '/editProfileScreen',

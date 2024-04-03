@@ -256,13 +256,14 @@ class _DiscoverContentsState extends State<DiscoverContents>
                   .add(GetLibraryCategoriesEvent());
             },
             child: AnimationLimiter(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
+              child: GridView.builder(
                 itemCount: injector
                         .get<WellnessLibraryBloc>()
                         .libraryCategories
                         ?.length ??
                     0,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 20, crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   return AnimationConfiguration.staggeredList(
                     position: index,

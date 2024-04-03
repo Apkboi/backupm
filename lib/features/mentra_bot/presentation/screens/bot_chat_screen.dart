@@ -84,7 +84,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
                       switch (value) {
                         case "end":
                           if (SessionManager.instance.isLoggedIn) {
-                            _endSession(context);
+                            // _endSession(context);
                           } else {
                             context.pop();
                           }
@@ -178,17 +178,15 @@ class _BotChatScreenState extends State<BotChatScreen> {
     }
   }
 
-
-
   void _endSession(BuildContext context) async {
-    final bool? sessionEnded =
-        await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
-            constraints: BoxConstraints(maxHeight: 0.9.sh));
+    final bool? sessionEnded = await CustomDialogs.showBottomSheet(
+        context, const EndMentraSessionDialog(),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        )),
+        constraints: BoxConstraints(maxHeight: 0.9.sh));
 
     if (sessionEnded ?? false) {
       final bool? writeReview = await CustomDialogs.showBottomSheet(

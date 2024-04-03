@@ -57,7 +57,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
             PopupMenuButton(
               position: PopupMenuPosition.over,
               // constraints: const BoxConstraints(maxHeight: 60,),
-              constraints: const BoxConstraints(maxWidth: 103),
+              constraints: const BoxConstraints(maxWidth: 107),
               padding: EdgeInsets.zero,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.r)),
@@ -159,14 +159,14 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
   }
 
   void _endSession(BuildContext context, {bool restart = false}) async {
-    final bool? sessionEnded =
-        await CustomDialogs.showBottomSheet(context, const EndSessionDialog(),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
-            constraints: BoxConstraints(maxHeight: 0.9.sh));
+    final bool? sessionEnded = await CustomDialogs.showBottomSheet(
+        context, const EndMentraSessionDialog(),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        )),
+        constraints: BoxConstraints(maxHeight: 0.9.sh));
 
     if (sessionEnded ?? false) {
       final MentraReviewModel? review =
@@ -176,7 +176,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               )),
-              constraints: BoxConstraints(maxHeight: 0.9.sh));
+              constraints: BoxConstraints(maxHeight: 1.sh));
 
       if (review != null) {
         bloc.add(EndMentraSessionEvent(
@@ -257,12 +257,8 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
 
       if (!restartSession) {
         context.pop();
-      }else{
-
-
+      } else {
         bloc.add(GetCurrentSessionEvent());
-
-
       }
 // CustomDialogs.success();
     }
@@ -306,11 +302,15 @@ class _InputBar extends StatelessWidget {
                 enabled: state is! GetCurrentSessionLoading &&
                     state is! ContinueSessionLoading,
                 hasElevation: false,
+                minLine: 1,
+                maxLine: 5,
                 suffix: InkWell(
                   onTap: () async {
+
                     context.read<MentraChatBloc>().add(ContinueSessionEvent(
                         context.read<MentraChatBloc>().sessionId,
                         controller.text));
+
                   },
                   child: const Icon(
                     Icons.send_rounded,

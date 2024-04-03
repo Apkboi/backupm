@@ -14,10 +14,10 @@ class FeedbackSuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(17),
+      padding:  EdgeInsets.symmetric(horizontal: 40.w,vertical: 20.h),
       child: Container(
         decoration:  BoxDecoration(
-            color: Pallets.white,
+            color: Pallets.bottomSheetColor,
             borderRadius: BorderRadius.circular(21)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -27,6 +27,7 @@ class FeedbackSuccessDialog extends StatelessWidget {
               Container(
                 width: 49,
                 height: 5,
+                padding: const EdgeInsets.all(10),
                 decoration: ShapeDecoration(
                   color: const Color(0xFFBCC4CC),
                   shape: RoundedRectangleBorder(
@@ -37,11 +38,12 @@ class FeedbackSuccessDialog extends StatelessWidget {
               37.verticalSpace,
               ImageWidget(
                 imageUrl: Assets.images.svgs.success,
+                size: 70,
               ),
               10.verticalSpace,
               TextView(
                 text:
-                    'Thank you for your feedback! It helps us continually enhance our services and support.',
+                    'Your feedback makes us better, thank you!',
                 align: TextAlign.center,
                 style: GoogleFonts.fraunces(
                     fontSize: 20.sp, fontWeight: FontWeight.w600),

@@ -177,6 +177,14 @@ class $AssetsImagesPngsGen {
   AssetGenImage get summary =>
       const AssetGenImage('assets/images/pngs/summary.png');
 
+  /// File path: assets/images/pngs/tech_lady.png
+  AssetGenImage get techLady =>
+      const AssetGenImage('assets/images/pngs/tech_lady.png');
+
+  /// File path: assets/images/pngs/traveller.png
+  AssetGenImage get traveller =>
+      const AssetGenImage('assets/images/pngs/traveller.png');
+
   /// File path: assets/images/pngs/vertical_logo.png
   AssetGenImage get verticalLogo =>
       const AssetGenImage('assets/images/pngs/vertical_logo.png');
@@ -228,6 +236,8 @@ class $AssetsImagesPngsGen {
         sorry,
         splashLogo,
         summary,
+        techLady,
+        traveller,
         verticalLogo,
         videoThumbail,
         wLibrary

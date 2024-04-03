@@ -53,6 +53,7 @@ class PageUrl {
   static const createJournalScreen = 'createJournalScreen';
   static const notificationsScreen = 'notificationsScreen';
   static const manageSubscriptionScreen = 'manageSubscriptionScreen';
+  static const supportScreen = 'supportScreen';
 
   static const botChatScreen = 'botChatScreen';
   static const talkToMentraScreen = 'talkToMentraScreen';

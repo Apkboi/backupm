@@ -11,6 +11,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/summary/presentation/screens/summary_tab.dart';
 import 'package:mentra/features/summary/presentation/screens/work_sheet_tab.dart';
+import 'package:mentra/features/tasks/presentation/screens/daily_task_tab.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MyActivitiesScreen extends StatefulWidget {
@@ -56,7 +57,7 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
           AppBg(image: Assets.images.pngs.homeBg.path),
           SafeArea(
             child: DefaultTabController(
-              length: 2,
+              length: 3,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 17.w),
                 child: Column(
@@ -64,6 +65,8 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
                     // 120.verticalSpace,
                     const CustomTabbar(tabs: [
                       Tab(
+                        text: "Daily Tasks",
+                      ),          Tab(
                         text: "Summaries",
                       ),
                       Tab(text: "Worksheet"),
@@ -72,7 +75,11 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
                     const Expanded(
                         child: TabBarView(
                             physics: NeverScrollableScrollPhysics(),
-                            children: [SummaryTab(), WorkSheetTab()])),
+                            children: [
+                          DailyTaskTab(),
+                          SummaryTab(),
+                          WorkSheetTab()
+                        ])),
                     8.verticalSpace,
                   ],
                 ),

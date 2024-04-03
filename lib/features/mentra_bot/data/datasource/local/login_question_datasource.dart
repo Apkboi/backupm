@@ -25,6 +25,17 @@ class LoginQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
+            'Success! Your password has been reset. You can now log in to your account using your new password.',
+        isFromBot: true,
+        id: 0,
+        isTyping: false,
+        flow: BotChatFlow.login,
+        answerType: AnswerType.EMAIL_PREVIW,
+        loginStage: LoginStage.PASSWORD_RESET_SUCCESS,
+        time: DateTime.now(),
+        answerTime: DateTime.now()),
+    BotChatmessageModel(
+        message:
             'Fantastic! Let\'s get you logged in. Please provide your email.',
         isFromBot: true,
         id: 0,
@@ -34,6 +45,20 @@ class LoginQuestionDataSource {
         loginStage: LoginStage.EMAILPREVIEW,
         time: DateTime.now(),
         answerTime: DateTime.now()),
+    BotChatmessageModel(
+        message:
+            '',
+        isFromBot: true,
+        id: 0,
+        isTyping: false,
+        flow: BotChatFlow.login,
+        answerType: AnswerType.EMAIL_PREVIW,
+        loginStage: LoginStage.EMAILPREVIEW,
+
+        time: DateTime.now(),
+        answerTime: DateTime.now()),
+
+
     BotChatmessageModel(
         message: "Now, please enter your passcode.",
         isFromBot: true,

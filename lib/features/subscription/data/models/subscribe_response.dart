@@ -44,8 +44,7 @@ class SubscribeResponse {
         code: json["code"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "message": message,
         "data": data.toJson(),
         "success": success,
@@ -57,9 +56,9 @@ class Data {
   final int id;
   final User user;
   final Plan plan;
-  final String stripeSubscriptionId;
+  final dynamic stripeSubscriptionId;
   final dynamic stripeClientSecret;
-  final String status;
+  final dynamic status;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -95,8 +94,7 @@ class Data {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Data.fromJson(Map<String, dynamic> json) =>
-      Data(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
         user: User.fromJson(json["user"]),
         plan: Plan.fromJson(json["plan"]),
@@ -107,8 +105,7 @@ class Data {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "user": user.toJson(),
         "plan": plan.toJson(),
@@ -174,8 +171,7 @@ class Plan {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Plan.fromJson(Map<String, dynamic> json) =>
-      Plan(
+  factory Plan.fromJson(Map<String, dynamic> json) => Plan(
         id: json["id"],
         name: json["name"],
         description: json["description"],
@@ -191,8 +187,7 @@ class Plan {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "description": description,
@@ -237,8 +232,7 @@ class Benefit {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Benefit.fromJson(Map<String, dynamic> json) =>
-      Benefit(
+  factory Benefit.fromJson(Map<String, dynamic> json) => Benefit(
         id: json["id"],
         title: json["title"],
         key: json["key"],
@@ -246,8 +240,7 @@ class Benefit {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
         "key": key,
@@ -272,7 +265,7 @@ class Duration {
     required this.duration,
     required this.price,
     required this.discount,
-     this.stripePriceId,
+    this.stripePriceId,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -298,8 +291,7 @@ class Duration {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory Duration.fromJson(Map<String, dynamic> json) =>
-      Duration(
+  factory Duration.fromJson(Map<String, dynamic> json) => Duration(
         id: json["id"],
         frequency: json["frequency"],
         duration: json["duration"],
@@ -310,8 +302,7 @@ class Duration {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "frequency": frequency,
         "duration": duration,
@@ -368,8 +359,8 @@ class User {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
-        avatarBackgroundColor: avatarBackgroundColor ??
-            this.avatarBackgroundColor,
+        avatarBackgroundColor:
+            avatarBackgroundColor ?? this.avatarBackgroundColor,
         username: username ?? this.username,
         email: email ?? this.email,
         birthYear: birthYear ?? this.birthYear,
@@ -378,8 +369,7 @@ class User {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory User.fromJson(Map<String, dynamic> json) =>
-      User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         avatar: json["avatar"],
         name: json["name"],
@@ -393,8 +383,7 @@ class User {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "avatar": avatar,
         "name": name,

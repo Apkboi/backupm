@@ -33,6 +33,7 @@ class FilledTextField extends StatefulWidget {
   final GlobalKey<FormFieldState<dynamic>>? formKey;
 
   final double radius;
+  final bool? expands;
 
   final List<TextInputFormatter>? inputFormatters;
 
@@ -50,6 +51,7 @@ class FilledTextField extends StatefulWidget {
       this.contentPadding,
       this.textInputAction,
       this.obscured = false,
+      this.expands = false,
       this.fillColor,
       this.focusNode,
       this.outline = false,
@@ -80,7 +82,8 @@ class _FilledTextFieldState extends State<FilledTextField> {
         validator: widget.validator,
         key: widget.formKey,
         controller: widget.controller,
-        maxLines: widget.maxLine ?? 1,
+
+        maxLines: widget.expands! ? null : widget.maxLine ?? 1,
         keyboardType: widget.inputType,
         cursorColor: Theme.of(context).colorScheme.onBackground,
         onChanged: widget.onChanged,
@@ -90,15 +93,22 @@ class _FilledTextFieldState extends State<FilledTextField> {
         focusNode: widget.focusNode,
         inputFormatters: widget.inputFormatters,
         autofocus: widget.autofocus!,
-        minLines: widget.minLine,
+        expands: widget.expands!,
+        minLines: widget.expands! ? null : widget.minLine,
         textInputAction: widget.textInputAction,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: widget.textColor ??
-                Theme.of(context).colorScheme.onBackground,
+            color:
+                widget.textColor ?? Theme.of(context).colorScheme.onBackground,
             fontSize: 16,
             fontWeight: FontWeight.w500),
         decoration: AppStyles.filledTextFieldDecoration.copyWith(
-            fillColor: widget.fillColor ?? Theme.of(context).colorScheme.surface,
+
+            // alignLabelWithHint: true,
+            constraints: widget.expands!
+                ? const BoxConstraints(maxHeight: 20, minHeight: 40)
+                : null,
+            fillColor:
+                widget.fillColor ?? Theme.of(context).colorScheme.surface,
             enabledBorder: widget.hasBorder!
                 ? OutlineInputBorder(
                     borderRadius: BorderRadius.circular(widget.radius),

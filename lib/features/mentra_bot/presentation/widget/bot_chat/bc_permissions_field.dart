@@ -83,27 +83,27 @@ class BCPermissionsField extends StatelessWidget {
       case PermissionsStage.NONE:
         break;
     }
+    context.goNamed(PageUrl.welcomeScreen);
   }
 
   void _requestPermission(BuildContext context) async {
     switch (message.permissionsStage) {
       case PermissionsStage.BIOMETRIC:
         await PermissionHandlerService().requestPermission(Permission.camera);
-        context.read<BotChatCubit>().answerQuestion(id: message.id,
+        context.read<BotChatCubit>().answerQuestion(
+            id: message.id,
             answer: 'Yes, please!',
             nextPermissionStage: PermissionsStage.NOTIFICATION);
       case PermissionsStage.NOTIFICATION:
         await PermissionHandlerService()
             .requestPermission(Permission.notification);
-        context.read<BotChatCubit>().answerQuestion(id: message.id,
+        context.read<BotChatCubit>().answerQuestion(
+            id: message.id,
             answer: 'Yes, please!',
             nextFlow: BotChatFlow.talkToMentra);
-         context.goNamed(PageUrl.welcomeScreen);
+        context.goNamed(PageUrl.welcomeScreen);
       case PermissionsStage.NONE:
         break;
     }
-
-
-
   }
 }

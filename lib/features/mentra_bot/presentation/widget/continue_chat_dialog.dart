@@ -14,7 +14,7 @@ class ContinueChatDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: Pallets.white,
+          color: Pallets.bottomSheetColor,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(21), topLeft: Radius.circular(21))),
       child: Padding(
@@ -34,7 +34,7 @@ class ContinueChatDialog extends StatelessWidget {
             ),
             10.verticalSpace,
             TextView(
-              text: 'Do you wish to start a new chat session?',
+              text: 'Do You Wish to Start a New Chat Session?',
               align: TextAlign.center,
               style: GoogleFonts.fraunces(
                   fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -66,6 +66,7 @@ class ContinueChatDialog extends StatelessWidget {
             17.verticalSpace,
             CustomOutlinedButton(
               outlinedColr: Pallets.primary,
+              bgColor: Pallets.white,
               onPressed: () {
                 context.pop();
 

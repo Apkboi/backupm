@@ -15,7 +15,6 @@ import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.da
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
-import 'package:mentra/features/therapy/presentation/widgets/subscription_prompt_dialog.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -67,6 +66,7 @@ class _MenuScreenState extends State<MenuScreen> {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: CustomNeumorphicButton(
+                expanded: false,
                 onTap: () {
                   context.pushNamed(PageUrl.emergencySosScreen);
                 },
@@ -243,17 +243,19 @@ class _MenuScreenState extends State<MenuScreen> {
     if (_userISubscribed()) {
       context.pushNamed(PageUrl.therapyScreen);
     } else {
-      final bool? subscribe = await CustomDialogs.showBottomSheet(
-          context, const SubscriptionPromptDialog(),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          )),
-          constraints: BoxConstraints(maxHeight: 0.9.sh));
-      if (subscribe ?? false) {
-        context.pushNamed(PageUrl.selectPlanScreen);
-      }
+      context.pushNamed(PageUrl.selectPlanScreen);
+
+      // final bool? subscribe = await CustomDialogs.showBottomSheet(
+      //     context, const SubscriptionPromptDialog(),
+      //     shape: const RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(16),
+      //       topRight: Radius.circular(16),
+      //     )),
+      //     constraints: BoxConstraints(maxHeight: 0.9.sh));
+      // if (subscribe ?? false) {
+      //   context.pushNamed(PageUrl.selectPlanScreen);
+      // }
     }
   }
 }

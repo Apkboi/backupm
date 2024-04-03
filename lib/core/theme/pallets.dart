@@ -12,7 +12,7 @@ abstract class Pallets {
   static const milkColor = Color(0xFFFFD8A3);
   static const promptDarkMilkColor = Color(0xFF9E6F0E);
   static const promptMilkCOlor = Color(0xFFFAE19D);
-  static const bottomSheetColor = Color(0xFFf7f7f7);
+  static const bottomSheetColor = Color(0xFFEFFAF6);
   static const lightSecondary = Color(0xFFC7D69F);
   static const turquoise1 = Color(0xFF99BEB7);
   static const subtleLight = Color(0xFFA6C9AE);

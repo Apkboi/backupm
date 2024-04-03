@@ -9,6 +9,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/helper_utils.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/login_question_datasource.dart';
+import 'package:mentra/features/mentra_bot/data/datasource/local/password_reset_datasource.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/permissions_message_data_source.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/signup_question_data_source.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/welcome_message_data_source.dart';
@@ -21,6 +22,7 @@ enum BotChatFlow {
   welcome,
   signup,
   login,
+  passwordReset,
   talkToMentra,
   permissions,
 }
@@ -99,6 +101,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     LoginStage? nextLoginStage,
     SignupStage? nextSignupStage,
     PermissionsStage? nextPermissionStage,
+    PasswordResetStage? nextPasswordResetStage,
   }) async {
     // Update the question with the answer
     stagedMessages.last.answerWidget = answerWidget;
@@ -119,6 +122,7 @@ class BotChatCubit extends Cubit<BotChatState> {
         nextFlow: nextFlow,
         nextLoginStage: nextLoginStage,
         nextPermissionStage: nextPermissionStage,
+        nextPasswordResetStage: nextPasswordResetStage,
         nextSignUpStage: nextSignupStage);
     _scrollToLast();
   }
@@ -128,6 +132,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     LoginStage? nextLoginStage,
     SignupStage? nextSignUpStage,
     PermissionsStage? nextPermissionStage,
+    PasswordResetStage? nextPasswordResetStage,
   }) {
     if (nextFlow != null) {
       currentChatFlow = nextFlow;
@@ -149,6 +154,9 @@ class BotChatCubit extends Cubit<BotChatState> {
         break;
       case BotChatFlow.permissions:
         _getNextPermissionsMessage(nextPermissionStage: nextPermissionStage!);
+      case BotChatFlow.passwordReset:
+        _getNextPasswordResetQuestion(
+            nextPasswordResetStage: nextPasswordResetStage);
     }
   }
 
@@ -160,6 +168,8 @@ class BotChatCubit extends Cubit<BotChatState> {
     currentQuestion = question;
     emit(QuestionUpdatedState());
   }
+
+  // =======================  Retreiving Next Login Question ================
 
   void _getNextLoginMessage({
     LoginStage? nextLoginStage,
@@ -173,10 +183,16 @@ class BotChatCubit extends Cubit<BotChatState> {
           .first
         ..time = DateTime.now());
     }
-    updateCurrentQuestion(stagedMessages.last);
+    if (nextLoginStage == LoginStage.EMAILPREVIEW) {
+      _addPasswordResetMessage();
+    } else {
+      updateCurrentQuestion(stagedMessages.last);
+    }
     // emit(QuestionUpdatedState());
     _scrollToLast();
   }
+
+  // =======================  Retrieving Next Signup Question ================
 
   void _getNextSignupMessage({
     SignupStage? nextSignupStage,
@@ -197,8 +213,26 @@ class BotChatCubit extends Cubit<BotChatState> {
     } else {
       updateCurrentQuestion(stagedMessages.last);
     }
+  }
 
-    // _scrollToLast();
+  // =======================  Retrieving Next PasswordReset Question ================
+
+  void _getNextPasswordResetQuestion({
+    PasswordResetStage? nextPasswordResetStage,
+  }) {
+    PasswordResetDataSource dataSource = PasswordResetDataSource();
+    if (nextPasswordResetStage == null) {
+      stagedMessages.add(dataSource.messages.first..time = DateTime.now());
+    } else {
+      stagedMessages.add(dataSource.messages
+          .where(
+              (element) => element.passwordResetStage == nextPasswordResetStage)
+          .first
+        ..time = DateTime.now());
+      // CustomDialogs.showToast(stagedMessages.last.flow.name);
+    }
+
+    updateCurrentQuestion(stagedMessages.last);
   }
 
   void _addTyping() async {
@@ -263,6 +297,72 @@ class BotChatCubit extends Cubit<BotChatState> {
         signupStage: SignupStage.TERMS,
         time: DateTime.now(),
         flow: BotChatFlow.signup,
+        answerTime: DateTime.now());
+
+    _addTyping();
+    await Future.delayed(const Duration(seconds: 2));
+    await _removeTyping();
+    await Future.delayed(const Duration(milliseconds: 300));
+    stagedMessages.add(termsMessage);
+    currentQuestion = termsMessage;
+    // updateCurrentQuestion(termsMessage);
+    emit(QuestionUpdatedState());
+  }
+
+  void _addPasswordResetMessage() async {
+    var termsMessage = BotChatmessageModel(
+        message: 'Password Reset',
+        isFromBot: true,
+        id: 0,
+        isTyping: false,
+        child: InkWell(
+          onTap: () {
+            answerQuestion(
+              id: 0,
+              answer: 'Forgot password',
+              nextFlow: BotChatFlow.passwordReset,
+            );
+
+            // Helpers.launchRawUrl('https://yourmentra.com/terms-and-conditions');
+          },
+          child: RichText(
+              text: TextSpan(
+                  style: GoogleFonts.plusJakartaSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14.sp,
+                      height: 1.5.h,
+                      wordSpacing: 1.5,
+                      color: Pallets.white
+                      // letterSpacing: 2
+                      ),
+                  children: [
+                // const TextSpan(
+                //   text: 'Forgot password ? ',
+                //   // color: Pallets.secondary,
+                //   // fontWeight: FontWeight.w600,
+                //   // lineHeight: 1.5,
+                // ),
+                TextSpan(
+                    text: 'Forgot password ?',
+                    // color: Pallets.secondary,
+                    // fontWeight: FontWeight.w600,
+                    // lineHeight: 1.5,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontWeight: FontWeight.w600,
+                      color: Pallets.secondary,
+                      fontSize: 14.sp,
+                      height: 1.5.h,
+                      wordSpacing: 1.5,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Pallets.secondary,
+                      // letterSpacing: 2
+                    ))
+              ])),
+        ),
+        flow: BotChatFlow.login,
+        answerType: AnswerType.EMAIL_PREVIW,
+        loginStage: LoginStage.EMAILPREVIEW,
+        time: DateTime.now(),
         answerTime: DateTime.now());
 
     _addTyping();

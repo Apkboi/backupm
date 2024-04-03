@@ -38,7 +38,7 @@ class CustomDialogs {
       useRootNavigator: useRootNavigator!,
       builder: (BuildContext context) => dialog,
       barrierDismissible: true,
-      barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.2),
+      barrierColor: barrierColor ?? Pallets.black80.withOpacity(0.2),
       // barrierColor: barrierColor,
     );
   }
@@ -53,7 +53,7 @@ class CustomDialogs {
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,
         context: context,
-        barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.3),
+        barrierColor: barrierColor ?? Pallets.black80.withOpacity(0.3),
         useRootNavigator: true,
         isScrollControlled: true,
         shape: shape,
@@ -212,7 +212,7 @@ class CustomDialogs {
       bool? useRootNavigator = false,
       bool? barrierDismissible = true}) async {
     final dialog = Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Pallets.bottomSheetColor,
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.r),

@@ -20,7 +20,7 @@ const sessionEndedMessage =
 const therapySubscriptionMessage =
     "Sorry you cant access this feature because you are on a free plan,Please upgrade to gain access to this feature.";
 const endSessionMessage =
-    "It's been great talking with you. Remember, I'll clear our chat history for privacy, but I'll send a session summary to your notifications. Would you like to end the session or continue chatting?";
+    "Don’t worry, I’ll send a summary to you and clear the chat for privacy.";
 const registrationSuccesMessage =
     "Thank you for submitting your registration. Your request has been received, and we'll review it promptly. Expect a response within 24 hours.";
 

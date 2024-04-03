@@ -115,8 +115,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     horizontal: 16, vertical: 13),
                                 color: Pallets.primary,
                                 child: const TextView(
-                                  text: "Edit profile",
+                                  text: "Edit Profile",
                                   color: Pallets.white,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 )),
                           ),
@@ -152,7 +153,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                 ?.activeSubscription
                                                 ?.plan
                                                 .name ??
-                                            'Free',
+                                            'FREE',
                                         color: Pallets.ink,
                                       ),
                                       8.horizontalSpace,
@@ -180,10 +181,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               leadingIconUrl: Assets.images.svgs.logout,
                               tittle: 'Logout',
                               onTap: () {
-                             CustomDialogs.showConfirmDialog(context,onYes: () {
-                               SessionManager.instance.logOut();
-                               context.goNamed(PageUrl.onBoardingPage);
-                             },tittle: 'Logout',);
+                                CustomDialogs.showConfirmDialog(
+                                  context,
+                                  onYes: () {
+                                    SessionManager.instance.logOut();
+                                    context.goNamed(PageUrl.onBoardingPage);
+                                  },
+                                  tittle: 'Logout',
+                                );
                               },
                             ),
                           )),

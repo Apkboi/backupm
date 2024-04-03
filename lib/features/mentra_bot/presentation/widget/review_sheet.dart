@@ -38,7 +38,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Pallets.white,
+      color: Pallets.bottomSheetColor,
       padding: const EdgeInsets.all(18),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -47,7 +47,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
             width: 49,
             height: 5,
             decoration: ShapeDecoration(
-              color: const Color(0xFFBCC4CC),
+              // color: const Color(0xFFBCC4CC),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(42),
               ),
@@ -55,8 +55,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
           ),
           10.verticalSpace,
           TextView(
-            text:
-                'Hey ${injector.get<UserBloc>().appUser?.name}! 👋 How was your session with Mentra?',
+            text: 'How Do You Feel After Our Chat Today?',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -90,6 +89,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
                         child: Column(
                           children: [
                             ImageWidget(
+                                size: 50,
                                 onTap: () {
                                   feeling =
                                       ReviewMoodModel.allMoods[index].mood;
@@ -97,11 +97,11 @@ class _ReviewSheetState extends State<ReviewSheet> {
                                 },
                                 imageUrl:
                                     ReviewMoodModel.allMoods[index].avatar),
-                            5.verticalSpace,
-                            TextView(
-                              text: ReviewMoodModel.allMoods[index].mood,
-                              fontSize: 16,
-                            )
+                            // 5.verticalSpace,
+                            // TextView(
+                            //   text: ReviewMoodModel.allMoods[index].mood,
+                            //   fontSize: 16,
+                            // )
                           ],
                         ),
                       ),
@@ -110,7 +110,10 @@ class _ReviewSheetState extends State<ReviewSheet> {
           22.verticalSpace,
           Container(
             padding: const EdgeInsets.all(16),
+            // height: 300,
+
             decoration: ShapeDecoration(
+                color: Pallets.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                     side: BorderSide(
@@ -120,6 +123,8 @@ class _ReviewSheetState extends State<ReviewSheet> {
                         width: 0.8))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextView(
                   text: 'Review',
@@ -127,11 +132,21 @@ class _ReviewSheetState extends State<ReviewSheet> {
                       fontSize: 12, fontWeight: FontWeight.w500),
                 ),
                 7.verticalSpace,
+
+                // const TextField(
+                //   // expands: true,
+                //   maxLines: null,
+                //   // minLines: null,
+                //   decoration: InputDecoration(constraints: BoxConstraints(maxHeight: 20,minHeight: 19)),
+                // )
                 FilledTextField(
-                    maxLine: 5,
+                    // maxLine: 5,
+                    minLine: 1,
+                    maxLine: 20,
                     hasElevation: false,
                     contentPadding: EdgeInsets.zero,
                     hasBorder: false,
+                    // expands: true,
                     controller: controller,
                     fillColor: Colors.transparent,
                     hint:

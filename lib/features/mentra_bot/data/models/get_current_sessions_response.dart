@@ -173,8 +173,8 @@ class User {
   final String email;
   final dynamic birthYear;
   final String stripeCustomerId;
-  final String mesiboUserId;
-  final String mesiboUserToken;
+  final dynamic mesiboUserId;
+  final dynamic mesiboUserToken;
   final ActiveSubscription? activeSubscription;
   final MatchedTherapist? matchedTherapist;
   final DateTime createdAt;
@@ -331,11 +331,11 @@ class ActiveSubscription {
 
 class Plan {
   final int id;
-  final String name;
-  final String description;
-  final String frequency;
-  final int price;
-  final int discount;
+  final dynamic name;
+  final dynamic description;
+  final dynamic frequency;
+  final dynamic price;
+  final dynamic discount;
   final String status;
   final bool isActiveSubscription;
   final List<ChatDuration> durations;
@@ -467,10 +467,10 @@ class Benefit {
 
 class ChatDuration {
   final int id;
-  final String frequency;
-  final String duration;
-  final int price;
-  final int discount;
+  final dynamic frequency;
+  final dynamic duration;
+  final dynamic price;
+  final dynamic discount;
   final String stripePriceId;
   final DateTime createdAt;
   final DateTime updatedAt;

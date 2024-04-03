@@ -8,14 +8,15 @@ import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
-class EndSessionDialog extends StatelessWidget {
-  const EndSessionDialog({Key? key}) : super(key: key);
+class EndMentraSessionDialog extends StatelessWidget {
+  const EndMentraSessionDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: Pallets.white,
+          color: Pallets.bottomSheetColor,
+
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(21), topLeft: Radius.circular(21))),
       child: Padding(
@@ -27,7 +28,7 @@ class EndSessionDialog extends StatelessWidget {
               width: 49,
               height: 5,
               decoration: ShapeDecoration(
-                color: const Color(0xFFBCC4CC),
+                color: Pallets.bottomSheetColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(42),
                 ),
@@ -35,7 +36,7 @@ class EndSessionDialog extends StatelessWidget {
             ),
             10.verticalSpace,
             TextView(
-              text: 'Are you ready to end our chat session?',
+              text: 'Ready to End Our Chat? ',
               align: TextAlign.center,
               style: GoogleFonts.fraunces(
                   fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -62,16 +63,19 @@ class EndSessionDialog extends StatelessWidget {
                 //     constraints: BoxConstraints(maxHeight: 0.9.sh));
               },
               color: Pallets.primary,
-              text: "Yes, End Session",
+              text: "Yes, End the Chat",
             ),
             17.verticalSpace,
             CustomOutlinedButton(
               outlinedColr: Pallets.primary,
-              onPressed: () {},
+              bgColor: Pallets.white,
+              onPressed: () {
+                context.pop();
+              },
               radius: 100,
               padding: const EdgeInsets.all(20),
               child: const TextView(
-                text: 'No, I have more questions',
+                text: 'No, Continue Chatting',
                 fontWeight: FontWeight.w600,
               ),
             ),
