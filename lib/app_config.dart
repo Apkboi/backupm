@@ -4,16 +4,13 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mentra/app.dart';
-import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'core/di/injector.dart';
 import 'core/services/data/hive/hive_manager.dart';
 import 'core/services/data/session_manager.dart';
 import 'core/services/firebase/crashlytics.dart';
 import 'core/services/firebase/notifiactions.dart';
-import 'core/services/mesibo/mesibo_service.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 import 'features/account/presentation/user_bloc/user_bloc.dart';
@@ -43,7 +40,6 @@ class AppConfig {
     // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     // await Firebase.initializeApp();
     await DefaultCacheManager().emptyCache();
-
     await Hive.initFlutter();
     // var remoteConfigsService = RemoteConfigsService.create();
     // remoteConfigsService.retrieveSecrets();

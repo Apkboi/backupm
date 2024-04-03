@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -12,17 +11,17 @@ import 'package:mentra/features/authentication/password_reset/presentation/bloc/
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
-class PasswordResetEmailScreen extends StatefulWidget {
-  const PasswordResetEmailScreen({super.key, required this.message});
+class PasswordResetEmailField extends StatefulWidget {
+  const PasswordResetEmailField({super.key, required this.message});
 
   final BotChatmessageModel message;
 
   @override
-  State<PasswordResetEmailScreen> createState() =>
-      _PasswordResetEmailScreenState();
+  State<PasswordResetEmailField> createState() =>
+      _PasswordResetEmailFieldState();
 }
 
-class _PasswordResetEmailScreenState extends State<PasswordResetEmailScreen> {
+class _PasswordResetEmailFieldState extends State<PasswordResetEmailField> {
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
 
@@ -92,8 +91,8 @@ class _PasswordResetEmailScreenState extends State<PasswordResetEmailScreen> {
       context.pop();
       context.read<BotChatCubit>().answerQuestion(
           id: widget.message.id,
-          answer: "*******",
-      nextPasswordResetStage: PasswordResetStage.EMAIL);
+          answer: _controller.text,
+      nextPasswordResetStage: PasswordResetStage.OTP);
     }
 
     if (state is PasswordResetOtpFailureState) {

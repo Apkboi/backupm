@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
@@ -48,17 +49,35 @@ class GuidedPromptsItem extends StatelessWidget {
                   foregroundColor: Pallets.primary,
                   backgroundColor: Pallets.white.withOpacity(0.5),
                   radius: 12.r,
-                  child: ImageWidget(imageUrl: Assets.images.svgs.refreshIcon,),
+                  child: ImageWidget(
+                    imageUrl: Assets.images.svgs.refreshIcon,
+                  ),
                 )
               ],
             ),
             12.verticalSpace,
-            TextView(
-              text: prompt.content,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Pallets.primary,
-            ),
+
+            Html(shrinkWrap: true, data: prompt.content, style: {
+              "p": Style(
+                  fontSize: FontSize(
+                    16.sp,
+                    Unit.px,
+                  ),
+                  fontWeight: FontWeight.w400),
+              "h4": Style(
+                  fontSize: FontSize(
+                    16.sp,
+                    Unit.px,
+                  ),
+                  // height: Height(15),
+                  fontWeight: FontWeight.w400),
+            }),
+            // TextView(
+            //   text: prompt.content,
+            //   fontSize: 16,
+            //   fontWeight: FontWeight.w600,
+            //   color: Pallets.primary,
+            // ),
           ],
         ),
       ),

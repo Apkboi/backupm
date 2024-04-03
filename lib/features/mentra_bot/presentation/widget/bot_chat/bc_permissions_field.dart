@@ -76,10 +76,10 @@ class BCPermissionsField extends StatelessWidget {
             nextPermissionStage: PermissionsStage.NOTIFICATION);
       case PermissionsStage.NOTIFICATION:
         context.read<BotChatCubit>().answerQuestion(
-          id: message.id,
-          answer: 'Not now',
-          nextFlow: BotChatFlow.talkToMentra,
-        );
+              id: message.id,
+              answer: 'Not now',
+              nextFlow: BotChatFlow.talkToMentra,
+            );
       case PermissionsStage.NONE:
         break;
     }

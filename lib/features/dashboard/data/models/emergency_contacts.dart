@@ -39,7 +39,8 @@ class GetEmergencyContactsResponse {
   factory GetEmergencyContactsResponse.fromJson(Map<String, dynamic> json) =>
       GetEmergencyContactsResponse(
         message: json["message"],
-        data: List<EmergencyContact>.from(json["data"].map((x) => EmergencyContact.fromJson(x))),
+        data: List<EmergencyContact>.from(
+            json["data"].map((x) => EmergencyContact.fromJson(x))),
         success: json["success"],
         code: json["code"],
       );
@@ -55,10 +56,10 @@ class GetEmergencyContactsResponse {
 class EmergencyContact {
   final int id;
   final String title;
-  final String description;
-  final String contact;
-  final String status;
-  final Image image;
+  final dynamic description;
+  final dynamic contact;
+  final dynamic status;
+  final dynamic image;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -94,13 +95,14 @@ class EmergencyContact {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory EmergencyContact.fromJson(Map<String, dynamic> json) => EmergencyContact(
+  factory EmergencyContact.fromJson(Map<String, dynamic> json) =>
+      EmergencyContact(
         id: json["id"],
         title: json["title"],
         description: json["description"],
         contact: json["contact"],
         status: json["status"],
-        image: Image.fromJson(json["image"]),
+        image: json["image"] == null ? null : Image.fromJson(json["image"]),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );

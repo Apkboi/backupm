@@ -32,7 +32,7 @@ class _ResetPasscodeFieldState extends State<ResetPasscodeField> {
         context.read<BotChatCubit>().answerQuestion(
             id: widget.message.id,
             answer: '****',
-            nextPasswordResetStage: PasswordResetStage.PASSCODE);
+            nextPasswordResetStage: PasswordResetStage.CONFIRM_PASSCODE);
       },
     );
   }

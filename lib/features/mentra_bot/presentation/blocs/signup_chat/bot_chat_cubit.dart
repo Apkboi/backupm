@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +14,6 @@ import 'package:mentra/features/mentra_bot/data/datasource/local/signup_question
 import 'package:mentra/features/mentra_bot/data/datasource/local/welcome_message_data_source.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-
 part 'bot_chat_state.dart';
 
 enum BotChatFlow {
@@ -68,7 +66,8 @@ class BotChatCubit extends Cubit<BotChatState> {
     } else {
       stagedMessages.removeLast();
       stagedMessages.last.answer = null;
-      if (stagedMessages.last.signupStage == SignupStage.EMAIL_MESSAGE) {
+      if (stagedMessages.last.signupStage == SignupStage.EMAIL_MESSAGE ||
+          stagedMessages.last.loginStage == LoginStage.PASSCODE) {
         revertBack();
       } else {
         updateCurrentQuestion(stagedMessages.last);
@@ -183,7 +182,7 @@ class BotChatCubit extends Cubit<BotChatState> {
           .first
         ..time = DateTime.now());
     }
-    if (nextLoginStage == LoginStage.EMAILPREVIEW) {
+    if (nextLoginStage == LoginStage.PASSCODE) {
       _addPasswordResetMessage();
     } else {
       updateCurrentQuestion(stagedMessages.last);
@@ -360,8 +359,8 @@ class BotChatCubit extends Cubit<BotChatState> {
               ])),
         ),
         flow: BotChatFlow.login,
-        answerType: AnswerType.EMAIL_PREVIW,
-        loginStage: LoginStage.EMAILPREVIEW,
+        answerType: AnswerType.LOGIN_PASSCODE,
+        loginStage: LoginStage.PASSCODE,
         time: DateTime.now(),
         answerTime: DateTime.now());
 

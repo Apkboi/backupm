@@ -59,25 +59,27 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                   ),
                 ),
                 16.verticalSpace,
-                CustomNeumorphicButton(
-                  onTap: () {
-                    context.pop();
-                    context.pushNamed(
-                      PageUrl.createJournalScreen,
-                    );
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                  color: Pallets.primary,
-                  child: Row(
-                    children: [
-                      ImageWidget(imageUrl: Assets.images.svgs.editFilled),
-                      5.horizontalSpace,
-                      const TextView(
-                        text: 'Blank Entry',
-                        color: Pallets.white,
-                        fontWeight: FontWeight.w600,
-                      )
-                    ],
+                Center(
+                  child: CustomNeumorphicButton(
+                    onTap: () {
+                      context.pop();
+                      context.pushNamed(
+                        PageUrl.createJournalScreen,
+                      );
+                    },
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    color: Pallets.primary,
+                    child: Row(
+                      children: [
+                        ImageWidget(imageUrl: Assets.images.svgs.editFilled),
+                        5.horizontalSpace,
+                        const TextView(
+                          text: 'Blank Entry',
+                          color: Pallets.white,
+                          fontWeight: FontWeight.w600,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 16.verticalSpace,

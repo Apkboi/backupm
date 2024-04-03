@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/path_params.dart';
@@ -10,7 +9,6 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/string_extension.dart';
 import 'package:mentra/features/library/data/models/get_library_categories_response.dart';
-import 'package:mentra/gen/assets.gen.dart';
 
 class LibraryItem extends StatelessWidget {
   const LibraryItem({Key? key, required this.category}) : super(key: key);
@@ -40,7 +38,7 @@ class LibraryItem extends StatelessWidget {
                   text: category.name,
                   style: GoogleFonts.fraunces(
                       color: Pallets.white,
-                      fontSize: 24.sp,
+                      fontSize: 23.sp,
                       fontWeight: FontWeight.w600),
                 ),
                 TextButton(

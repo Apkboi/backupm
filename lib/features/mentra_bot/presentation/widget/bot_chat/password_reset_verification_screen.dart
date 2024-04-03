@@ -10,8 +10,8 @@ import 'package:mentra/features/authentication/password_reset/presentation/bloc/
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
-class PasswordResetVerificationScreen extends StatefulWidget {
-  const PasswordResetVerificationScreen({
+class PasswordResetVerificationField extends StatefulWidget {
+  const PasswordResetVerificationField({
     super.key,
     required this.message,
   });
@@ -19,12 +19,12 @@ class PasswordResetVerificationScreen extends StatefulWidget {
   final BotChatmessageModel message;
 
   @override
-  State<PasswordResetVerificationScreen> createState() =>
-      _PasswordResetVerificationScreenState();
+  State<PasswordResetVerificationField> createState() =>
+      _PasswordResetVerificationFieldState();
 }
 
-class _PasswordResetVerificationScreenState
-    extends State<PasswordResetVerificationScreen> {
+class _PasswordResetVerificationFieldState
+    extends State<PasswordResetVerificationField> {
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
   final _bloc = PasswordResetBloc(injector.get());
@@ -81,9 +81,15 @@ class _PasswordResetVerificationScreenState
     if (_formKey.currentState!.validate()) {
       // context.pushNamed(PageUrl.selectYearScreen);
 
-      _bloc.add(VerifyPasswordResetOtpEvent(
-          email: injector.get<PasswordResetBloc>().email,
-          otp: _controller.text.trim()));
+      injector.get<PasswordResetBloc>().otp = _controller.text.trim();
+      context.read<BotChatCubit>().answerQuestion(
+          id: widget.message.id,
+          answer: "*******",
+          nextPasswordResetStage: PasswordResetStage.PASSCODE);
+
+      // _bloc.add(VerifyPasswordResetOtpEvent(
+      //     email: injector.get<PasswordResetBloc>().email,
+      //     otp: _controller.text.trim()));
     }
   }
 
@@ -94,10 +100,6 @@ class _PasswordResetVerificationScreenState
     }
     if (state is VerifyPasswordResetOtpSuccessState) {
       context.pop();
-      context.read<BotChatCubit>().answerQuestion(
-          id: widget.message.id,
-          answer: "*******",
-          nextPasswordResetStage:PasswordResetStage.PASSCODE);
     }
 
     if (state is VerifyPasswordResetOtpFailureState) {

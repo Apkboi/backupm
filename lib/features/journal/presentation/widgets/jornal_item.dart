@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/confirm_sheet.dart';
@@ -184,12 +185,28 @@ class _PromptWidget extends StatelessWidget {
                   color: Pallets.navy,
                 ),
                 9.verticalSpace,
-                TextView(
-                  fontSize: 15,
-                  text: prompt!.content.toString(),
-                  fontWeight: FontWeight.w600,
-                  color: Pallets.navy,
-                ),
+
+                Html(shrinkWrap: true, data: prompt!.content, style: {
+                  "p": Style(
+                      fontSize: FontSize(
+                        16.sp,
+                        Unit.px,
+                      ),
+                      fontWeight: FontWeight.w400),
+                  "h4": Style(
+                      fontSize: FontSize(
+                        16.sp,
+                        Unit.px,
+                      ),
+                      // height: Height(15),
+                      fontWeight: FontWeight.w400),
+                }),
+                // TextView(
+                //   fontSize: 15,
+                //   text: prompt!.content.toString(),
+                //   fontWeight: FontWeight.w600,
+                //   color: Pallets.navy,
+                // ),
               ],
             ),
           )

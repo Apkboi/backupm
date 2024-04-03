@@ -1,3 +1,4 @@
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/dashboard/data/models/conversation_starter_response.dart';
@@ -19,8 +20,14 @@ class DashboardRepositoryImpl extends DashboardRepository {
 
   @override
   Future<GetEmergencyContactsResponse> getEmergencyContacts() async {
-    final response = await _networkService.call(
-        UrlConfig.getEmergencyContacts, RequestMethod.get);
-    return GetEmergencyContactsResponse.fromJson(response.data);
+    try {
+      final response = await _networkService.call(
+          UrlConfig.getEmergencyContacts, RequestMethod.get);
+      return GetEmergencyContactsResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.e(e.toString(), stackTrace: stack);
+
+      rethrow;
+    }
   }
 }

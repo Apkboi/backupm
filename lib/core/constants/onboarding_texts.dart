@@ -1,5 +1,5 @@
-const String heading1 = "Begin your journey to better mental and emotional wellbeing";
-const String heading2 = "Personalized Tech-Enabled Support, Anytime, Anywhere";
+const String heading2 = "Begin your journey to better mental and emotional wellbeing";
+const String heading1 = "Personalized Tech-Enabled Support, Anytime, Anywhere";
 
 const String heading3 = "Get matched with a therapist tailored to your needs";
 const String body1 =

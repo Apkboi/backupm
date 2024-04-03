@@ -76,7 +76,7 @@ class UrlConfig {
   static const String verifyPasscode = '/user/passcode/verify';
   static const String updatePassword = '/user/passcode/update';
   static const String allowNotifications = 'general/account/allow-notification';
-  static const String resetPassword = '/auth/reset-password';
+  static const String resetPassword = '/auth/password/reset';
   static const String getAvatars = '/profile/avatars';
   static const String uploadAvatar = '/user/profile/upload-avatar';
   static const String getProfile = '/user/me';

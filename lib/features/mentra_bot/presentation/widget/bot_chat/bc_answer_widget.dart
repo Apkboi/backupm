@@ -91,6 +91,14 @@ class _BCMessageAnswerWidgetState extends State<BCMessageAnswerWidget>
             // TODO: Handle this case.
             AnswerType.NOTIFICATION_OPTIONS =>
               BCPermissionsField(message: widget.messsage),
+            // TODO: Handle this case.
+            AnswerType.PASSWORD_RESET_EMAIL => 0.verticalSpace,
+            // TODO: Handle this case.
+            AnswerType.PASSWORD_RESET_OTP => 0.verticalSpace,
+            // TODO: Handle this case.
+            AnswerType.PASSWORD_RESET_PASSCODE => 0.verticalSpace,
+            // TODO: Handle this case.
+            AnswerType.PASSWORD_RESET_CONFIRMPASSCODE => 0.verticalSpace,
           };
         },
       ),

@@ -32,6 +32,7 @@ class InputBar extends StatelessWidget {
               hasElevation: false,
               inputType: inputType,
               controller: controller,
+            fontSize: 17,
               validator: validator,
               suffix: InkWell(
                 onTap: () async {

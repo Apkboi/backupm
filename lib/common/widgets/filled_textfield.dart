@@ -33,6 +33,7 @@ class FilledTextField extends StatefulWidget {
   final GlobalKey<FormFieldState<dynamic>>? formKey;
 
   final double radius;
+  final double? fontSize;
   final bool? expands;
 
   final List<TextInputFormatter>? inputFormatters;
@@ -67,7 +68,7 @@ class FilledTextField extends StatefulWidget {
       this.labelText,
       this.labelTextStyle,
       this.suffixIcon,
-      this.inputFormatters})
+      this.inputFormatters,  this.fontSize})
       : super(key: key);
 
   @override
@@ -82,7 +83,6 @@ class _FilledTextFieldState extends State<FilledTextField> {
         validator: widget.validator,
         key: widget.formKey,
         controller: widget.controller,
-
         maxLines: widget.expands! ? null : widget.maxLine ?? 1,
         keyboardType: widget.inputType,
         cursorColor: Theme.of(context).colorScheme.onBackground,
@@ -99,7 +99,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color:
                 widget.textColor ?? Theme.of(context).colorScheme.onBackground,
-            fontSize: 16,
+            fontSize: widget.fontSize??16,
             fontWeight: FontWeight.w500),
         decoration: AppStyles.filledTextFieldDecoration.copyWith(
 
