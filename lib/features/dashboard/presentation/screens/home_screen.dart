@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -11,8 +14,10 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
@@ -21,8 +26,11 @@ import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key,  this.startConvo= true});
+  const HomeScreen(
+      {super.key, this.startConvo = true, this.authenticate = false});
+
   final bool startConvo;
+  final bool authenticate;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -34,11 +42,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   void initState() {
-
-    if(widget.startConvo){
-      _startMentraChat();
-
-    }
+    _welcome();
     DashboardUsecase().execute();
     // _initMesibo();
     // _startMentraChat();
@@ -63,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen>
           InkWell(
             onTap: () {
               context.pushNamed(PageUrl.menuScreen);
+              // _welcome();
               // DashboardUsecase().execute();
-
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
@@ -101,15 +105,10 @@ class _HomeScreenState extends State<HomeScreen>
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -270.h,
-                        right: 0,
-
-                        left: 0,
-                        child: HomeBotImage()),
+                        top: -270.h, right: 0, left: 0, child: HomeBotImage()),
                     Positioned(
                         top: -98,
                         right: 0,
-
                         left: 0,
                         child: ImageWidget(
                             width: 1.sw,
@@ -227,11 +226,29 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _startMentraChat() {
-    Future.delayed(const Duration(seconds: 1), () {
-      context.pushNamed(
-        PageUrl.talkToMentraScreen,
-      );
-    });
+    if (widget.startConvo) {
+      Future.delayed(const Duration(seconds: 1), () {
+        context.pushNamed(
+          PageUrl.talkToMentraScreen,
+        );
+      });
+    }
+  }
+
+  void _welcome() async {
+    _startMentraChat();
+    // if (widget.authenticate && SessionManager.instance.bioMetricEnabled) {
+    //   var authenticated =
+    //       await injector.get<LocalAuthCubit>().authenticateUser();
+    //   if (authenticated) {
+    //     _startMentraChat();
+    //   } else {
+    //     // SystemNavigator.pop();
+    //     exit(0);
+    //   }
+    // } else {
+    //
+    // }
   }
 }
 

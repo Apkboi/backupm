@@ -13,6 +13,7 @@ import 'package:mentra/features/mentra_bot/data/datasource/local/permissions_mes
 import 'package:mentra/features/mentra_bot/data/datasource/local/signup_question_data_source.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/welcome_message_data_source.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_resend_otp_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 part 'bot_chat_state.dart';
 
@@ -206,10 +207,13 @@ class BotChatCubit extends Cubit<BotChatState> {
         ..time = DateTime.now());
       // CustomDialogs.showToast(stagedMessages.last.flow.name);
     }
-
     if (nextSignupStage == SignupStage.EMAIL_MESSAGE) {
       _addTermsAndConditionMessage();
-    } else {
+    } else if(nextSignupStage == SignupStage.EMAIL_VERIFICATION){
+
+      _addResendPassWordMessage();
+
+    }else {
       updateCurrentQuestion(stagedMessages.last);
     }
   }
@@ -342,7 +346,7 @@ class BotChatCubit extends Cubit<BotChatState> {
                 //   // lineHeight: 1.5,
                 // ),
                 TextSpan(
-                    text: 'Forgot password ?',
+                    text: 'Forgot pin ?',
                     // color: Pallets.secondary,
                     // fontWeight: FontWeight.w600,
                     // lineHeight: 1.5,
@@ -371,6 +375,27 @@ class BotChatCubit extends Cubit<BotChatState> {
     stagedMessages.add(termsMessage);
     currentQuestion = termsMessage;
     // updateCurrentQuestion(termsMessage);
+    emit(QuestionUpdatedState());
+  }
+
+  void _addResendPassWordMessage() async{
+    var resendMessage = BotChatmessageModel(
+        message: 'Resend Code',
+        isFromBot: true,
+        id: 0,
+        isTyping: false,
+        child: const BcResendOtpWidget(),
+        flow: BotChatFlow.signup,
+        answerType: AnswerType.EMAIL_VERIFICATION,
+        signupStage: SignupStage.EMAIL_VERIFICATION,
+        time: DateTime.now(),
+        answerTime: DateTime.now());
+    _addTyping();
+    await Future.delayed(const Duration(seconds: 2));
+    await _removeTyping();
+    await Future.delayed(const Duration(milliseconds: 300));
+    stagedMessages.add(resendMessage);
+    currentQuestion = resendMessage;
     emit(QuestionUpdatedState());
   }
 }

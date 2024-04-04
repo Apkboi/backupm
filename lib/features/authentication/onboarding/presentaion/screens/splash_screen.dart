@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -75,7 +76,6 @@ class _SplashPageState extends State<SplashPage>
                     width: 120,
                     fit: BoxFit.scaleDown,
                     imageUrl: Assets.images.pngs.logo5.path),
-                
               )
             ],
           ),
@@ -87,7 +87,8 @@ class _SplashPageState extends State<SplashPage>
   void _goToNextScreen() {
     // context.pushReplacementNamed(PageUrl.onBoardingPage);
     if (SessionManager.instance.isLoggedIn) {
-      context.goNamed(PageUrl.homeScreen);
+      context.goNamed(PageUrl.homeScreen,
+          queryParameters: {PathParam.authenticate: 'true'});
     } else {
       // if (SessionManager.instance.hasOnboarded) {
       //   context.goNamed(PageUrl.login);

@@ -32,7 +32,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       // Call your registration API here
       var authResponse = await _authRepository.register(event.payload);
 
-      AuthSuccessUsecase().execute(authResponse);
+      AuthSuccessUsecase().execute(authResponse,passKey:event.payload.password);
 
       emit(RegistrationSuccessState(authResponse));
     } catch (e) {

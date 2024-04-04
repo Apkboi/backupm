@@ -57,25 +57,18 @@ class _TalkToMentraInputFieldsState extends State<TalkToMentraInputFields> {
           message: widget.currentMessage,
         ),
       AnswerType.USERNAME => BcUserNameField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.EMAIL_PREVIW =>
         BCEmailPreviewField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.LOGIN_PASSCODE =>
         BCLoginPasscodeField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.NOTIFICATION_OPTIONS => 0.verticalSpace,
-      // TODO: Handle this case.
       AnswerType.PASSWORD_RESET_EMAIL =>
         PasswordResetEmailField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.PASSWORD_RESET_OTP => PasswordResetVerificationField(
           message: widget.currentMessage,
         ),
-      // TODO: Handle this case.
       AnswerType.PASSWORD_RESET_PASSCODE =>
         ResetPasscodeField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.PASSWORD_RESET_CONFIRMPASSCODE =>
         const ConfirmPasswordResetCodeField()
     };

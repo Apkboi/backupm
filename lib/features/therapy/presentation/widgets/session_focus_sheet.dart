@@ -12,7 +12,12 @@ import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.d
 class SessionFocusSheet extends StatelessWidget {
   SessionFocusSheet({super.key});
 
-  List sessionFocuses = ["Depression", "Health", "Mental disorder"];
+  List sessionFocuses = [
+    'Developing coping strategies for anxiety',
+    'Resolving interpersonal conflicts',
+    'Building self esteem and confidence',
+    'Managing depression and mood fluctuations'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class SessionFocusSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextView(
-            text: 'Select session focus',
+            text: 'Select Session Focus',
             style: GoogleFonts.sora(
               fontSize: 20.sp,
             ),
@@ -55,5 +60,4 @@ class SessionFocusSheet extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -1,7 +1,6 @@
 // To parse this JSON data, do
-//
-//     final getNotificationsResponse = getNotificationsResponseFromJson(jsonString);
 
+//     final getNotificationsResponse = getNotificationsResponseFromJson(jsonString);
 import 'dart:convert';
 
 GetNotificationsResponse getNotificationsResponseFromJson(String str) =>

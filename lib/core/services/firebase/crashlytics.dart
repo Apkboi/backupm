@@ -13,6 +13,7 @@ class CrashlyticsService {
         FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
         return true;
       };
+
     }
   }
 }

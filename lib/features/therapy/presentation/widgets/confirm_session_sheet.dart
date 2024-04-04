@@ -62,7 +62,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                     ),
                     16.verticalSpace,
                     TextView(
-                      text: 'Confirm your session',
+                      text: 'Confirm Your Session',
                       style: GoogleFonts.fraunces(
                           color: Pallets.navy,
                           fontSize: 32.sp,
@@ -195,13 +195,15 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                     ),
                     Expanded(child: 16.verticalSpace),
                     focus != null
-                        ? CustomNeumorphicButton(
-                            text: 'Continue',
-                            onTap: () {
-                              _scheduleSession(context);
-                              // _closeAllSheets(context);
-                            },
-                            color: Pallets.primary)
+                        ? Center(
+                          child: CustomNeumorphicButton(
+                              text: 'Continue',
+                              onTap: () {
+                                _scheduleSession(context);
+                                // _closeAllSheets(context);
+                              },
+                              color: Pallets.primary),
+                        )
                         : 0.horizontalSpace
                   ],
                 ),

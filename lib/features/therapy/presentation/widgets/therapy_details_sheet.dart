@@ -81,6 +81,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                 children: [
                   CustomNeumorphicButton(
                       fgColor: Pallets.black,
+                      expanded: false,
                       padding: const EdgeInsets.all(10),
                       onTap: () async {
                         // injector.get<MesiboCubit>().startGroupCall();
@@ -93,7 +94,9 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                   CustomOutlinedButton(
                     bgColor: Colors.white,
                     outlinedColr: Pallets.primary,
+
                     padding: const EdgeInsets.all(10),
+                    isExpanded: false,
                     radius: 148,
                     child: const TextView(
                       text: 'Cancel Session',

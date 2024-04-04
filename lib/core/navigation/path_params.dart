@@ -20,6 +20,7 @@ class PathParam {
   static const journal = 'journal';
 
   static const startConvo = 'startConvo';
+  static const authenticate = 'authenticate';
 
 // static const chatId = 'chatId';
 }

@@ -26,7 +26,7 @@ class LoginQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Success! Your password has been reset. You can now log in to your account using your new password. Enter your email to proceed.',
+            'Success! Your password has been reset. You can now log in to your account using your new pin. Enter your email to proceed.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -57,7 +57,7 @@ class LoginQuestionDataSource {
         time: DateTime.now(),
         answerTime: DateTime.now()),
     BotChatmessageModel(
-        message: "Now, please enter your passcode.",
+        message: "Now, please enter your pin.",
         isFromBot: true,
         id: 0,
         isTyping: false,

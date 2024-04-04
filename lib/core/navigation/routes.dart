@@ -176,6 +176,8 @@ class CustomRoutes {
         builder: (context, state) => HomeScreen(
           startConvo: bool.parse(
               state.uri.queryParameters[PathParam.startConvo] ?? "true"),
+          authenticate: bool.parse(
+              state.uri.queryParameters[PathParam.authenticate] ?? "false"),
         ),
       ),
       GoRoute(

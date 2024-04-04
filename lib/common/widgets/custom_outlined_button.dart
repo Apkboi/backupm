@@ -35,7 +35,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 1.sw - 127.w,
+      width:widget.isExpanded!? 1.sw - 127.w:null,
       child: ElevatedButton(
         onPressed: widget.onPressed,
         style: OutlinedButton.styleFrom(

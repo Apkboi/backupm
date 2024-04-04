@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,9 +8,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 
@@ -124,7 +120,6 @@ class _ReviewSheetState extends State<ReviewSheet> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextView(
                   text: 'Review',
@@ -132,13 +127,6 @@ class _ReviewSheetState extends State<ReviewSheet> {
                       fontSize: 12, fontWeight: FontWeight.w500),
                 ),
                 7.verticalSpace,
-
-                // const TextField(
-                //   // expands: true,
-                //   maxLines: null,
-                //   // minLines: null,
-                //   decoration: InputDecoration(constraints: BoxConstraints(maxHeight: 20,minHeight: 19)),
-                // )
                 FilledTextField(
                     // maxLine: 5,
                     minLine: 1,
@@ -162,15 +150,6 @@ class _ReviewSheetState extends State<ReviewSheet> {
                 feeling: feeling,
               ));
 
-              // context.pop();
-              // CustomDialogs.showBottomSheet(
-              //     context, const EndSessionDialog(),
-              //     shape: const RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(16),
-              //           topRight: Radius.circular(16),
-              //         )),
-              //     constraints: BoxConstraints(maxHeight: 0.9.sh));
             },
             color: Pallets.primary,
             text: "Submit Review",

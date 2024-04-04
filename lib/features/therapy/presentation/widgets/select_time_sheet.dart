@@ -107,13 +107,15 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                 const Spacer(),
                 20.verticalSpace,
                 time != null
-                    ? CustomNeumorphicButton(
-                        text: 'Continue',
-                        onTap: () {
-                          _confirmSession(
-                              context: context, selectedTime: time!);
-                        },
-                        color: Pallets.primary)
+                    ? Center(
+                      child: CustomNeumorphicButton(
+                          text: 'Continue',
+                          onTap: () {
+                            _confirmSession(
+                                context: context, selectedTime: time!);
+                          },
+                          color: Pallets.primary),
+                    )
                     : 0.horizontalSpace,
               ],
             ),

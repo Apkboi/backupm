@@ -98,14 +98,14 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                       ? _fadeAnimation
                       : Animation.fromValueListenable(ValueNotifier(1)),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
                     padding: !widget.isTyping
                         ? EdgeInsets.only(
                             top: 45.h,
                           )
-                        : EdgeInsets.only(top: 9.h),
+                        : EdgeInsets.only(top: 10.h),
                     child: CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 13,

@@ -5,7 +5,7 @@ class PasswordResetDataSource {
   final List<BotChatmessageModel> messages = [
     BotChatmessageModel(
         message:
-            'Resetting your password is easy. To get started, please provide the email address associated with your account.',
+            'Resetting your pin is easy. To get started, please provide the email address associated with your account.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -27,7 +27,7 @@ class PasswordResetDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Looking good! \nNow, let\'s create a secure passcode for your account. Please set up your passcode.',
+            'Looking good! \nNow, let\'s create a secure pin for your account. Please set up your pin.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -37,7 +37,7 @@ class PasswordResetDataSource {
         time: DateTime.now(),
         answerTime: DateTime.now()),
     BotChatmessageModel(
-        message:  'Well done! To ensure it\'s correct, please confirm your passcode.',
+        message:  'Well done! To ensure it\'s correct, please confirm your pin.',
         isFromBot: true,
         id: 0,
         isTyping: false,

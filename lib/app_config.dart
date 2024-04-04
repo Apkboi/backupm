@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mentra/app.dart';
+import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'core/di/injector.dart';
 import 'core/services/data/hive/hive_manager.dart';
 import 'core/services/data/session_manager.dart';
@@ -47,12 +48,14 @@ class AppConfig {
     await initializeDB();
     await initCore();
     await setup();
+
     runApp(const MentraApp());
     // FlutterNativeSplash.remove();
   }
 
   Future setup() async {
     injector.get<UserBloc>().add(GetUserEvent());
+    injector.get<LocalAuthCubit>().init();
 
     // injector.get<DashboardBloc>().add(GetConversationStarterEvent());
   }

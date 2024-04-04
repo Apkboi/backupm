@@ -47,7 +47,7 @@ class _SupportScreenState extends State<SupportScreen> {
           const AppBg(),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
               child: Column(
                 children: [
                   Container(
@@ -86,7 +86,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                     text:
                                         'Our dedicated support team is committed to ensuring that your experience with our product/service is seamless and satisfactory. We strive to respond to all inquiries promptly and provide the assistance you need within two working days.'),
                               ])),
-                          42.verticalSpace
+                          20.verticalSpace
                         ],
                       ),
                     ),

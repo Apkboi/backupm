@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:mentra/common/widgets/input_bar.dart';
@@ -22,6 +23,10 @@ class _ResetPasscodeFieldState extends State<ResetPasscodeField> {
     return InputBar(
       inputType: TextInputType.number,
       hint: "Enter passcode",
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(4),
+
+      ],
       validator: MultiValidator([
         RequiredValidator(errorText: 'Enter passcode'),
         MaxLengthValidator(4, errorText: 'Passcode should be a 4 digit number'),

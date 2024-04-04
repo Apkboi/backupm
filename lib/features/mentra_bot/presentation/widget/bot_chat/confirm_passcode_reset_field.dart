@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -20,10 +21,12 @@ class ConfirmPasswordResetCodeField extends StatefulWidget {
   const ConfirmPasswordResetCodeField({super.key});
 
   @override
-  State<ConfirmPasswordResetCodeField> createState() => _ConfirmPasswordResetCodeFieldState();
+  State<ConfirmPasswordResetCodeField> createState() =>
+      _ConfirmPasswordResetCodeFieldState();
 }
 
-class _ConfirmPasswordResetCodeFieldState extends State<ConfirmPasswordResetCodeField> {
+class _ConfirmPasswordResetCodeFieldState
+    extends State<ConfirmPasswordResetCodeField> {
   final _formKey = GlobalKey<FormState>();
   final _pinController = PINController();
   PinMode pinMode = PinMode.setPin;
@@ -43,6 +46,10 @@ class _ConfirmPasswordResetCodeFieldState extends State<ConfirmPasswordResetCode
           return InputBar(
             inputType: TextInputType.number,
             hint: "Enter passcode",
+            inputFormatters: [
+              LengthLimitingTextInputFormatter(4),
+
+            ],
             validator: MultiValidator([
               RequiredValidator(errorText: 'Enter passcode'),
               MaxLengthValidator(4,
@@ -51,17 +58,10 @@ class _ConfirmPasswordResetCodeFieldState extends State<ConfirmPasswordResetCode
                   errorText: 'Passcode should be a 4 digit number'),
             ]).call,
             onAnswer: (answer) {
-              if (injector
-                  .get<PasswordResetBloc>()
-                  .confirmPasscode(answer)) {
-// logger.i(injector.get<RegistrationBloc>().registrationPayload.toJson());
-
+              if (injector.get<PasswordResetBloc>().confirmPasscode(answer)) {
                 _bloc.add(ResetPasswordEvent(
-                    code: injector.get<PasswordResetBloc>().otp, password: answer));
-
-                // _registrationBloc.add(RegisterEvent(
-                //     payload:
-                //     injector.get<RegistrationBloc>().registrationPayload));
+                    code: injector.get<PasswordResetBloc>().otp,
+                    password: answer));
               } else {
                 context.read<BotChatCubit>().revertBack();
                 CustomDialogs.error('Password mismatch');
