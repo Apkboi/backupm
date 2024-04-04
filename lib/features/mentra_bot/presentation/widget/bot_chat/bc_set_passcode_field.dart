@@ -22,12 +22,12 @@ class _BcSetPasscodeFieldState extends State<BcSetPasscodeField> {
   Widget build(BuildContext context) {
     return InputBar(
       inputType: TextInputType.number,
-      hint: "Enter passcode",
+      hint: "Enter pin",
       inputFormatters: [
         LengthLimitingTextInputFormatter(4),
       ],
       validator: MultiValidator([
-        RequiredValidator(errorText: 'Enter passcode'),
+        RequiredValidator(errorText: 'Enter pin'),
         MaxLengthValidator(4, errorText: 'Passcode should be a 4 digit number'),
         MinLengthValidator(4, errorText: 'Passcode should be a 4 digit number'),
       ]).call,

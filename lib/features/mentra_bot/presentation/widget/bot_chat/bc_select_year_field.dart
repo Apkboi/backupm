@@ -24,10 +24,14 @@ class _BcSelectYearFieldState extends State<BcSelectYearField> {
       inputType: TextInputType.number,
       hint: "Enter birth year",
       inputFormatters: [
-        LengthLimitingTextInputFormatter(4),
-
+        LengthLimitingTextInputFormatter(4,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced),
       ],
-      validator: RequiredValidator(errorText: 'Enter birth year').call,
+      validator: MultiValidator([
+        RequiredValidator(errorText: 'Enter birth year'),
+        MinLengthValidator(4,
+            errorText: 'Birth year should be exactly 4 digits')
+      ]).call,
       onAnswer: (answer) {
         injector
             .get<RegistrationBloc>()
