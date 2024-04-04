@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
@@ -10,6 +11,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/string_extension.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
 import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
@@ -78,17 +80,27 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                            color: Pallets.promptMilkCOlor,
+                            color: prompt.backgroundColor.toString().toColor(),
                             borderRadius: BorderRadius.circular(10)),
                         width: 1.sw,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextView(
-                              text: prompt.content,
-                              fontWeight: FontWeight.w600,
-                              color: Pallets.promptDarkMilkColor,
-                            ),
+                            Html(shrinkWrap: true, data: prompt.content, style: {
+                              "p": Style(
+                                  fontSize: FontSize(
+                                    16.sp,
+                                    Unit.px,
+                                  ),
+                                  fontWeight: FontWeight.w400),
+                              "h4": Style(
+                                  fontSize: FontSize(
+                                    16.sp,
+                                    Unit.px,
+                                  ),
+                                  // height: Height(15),
+                                  fontWeight: FontWeight.w400),
+                            }),
                           ],
                         ),
                       ),

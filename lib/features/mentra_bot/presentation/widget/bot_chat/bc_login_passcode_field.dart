@@ -39,9 +39,9 @@ class _BCLoginPasscodeFieldState extends State<BCLoginPasscodeField> {
           validator: MultiValidator([
             RequiredValidator(errorText: 'Enter pin'),
             MaxLengthValidator(4,
-                errorText: 'Passcode should be a 4 digit number'),
+                errorText: 'Pin should be a 4 digit number'),
             MinLengthValidator(4,
-                errorText: 'Passcode should be a 4 digit number'),
+                errorText: 'Pin should be a 4 digit number'),
           ]).call,
           onAnswer: (answer) {
             _loginBloc.add(LoginUserEvent(

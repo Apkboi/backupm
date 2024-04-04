@@ -53,9 +53,9 @@ class _ConfirmPasswordResetCodeFieldState
             validator: MultiValidator([
               RequiredValidator(errorText: 'Enter pin'),
               MaxLengthValidator(4,
-                  errorText: 'Passcode should be a 4 digit number'),
+                  errorText: 'Pin should be a 4 digit number'),
               MinLengthValidator(4,
-                  errorText: 'Passcode should be a 4 digit number'),
+                  errorText: 'Pin should be a 4 digit number'),
             ]).call,
             onAnswer: (answer) {
               if (injector.get<PasswordResetBloc>().confirmPasscode(answer)) {
@@ -64,7 +64,7 @@ class _ConfirmPasswordResetCodeFieldState
                     password: answer));
               } else {
                 context.read<BotChatCubit>().revertBack();
-                CustomDialogs.error('Password mismatch');
+                CustomDialogs.error('Pin mismatch');
               }
             },
           );

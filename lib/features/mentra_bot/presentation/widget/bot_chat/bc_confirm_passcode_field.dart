@@ -38,9 +38,9 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
           validator: MultiValidator([
             RequiredValidator(errorText: 'Enter pin'),
             MaxLengthValidator(4,
-                errorText: 'Passcode should be a 4 digit number'),
+                errorText: 'Pin should be a 4 digit number'),
             MinLengthValidator(4,
-                errorText: 'Passcode should be a 4 digit number'),
+                errorText: 'Pin should be a 4 digit number'),
           ]).call,
           onAnswer: (answer) {
             if (injector.get<RegistrationBloc>().confirmPasscode(answer)) {
