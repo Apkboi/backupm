@@ -139,6 +139,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                                   lineHeight: 1.5,
                                   color: Pallets.white,
                                   fontSize: 15.sp,
+                                  wordSpacing: 1,
                                   fontWeight: FontWeight.w500),
                             if (!widget.isTyping) 8.verticalSpace,
                           ],

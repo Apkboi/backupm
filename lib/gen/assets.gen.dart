@@ -121,6 +121,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get mentra =>
       const AssetGenImage('assets/images/pngs/mentra.png');
 
+  /// File path: assets/images/pngs/mentra2.png
+  AssetGenImage get mentra2 =>
+      const AssetGenImage('assets/images/pngs/mentra2.png');
+
   /// File path: assets/images/pngs/mentra_big.png
   AssetGenImage get mentraBig =>
       const AssetGenImage('assets/images/pngs/mentra_big.png');
@@ -160,6 +164,14 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/sleep.png
   AssetGenImage get sleep =>
       const AssetGenImage('assets/images/pngs/sleep.png');
+
+  /// File path: assets/images/pngs/slide1.png
+  AssetGenImage get slide1 =>
+      const AssetGenImage('assets/images/pngs/slide1.png');
+
+  /// File path: assets/images/pngs/slide2.png
+  AssetGenImage get slide2 =>
+      const AssetGenImage('assets/images/pngs/slide2.png');
 
   /// File path: assets/images/pngs/small_mentra.png
   AssetGenImage get smallMentra =>
@@ -222,6 +234,7 @@ class $AssetsImagesPngsGen {
         logoF,
         mainLogo,
         mentra,
+        mentra2,
         mentraBig,
         moody,
         normal,
@@ -232,6 +245,8 @@ class $AssetsImagesPngsGen {
         placeholder,
         productivity,
         sleep,
+        slide1,
+        slide2,
         smallMentra,
         sorry,
         splashLogo,

@@ -171,7 +171,7 @@ class _PromptWidget extends StatelessWidget {
     return prompt != null
         ? Container(
             width: 1.sw,
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
                 color: prompt?.backgroundColor.toString().toColor(),
                 borderRadius: BorderRadius.circular(10)),

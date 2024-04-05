@@ -61,15 +61,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // },
                     items: [
                       OnboardingItem(
-                        img: Assets.images.pngs.techLady.path,
+                        img: Assets.images.pngs.slide1.path,
                         header: heading1,
-                        text: body1,
+                        text: body2,
                         index: 0,
                       ),
                       OnboardingItem(
-                        img: Assets.images.pngs.traveller.path,
+                        img: Assets.images.pngs.slide2.path,
                         header: heading2,
-                        text: body2,
+                        text: body1,
                         index: 1,
                       ),
                       // OnboardingItem(
@@ -79,7 +79,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       // ),
                     ]),
               ),
-              30.verticalSpace,
+              20.verticalSpace,
+              Indicator(
+                seledtedIndex: _currentIndex,
+                items_count: 2,
+              ),
+              10.verticalSpace,
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 10),

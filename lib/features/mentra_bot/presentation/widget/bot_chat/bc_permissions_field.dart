@@ -85,7 +85,7 @@ class BCPermissionsField extends StatelessWidget {
       case PermissionsStage.NONE:
         break;
     }
-    context.goNamed(PageUrl.welcomeScreen);
+    context.goNamed(PageUrl.homeScreen);
   }
 
   void _requestPermission(BuildContext context) async {
@@ -108,7 +108,7 @@ class BCPermissionsField extends StatelessWidget {
             id: message.id,
             answer: 'Yes, Please!',
             nextFlow: BotChatFlow.talkToMentra);
-        context.goNamed(PageUrl.welcomeScreen);
+        context.goNamed(PageUrl.homeScreen);
       case PermissionsStage.NONE:
         break;
     }

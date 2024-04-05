@@ -37,7 +37,7 @@ class NewUserPrompt extends StatelessWidget {
                           fontSize: 20.sp, fontWeight: FontWeight.w600),
                     ),
                     8.verticalSpace,
-                    const TextView(
+                     const TextView(
                       fontSize: 15,
                       text:
                           'Click below to \'Talk to Mentra\' and share how you\'re doing, ask questions, or just have a friendly chat.  Ready when you are!',

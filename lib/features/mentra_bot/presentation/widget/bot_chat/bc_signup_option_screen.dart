@@ -143,7 +143,7 @@ class BCSignupOptionsField extends StatelessWidget {
         //     nextFlow: BotChatFlow.talkToMentra,
         //     nextSignupStage: SignupStage.YEAR);
         // context.pop();
-        context.pushNamed(PageUrl.welcomeScreen);
+        context.pushNamed(PageUrl.talkToMentraScreen);
       }
     }
     if (state is OauthFailureState) {

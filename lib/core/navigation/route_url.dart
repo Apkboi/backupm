@@ -23,6 +23,7 @@ class PageUrl {
       'passwordResetEmailVerificationScreen';
   static const passwordResetScreen = 'passwordResetScreen';
   static const passwordResetSuccessScreen = 'passwordResetSuccessScreen';
+  static const passcodeAuthScreen = 'passcodeAuthScreen';
 
   static const homeScreen = 'homeScreen';
   static const menuScreen = 'menuScreen';

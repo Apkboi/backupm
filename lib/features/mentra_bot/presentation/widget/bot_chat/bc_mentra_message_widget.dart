@@ -49,7 +49,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
   @override
   void initState() {
     super.initState();
-    logger.i('forwading');
+    // logger.i('forwading');
 
     _controller = AnimationController(
       vsync: this,
@@ -79,7 +79,7 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
     return BlocConsumer<BotChatCubit, BotChatState>(
       bloc: context.read(),
       listener: (context, state) {
-        logger.i(widget.message[0]);
+        // logger.i(widget.message[0]);
         if (state is RemoveTypingState && widget.message[0] == '') {
           _controller.reverse();
         }
@@ -248,15 +248,11 @@ class _MessageContentState extends State<_MessageContent> {
             text: widget.isTyping ? 'Mentra is typing....' : widget.message,
             // lineHeight: 1.5,
 
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.w500,
-              color: Pallets.white,
-              fontSize: 15.sp,
-              height: 1.5,
-              wordSpacing: 1.5,
-
-              // letterSpacing: 2
-            ),
+            fontWeight: FontWeight.w500,
+            color: Pallets.white,
+            fontSize: 15.sp,
+            lineHeight: 1.5,
+            wordSpacing: 1,
           ),
         if (!widget.isTyping) 8.verticalSpace,
       ],

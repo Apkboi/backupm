@@ -34,14 +34,11 @@ class _BCLoginPasscodeFieldState extends State<BCLoginPasscodeField> {
           hint: "Enter pin",
           inputFormatters: [
             LengthLimitingTextInputFormatter(4),
-
           ],
           validator: MultiValidator([
             RequiredValidator(errorText: 'Enter pin'),
-            MaxLengthValidator(4,
-                errorText: 'Pin should be a 4 digit number'),
-            MinLengthValidator(4,
-                errorText: 'Pin should be a 4 digit number'),
+            MaxLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
+            MinLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
           ]).call,
           onAnswer: (answer) {
             _loginBloc.add(LoginUserEvent(
@@ -69,7 +66,7 @@ class _BCLoginPasscodeFieldState extends State<BCLoginPasscodeField> {
           answer: '****',
           nextFlow: BotChatFlow.talkToMentra);
 
-      context.goNamed(PageUrl.welcomeScreen);
+      context.goNamed(PageUrl.talkToMentraScreen);
     }
 
     if (state is LoginFailureState) {

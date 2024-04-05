@@ -48,7 +48,7 @@ class SettingListTile extends StatelessWidget {
           Expanded(
             child: TextView(
               text: tittle,
-              fontSize: 16.sp,
+              fontSize: 15,
               fontWeight: FontWeight.w600,
             ),
           ),

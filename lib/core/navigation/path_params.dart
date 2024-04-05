@@ -13,6 +13,7 @@ class PathParam {
   static const libraryCategory = 'libraryCategory';
   static const libraryCourse = 'libraryCourse';
   static const userPreferenceFlow = 'userPreferenceFlow';
+  static const botChatFlow = 'botChatFlow';
   static const updatedPreference = 'updatedPreference';
   static const therapist = 'therapist';
   static const sessionDetails = 'sessionDetails';

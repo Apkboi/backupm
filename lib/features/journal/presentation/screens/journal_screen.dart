@@ -161,6 +161,9 @@ class _JournalScreenState extends State<JournalScreen> {
                                 AppEmptyState(
                                   hasBg: false,
                                   tittleColor: Pallets.black,
+                                  tittle: 'Start journaling today ',
+                                  subtittle:
+                                      'Take a moment to pause, reflect, and explore the depths of your inner world. Begin your journaling journey today.',
                                   image: Assets.images.pngs.journalNote.path,
                                 ),
                                 // Spacer(),

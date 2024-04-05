@@ -7,6 +7,7 @@ import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/continue_chat_dialog.dart';
@@ -53,6 +54,9 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen> {
 
         appBar: CustomAppBar(
           tittleText: '',
+          onBackPressed: () {
+            context.goNamed(PageUrl.homeScreen);
+          },
           actions: [
             PopupMenuButton(
               position: PopupMenuPosition.over,
@@ -306,11 +310,9 @@ class _InputBar extends StatelessWidget {
                 maxLine: 5,
                 suffix: InkWell(
                   onTap: () async {
-
                     context.read<MentraChatBloc>().add(ContinueSessionEvent(
                         context.read<MentraChatBloc>().sessionId,
                         controller.text));
-
                   },
                   child: const Icon(
                     Icons.send_rounded,

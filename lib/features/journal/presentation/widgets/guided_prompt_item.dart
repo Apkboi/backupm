@@ -27,7 +27,7 @@ class GuidedPromptsItem extends StatelessWidget {
       },
       child: Container(
         padding:
-            const EdgeInsets.only(right: 20, left: 20, top: 16, bottom: 20),
+            const EdgeInsets.only(right: 16, left: 16, top: 16, bottom: 16),
         decoration: BoxDecoration(
             color: prompt.backgroundColor.toString().toColor(),
             borderRadius: BorderRadius.circular(10)),

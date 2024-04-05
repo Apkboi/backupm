@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -87,8 +89,18 @@ class _SplashPageState extends State<SplashPage>
   void _goToNextScreen() {
     // context.pushReplacementNamed(PageUrl.onBoardingPage);
     if (SessionManager.instance.isLoggedIn) {
-      context.goNamed(PageUrl.homeScreen,
-          queryParameters: {PathParam.authenticate: 'true'});
+      context.pushNamed(PageUrl.passcodeAuthScreen);
+
+      // if (SessionManager.instance.bioMetricEnabled &&
+      //     injector.get<UserBloc>().appUser != null){
+      //   context.pushNamed(PageUrl.passcodeAuthScreen);
+      //
+      // }else{
+      //   context.goNamed(PageUrl.homeScreen, queryParameters: {
+      //     PathParam.authenticate: 'true',
+      //     PathParam.startConvo: 'true',
+      //   });
+      // }
     } else {
       // if (SessionManager.instance.hasOnboarded) {
       //   context.goNamed(PageUrl.login);

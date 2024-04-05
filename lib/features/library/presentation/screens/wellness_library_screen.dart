@@ -263,6 +263,7 @@ class _DiscoverContentsState extends State<DiscoverContents>
                         ?.length ??
                     0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.9,
                     crossAxisSpacing: 20, crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   return AnimationConfiguration.staggeredList(

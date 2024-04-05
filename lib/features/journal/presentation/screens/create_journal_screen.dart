@@ -47,6 +47,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         tittleText: '',
+        height: 60,
         actions: [
           CustomNeumorphicButton(
             onTap: () {
@@ -56,8 +57,9 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
             },
             color: Pallets.primary,
             expanded: false,
-            padding: const EdgeInsets.all(12),
+            padding:  const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
             text: 'Save',
+
           )
         ],
       ),
@@ -78,7 +80,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                   children: [
                     if ( prompt != null)
                       Container(
-                        padding: const EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                             color: prompt.backgroundColor.toString().toColor(),
                             borderRadius: BorderRadius.circular(10)),

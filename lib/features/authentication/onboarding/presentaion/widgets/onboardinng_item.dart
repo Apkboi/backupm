@@ -42,7 +42,18 @@ class _OnboardingItemState extends State<OnboardingItem> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            110.verticalSpace,
+            // 110.verticalSpace,
+
+            Expanded(
+              child: ImageWidget(
+                // shape: BoxShape.rectangle,
+                // height: 260.h,
+                width: 1.sw,
+                fit: BoxFit.fill,
+                // borderRadius: BorderRadius.circular(10),
+                imageUrl: widget.img,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
@@ -66,24 +77,7 @@ class _OnboardingItemState extends State<OnboardingItem> {
                 ],
               ),
             ),
-            20.verticalSpace,
-
-            Indicator(
-              seledtedIndex: widget.index,
-              items_count: 2,
-            ),
-            40.verticalSpace,
-
-            Expanded(
-              child: ImageWidget(
-                // shape: BoxShape.rectangle,
-                // height: 260.h,
-                width: 1.sw,
-                fit: BoxFit.scaleDown,
-                // borderRadius: BorderRadius.circular(10),
-                imageUrl: widget.img,
-              ),
-            ),
+            10.verticalSpace,
             // 35.verticalSpace,
 
             // SizedBox(

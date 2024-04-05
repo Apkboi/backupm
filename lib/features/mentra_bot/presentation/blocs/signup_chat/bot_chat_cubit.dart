@@ -15,6 +15,7 @@ import 'package:mentra/features/mentra_bot/data/datasource/local/welcome_message
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_resend_otp_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
 part 'bot_chat_state.dart';
 
 enum BotChatFlow {
@@ -32,34 +33,68 @@ class BotChatCubit extends Cubit<BotChatState> {
   BotChatmessageModel? currentQuestion;
   LoginQuestionDataSource loginDataSource = LoginQuestionDataSource();
   SignupQuestionDataSource signupDataSource = SignupQuestionDataSource();
+  PermissionMessageDataSource permissionsDataSource =
+      PermissionMessageDataSource();
+  PasswordResetDataSource passwordResetDataSource = PasswordResetDataSource();
   WelcomeMessageDataSource welcomeMessageDataSource =
       WelcomeMessageDataSource();
   BotChatFlow currentChatFlow = BotChatFlow.welcome;
   final scrollController = ItemScrollController();
 
-  void displayWelcomeMessages(BotChatFlow flow) async {
-    if (flow != BotChatFlow.talkToMentra) {
-      stagedMessages.clear();
+
+  void startChat(BotChatFlow flow) async {
+    stagedMessages.clear();
+    var startingMessage = switch (flow) {
+      BotChatFlow.welcome => BotChatmessageModel.botTyping(),
+      BotChatFlow.signup => signupDataSource.questions.first
+        ..time = DateTime.now(),
+      BotChatFlow.login => loginDataSource.messages.first
+        ..time = DateTime.now(),
+      BotChatFlow.passwordReset => passwordResetDataSource.messages.first
+        ..time = DateTime.now(),
+      BotChatFlow.talkToMentra => BotChatmessageModel.botTyping(),
+      BotChatFlow.permissions => permissionsDataSource.messages.first
+        ..time = DateTime.now(),
+    };
+
+    if (flow == BotChatFlow.welcome) {
+      startWelcomeMessage();
       // _addTyping();
-      for (var message in welcomeMessageDataSource.messages) {
-        _addTyping();
-        await Future.delayed(const Duration(seconds: 2));
-        await _removeTyping();
-        await Future.delayed(const Duration(milliseconds: 300));
-        stagedMessages.add(message..time = DateTime.now());
-        currentQuestion = message;
-        emit(QuestionUpdatedState());
-        logger.i(stagedMessages.length);
-        await Future.delayed(const Duration(seconds: 1));
-      }
-    } else {}
+    } else {
+      await _simulateTyping();
+      stagedMessages.add(startingMessage);
+      currentQuestion = startingMessage;
+      updateCurrentQuestion(startingMessage);
+    }
+  }
+
+  Future<void> _simulateTyping() async {
+    _addTyping();
+    await Future.delayed(const Duration(seconds: 2));
+    await _removeTyping();
+  }
+
+  void startWelcomeMessage() async {
+    for (var message in welcomeMessageDataSource.messages) {
+      _addTyping();
+      await Future.delayed(const Duration(seconds: 2));
+      await _removeTyping();
+      await Future.delayed(const Duration(milliseconds: 300));
+      stagedMessages.add(message..time = DateTime.now());
+      currentQuestion = message;
+      emit(QuestionUpdatedState());
+      // logger.i(stagedMessages.length);
+      await Future.delayed(const Duration(seconds: 1));
+    }
   }
 
   bool get canNotRevert =>
       currentChatFlow == BotChatFlow.welcome ||
       currentChatFlow == BotChatFlow.talkToMentra ||
       (currentChatFlow == BotChatFlow.permissions &&
-          currentQuestion!.permissionsStage == PermissionsStage.BIOMETRIC);
+          currentQuestion!.permissionsStage == PermissionsStage.BIOMETRIC) ||
+      (currentChatFlow == BotChatFlow.passwordReset &&
+          currentQuestion!.passwordResetStage == PasswordResetStage.EMAIL);
 
   bool revertBack() {
     if (canNotRevert) {
@@ -145,7 +180,7 @@ class BotChatCubit extends Cubit<BotChatState> {
         break;
 
       case BotChatFlow.login:
-        logger.i('IN login stage');
+        // logger.i('IN login stage');
         _getNextLoginMessage(nextLoginStage: nextLoginStage);
         break;
 
@@ -209,11 +244,9 @@ class BotChatCubit extends Cubit<BotChatState> {
     }
     if (nextSignupStage == SignupStage.EMAIL_MESSAGE) {
       _addTermsAndConditionMessage();
-    } else if(nextSignupStage == SignupStage.EMAIL_VERIFICATION){
-
+    } else if (nextSignupStage == SignupStage.EMAIL_VERIFICATION) {
       _addResendPassWordMessage();
-
-    }else {
+    } else {
       updateCurrentQuestion(stagedMessages.last);
     }
   }
@@ -266,7 +299,11 @@ class BotChatCubit extends Cubit<BotChatState> {
   }
 
   void _startMentraChat() {
+
+
     // stagedMessages.add(BotChatmessageModel.botTyping());
+
+
   }
 
   void _addTermsAndConditionMessage() async {
@@ -378,7 +415,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     emit(QuestionUpdatedState());
   }
 
-  void _addResendPassWordMessage() async{
+  void _addResendPassWordMessage() async {
     var resendMessage = BotChatmessageModel(
         message: 'Resend Code',
         isFromBot: true,

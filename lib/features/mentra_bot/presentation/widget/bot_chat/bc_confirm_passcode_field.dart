@@ -33,14 +33,11 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
           hint: "Enter pin",
           inputFormatters: [
             LengthLimitingTextInputFormatter(4),
-
           ],
           validator: MultiValidator([
             RequiredValidator(errorText: 'Enter pin'),
-            MaxLengthValidator(4,
-                errorText: 'Pin should be a 4 digit number'),
-            MinLengthValidator(4,
-                errorText: 'Pin should be a 4 digit number'),
+            MaxLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
+            MinLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
           ]).call,
           onAnswer: (answer) {
             if (injector.get<RegistrationBloc>().confirmPasscode(answer)) {
@@ -49,8 +46,6 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
               _registrationBloc.add(RegisterEvent(
                   payload:
                       injector.get<RegistrationBloc>().registrationPayload));
-
-
             } else {
               context.read<BotChatCubit>().revertBack();
               CustomDialogs.error('Pin mismatch');

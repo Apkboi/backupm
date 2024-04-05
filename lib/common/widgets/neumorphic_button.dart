@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 // import 'package:neumorphic_ui/neumorphic_ui.dart';
@@ -79,12 +80,12 @@ class CustomNeumorphicButton extends StatelessWidget {
                         children: [
                           Center(
                             child: child ??
-                                Text(
-                                  text ?? 'Button',
-                                  textAlign: TextAlign.center,
+                                TextView(
+                                  text: text ?? 'Button',
+                                  align: TextAlign.center,
                                   style: TextStyle(
                                     color: fgColor,
-                                    fontSize: 16.sp,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -92,13 +93,15 @@ class CustomNeumorphicButton extends StatelessWidget {
                         ],
                       )
                     : child ??
-                        Text(
-                          text ?? 'Button',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: fgColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        TextView(
+                          text: text ?? 'Button',
+                          align: TextAlign.center,
+                          color: fgColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          // style: TextStyle(
+                          //
+                          // ),
                         ),
               ),
             ),

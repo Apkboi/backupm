@@ -130,28 +130,28 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
               ),
             ),
             16.verticalSpace,
-            if (SessionManager.instance.bioMetricEnabled &&
-                injector.get<UserBloc>().appUser != null)
-              Align(
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CustomNeumorphicButton(
-                      onTap: () {
-                        _authenticateWithBioMetric();
-                        // context.pushNamed(PageUrl.loginPreview);
-                      },
-                      expanded: false,
-                      // fgColor: Pallets.black,
-                      color: Pallets.secondary,
-                      fgColor: Pallets.black,
-                      padding: const EdgeInsets.all(15),
-                      text: "Continue with Biometric",
-                    ),
-                  ],
-                ),
-              ),
+            // if (SessionManager.instance.bioMetricEnabled &&
+            //     injector.get<UserBloc>().appUser != null)
+            //   Align(
+            //     alignment: Alignment.centerRight,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.end,
+            //       children: [
+            //         CustomNeumorphicButton(
+            //           onTap: () {
+            //             _authenticateWithBioMetric();
+            //             // context.pushNamed(PageUrl.loginPreview);
+            //           },
+            //           expanded: false,
+            //           // fgColor: Pallets.black,
+            //           color: Pallets.secondary,
+            //           fgColor: Pallets.black,
+            //           padding: const EdgeInsets.all(15),
+            //           text: "Continue with Biometric",
+            //         ),
+            //       ],
+            //     ),
+            //   ),
             150.verticalSpace
           ],
         );
@@ -179,7 +179,7 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
         // context.pushNamed(PageUrl.selectYearScreen);
       } else {
         context.pop();
-        context.pushNamed(PageUrl.welcomeScreen);
+        context.pushNamed(PageUrl.talkToMentraScreen);
       }
     }
     if (state is OauthFailureState) {

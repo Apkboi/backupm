@@ -61,8 +61,8 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                           borderRadius: BorderRadius.circular(20),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(
-                              sigmaX: 25,
-                              sigmaY: 25,
+                              sigmaX: 50,
+                              sigmaY: 50,
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -275,7 +275,8 @@ class PlanFeature extends StatelessWidget {
           Expanded(
               child: TextView(
             text: benefit.title,
-            fontSize: 16,
+            // fontSize: 15,
+            fontWeight: FontWeight.w500,
           ))
         ],
       ),

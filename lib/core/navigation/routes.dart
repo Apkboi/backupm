@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/utils/bot_chat_flow_helper.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_preview_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/new_login.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/new_passcode_screen.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/passcode_auth_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/welcome_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
@@ -39,6 +41,9 @@ import 'package:mentra/features/library/presentation/screens/audio_article_scree
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
+
+// import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/bot_chat_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
 import 'package:mentra/features/notification/presentation/screens/notifications_screen.dart';
@@ -134,6 +139,11 @@ class CustomRoutes {
         builder: (context, state) => const NotificationAccessScreen(),
       ),
       GoRoute(
+        path: '/passcodeAuthScreen',
+        name: PageUrl.passcodeAuthScreen,
+        builder: (context, state) => const PasscodeAuthScreen(),
+      ),
+      GoRoute(
         path: '/selectYearScreen',
         name: PageUrl.selectYearScreen,
         builder: (context, state) => const SelectYearScreen(),
@@ -175,7 +185,7 @@ class CustomRoutes {
         name: PageUrl.homeScreen,
         builder: (context, state) => HomeScreen(
           startConvo: bool.parse(
-              state.uri.queryParameters[PathParam.startConvo] ?? "true"),
+              state.uri.queryParameters[PathParam.startConvo] ?? "false"),
           authenticate: bool.parse(
               state.uri.queryParameters[PathParam.authenticate] ?? "false"),
         ),
@@ -198,7 +208,11 @@ class CustomRoutes {
       GoRoute(
         path: '/botChatScreen',
         name: PageUrl.botChatScreen,
-        builder: (context, state) => const BotChatScreen(),
+        builder: (context, state) => BotChatScreen(
+          botChatFlow: BotChatFlowHelper.fromStringValue(
+              state.uri.queryParameters[PathParam.botChatFlow] ??
+                  BotChatFlow.welcome.name),
+        ),
       ),
       GoRoute(
         path: '/therapistProfile',

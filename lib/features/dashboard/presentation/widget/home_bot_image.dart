@@ -12,6 +12,7 @@ class HomeBotImage extends StatefulWidget {
 
 class _HomeBotImageState extends State<HomeBotImage>
     with SingleTickerProviderStateMixin {
+
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -52,7 +53,7 @@ class _HomeBotImageState extends State<HomeBotImage>
           return Transform.translate(
             offset: Offset(0, _animation.value),
             child: ImageWidget(
-              imageUrl: Assets.images.pngs.mentraBig.path,
+              imageUrl: Assets.images.pngs.mentra2.path,
               height: 250.h,
               width: 254,
               fit: BoxFit.contain,

@@ -27,7 +27,7 @@ import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
-      {super.key, this.startConvo = true, this.authenticate = false});
+      {super.key, this.startConvo = false, this.authenticate = false});
 
   final bool startConvo;
   final bool authenticate;
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen>
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -270.h, right: 0, left: 0, child: HomeBotImage()),
+                        top: -280.h, right: 0, left: 0, child: const HomeBotImage()),
                     Positioned(
                         top: -98,
                         right: 0,
@@ -236,7 +236,11 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _welcome() async {
-    _startMentraChat();
+
+    if(widget.startConvo){
+      _startMentraChat();
+
+    }
     // if (widget.authenticate && SessionManager.instance.bioMetricEnabled) {
     //   var authenticated =
     //       await injector.get<LocalAuthCubit>().authenticateUser();
