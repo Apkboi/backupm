@@ -57,9 +57,9 @@ class _BotChatScreenState extends State<BotChatScreen> {
           // context.watch<BotChatCubit>();
           return WillPopScope(
             onWillPop: () async {
-              if (SessionManager.instance.isLoggedIn && context
-                  .read<BotChatCubit>()
-                  .currentChatFlow != BotChatFlow.passwordReset) {
+              if (SessionManager.instance.isLoggedIn &&
+                  context.read<BotChatCubit>().currentChatFlow !=
+                      BotChatFlow.passwordReset) {
                 context.pushNamed(PageUrl.homeScreen);
               } else {
                 context.pop();
@@ -72,14 +72,12 @@ class _BotChatScreenState extends State<BotChatScreen> {
               appBar: CustomAppBar(
                 tittleText: '',
                 leading: CustomBackButton(
-                  icon: context
-                      .watch<BotChatCubit>()
-                      .canNotRevert
+                  icon: context.watch<BotChatCubit>().canNotRevert
                       ? null
                       : const Icon(
-                    Icons.undo,
-                    color: Pallets.black,
-                  ),
+                          Icons.undo,
+                          color: Pallets.black,
+                        ),
                   onTap: () {
                     // context.pop(context);
                     _goBack(context);
@@ -95,7 +93,10 @@ class _BotChatScreenState extends State<BotChatScreen> {
                     onSelected: (value) {
                       switch (value) {
                         case "end":
-                          if (SessionManager.instance.isLoggedIn) {
+                          if (SessionManager.instance.isLoggedIn &&
+                              context.read<BotChatCubit>().currentChatFlow !=
+                                  BotChatFlow.passwordReset) {
+                            context.goNamed(PageUrl.talkToMentraScreen);
                             // _endSession(context);
                           } else {
                             context.pop();
@@ -151,8 +152,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
                                       .reversed
                                       .toList()
                                       .length,
-                                  itemBuilder: (context, index) =>
-                                      BCMessageBox(
+                                  itemBuilder: (context, index) => BCMessageBox(
                                         message: context
                                             .watch<BotChatCubit>()
                                             .stagedMessages
@@ -180,12 +180,10 @@ class _BotChatScreenState extends State<BotChatScreen> {
   }
 
   void _goBack(BuildContext context) {
-    if (context
-        .read<BotChatCubit>()
-        .canNotRevert) {
-      if (SessionManager.instance.isLoggedIn && context
-          .read<BotChatCubit>()
-          .currentChatFlow != BotChatFlow.passwordReset) {
+    if (context.read<BotChatCubit>().canNotRevert) {
+      if (SessionManager.instance.isLoggedIn &&
+          context.read<BotChatCubit>().currentChatFlow !=
+              BotChatFlow.passwordReset) {
         context.pushNamed(PageUrl.homeScreen);
       } else {
         context.pop();
@@ -200,9 +198,9 @@ class _BotChatScreenState extends State<BotChatScreen> {
         context, const EndMentraSessionDialog(),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        )),
         constraints: BoxConstraints(maxHeight: 0.9.sh));
 
     if (sessionEnded ?? false) {
@@ -210,29 +208,29 @@ class _BotChatScreenState extends State<BotChatScreen> {
           context, const MentraSessionEndedSheet(),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              )),
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          )),
           constraints: BoxConstraints(maxHeight: 0.9.sh));
 
       if (writeReview ?? false) {
         final bool? wroteFeedback =
-        await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
+            await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 )),
-            constraints: BoxConstraints(maxHeight: 0.9.sh));
+                constraints: BoxConstraints(maxHeight: 0.9.sh));
 
         if (wroteFeedback ?? false) {
           await CustomDialogs.showBottomSheet(
               context, const FeedbackSuccessDialog(),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  )),
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )),
               constraints: BoxConstraints(maxHeight: 0.9.sh));
           context.pop();
         }
