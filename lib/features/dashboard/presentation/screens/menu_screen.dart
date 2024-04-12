@@ -122,15 +122,15 @@ class _MenuScreenState extends State<MenuScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const DailyStreakWidget(),
-                      11.verticalSpace,
+                      10.verticalSpace,
                       const MoodCheckerWidget(),
-                      14.verticalSpace,
+                      10.verticalSpace,
                       const HomeTasksWidget(),
                       // 14.verticalSpace,
                       // const HomeWorkSheetWidget(),
                       // 14.verticalSpace,
                       // const UpcomingSessionsWidget(),
-                      30.verticalSpace,
+                      20.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
                         fontSize: 16,
@@ -190,7 +190,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                         )),
                                   ],
                                 ),
-                                8.verticalSpace,
+                                7.verticalSpace,
                                 Row(
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,

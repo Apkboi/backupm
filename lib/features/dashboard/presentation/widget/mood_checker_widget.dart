@@ -64,7 +64,7 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                         const TextView(
                           text: 'How are you doing today?',
                           fontWeight: FontWeight.w700,
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                         6.verticalSpace,
                         const TextView(
