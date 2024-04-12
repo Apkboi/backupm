@@ -96,6 +96,8 @@ class UrlConfig {
   static const String getMatchedTherapist = '/user/session/therapist/select';
   static const String createReview = '/user/session/reviews/create';
   static const String getReviews = '/user/session/reviews/list';
+  static const String sessionFocus = '/user/session/focus/list';
+  static const String report = '/user/report/save';
 
 //  NOtification
   static const String getNotifications = '/notifications/list';
@@ -118,4 +120,11 @@ class UrlConfig {
   static const String continueSession = '/user/ai-sessions/send-message';
 
   static String endSession = '/user/ai-sessions/end';
+
+//   MOOD CHECKER
+  static String updateMoodChecker = '/user/mood-checker/save';
+
+  //   MOOD CHECKER
+  static String getDailyTasks = '/daily-tasks/list';
+  static String updateDailyTasks = '/daily-tasks/save';
 }

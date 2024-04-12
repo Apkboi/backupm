@@ -241,7 +241,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
     CustomDialogs.showCustomDialog(
         SessionScheduledDialog(
           sessionDetails: sessionDetails.data,
-          tittle: "Session Rescheduled successfully",
+          tittle: "Session rescheduled successfully",
         ),
         context);
   }

@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/dashboard/data/models/conversation_starter_response.dart';
 import 'package:mentra/features/dashboard/data/models/emergency_contacts.dart';
+import 'package:mentra/features/dashboard/data/models/update_mood_checker_response.dart';
 import 'package:mentra/features/dashboard/dormain/repository/dashboard_repository.dart';
 
 part 'dashboard_event.dart';
@@ -18,6 +19,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc(this._dashboardRepository) : super(DashboardInitial()) {
     on<GetConversationStarterEvent>(_mapGetConversationStarterEventToState);
     on<GetEmergencyContactsEvent>(_mapGetEmergencyContactsEventToState);
+    on<UpdateMoodCheckerEvent>(_mapUpdateMoodCheckerEventToState);
   }
 
   Future<void> _mapGetConversationStarterEventToState(
@@ -41,10 +43,23 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final response = await _dashboardRepository.getEmergencyContacts();
       emit(GetEmergencyContactSuccessState(data: response));
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.e(e.toString());
       logger.e(stack.toString());
       emit(GetEmergencyContactFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapUpdateMoodCheckerEventToState(
+      UpdateMoodCheckerEvent event, Emitter<DashboardState> emit) async {
+    emit(UpdateMoodCheckerLoading());
+    try {
+      final response = await _dashboardRepository.updateMoodChecker(event.mood);
+      emit(UpdateMoodCheckerSuccessState(response: response));
+    } catch (e, stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
+      emit(UpdateMoodCheckerFailureState(error: e.toString()));
     }
   }
 }

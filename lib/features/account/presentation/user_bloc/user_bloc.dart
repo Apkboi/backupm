@@ -23,7 +23,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this._accountRepository) : super(UserInitial()) {
     on<UserEvent>((event, emit) {});
-
     on<SaveUserEvent>(_mapSaveUserEventToState);
     on<GetUserEvent>(_mapGetUserEventToState);
     on<GetRemoteUser>(_mapGetRemoteUserToState);
@@ -44,7 +43,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (user != null) {
       appUser = user;
 
-      logger.i(appUser?.toJson());
+      // logger.i(appUser?.toJson());
 
       // injector.get<MesiboCubit>().initialize();
       emit(UserCachedState(user));

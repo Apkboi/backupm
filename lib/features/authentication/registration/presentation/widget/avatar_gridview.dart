@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
 

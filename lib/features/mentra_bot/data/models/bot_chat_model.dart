@@ -50,6 +50,9 @@ class BotChatmessageModel {
       answerTime: DateTime.now(),
       signupStage: SignupStage.NONE,
       flow: BotChatFlow.welcome);
+
+
+
 }
 
 enum AnswerType {

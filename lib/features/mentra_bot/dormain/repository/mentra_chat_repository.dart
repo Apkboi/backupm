@@ -8,6 +8,6 @@ abstract class MentraChatRepository {
 
   Future<dynamic> endSession(
       {required String sessionId,
-      required String feeling,
+      required String? feeling,
        String? comment});
 }

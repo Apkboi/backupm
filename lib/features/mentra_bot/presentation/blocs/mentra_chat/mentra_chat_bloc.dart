@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/animation.dart';
+import 'package:mentra/core/services/sound/sound_manager.dart';
 import 'package:mentra/features/mentra_bot/data/models/get_current_sessions_response.dart';
 import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 import 'package:mentra/features/mentra_bot/dormain/repository/mentra_chat_repository.dart';
@@ -13,6 +13,7 @@ part 'mentra_chat_state.dart';
 
 class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   final MentraChatRepository _repository;
+  List<MentraChatModel> authMessages = [];
   List<MentraChatModel> allMessage = [];
   final scrollController = ItemScrollController();
   String sessionId = '';
@@ -23,6 +24,7 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
     on<ContinueSessionEvent>(_mapContinueSessionEventToState);
     on<EndMentraSessionEvent>(_mapEndMentraSessionEventToState);
     on<RetryMessageEvent>(_mapRetryMessageEventToState);
+    on<AddAuthMessagesEvent>(_mapAddSignupMessagesEventToState);
   }
 
   void _scrollToLast() async {
@@ -37,17 +39,23 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   FutureOr<void> _mapGetCurrentSessionEventToState(
       GetCurrentSessionEvent event, Emitter<MentraChatState> emit) async {
     emit(GetCurrentSessionLoading());
-    allMessage.clear();
+
+    if (authMessages.isEmpty) {
+      allMessage.clear();
+    }
     _addTyping();
     // _scrollToLast();
     try {
       final response = await _repository.getCurrentSession();
-
       sessionId = response.data.id.toString();
-      allMessage = response.data.messages
-          .where((element) => element.user != 'system')
-          .map((e) => MentraChatModel.fromResponse(e))
-          .toList();
+      allMessage = [
+        ...authMessages,
+        ...response.data.messages
+            .where((element) => element.user != 'system')
+            .map((e) => MentraChatModel.fromResponse(e))
+      ];
+      await _removeTyping();
+
       emit(MessageUpdatedState(allMessage));
       _scrollToLast();
 
@@ -59,6 +67,7 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
 
   FutureOr<void> _mapContinueSessionEventToState(
       ContinueSessionEvent event, Emitter<MentraChatState> emit) async {
+    SoundManager.playMessageSentSound();
     final MentraChatModel message = MentraChatModel.fromPrompt(event.prompt);
     allMessage.add(message);
     _addTyping();
@@ -69,10 +78,15 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
           await _repository.continueSession(event.sessionId, event.prompt);
       // emit(ContinueSessionSuccessState(response));
 
-      allMessage = response.data.messages
-          .where((element) => element.user != 'system')
-          .map((e) => MentraChatModel.fromResponse(e))
-          .toList();
+      allMessage = [
+
+        ...authMessages,
+        ...response.data.messages
+            .where((element) => element.user != 'system')
+            .map((e) => MentraChatModel.fromResponse(e))
+      ];
+      _removeTyping();
+      SoundManager.playMessageReceivedSound();
 
       emit(MessageUpdatedState(allMessage));
       _scrollToLast();
@@ -106,9 +120,9 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   }
 
   Future _removeTyping() async {
-    await Future.delayed(const Duration(milliseconds: 400));
+    // await Future.delayed(const Duration(milliseconds: 400));
     allMessage.removeWhere((element) => element.isTyping == true);
-    emit(MessageUpdatedState(allMessage));
+    // emit(MessageUpdatedState(allMessage));
 
     // await Future.delayed(const Duration(milliseconds: 300));
   }
@@ -126,12 +140,17 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
     try {
       final response =
           await _repository.continueSession(sessionId, event.message.content);
-      // emit(ContinueSessionSuccessState(response));
-
-      allMessage = response.data.messages
-          .where((element) => element.user != 'system')
-          .map((e) => MentraChatModel.fromResponse(e))
-          .toList();
+      allMessage = [
+        ...authMessages,
+        ...response.data.messages
+            .where((element) => element.user != 'system')
+            .map((e) => MentraChatModel.fromResponse(e))
+      ];
+      _removeTyping();
+      // response.data.messages
+      // .where((element) => element.user != 'system')
+      // .map((e) => MentraChatModel.fromResponse(e))
+      // .toList();
 
       emit(MessageUpdatedState(allMessage));
       _scrollToLast();
@@ -143,5 +162,13 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
           .toList();
       emit(ContinueSessionFailureState(e.toString()));
     }
+  }
+
+  FutureOr<void> _mapAddSignupMessagesEventToState(
+      AddAuthMessagesEvent event, Emitter<MentraChatState> emit) {
+    authMessages.addAll(event.signupMessages);
+    allMessage =
+        authMessages.where((element) => element.isTyping == false).toList();
+    emit(SignupMessageAdded());
   }
 }

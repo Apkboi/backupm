@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:mentra/common/widgets/custom_button.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
@@ -18,8 +17,6 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
-import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart'
-    as regbloc;
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -125,6 +122,8 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
                   ],
                 ),
                 onPressed: () {
+                  // injector.get<regbloc.RegistrationBloc>().add(const regbloc.SignupCompleteEvent());
+
                   injector.get<LoginBloc>().add(const GoogleAuthEvent());
                 },
               ),
@@ -163,23 +162,15 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
     if (state is OauthLoadingState) {
       CustomDialogs.showLoading(context);
     }
-    if (state is OauthSuccessState) {
+    if (state is LoginOauthSuccessState) {
       context.pop();
       if (state.response.data.newUser) {
-        // context.pop();
         CustomDialogs.error('Account not found, Please sign up.');
-        // injector.get<regbloc.RegistrationBloc>().updateFields(
-        //     email: state.response.data.email);
-        // context.read<BotChatCubit>().answerQuestion(
-        //     id: widget.message.id,
-        //     answer: "Continue with Google",
-        //     nextFlow: BotChatFlow.signup,
-        //     nextSignupStage: SignupStage.YEAR);
-        // context.pop();
-        // context.pushNamed(PageUrl.selectYearScreen);
       } else {
-        context.pop();
-        context.pushNamed(PageUrl.talkToMentraScreen);
+        context.read<BotChatCubit>().answerQuestion(
+            id: widget.message.id,
+            answer: "Continue with Google",
+            nextFlow: BotChatFlow.talkToMentra);
       }
     }
     if (state is OauthFailureState) {
@@ -189,16 +180,6 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
 
     if (state is LoginLoadingState) {
       CustomDialogs.showLoading(context);
-    }
-
-    if (state is LoginSuccessState) {
-      context.pop();
-      context.read<BotChatCubit>().answerQuestion(
-          id: widget.message.id,
-          answer: '****',
-          nextFlow: BotChatFlow.talkToMentra);
-
-      context.goNamed(PageUrl.welcomeScreen);
     }
 
     if (state is LoginFailureState) {

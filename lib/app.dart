@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/theme/pallets.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:mentra/app_config.dart';

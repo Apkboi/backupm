@@ -13,7 +13,13 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
+import 'package:mentra/features/dashboard/presentation/widget/mood_checker_widget.dart';
 import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
+import 'package:mentra/features/dashboard/presentation/widget/upcoming_session.dart';
+import 'package:mentra/features/streaks/presentation/widget/daily_streak_widget.dart';
+import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart';
+import 'package:mentra/features/therapy/presentation/widgets/upcoming_session_widget.dart';
+import 'package:mentra/features/work_sheet/presentation/widgets/hom_worksheet_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -115,17 +121,16 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const TextView(
-                      //   text: 'Upcoming Session',
-                      //   fontSize: 16,
-                      //   fontWeight: FontWeight.w600,
-                      //   color: Pallets.primary,
-                      // ),
-                      // 24.verticalSpace,
-                      // const UpcomingSession(),
-                      // const UnlockPremiumWidget(),
-                      const NewUserPrompt(),
-                      10.verticalSpace,
+                      const DailyStreakWidget(),
+                      11.verticalSpace,
+                      const MoodCheckerWidget(),
+                      14.verticalSpace,
+                      const HomeTasksWidget(),
+                      // 14.verticalSpace,
+                      // const HomeWorkSheetWidget(),
+                      // 14.verticalSpace,
+                      // const UpcomingSessionsWidget(),
+                      30.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
                         fontSize: 16,
@@ -138,53 +143,57 @@ class _MenuScreenState extends State<MenuScreen> {
                           child: Column(
                             children: AnimationConfiguration.toStaggeredList(
                               duration: const Duration(milliseconds: 600),
-                              childAnimationBuilder: (widget) => SlideAnimation(
-                                verticalOffset: 40.0,
-                                delay: const Duration(milliseconds: 100),
-                                child: FadeInAnimation(
-                                  child: widget,
-                                ),
-                              ),
+                              childAnimationBuilder: (widget) =>
+                                  SlideAnimation(
+                                    verticalOffset: 40.0,
+                                    delay: const Duration(milliseconds: 100),
+                                    child: FadeInAnimation(
+                                      child: widget,
+                                    ),
+                                  ),
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Expanded(
                                         child: MenuItem(
-                                      textColor: Pallets.orangePink,
-                                      bgColor: Pallets.lighterPink,
-                                      image: Assets.images.pngs.summary.path,
-                                      text: "My Activities",
-                                      onTap: () {
-                                        context
-                                            .pushNamed(PageUrl.summariesScreen);
-                                      },
-                                      // image: Assets.images.pngs.pTherapy.path,
-                                      // text: "Professional Therapy"
-                                    )),
+                                          textColor: Pallets.orangePink,
+                                          bgColor: Pallets.lighterPink,
+                                          image: Assets.images.pngs.summary
+                                              .path,
+                                          text: "My Activities",
+                                          onTap: () {
+                                            context
+                                                .pushNamed(
+                                                PageUrl.summariesScreen);
+                                          },
+                                          // image: Assets.images.pngs.pTherapy.path,
+                                          // text: "Professional Therapy"
+                                        )),
                                     16.horizontalSpace,
                                     Expanded(
                                         child: MenuItem(
-                                      textColor: Pallets.brown,
-                                      bgColor: Pallets.lightOrange,
-                                      image: Assets.images.pngs.gJournal.path,
-                                      text: "Guided Journal",
+                                          textColor: Pallets.brown,
+                                          bgColor: Pallets.lightOrange,
+                                          image: Assets.images.pngs.gJournal
+                                              .path,
+                                          text: "Guided Journal",
 
-                                      onTap: () {
-                                        context.pushNamed(
-                                            PageUrl.guidedJournalScreen);
-                                      },
+                                          onTap: () {
+                                            context.pushNamed(
+                                                PageUrl.guidedJournalScreen);
+                                          },
 
-                                      // image: Assets.images.pngs.summary.path,
-                                      // text: "Summaries"
-                                    )),
+                                          // image: Assets.images.pngs.summary.path,
+                                          // text: "Summaries"
+                                        )),
                                   ],
                                 ),
-                                10.verticalSpace,
+                                8.verticalSpace,
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Expanded(
                                         child: MenuItem(
@@ -200,16 +209,17 @@ class _MenuScreenState extends State<MenuScreen> {
                                     16.horizontalSpace,
                                     Expanded(
                                         child: MenuItem(
-                                      textColor: Pallets.indigo,
-                                      bgColor: Pallets.lightBlue,
-                                      image: Assets.images.pngs.pTherapy.path,
-                                      text: "Professional Support",
-                                      onTap: () async {
-                                        _checkSubscription(context);
-                                      },
-                                      // image: Assets.images.pngs.gJournal.path,
-                                      // text: "Guided Journal"
-                                    )),
+                                          textColor: Pallets.indigo,
+                                          bgColor: Pallets.lightBlue,
+                                          image: Assets.images.pngs.pTherapy
+                                              .path,
+                                          text: "Professional Support",
+                                          onTap: () async {
+                                            _checkSubscription(context);
+                                          },
+                                          // image: Assets.images.pngs.gJournal.path,
+                                          // text: "Guided Journal"
+                                        )),
                                   ],
                                 ),
                               ],
@@ -217,7 +227,6 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                         ),
                       ),
-
                       100.verticalSpace
                     ],
                   ),
@@ -235,7 +244,10 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   bool _userISubscribed() {
-    return injector.get<UserBloc>().appUser?.activeSubscription != null;
+    return injector
+        .get<UserBloc>()
+        .appUser
+        ?.activeSubscription != null;
   }
 
   void _checkSubscription(BuildContext context) async {

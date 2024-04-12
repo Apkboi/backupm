@@ -68,33 +68,30 @@ class _UserMessageItemState extends State<UserMessageItem>
       children: [
         Container(
           constraints: BoxConstraints(maxWidth: 0.7.sw),
-          child: FadeTransition(
-            opacity: _fadeAnimation,
-            child: ChatBubble(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.w,vertical: 7
-              ),
-              backGroundColor: Pallets.secondary,
-              clipper: ChatBubbleClipper3(
-                  type: BubbleType.sendBubble, nipSize: 4, radius: 15),
-              alignment: Alignment.centerRight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 10.w,
-                    ),
-                    child: widget.child ??
-                        TextView(
-                            text: widget.message.content,
-                            fontSize: 15.sp,
-                            color: Pallets.black,
-                            lineHeight: 1.5,
-                            fontWeight: FontWeight.w500),
+          child: ChatBubble(
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.w,vertical: 7
+            ),
+            backGroundColor: Pallets.secondary,
+            clipper: ChatBubbleClipper3(
+                type: BubbleType.sendBubble, nipSize: 4, radius: 15),
+            alignment: Alignment.centerRight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
                   ),
-                ],
-              ),
+                  child: widget.child ??
+                      TextView(
+                          text: widget.message.content,
+                          fontSize: 15.sp,
+                          color: Pallets.black,
+                          lineHeight: 1.5,
+                          fontWeight: FontWeight.w500),
+                ),
+              ],
             ),
           ),
         ),

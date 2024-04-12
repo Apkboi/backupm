@@ -9,6 +9,15 @@ class GetCurrentSessionEvent extends MentraChatEvent {
   List<Object?> get props => [];
 }
 
+class AddAuthMessagesEvent extends MentraChatEvent {
+  final List<MentraChatModel> signupMessages;
+
+  const AddAuthMessagesEvent(this.signupMessages);
+
+  @override
+  List<Object?> get props => [signupMessages];
+}
+
 class ContinueSessionEvent extends MentraChatEvent {
   String sessionId;
   String prompt;
@@ -30,14 +39,15 @@ class RetryMessageEvent extends MentraChatEvent {
 
 class EndMentraSessionEvent extends MentraChatEvent {
   final String sessionId;
-  final String feeling;
+  final String? feeling;
   final String? comment;
 
   const EndMentraSessionEvent(
     this.sessionId,
+      {
     this.feeling,
     this.comment,
-  );
+  });
 
   @override
   List<Object?> get props => [sessionId, feeling, comment];

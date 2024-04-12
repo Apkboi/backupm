@@ -14,6 +14,12 @@ class GetCurrentSessionLoading extends MentraChatState {
   List<Object> get props => [];
 }
 
+
+class SignupMessageAdded extends MentraChatState {
+  @override
+  List<Object> get props => [];
+}
+
 class GetCurrentSessionSuccessState extends MentraChatState {
 
   final GetCurrentSessionRsponse response;

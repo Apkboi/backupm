@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
@@ -98,12 +96,13 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                       ? _fadeAnimation
                       : Animation.fromValueListenable(ValueNotifier(1)),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Padding(
                     padding: !widget.isTyping
                         ? EdgeInsets.only(
-                            top: 45.h,
+                            top: 0.h,
+                      bottom: 10.h
                           )
                         : EdgeInsets.only(top: 10.h),
                     child: CircleAvatar(

@@ -59,10 +59,10 @@ class OauthLoadingState extends LoginState {
   List<Object?> get props => [];
 }
 
-class  OauthSuccessState extends LoginState {
+class  LoginOauthSuccessState extends LoginState {
   final OauthResponse response;
 
-  OauthSuccessState(this.response);
+  LoginOauthSuccessState(this.response);
 
   @override
   List<Object?> get props => [response];

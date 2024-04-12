@@ -74,7 +74,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           res.toAuthSuccessResponse,
         );
       }
-      emit(OauthSuccessState(res));
+      emit(LoginOauthSuccessState(res));
     } catch (e) {
       emit(OauthFailureState(error: e.toString()));
     }
@@ -94,7 +94,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         AuthSuccessUsecase().execute(res.toAuthSuccessResponse);
       }
 
-      emit(OauthSuccessState(res));
+      emit(LoginOauthSuccessState(res));
     } catch (e) {
       emit(OauthFailureState(error: e.toString()));
     }

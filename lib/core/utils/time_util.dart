@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class TimeUtil {

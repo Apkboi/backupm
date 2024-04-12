@@ -36,6 +36,7 @@ class _TalkToMentraMessageBoxState extends State<TalkToMentraMessageBox> {
                 message: [widget.message.content],
                 time: widget.message.time!,
                 isTyping: widget.message.isTyping,
+                mentraMessge: widget.message,
                 child: widget.child,
               ));
   }

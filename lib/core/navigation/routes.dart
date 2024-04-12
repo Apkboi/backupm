@@ -41,6 +41,7 @@ import 'package:mentra/features/library/presentation/screens/audio_article_scree
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
+import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 
 // import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
@@ -56,6 +57,8 @@ import 'package:mentra/features/settings/presentation/screens/security_privacy_s
 import 'package:mentra/features/settings/presentation/screens/settings_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/support_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
+import 'package:mentra/features/streaks/presentation/screens/badges_screen.dart';
+import 'package:mentra/features/streaks/presentation/screens/streak_details_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
@@ -201,7 +204,12 @@ class CustomRoutes {
         pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
           context: context,
           state: state,
-          child: const TalkToMentraScreen(),
+          child: TalkToMentraScreen(
+            authMessages: List.from(jsonDecode(
+                    state.uri.queryParameters[PathParam.authMessages] ?? '[]'))
+                .map((e) => MentraChatModel.fromJson(e as Map<String, dynamic>))
+                .toList(),
+          ),
         ),
         // builder: (context, state) => const TalkToMentraScreen(),
       ),
@@ -427,6 +435,16 @@ class CustomRoutes {
         path: '/notificationsScreen',
         name: PageUrl.notificationsScreen,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: '/streakDetailsScreen',
+        name: PageUrl.streakDetailsScreen,
+        builder: (context, state) => const StreakDetailsScreen(),
+      ),
+      GoRoute(
+        path: '/badgesScreen',
+        name: PageUrl.badgesScreen,
+        builder: (context, state) => const BadgesScreen(),
       ),
     ],
   );

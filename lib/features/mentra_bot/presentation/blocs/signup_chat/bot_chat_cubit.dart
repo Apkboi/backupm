@@ -41,7 +41,6 @@ class BotChatCubit extends Cubit<BotChatState> {
   BotChatFlow currentChatFlow = BotChatFlow.welcome;
   final scrollController = ItemScrollController();
 
-
   void startChat(BotChatFlow flow) async {
     stagedMessages.clear();
     var startingMessage = switch (flow) {
@@ -299,11 +298,8 @@ class BotChatCubit extends Cubit<BotChatState> {
   }
 
   void _startMentraChat() {
-
-
+    _removeTyping();
     // stagedMessages.add(BotChatmessageModel.botTyping());
-
-
   }
 
   void _addTermsAndConditionMessage() async {

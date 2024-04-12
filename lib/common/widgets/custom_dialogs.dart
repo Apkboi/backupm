@@ -49,6 +49,8 @@ class CustomDialogs {
     Color? barrierColor,
     BoxConstraints? constraints,
     ShapeBorder? shape,
+  AnimationController? transitionAnimationController
+
   }) {
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,
@@ -58,6 +60,8 @@ class CustomDialogs {
         isScrollControlled: true,
         shape: shape,
         constraints: constraints,
+
+        transitionAnimationController: transitionAnimationController,
         builder: (context) {
           return ClipRRect(
             borderRadius: const BorderRadius.only(
@@ -86,6 +90,7 @@ class CustomDialogs {
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: true,
+
       useRootNavigator: useRootNavigator ?? false,
       builder: (context) => Material(
         child: CupertinoPageScaffold(child: child),

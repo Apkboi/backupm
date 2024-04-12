@@ -74,4 +74,11 @@ class PageUrl {
 
   ///NOTIFICATIONS
   static const notificationsPage = 'notificationsPage';
+
+
+//   DAILY STREAK
+  static const streakDetailsScreen = 'streakDetailsScreen';
+  static const badgesScreen = 'badgesScreen';
+
+
 }

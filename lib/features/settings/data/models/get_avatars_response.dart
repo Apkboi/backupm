@@ -56,8 +56,8 @@ class GetAvatarsResponse {
 class AvatarImage {
   final int id;
   final dynamic title;
-  final String description;
-  final String status;
+  final dynamic description;
+  final dynamic status;
   final Image image;
   final DateTime createdAt;
   final DateTime updatedAt;

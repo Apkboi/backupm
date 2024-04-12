@@ -3,6 +3,7 @@ import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:mentra/features/tasks/presentation/bloc/daily_task_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 
@@ -15,6 +16,7 @@ class DashboardUsecase {
     injector.get<JournalBloc>().add(GetJournalsEvent());
     injector.get<JournalBloc>().add(GetPromptsEvent());
     injector.get<WellnessLibraryBloc>().add(GetLibraryCategoriesEvent());
+    injector.get<DailyTaskBloc>().add(GetDailyTaskEvent());
 
     // void _initMesibo() async {
     //   Mesibo mesibo = Mesibo();

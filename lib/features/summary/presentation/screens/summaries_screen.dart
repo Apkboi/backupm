@@ -66,7 +66,8 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
                     const CustomTabbar(tabs: [
                       Tab(
                         text: "Daily Tasks",
-                      ),          Tab(
+                      ),
+                      Tab(
                         text: "Summaries",
                       ),
                       Tab(text: "Worksheet"),

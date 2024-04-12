@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mentra/core/services/data/hive/hive_manager.dart';
 
 // final sessionProvider = Provider<SessionManager>((ref) {
 //   SessionManager().init();

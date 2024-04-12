@@ -110,7 +110,8 @@ class Data {
         status: json["status"],
         isNew: json["is_new"],
         messages: List<AiMessage>.from(
-            json["messages"].map((x) => AiMessage.fromJson(x))),);
+            json["messages"].map((x) => AiMessage.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -129,12 +130,14 @@ class AiMessage {
   final String user;
   final String prompt;
   final String inputType;
+  final List suggestion;
   final DateTime createdAt;
 
   AiMessage({
     required this.user,
     required this.prompt,
     required this.inputType,
+    required this.suggestion,
     required this.createdAt,
   });
 
@@ -142,11 +145,13 @@ class AiMessage {
     String? user,
     String? prompt,
     String? inputType,
+    List? suggestion,
     DateTime? createdAt,
   }) =>
       AiMessage(
         user: user ?? this.user,
         prompt: prompt ?? this.prompt,
+        suggestion: suggestion ?? this.suggestion,
         inputType: inputType ?? this.inputType,
         createdAt: createdAt ?? this.createdAt,
       );
@@ -154,6 +159,11 @@ class AiMessage {
   factory AiMessage.fromJson(Map<String, dynamic> json) => AiMessage(
         user: json["user"],
         prompt: json["prompt"],
+        suggestion: json["suggestions"] == null
+            ? []
+            : List.from(
+                json["suggestions"],
+              ),
         inputType: json["input_type"],
         createdAt: DateTime.parse(json["created_at"]),
       );
@@ -162,6 +172,7 @@ class AiMessage {
         "user": user,
         "prompt": prompt,
         "input_type": inputType,
+        "suggestions": suggestion,
         "created_at": createdAt.toIso8601String(),
       };
 }

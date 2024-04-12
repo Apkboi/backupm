@@ -2,18 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
-import 'package:mentra/common/widgets/text_view.dart';
-import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/helper_utils.dart';
 import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
-import 'package:mentra/gen/assets.gen.dart';
 
 class SupportScreen extends StatefulWidget {
   const SupportScreen({Key? key}) : super(key: key);
@@ -84,7 +79,7 @@ class _SupportScreenState extends State<SupportScreen> {
                                         decoration: TextDecoration.underline)),
                                 const TextSpan(
                                     text:
-                                        'Our dedicated support team is committed to ensuring that your experience with our product/service is seamless and satisfactory. We strive to respond to all inquiries promptly and provide the assistance you need within two working days.'),
+                                        'Our dedicated support team is committed to ensuring that your experience with our product/service is seamless and satisfactory. We will respond to your query within 24hrs (one (1) business day).'),
                               ])),
                           20.verticalSpace
                         ],

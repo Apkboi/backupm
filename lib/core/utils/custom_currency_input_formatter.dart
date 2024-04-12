@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-import 'currency_util.dart';
 
 class CustomCurrencyInputFormatter extends TextInputFormatter {
   final String? currency;

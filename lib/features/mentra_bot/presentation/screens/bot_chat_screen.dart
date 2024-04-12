@@ -9,7 +9,9 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
+import 'package:mentra/features/mentra_bot/presentation/screens/login_signup_listener.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_message_box.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/talk_to_mentra_input_fields.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
@@ -67,110 +69,117 @@ class _BotChatScreenState extends State<BotChatScreen> {
               }
               return false;
             },
-            child: Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: CustomAppBar(
-                tittleText: '',
-                leading: CustomBackButton(
-                  icon: context.watch<BotChatCubit>().canNotRevert
-                      ? null
-                      : const Icon(
-                          Icons.undo,
-                          color: Pallets.black,
-                        ),
-                  onTap: () {
-                    // context.pop(context);
-                    _goBack(context);
-                  },
-                ),
-                actions: [
-                  PopupMenuButton(
-                    position: PopupMenuPosition.over,
-                    constraints: const BoxConstraints(maxWidth: 150),
-                    padding: EdgeInsets.zero,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r)),
-                    onSelected: (value) {
-                      switch (value) {
-                        case "end":
-                          if (SessionManager.instance.isLoggedIn &&
-                              context.read<BotChatCubit>().currentChatFlow !=
-                                  BotChatFlow.passwordReset) {
-                            context.goNamed(PageUrl.talkToMentraScreen);
-                            // _endSession(context);
-                          } else {
-                            context.pop();
-                          }
-                          break;
-                      }
-                    },
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem<String>(
-                          value: 'end',
-                          height: 30,
-                          child: Text(
-                            'End Session',
-                            style: TextStyle(fontSize: 14.sp),
+            child: LoginSignupListener(
+              child: Scaffold(
+                extendBodyBehindAppBar: true,
+                appBar: CustomAppBar(
+                  tittleText: '',
+                  leading: CustomBackButton(
+                    icon: context.watch<BotChatCubit>().canNotRevert
+                        ? null
+                        : const Icon(
+                            Icons.undo,
+                            color: Pallets.black,
                           ),
-                        ),
-                      ];
+                    onTap: () {
+                      // context.pop(context);
+                      _goBack(context);
                     },
-                    child: const CircleAvatar(
-                        backgroundColor: Pallets.white,
-                        foregroundColor: Pallets.black,
-                        child: Icon(Icons.more_vert)),
-                  )
-                ],
-              ),
-              body: Stack(
-                children: [
-                  AppBg(
-                    image: Assets.images.pngs.homeBg.path,
                   ),
-                  SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          Expanded(
-                              child: ScrollablePositionedList.builder(
-                                  reverse: true,
+                  actions: [
+                    PopupMenuButton(
+                      position: PopupMenuPosition.over,
+                      constraints: const BoxConstraints(maxWidth: 150),
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.r)),
+                      onSelected: (value) {
+                        switch (value) {
+                          case "end":
+                            if (SessionManager.instance.isLoggedIn &&
+                                context.read<BotChatCubit>().currentChatFlow !=
+                                    BotChatFlow.passwordReset) {
+                              injector
+                                  .get<RegistrationBloc>()
+                                  .add(const SignupCompleteEvent());
 
-                                  // shrinkWrap: true,
+                              // context.goNamed(PageUrl.talkToMentraScreen);
+                              // _endSession(context);
+                            } else {
+                              context.pop();
+                            }
+                            break;
+                        }
+                      },
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem<String>(
+                            value: 'end',
+                            height: 30,
+                            child: Text(
+                              'End Session',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                          ),
+                        ];
+                      },
+                      child: const CircleAvatar(
+                          backgroundColor: Pallets.white,
+                          foregroundColor: Pallets.black,
+                          child: Icon(Icons.more_vert)),
+                    )
+                  ],
+                ),
+                body: Stack(
+                  children: [
+                    AppBg(
+                      image: Assets.images.pngs.homeBg.path,
+                    ),
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            Expanded(
+                                child: ScrollablePositionedList.builder(
+                                    reverse: true,
 
-                                  // addAutomaticKeepAlives: true,
-                                  padding: EdgeInsets.zero,
-                                  // physics:
-                                  //     const AlwaysScrollableScrollPhysics(),
-                                  itemScrollController: context
-                                      .read<BotChatCubit>()
-                                      .scrollController,
-                                  itemCount: context
-                                      .watch<BotChatCubit>()
-                                      .stagedMessages
-                                      .reversed
-                                      .toList()
-                                      .length,
-                                  itemBuilder: (context, index) => BCMessageBox(
-                                        message: context
-                                            .watch<BotChatCubit>()
-                                            .stagedMessages
-                                            .reversed
-                                            .toList()[index],
-                                      ))),
-                          16.verticalSpace,
-                          TalkToMentraInputFields(
-                              currentMessage: context
-                                  .watch<BotChatCubit>()
-                                  .currentQuestion!)
+                                    // shrinkWrap: true,
 
-                          // const _InputBar()
-                        ],
+                                    // addAutomaticKeepAlives: true,
+                                    padding: EdgeInsets.zero,
+                                    // physics:
+                                    //     const AlwaysScrollableScrollPhysics(),
+                                    itemScrollController: context
+                                        .read<BotChatCubit>()
+                                        .scrollController,
+                                    itemCount: context
+                                        .watch<BotChatCubit>()
+                                        .stagedMessages
+                                        .reversed
+                                        .toList()
+                                        .length,
+                                    itemBuilder: (context, index) =>
+                                        BCMessageBox(
+                                          message: context
+                                              .watch<BotChatCubit>()
+                                              .stagedMessages
+                                              .reversed
+                                              .toList()[index],
+                                        ))),
+                            16.verticalSpace,
+                            TalkToMentraInputFields(
+                                currentMessage: context
+                                    .watch<BotChatCubit>()
+                                    .currentQuestion!)
+
+                            // const _InputBar()
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -223,17 +232,17 @@ class _BotChatScreenState extends State<BotChatScreen> {
                 )),
                 constraints: BoxConstraints(maxHeight: 0.9.sh));
 
-        if (wroteFeedback ?? false) {
-          await CustomDialogs.showBottomSheet(
-              context, const FeedbackSuccessDialog(),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              )),
-              constraints: BoxConstraints(maxHeight: 0.9.sh));
-          context.pop();
-        }
+        // if (wroteFeedback ?? false) {
+        //   await CustomDialogs.showBottomSheet(
+        //       context, const FeedbackSuccessDialog(),
+        //       shape: const RoundedRectangleBorder(
+        //           borderRadius: BorderRadius.only(
+        //         topLeft: Radius.circular(16),
+        //         topRight: Radius.circular(16),
+        //       )),
+        //       constraints: BoxConstraints(maxHeight: 0.9.sh));
+        //   context.pop();
+        // }
         context.pop();
       } else {
         context.pop();

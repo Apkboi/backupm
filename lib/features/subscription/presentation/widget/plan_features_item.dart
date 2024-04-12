@@ -51,7 +51,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                         // color: Pallets.grey,
 
                         decoration: ShapeDecoration(
-                            // color: Pallets.white,
+                            color: Pallets.eggShell,
                             shape: RoundedRectangleBorder(
                                 side: const BorderSide(
                                   color: Pallets.white,
@@ -59,66 +59,60 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                                 borderRadius: BorderRadius.circular(20))),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 50,
-                              sigmaY: 50,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 16, horizontal: 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  30.verticalSpace,
-                                  if (widget.plan.name
-                                          .toString()
-                                          .toLowerCase() !=
-                                      'free')
-                                    TextView(
-                                      text: (!widget.isPreview! &&
-                                              widget.plan.isActiveSubscription)
-                                          ? 'Current Plan'
-                                          : widget.plan.name,
-                                      style: GoogleFonts.fraunces(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 18,
-                                        color: Pallets.lightSecondary,
-                                      ),
-                                    ),
-                                  5.verticalSpace,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                30.verticalSpace,
+                                if (widget.plan.name
+                                        .toString()
+                                        .toLowerCase() !=
+                                    'free')
                                   TextView(
-                                    text: widget.plan.name
-                                                .toString()
-                                                .toLowerCase() ==
-                                            'free'
-                                        ? 'FREE'
-                                        : '${widget.plan.price} AED/month',
+                                    text: (!widget.isPreview! &&
+                                            widget.plan.isActiveSubscription)
+                                        ? 'Current Plan'
+                                        : widget.plan.name,
                                     style: GoogleFonts.fraunces(
-                                        color: Pallets.primary,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w600),
-
-                                    // fontSize: 18,
-                                    // color: Pallets.lightSecondary,
-                                    // fontWeight: FontWeight.w700
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                      color: Pallets.lightSecondary,
+                                    ),
                                   ),
-                                  10.verticalSpace,
-                                  if (widget.plan.description != null)
-                                    TextView(
-                                        text: widget.plan.description ?? '',
-                                        color: Pallets.navy,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  10.verticalSpace,
-                                  ...List.generate(
-                                      widget.plan.benefits.length,
-                                      (index) => PlanFeature(
-                                            benefit:
-                                                widget.plan.benefits[index],
-                                          )),
-                                ],
-                              ),
+                                5.verticalSpace,
+                                TextView(
+                                  text: widget.plan.name
+                                              .toString()
+                                              .toLowerCase() ==
+                                          'free'
+                                      ? 'FREE'
+                                      : '${widget.plan.price} AED/month',
+                                  style: GoogleFonts.fraunces(
+                                      color: Pallets.primary,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600),
+
+                                  // fontSize: 18,
+                                  // color: Pallets.lightSecondary,
+                                  // fontWeight: FontWeight.w700
+                                ),
+                                10.verticalSpace,
+                                if (widget.plan.description != null)
+                                  TextView(
+                                      text: widget.plan.description ?? '',
+                                      color: Pallets.navy,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                10.verticalSpace,
+                                ...List.generate(
+                                    widget.plan.benefits.length,
+                                    (index) => PlanFeature(
+                                          benefit:
+                                              widget.plan.benefits[index],
+                                        )),
+                              ],
                             ),
                           ),
                         ),

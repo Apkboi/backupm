@@ -297,3 +297,53 @@ class GetTherapistReviewsLoadingState extends TherapyState {
   @override
   List<Object?> get props => [];
 }
+
+class GetSessionFocusSuccessState extends TherapyState {
+  final SessionFocusResponse response;
+
+  const GetSessionFocusSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class GetSessionFocusFailureState extends TherapyState {
+  final String error;
+
+  const GetSessionFocusFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class GetSessionFocusLoadingState extends TherapyState {
+  const GetSessionFocusLoadingState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class ReportLoadingState extends TherapyState {
+  const ReportLoadingState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class ReportSuccessState extends TherapyState {
+  final dynamic response;
+
+  const ReportSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class ReportFailureState extends TherapyState {
+  final String error;
+
+  const ReportFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [];
+}

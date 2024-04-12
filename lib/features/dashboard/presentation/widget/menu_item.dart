@@ -25,7 +25,7 @@ class MenuItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: (0.5 / 2).sh,
+          height: (0.45 / 2).sh,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22),
               color: bgColor ?? Pallets.white),

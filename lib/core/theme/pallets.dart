@@ -10,6 +10,8 @@ abstract class Pallets {
   static const secondaryDark = Color(0xFFE5C572);
   static const gold = Color(0xFFFAE19D);
   static const milkColor = Color(0xFFFFD8A3);
+  static const eggShell = Color(0xFFF0EAD6);
+  static const darkGold = Color(0xFFDCA40D);
   static const promptDarkMilkColor = Color(0xFF9E6F0E);
   static const promptMilkCOlor = Color(0xFFFAE19D);
   static const bottomSheetColor = Color(0xFFEFFAF6);
@@ -42,6 +44,10 @@ abstract class Pallets {
   static const videoButtonColor = Color(0xFFF9C16C);
   static const buttonBlack = Color(0xFF242628);
   static const skyBlue = Color(0xFF0666EB);
+  static const moodCheckerBg = Color(0xFFFED4C4);
+  static const moodCheckerBorder = Color(0xFFED8550);
+  static const dailyTaskBg = Color(0xFFC8D5E9);
+  static const streakBg = Color(0xFFBFD8AC);
 
   // static const buttonBlack = Color(0xFF0666EB);
 
@@ -87,6 +93,7 @@ abstract class Pallets {
   static const otpBorderGrey = Color(0xffE6E6E6);
   static const hintGrey = Color(0xff868686);
   static const error = Color(0xffCA1818);
+  static const dailyTaskItemBg = Color(0xffFFF5DB);
 
   // static const secondary = Color(0xFFCC9933);
   static const avatarBackgrounds = [

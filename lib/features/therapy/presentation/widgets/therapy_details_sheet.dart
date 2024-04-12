@@ -21,7 +21,6 @@ import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialo
 import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'end_therapy_session_dialog.dart';
 

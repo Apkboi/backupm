@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/confirm_sheet.dart';
@@ -10,7 +9,6 @@ import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/success_dialog.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:mentra/features/notification/presentation/widget/notification_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';

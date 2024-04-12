@@ -7,7 +7,6 @@ import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
-import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
@@ -51,18 +50,10 @@ class _ReviewSheetState extends State<ReviewSheet> {
           ),
           10.verticalSpace,
           TextView(
-            text: 'How Do You Feel After Our Chat Today?',
+            text: 'How do you feel after our chat today?',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),
-          ),
-          22.verticalSpace,
-          const TextView(
-            text: reviewSubtext,
-            align: TextAlign.center,
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Pallets.ink,
           ),
           20.verticalSpace,
           Row(
@@ -85,7 +76,9 @@ class _ReviewSheetState extends State<ReviewSheet> {
                         child: Column(
                           children: [
                             ImageWidget(
-                                size: 50,
+                                height: 70.h,
+                                width: 70.w,
+                                fit: BoxFit.scaleDown,
                                 onTap: () {
                                   feeling =
                                       ReviewMoodModel.allMoods[index].mood;
@@ -126,7 +119,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
                   style: GoogleFonts.inter(
                       fontSize: 12, fontWeight: FontWeight.w500),
                 ),
-                7.verticalSpace,
+                5.verticalSpace,
                 FilledTextField(
                     // maxLine: 5,
                     minLine: 1,
@@ -137,8 +130,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
                     // expands: true,
                     controller: controller,
                     fillColor: Colors.transparent,
-                    hint:
-                        'Share your thoughts! How did Mentra support you today? Your words make a difference.'),
+                    hint: 'Share your thoughts!'),
               ],
             ),
           ),
@@ -149,7 +141,6 @@ class _ReviewSheetState extends State<ReviewSheet> {
                 comment: controller.text,
                 feeling: feeling,
               ));
-
             },
             color: Pallets.primary,
             text: "Submit Review",

@@ -27,7 +27,7 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
   @override
   Future endSession(
       {required String sessionId,
-      required String feeling,
+      required String? feeling,
        String? comment}) async {
     try {
       final response = await _networkService.call(

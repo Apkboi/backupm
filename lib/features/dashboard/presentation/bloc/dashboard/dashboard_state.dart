@@ -55,3 +55,26 @@ class GetEmergencyContactSuccessState extends DashboardState {
   @override
   List<Object?> get props => [data];
 }
+
+class UpdateMoodCheckerLoading extends DashboardState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UpdateMoodCheckerFailureState extends DashboardState {
+  final String error;
+
+  const UpdateMoodCheckerFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class UpdateMoodCheckerSuccessState extends DashboardState {
+  final UpdateMoodCheckerResponse response;
+
+  const UpdateMoodCheckerSuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}

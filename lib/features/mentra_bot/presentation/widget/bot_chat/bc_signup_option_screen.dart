@@ -10,7 +10,6 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
@@ -137,13 +136,19 @@ class BCSignupOptionsField extends StatelessWidget {
 
         // context.pushNamed(PageUrl.selectYearScreen);
       } else {
+
+        context.read<BotChatCubit>().answerQuestion(
+            id: message.id,
+            answer: "Continue with Google",
+            nextFlow: BotChatFlow.talkToMentra);
+
         // context.read<BotChatCubit>().answerQuestion(
         //     id: message.id,
         //     answer: state.response.data.email.toString(),
         //     nextFlow: BotChatFlow.talkToMentra,
         //     nextSignupStage: SignupStage.YEAR);
         // context.pop();
-        context.pushNamed(PageUrl.talkToMentraScreen);
+        // context.pushNamed(PageUrl.talkToMentraScreen);
       }
     }
     if (state is OauthFailureState) {

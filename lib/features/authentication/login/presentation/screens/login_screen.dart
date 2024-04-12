@@ -217,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (state is OauthLoadingState) {
       CustomDialogs.showLoading(context);
     }
-    if (state is OauthSuccessState) {
+    if (state is LoginOauthSuccessState) {
       if (state.response.data.newUser) {
         injector
             .get<regbloc.RegistrationBloc>()

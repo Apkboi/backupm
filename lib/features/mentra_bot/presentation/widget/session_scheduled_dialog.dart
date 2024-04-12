@@ -43,7 +43,7 @@ class SessionScheduledDialog extends StatelessWidget {
           ),
           10.verticalSpace,
           TextView(
-            text: tittle ?? 'Session Scheduled!',
+            text: tittle ?? 'Session scheduled!',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),

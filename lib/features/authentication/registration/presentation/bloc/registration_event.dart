@@ -13,6 +13,14 @@ class RegisterEvent extends RegistrationEvent {
   List<Object?> get props => [payload];
 }
 
+class SignupCompleteEvent extends RegistrationEvent {
+
+  const SignupCompleteEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class SendOtpEvent extends RegistrationEvent {
   final String email;
 

@@ -144,8 +144,6 @@ class ActiveSubscription {
       };
 }
 
-
-
 MentraUser mentraUserFromJson(String str) =>
     MentraUser.fromJson(json.decode(str));
 
@@ -163,6 +161,7 @@ class MentraUser {
   final dynamic stripeCustomerId;
   final dynamic mesiboUserId;
   final dynamic mesiboUserToken;
+  final dynamic mood;
   final ActiveSubscription? activeSubscription;
   final MatchedTherapist? matchedTherapist;
   final DateTime createdAt;
@@ -172,6 +171,7 @@ class MentraUser {
     required this.id,
     required this.avatar,
     required this.name,
+    required this.mood,
     required this.role,
     required this.avatarBackgroundColor,
     required this.username,
@@ -191,6 +191,7 @@ class MentraUser {
     String? avatar,
     String? name,
     String? role,
+    String? mood,
     String? avatarBackgroundColor,
     String? username,
     String? email,
@@ -208,6 +209,7 @@ class MentraUser {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
+        mood: mood ?? this.mood,
         avatarBackgroundColor:
             avatarBackgroundColor ?? this.avatarBackgroundColor,
         username: username ?? this.username,
@@ -234,8 +236,10 @@ class MentraUser {
         stripeCustomerId: json["stripe_customer_id"],
         mesiboUserId: json["mesibo_user_id"],
         mesiboUserToken: json["mesibo_user_token"],
-        activeSubscription:
-        json["active_subscription"] == null ? null:   ActiveSubscription.fromJson(json["active_subscription"]),
+        mood: json["mood"],
+        activeSubscription: json["active_subscription"] == null
+            ? null
+            : ActiveSubscription.fromJson(json["active_subscription"]),
         matchedTherapist: json["matched_therapist"] == null
             ? null
             : MatchedTherapist.fromJson(json["matched_therapist"]),
@@ -255,6 +259,7 @@ class MentraUser {
         "stripe_customer_id": stripeCustomerId,
         "mesibo_user_id": mesiboUserId,
         "mesibo_user_token": mesiboUserToken,
+        "mood": mood,
         "active_subscription": activeSubscription?.toJson(),
         "matched_therapist": matchedTherapist?.toJson(),
         "created_at": createdAt.toIso8601String(),

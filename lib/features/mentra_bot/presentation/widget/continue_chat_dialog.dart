@@ -13,6 +13,7 @@ class ContinueChatDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 1.sw,
       decoration: const BoxDecoration(
           color: Pallets.bottomSheetColor,
           borderRadius: BorderRadius.only(
@@ -34,22 +35,25 @@ class ContinueChatDialog extends StatelessWidget {
             ),
             10.verticalSpace,
             TextView(
-              text: 'Do You Wish to Start a New Chat Session?',
+              text: 'Continue where you\nleft Off ?',
               align: TextAlign.center,
               style: GoogleFonts.fraunces(
-                  fontSize: 24.sp, fontWeight: FontWeight.w600),
+                  fontSize: 23.sp, fontWeight: FontWeight.w600),
             ),
             22.verticalSpace,
-            const TextView(
-              text: 'You can continue your chat with Mentra or start fresh conversation.',
-              align: TextAlign.center,
-              fontWeight: FontWeight.w500,
-              color: Pallets.ink,
-            ),
-            20.verticalSpace,
+            // const TextView(
+            //   text: 'You can continue your chat with Mentra or start fresh conversation.',
+            //   align: TextAlign.center,
+            //   fontWeight: FontWeight.w500,
+            //   color: Pallets.ink,
+            // ),
+            // 20.verticalSpace,
             CustomNeumorphicButton(
+
+              padding: EdgeInsets.symmetric(horizontal: 50.w,vertical: 16),
               onTap: () {
-                context.pop(true);
+                context.pop();
+
                 // context.pop();
                 // CustomDialogs.showBottomSheet(
                 //     context, const EndSessionDialog(),
@@ -61,20 +65,23 @@ class ContinueChatDialog extends StatelessWidget {
                 //     constraints: BoxConstraints(maxHeight: 0.9.sh));
               },
               color: Pallets.primary,
-              text: "Yes, Start New Session",
+              expanded: false,
+              text: "Yes",
             ),
             17.verticalSpace,
             CustomOutlinedButton(
               outlinedColr: Pallets.primary,
               bgColor: Pallets.white,
+              padding: EdgeInsets.symmetric(horizontal: 50.w,vertical: 15),
+              isExpanded: false,
               onPressed: () {
-                context.pop();
+                context.pop(true);
 
               },
               radius: 100,
-              padding: const EdgeInsets.all(20),
+
               child: const TextView(
-                text: 'No, I Want to Continue',
+                text: 'No',
                 fontWeight: FontWeight.w600,
               ),
             ),

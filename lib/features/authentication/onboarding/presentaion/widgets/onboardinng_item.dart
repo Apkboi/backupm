@@ -5,7 +5,6 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/authentication/onboarding/presentaion/widgets/indicator.dart';
 
 class OnboardingItem extends StatefulWidget {
   const OnboardingItem(

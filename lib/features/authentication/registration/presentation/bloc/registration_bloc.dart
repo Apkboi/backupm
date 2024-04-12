@@ -22,6 +22,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     on<VerifyOtpEvent>(_mapVerifyOtpEventToState);
     on<GoogleAuthEvent>(_mapGoogleAuthEventToState);
     on<AppleAuthEvent>(_mapAppleAuthEventToState);
+    on<SignupCompleteEvent>(_mapSignupCompleteEventToState);
   }
 
   Future<void> _mapRegisterEventToState(
@@ -145,4 +146,11 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   }
 
   bool confirmPasscode(String passcode)=> initialPasscode == passcode;
+
+  FutureOr<void> _mapSignupCompleteEventToState(SignupCompleteEvent event, Emitter<RegistrationState> emit) {
+
+
+    emit(SignupCompleteState());
+
+  }
 }

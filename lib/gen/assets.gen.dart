@@ -15,8 +15,14 @@ class $AssetsAudioGen {
   /// File path: assets/audio/dummy.mp3
   String get dummy => 'assets/audio/dummy.mp3';
 
+  /// File path: assets/audio/received.mp3
+  String get received => 'assets/audio/received.mp3';
+
+  /// File path: assets/audio/sent.mp3
+  String get sent => 'assets/audio/sent.mp3';
+
   /// List of all assets
-  List<String> get values => [dummy];
+  List<String> get values => [dummy, received, sent];
 }
 
 class $AssetsImagesGen {
@@ -100,6 +106,14 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/images/pngs/launcher_icon.png');
+
+  /// File path: assets/images/pngs/launcher_icon1.png
+  AssetGenImage get launcherIcon1 =>
+      const AssetGenImage('assets/images/pngs/launcher_icon1.png');
+
+  /// File path: assets/images/pngs/launcher_icon_2.png
+  AssetGenImage get launcherIcon2 =>
+      const AssetGenImage('assets/images/pngs/launcher_icon_2.png');
 
   /// File path: assets/images/pngs/logo4.png
   AssetGenImage get logo4 =>
@@ -185,6 +199,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get splashLogo =>
       const AssetGenImage('assets/images/pngs/splash_logo.png');
 
+  /// File path: assets/images/pngs/streak_badge.png
+  AssetGenImage get streakBadge =>
+      const AssetGenImage('assets/images/pngs/streak_badge.png');
+
   /// File path: assets/images/pngs/summary.png
   AssetGenImage get summary =>
       const AssetGenImage('assets/images/pngs/summary.png');
@@ -229,6 +247,8 @@ class $AssetsImagesPngsGen {
         journalNote,
         launcher,
         launcherIcon,
+        launcherIcon1,
+        launcherIcon2,
         logo4,
         logo5,
         logoF,
@@ -250,6 +270,7 @@ class $AssetsImagesPngsGen {
         smallMentra,
         sorry,
         splashLogo,
+        streakBadge,
         summary,
         techLady,
         traveller,
