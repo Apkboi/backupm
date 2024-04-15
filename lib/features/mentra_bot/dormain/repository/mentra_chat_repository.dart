@@ -6,9 +6,7 @@ abstract class MentraChatRepository {
   Future<GetCurrentSessionRsponse> continueSession(
       String sessionId, String prompt);
 
-  Future<dynamic> endSession(
-      {required String sessionId, required String? feeling, String? comment});
+  Future<dynamic> endSession({required String sessionId, required String? feeling, String? comment});
 
-  Future<dynamic> reviewMentraSession(
-      {dynamic payload});
+  Future<dynamic> reviewMentraSession({required String sessionId, required String? feeling, String? comment});
 }

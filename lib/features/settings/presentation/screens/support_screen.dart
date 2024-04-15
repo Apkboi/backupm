@@ -95,13 +95,13 @@ class _SupportScreenState extends State<SupportScreen> {
                     color: Pallets.primary,
                     text: 'Email Support',
                   ),
-                  10.verticalSpace,
-                  CustomNeumorphicButton(
-                    onTap: () {},
-                    color: Pallets.secondary,
-                    fgColor: Pallets.black,
-                    text: 'Chat Now',
-                  ),
+                  // 10.verticalSpace,
+                  // CustomNeumorphicButton(
+                  //   onTap: () {},
+                  //   color: Pallets.secondary,
+                  //   fgColor: Pallets.black,
+                  //   text: 'Chat Now',
+                  // ),
                   10.verticalSpace
                 ],
               ),

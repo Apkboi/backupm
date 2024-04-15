@@ -61,12 +61,17 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
   }
 
   @override
-  Future reviewMentraSession({payload}) async {
+  Future reviewMentraSession(
+      {required String sessionId,
+      required String? feeling,
+      String? comment}) async {
     try {
       final response = await _networkService.call(
-        UrlConfig.currentSession,
-        RequestMethod.get,
-      );
+          UrlConfig.reviewAiSession, RequestMethod.post, data: {
+        "ai_session_id": sessionId,
+        "feeling": feeling,
+        "comment": comment
+      });
 
       return GetCurrentSessionRsponse.fromJson(response.data);
     } catch (e, stack) {

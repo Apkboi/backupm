@@ -5,6 +5,7 @@ Correct login flow for google auth for when a user is registered already buh goe
 Optimize bot chat cubit
 Write docs for bot chat model
 And MentraMessage model
+Chat dates to capture day and month for later chats
 
 
  ===== Slide =======

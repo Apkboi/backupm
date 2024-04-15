@@ -166,7 +166,10 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
     emit(const ReviewMentraLoadingState());
     // _addTyping();
     try {
-      final response = await _repository.reviewMentraSession();
+      final response = await _repository.reviewMentraSession(
+          feeling: event.feeling,
+          sessionId: event.sessionId,
+          comment: event.comment);
       emit(ReviewMentraSessionSuccessState(response));
     } catch (e) {
       emit(ReviewMentraSessionFailureState(e.toString()));

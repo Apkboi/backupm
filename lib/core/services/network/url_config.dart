@@ -95,6 +95,7 @@ class UrlConfig {
   static const String selectTherapist = '/user/session/therapist/select';
   static const String getMatchedTherapist = '/user/session/therapist/select';
   static const String createReview = '/user/session/reviews/create';
+  static const String reviewAiSession = '/user/ai-sessions/send-review';
   static const String getReviews = '/user/session/reviews/list';
   static const String sessionFocus = '/user/session/focus/list';
   static const String report = '/user/report/save';

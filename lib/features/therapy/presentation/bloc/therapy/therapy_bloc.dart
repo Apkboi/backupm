@@ -317,7 +317,6 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
 
   FutureOr<void> _mapReportEventToState(
       ReportEvent event, Emitter<TherapyState> emit) async {
-
     emit(const ReportLoadingState());
     try {
       final response = await _therapyRepository.report(content: event.content);
@@ -327,6 +326,5 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
       logger.e(e.toString(), stackTrace: stack);
       emit(ReportFailureState(error: e.toString()));
     }
-
   }
 }

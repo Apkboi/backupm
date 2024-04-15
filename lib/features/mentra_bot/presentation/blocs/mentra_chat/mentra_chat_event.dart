@@ -53,10 +53,13 @@ class EndMentraSessionEvent extends MentraChatEvent {
 }
 
 class ReviewMentraSessionEvent extends MentraChatEvent {
-  dynamic payload;
+  final String sessionId;
+  final String feeling;
+  final String? comment;
 
-  ReviewMentraSessionEvent(this.payload);
+  ReviewMentraSessionEvent(
+      {required this.sessionId, required this.feeling, this.comment});
 
   @override
-  List<Object?> get props => [payload];
+  List<Object?> get props => [];
 }
