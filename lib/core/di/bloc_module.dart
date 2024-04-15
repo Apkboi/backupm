@@ -12,6 +12,7 @@ import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
+import 'package:mentra/features/streaks/presentation/bloc/daily_streak_bloc.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 import 'package:mentra/features/tasks/presentation/bloc/daily_task_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
@@ -43,6 +44,8 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<BotChatCubit>(() => BotChatCubit());
   getIt.registerLazySingleton<DailyTaskBloc>(
       () => DailyTaskBloc(injector.get()));
+  getIt.registerLazySingleton<DailyStreakBloc>(
+      () => DailyStreakBloc(injector.get()));
 
   // getIt.registerLazySingleton<MentraChatBloc>(
   //     () => MentraChatBloc(injector.get()));

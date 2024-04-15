@@ -18,12 +18,17 @@ class UserCachedState extends UserState {
   List<Object> get props => [user];
 }
 
-// class UserInitial extends UserState {
-//   @override
-//   List<Object> get props => [];
-// }
-//
-// class UserInitial extends UserState {
-//   @override
-//   List<Object> get props => [];
-// }
+class GetProfileFailedState extends UserState {
+  final String error;
+
+  const GetProfileFailedState(this.error);
+
+  @override
+  List<Object> get props => [];
+}
+
+class UserProfileLoadingState extends UserState {
+
+  @override
+  List<Object> get props => [];
+}

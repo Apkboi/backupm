@@ -7,7 +7,8 @@ abstract class MentraChatRepository {
       String sessionId, String prompt);
 
   Future<dynamic> endSession(
-      {required String sessionId,
-      required String? feeling,
-       String? comment});
+      {required String sessionId, required String? feeling, String? comment});
+
+  Future<dynamic> reviewMentraSession(
+      {dynamic payload});
 }

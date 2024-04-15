@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -23,6 +24,7 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
   late String mood;
 
   // final libraryBloc = Dashb(injector.get());
+  final _debouncer = Debouncer(milliseconds: 500);
 
   @override
   void initState() {
@@ -40,13 +42,14 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
           bloc: injector.get(),
           listener: (context, state) {
             if (state is UpdateMoodCheckerSuccessState) {
-              mood = state.response.data.mood;
-
+              // mood = state.response.data.mood;
               injector.get<UserBloc>().add(GetRemoteUser());
               setState(() {});
             }
             if (state is UpdateMoodCheckerFailureState) {
+              mood = injector.get<UserBloc>().appUser?.mood ?? mood;
               CustomDialogs.error(state.error);
+              setState(() {});
             }
           },
           builder: (context, state) {
@@ -79,9 +82,13 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                       (index) => InkWell(
                             onTap: () {
                               mood = ReviewMoodModel.allMoods[index].mood;
-                              injector
-                                  .get<DashboardBloc>()
-                                  .add(UpdateMoodCheckerEvent(mood));
+
+                              _debouncer.run(() {
+                                injector
+                                    .get<DashboardBloc>()
+                                    .add(UpdateMoodCheckerEvent(mood));
+                                // setState(() {});
+                              });
 
                               setState(() {});
                             },
@@ -91,9 +98,12 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                               child: ImageWidget(
                                 onTap: () {
                                   mood = ReviewMoodModel.allMoods[index].mood;
-                                  injector
-                                      .get<DashboardBloc>()
-                                      .add(UpdateMoodCheckerEvent(mood));
+
+                                  _debouncer.run(() {
+                                    injector
+                                        .get<DashboardBloc>()
+                                        .add(UpdateMoodCheckerEvent(mood));
+                                  });
                                   setState(() {});
                                 },
                                 shape: BoxShape.circle,
@@ -120,7 +130,12 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
   }
 
   void _listenToUserBloc(BuildContext context, UserState state) {
-    mood = injector.get<UserBloc>().appUser?.mood ?? mood;
-    setState(() {});
+    // if (state is! UserProfileLoadingState) {
+    //   mood = injector
+    //       .get<UserBloc>()
+    //       .appUser
+    //       ?.mood ?? mood;
+    //   setState(() {});
+    // }
   }
 }

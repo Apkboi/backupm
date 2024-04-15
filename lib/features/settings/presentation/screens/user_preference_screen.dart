@@ -64,7 +64,8 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
               if (widget.flow == UserPreferenceFlow.updatePreference) {
                 context.pop();
               }
-              if (widget.flow == UserPreferenceFlow.changeTherapist || widget.flow == UserPreferenceFlow.selectTherapist) {
+              if (widget.flow == UserPreferenceFlow.changeTherapist ||
+                  widget.flow == UserPreferenceFlow.selectTherapist) {
                 // context.pop();
                 context.pushReplacementNamed(PageUrl.matchTherapistScreen,
                     queryParameters: {PathParam.updatedPreference: 'true'});

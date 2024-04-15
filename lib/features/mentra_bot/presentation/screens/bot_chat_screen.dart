@@ -15,7 +15,6 @@ import 'package:mentra/features/mentra_bot/presentation/screens/login_signup_lis
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_message_box.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/talk_to_mentra_input_fields.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/end_session_dialog.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/feedback_success_dialog.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/review_sheet.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/session_ended_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -52,11 +51,6 @@ class _BotChatScreenState extends State<BotChatScreen> {
       child: BlocConsumer<BotChatCubit, BotChatState>(
         listener: (context, state) {},
         builder: (context, state) {
-          // var _shouldShowBotIcon =
-          //     context.watch<BotChatCubit>().currentChatFlow ==
-          //             BotChatFlow.welcome &&
-          //         context.watch<BotChatCubit>().stagedMessages.length < 3;
-          // context.watch<BotChatCubit>();
           return WillPopScope(
             onWillPop: () async {
               if (SessionManager.instance.isLoggedIn &&
@@ -75,7 +69,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
                 appBar: CustomAppBar(
                   tittleText: '',
                   leading: CustomBackButton(
-                    icon: context.watch<BotChatCubit>().canNotRevert
+                    icon: context.watch<BotChatCubit>().canNotRevertMessages
                         ? null
                         : const Icon(
                             Icons.undo,
@@ -189,7 +183,7 @@ class _BotChatScreenState extends State<BotChatScreen> {
   }
 
   void _goBack(BuildContext context) {
-    if (context.read<BotChatCubit>().canNotRevert) {
+    if (context.read<BotChatCubit>().canNotRevertMessages) {
       if (SessionManager.instance.isLoggedIn &&
           context.read<BotChatCubit>().currentChatFlow !=
               BotChatFlow.passwordReset) {
@@ -232,17 +226,6 @@ class _BotChatScreenState extends State<BotChatScreen> {
                 )),
                 constraints: BoxConstraints(maxHeight: 0.9.sh));
 
-        // if (wroteFeedback ?? false) {
-        //   await CustomDialogs.showBottomSheet(
-        //       context, const FeedbackSuccessDialog(),
-        //       shape: const RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.only(
-        //         topLeft: Radius.circular(16),
-        //         topRight: Radius.circular(16),
-        //       )),
-        //       constraints: BoxConstraints(maxHeight: 0.9.sh));
-        //   context.pop();
-        // }
         context.pop();
       } else {
         context.pop();

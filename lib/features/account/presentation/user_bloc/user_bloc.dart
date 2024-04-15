@@ -52,12 +52,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   FutureOr<void> _mapGetRemoteUserToState(
       GetRemoteUser event, Emitter<UserState> emit) async {
+    emit(UserProfileLoadingState());
     try {
       final response = await _accountRepository.getRemoteUser();
 
       add(SaveUserEvent(response.data));
     } catch (e) {
-      // emit(LoginFailureState(error: e.toString()));
+      emit(GetProfileFailedState(e.toString()));
     }
   }
 }

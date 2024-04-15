@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -155,12 +156,14 @@ class _CancelSessionSheetState extends State<CancelSessionSheet> {
                       ),
                     ),
                     Expanded(child: 16.verticalSpace),
-                    CustomNeumorphicButton(
-                        text: 'Cancel Session',
-                        onTap: () {
-                          _cancelSessions(context);
-                        },
-                        color: Pallets.primary)
+                    Center(
+                      child: CustomNeumorphicButton(
+                          text: 'Cancel Session',
+                          onTap: () {
+                            _cancelSessions(context);
+                          },
+                          color: Pallets.primary),
+                    )
                   ],
                 ),
               ));

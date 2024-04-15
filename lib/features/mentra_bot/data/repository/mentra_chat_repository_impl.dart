@@ -28,7 +28,7 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
   Future endSession(
       {required String sessionId,
       required String? feeling,
-       String? comment}) async {
+      String? comment}) async {
     try {
       final response = await _networkService.call(
           UrlConfig.endSession, RequestMethod.post, data: {
@@ -46,6 +46,22 @@ class MentraChatRepositoryImpl extends MentraChatRepository {
 
   @override
   Future<GetCurrentSessionRsponse> getCurrentSession() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.currentSession,
+        RequestMethod.get,
+      );
+
+      return GetCurrentSessionRsponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.i(e.toString());
+      logger.i(stack.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future reviewMentraSession({payload}) async {
     try {
       final response = await _networkService.call(
         UrlConfig.currentSession,

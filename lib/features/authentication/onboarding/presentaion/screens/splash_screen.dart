@@ -36,11 +36,7 @@ class _SplashPageState extends State<SplashPage>
       ),
     );
 
-    // Future.delayed(Duration.zero, () {
-    //
-    //   ref.read(setupProfileProvider.notifier).getDataConfigs();
-    //   // ref.read(locationProvider.notifier).caller();
-    // });
+
 
     animationCtrl?.forward();
     animation.addListener(() async {
@@ -84,26 +80,11 @@ class _SplashPageState extends State<SplashPage>
   }
 
   void _goToNextScreen() {
-    // context.pushReplacementNamed(PageUrl.onBoardingPage);
     if (SessionManager.instance.isLoggedIn) {
       context.pushReplacementNamed(PageUrl.passcodeAuthScreen);
 
-      // if (SessionManager.instance.bioMetricEnabled &&
-      //     injector.get<UserBloc>().appUser != null){
-      //   context.pushNamed(PageUrl.passcodeAuthScreen);
-      //
-      // }else{
-      //   context.goNamed(PageUrl.homeScreen, queryParameters: {
-      //     PathParam.authenticate: 'true',
-      //     PathParam.startConvo: 'true',
-      //   });
-      // }
     } else {
-      // if (SessionManager.instance.hasOnboarded) {
-      //   context.goNamed(PageUrl.login);
-      // } else {
-      //   context.goNamed(PageUrl.onBoardingPage);
-      // }
+
       context.pushReplacementNamed(PageUrl.onBoardingPage);
     }
   }

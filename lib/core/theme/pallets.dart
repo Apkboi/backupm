@@ -48,6 +48,8 @@ abstract class Pallets {
   static const moodCheckerBorder = Color(0xFFED8550);
   static const dailyTaskBg = Color(0xFFC8D5E9);
   static const streakBg = Color(0xFFBFD8AC);
+  static const currentStreakBg = Color(0xFFED8550);
+
 
   // static const buttonBlack = Color(0xFF0666EB);
 

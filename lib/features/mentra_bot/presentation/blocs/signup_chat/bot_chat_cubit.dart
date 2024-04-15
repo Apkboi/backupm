@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/sound/sound_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/helper_utils.dart';
 import 'package:mentra/features/mentra_bot/data/datasource/local/login_question_datasource.dart';
@@ -43,7 +44,7 @@ class BotChatCubit extends Cubit<BotChatState> {
 
   void startChat(BotChatFlow flow) async {
     stagedMessages.clear();
-    var startingMessage = switch (flow) {
+    var firstMessage = switch (flow) {
       BotChatFlow.welcome => BotChatmessageModel.botTyping(),
       BotChatFlow.signup => signupDataSource.questions.first
         ..time = DateTime.now(),
@@ -56,14 +57,14 @@ class BotChatCubit extends Cubit<BotChatState> {
         ..time = DateTime.now(),
     };
 
+    // Simulating bot typing for welcome messages
     if (flow == BotChatFlow.welcome) {
       startWelcomeMessage();
-      // _addTyping();
     } else {
       await _simulateTyping();
-      stagedMessages.add(startingMessage);
-      currentQuestion = startingMessage;
-      updateCurrentQuestion(startingMessage);
+      stagedMessages.add(firstMessage);
+      currentQuestion = firstMessage;
+      updateCurrentQuestion(firstMessage);
     }
   }
 
@@ -81,13 +82,15 @@ class BotChatCubit extends Cubit<BotChatState> {
       await Future.delayed(const Duration(milliseconds: 300));
       stagedMessages.add(message..time = DateTime.now());
       currentQuestion = message;
+      SoundManager.playMessageReceivedSound();
+
       emit(QuestionUpdatedState());
-      // logger.i(stagedMessages.length);
       await Future.delayed(const Duration(seconds: 1));
     }
   }
 
-  bool get canNotRevert =>
+  // Determines if a message flow can be reverted back
+  bool get canNotRevertMessages =>
       currentChatFlow == BotChatFlow.welcome ||
       currentChatFlow == BotChatFlow.talkToMentra ||
       (currentChatFlow == BotChatFlow.permissions &&
@@ -96,7 +99,7 @@ class BotChatCubit extends Cubit<BotChatState> {
           currentQuestion!.passwordResetStage == PasswordResetStage.EMAIL);
 
   bool revertBack() {
-    if (canNotRevert) {
+    if (canNotRevertMessages) {
       return false;
     } else {
       stagedMessages.removeLast();
@@ -114,17 +117,7 @@ class BotChatCubit extends Cubit<BotChatState> {
   }
 
   void _scrollToLast() async {
-    // emit(state.copyWith(highlightIndex: -1));
-    // scrollController.jumpTo(
-    //   alignment: 0.5,
-    //   index: 0,
-    //   // duration: const Duration(milliseconds: 800),
-    //   // curve: Curves.easeInOut,
-    //   // curve: Curves.easeOut,
-    //   // duration: kTabScrollDuration,
-    // );
-
-    // emit(state.copyWith(highlightIndex: event.index));
+    // TODO: REMOVE FUNCTION
   }
 
   void answerQuestion({
@@ -141,6 +134,7 @@ class BotChatCubit extends Cubit<BotChatState> {
     stagedMessages.last.answerWidget = answerWidget;
     stagedMessages.last.answer = answer;
     stagedMessages.last.answerTime = DateTime.now();
+    SoundManager.playMessageSentSound();
     emit(QuestionUpdatedState());
     await Future.delayed(const Duration(milliseconds: 300));
     _addTyping();
@@ -179,7 +173,6 @@ class BotChatCubit extends Cubit<BotChatState> {
         break;
 
       case BotChatFlow.login:
-        // logger.i('IN login stage');
         _getNextLoginMessage(nextLoginStage: nextLoginStage);
         break;
 
@@ -192,12 +185,10 @@ class BotChatCubit extends Cubit<BotChatState> {
         _getNextPasswordResetQuestion(
             nextPasswordResetStage: nextPasswordResetStage);
     }
+    SoundManager.playMessageReceivedSound();
   }
 
   void updateCurrentQuestion(BotChatmessageModel question) {
-    // CustomDialogs.showToast(question.flow.name);
-    // CustomDialogs.showToast(question.message);
-
     currentChatFlow = question.flow;
     currentQuestion = question;
     emit(QuestionUpdatedState());
@@ -271,7 +262,6 @@ class BotChatCubit extends Cubit<BotChatState> {
   }
 
   void _addTyping() async {
-    // await Future.delayed(const Duration(seconds: 1));
     stagedMessages.add(BotChatmessageModel.botTyping());
     currentQuestion = BotChatmessageModel.botTyping();
     emit(QuestionUpdatedState());
@@ -282,7 +272,6 @@ class BotChatCubit extends Cubit<BotChatState> {
     emit(RemoveTypingState());
     await Future.delayed(const Duration(milliseconds: 400));
     stagedMessages.removeWhere((element) => element.isTyping == true);
-    // await Future.delayed(const Duration(milliseconds: 300));
   }
 
   void _getNextPermissionsMessage(
@@ -314,9 +303,6 @@ class BotChatCubit extends Cubit<BotChatState> {
           },
           child: TextView(
               text: 'Terms and conditions apply',
-              // color: Pallets.secondary,
-              // fontWeight: FontWeight.w600,
-              // lineHeight: 1.5,
               style: GoogleFonts.plusJakartaSans(
                 fontWeight: FontWeight.w600,
                 color: Pallets.secondary,
@@ -341,7 +327,6 @@ class BotChatCubit extends Cubit<BotChatState> {
     await Future.delayed(const Duration(milliseconds: 300));
     stagedMessages.add(termsMessage);
     currentQuestion = termsMessage;
-    // updateCurrentQuestion(termsMessage);
     emit(QuestionUpdatedState());
   }
 
@@ -372,17 +357,8 @@ class BotChatCubit extends Cubit<BotChatState> {
                       // letterSpacing: 2
                       ),
                   children: [
-                // const TextSpan(
-                //   text: 'Forgot password ? ',
-                //   // color: Pallets.secondary,
-                //   // fontWeight: FontWeight.w600,
-                //   // lineHeight: 1.5,
-                // ),
                 TextSpan(
                     text: 'Forgot pin ?',
-                    // color: Pallets.secondary,
-                    // fontWeight: FontWeight.w600,
-                    // lineHeight: 1.5,
                     style: GoogleFonts.plusJakartaSans(
                       fontWeight: FontWeight.w600,
                       color: Pallets.secondary,

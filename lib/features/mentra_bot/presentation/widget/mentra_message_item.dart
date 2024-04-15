@@ -72,7 +72,7 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                       (index) => ChatBubble(
                         // margin: EdgeInsets.zero,
                         padding: const EdgeInsets.only(
-                            right: 15, bottom: 0, left: 15, top: 5),
+                            right: 8, bottom: 0, left: 15, top: 5),
                         backGroundColor: Pallets.navy,
                         clipper: ChatBubbleClipper3(
                             type: BubbleType.receiverBubble,
@@ -125,9 +125,11 @@ class _MentraMessageItemState extends State<MentraMessageItem>
             ),
           ],
         ),
+
+
+
         if (widget.mentraMessge.options.isNotEmpty &&
-            context.read<MentraChatBloc>().allMessage.last.content ==
-                widget.mentraMessge.content)
+            context.read<MentraChatBloc>().allMessages.last.content == widget.mentraMessge.content)
           _OptionsWidget(message: widget.mentraMessge)
       ],
     );

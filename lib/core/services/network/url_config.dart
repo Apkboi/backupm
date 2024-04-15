@@ -126,5 +126,6 @@ class UrlConfig {
 
   //   MOOD CHECKER
   static String getDailyTasks = '/daily-tasks/list';
+  static String getStreaks = '/badges/list';
   static String updateDailyTasks = '/daily-tasks/save';
 }

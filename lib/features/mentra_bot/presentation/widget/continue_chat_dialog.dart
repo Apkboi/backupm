@@ -35,7 +35,7 @@ class ContinueChatDialog extends StatelessWidget {
             ),
             10.verticalSpace,
             TextView(
-              text: 'Continue where you\nleft Off ?',
+              text: 'Continue where you\nleft off ?',
               align: TextAlign.center,
               style: GoogleFonts.fraunces(
                   fontSize: 23.sp, fontWeight: FontWeight.w600),

@@ -13,8 +13,8 @@ part 'mentra_chat_state.dart';
 
 class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   final MentraChatRepository _repository;
-  List<MentraChatModel> authMessages = [];
-  List<MentraChatModel> allMessage = [];
+  List<MentraChatModel> messagesFromAuthenticationFlow = [];
+  List<MentraChatModel> allMessages = [];
   final scrollController = ItemScrollController();
   String sessionId = '';
 
@@ -25,40 +25,37 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
     on<EndMentraSessionEvent>(_mapEndMentraSessionEventToState);
     on<RetryMessageEvent>(_mapRetryMessageEventToState);
     on<AddAuthMessagesEvent>(_mapAddSignupMessagesEventToState);
+    on<ReviewMentraSessionEvent>(_mapReviewMentraSessionEventToState);
   }
 
   void _scrollToLast() async {
-    // scrollController.scrollTo(
-    //   alignment: 0.5,
-    //   index: 0,
-    //   duration: const Duration(milliseconds: 800),
-    //   curve: Curves.easeInOut,
-    // );
+    // TODO:REMOVE THIS FUNCTION
   }
 
   FutureOr<void> _mapGetCurrentSessionEventToState(
       GetCurrentSessionEvent event, Emitter<MentraChatState> emit) async {
+    await _removeTyping();
+
     emit(GetCurrentSessionLoading());
 
-    if (authMessages.isEmpty) {
-      allMessage.clear();
+    if (messagesFromAuthenticationFlow.isEmpty) {
+      allMessages.clear();
     }
     _addTyping();
-    // _scrollToLast();
+
     try {
       final response = await _repository.getCurrentSession();
       sessionId = response.data.id.toString();
-      allMessage = [
-        ...authMessages,
+      allMessages = [
+        ...messagesFromAuthenticationFlow,
         ...response.data.messages
             .where((element) => element.user != 'system')
             .map((e) => MentraChatModel.fromResponse(e))
       ];
       await _removeTyping();
 
-      emit(MessageUpdatedState(allMessage));
+      emit(MessageUpdatedState(allMessages));
       _scrollToLast();
-
       emit(GetCurrentSessionSuccessState(response));
     } catch (e) {
       emit(GetCurrentSessionFailureState(e.toString()));
@@ -69,7 +66,7 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       ContinueSessionEvent event, Emitter<MentraChatState> emit) async {
     SoundManager.playMessageSentSound();
     final MentraChatModel message = MentraChatModel.fromPrompt(event.prompt);
-    allMessage.add(message);
+    allMessages.add(message);
     _addTyping();
     _scrollToLast();
     emit(ContinueSessionLoading());
@@ -78,9 +75,8 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
           await _repository.continueSession(event.sessionId, event.prompt);
       // emit(ContinueSessionSuccessState(response));
 
-      allMessage = [
-
-        ...authMessages,
+      allMessages = [
+        ...messagesFromAuthenticationFlow,
         ...response.data.messages
             .where((element) => element.user != 'system')
             .map((e) => MentraChatModel.fromResponse(e))
@@ -88,12 +84,12 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       _removeTyping();
       SoundManager.playMessageReceivedSound();
 
-      emit(MessageUpdatedState(allMessage));
+      emit(MessageUpdatedState(allMessages));
       _scrollToLast();
     } catch (e) {
       _removeTyping();
       final updatedMessage = message..sendingState = SendingState.failed;
-      allMessage.map((msg) => msg == message ? updatedMessage : msg).toList();
+      allMessages.map((msg) => msg == message ? updatedMessage : msg).toList();
       emit(ContinueSessionFailureState(e.toString()));
     }
   }
@@ -114,50 +110,42 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   }
 
   void _addTyping() async {
-    // await Future.delayed(const Duration(seconds: 1));
-    allMessage.add(MentraChatModel.typing());
-    emit(MessageUpdatedState(allMessage));
+    allMessages.add(MentraChatModel.typing());
+    emit(MessageUpdatedState(allMessages));
   }
 
   Future _removeTyping() async {
-    // await Future.delayed(const Duration(milliseconds: 400));
-    allMessage.removeWhere((element) => element.isTyping == true);
-    // emit(MessageUpdatedState(allMessage));
-
-    // await Future.delayed(const Duration(milliseconds: 300));
+    allMessages.removeWhere((element) => element.isTyping == true);
   }
 
   FutureOr<void> _mapRetryMessageEventToState(
       RetryMessageEvent event, Emitter<MentraChatState> emit) async {
     final MentraChatModel loadingMessage = event.message
       ..sendingState = SendingState.loading;
-    allMessage
+    allMessages
         .map((msg) => msg == event.message ? loadingMessage : msg)
         .toList();
+    await _removeTyping();
     _addTyping();
     _scrollToLast();
     emit(const RetryMessageLoadingState());
     try {
       final response =
           await _repository.continueSession(sessionId, event.message.content);
-      allMessage = [
-        ...authMessages,
+      allMessages = [
+        ...messagesFromAuthenticationFlow,
         ...response.data.messages
             .where((element) => element.user != 'system')
             .map((e) => MentraChatModel.fromResponse(e))
       ];
       _removeTyping();
-      // response.data.messages
-      // .where((element) => element.user != 'system')
-      // .map((e) => MentraChatModel.fromResponse(e))
-      // .toList();
 
-      emit(MessageUpdatedState(allMessage));
+      emit(MessageUpdatedState(allMessages));
       _scrollToLast();
     } catch (e) {
       _removeTyping();
       final updatedMessage = loadingMessage..sendingState = SendingState.failed;
-      allMessage
+      allMessages
           .map((msg) => msg == loadingMessage ? updatedMessage : msg)
           .toList();
       emit(ContinueSessionFailureState(e.toString()));
@@ -166,9 +154,22 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
 
   FutureOr<void> _mapAddSignupMessagesEventToState(
       AddAuthMessagesEvent event, Emitter<MentraChatState> emit) {
-    authMessages.addAll(event.signupMessages);
-    allMessage =
-        authMessages.where((element) => element.isTyping == false).toList();
+    messagesFromAuthenticationFlow.addAll(event.signupMessages);
+    allMessages = messagesFromAuthenticationFlow
+        .where((element) => element.isTyping == false)
+        .toList();
     emit(SignupMessageAdded());
+  }
+
+  FutureOr<void> _mapReviewMentraSessionEventToState(
+      ReviewMentraSessionEvent event, Emitter<MentraChatState> emit) async {
+    emit(const ReviewMentraLoadingState());
+    // _addTyping();
+    try {
+      final response = await _repository.reviewMentraSession();
+      emit(ReviewMentraSessionSuccessState(response));
+    } catch (e) {
+      emit(ReviewMentraSessionFailureState(e.toString()));
+    }
   }
 }

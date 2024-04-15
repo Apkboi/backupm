@@ -191,8 +191,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               Center(
                 child: CustomNeumorphicButton(
                   onTap: () {
-                    _endSession(context);
-                    // _reScheduleTherapy(context);
+                    // _endSession(context);
+                    _reScheduleTherapy(context);
                   },
                   color: Pallets.primary,
                   expanded: false,

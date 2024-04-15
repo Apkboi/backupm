@@ -43,12 +43,20 @@ class EndMentraSessionEvent extends MentraChatEvent {
   final String? comment;
 
   const EndMentraSessionEvent(
-    this.sessionId,
-      {
+    this.sessionId, {
     this.feeling,
     this.comment,
   });
 
   @override
   List<Object?> get props => [sessionId, feeling, comment];
+}
+
+class ReviewMentraSessionEvent extends MentraChatEvent {
+  dynamic payload;
+
+  ReviewMentraSessionEvent(this.payload);
+
+  @override
+  List<Object?> get props => [payload];
 }

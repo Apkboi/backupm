@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
@@ -41,8 +41,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     _welcome();
     DashboardUsecase().execute();
-    // _initMesibo();
-    // _startMentraChat();
+
     super.initState();
   }
 
@@ -102,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen>
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -280.h, right: 0, left: 0, child: const HomeBotImage()),
+                        top: -280.h,
+                        right: 0,
+                        left: 0,
+                        child: const HomeBotImage()),
                     Positioned(
                         top: -98,
                         right: 0,
@@ -233,23 +235,7 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _welcome() async {
-
-    if(widget.startConvo){
-      _startMentraChat();
-
-    }
-    // if (widget.authenticate && SessionManager.instance.bioMetricEnabled) {
-    //   var authenticated =
-    //       await injector.get<LocalAuthCubit>().authenticateUser();
-    //   if (authenticated) {
-    //     _startMentraChat();
-    //   } else {
-    //     // SystemNavigator.pop();
-    //     exit(0);
-    //   }
-    // } else {
-    //
-    // }
+    DailyStreakChecker.checkForStreak();
   }
 }
 

@@ -152,13 +152,13 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
                                       // reverse: true,
                                       itemCount: context
                                           .watch<MentraChatBloc>()
-                                          .allMessage
+                                          .allMessages
                                           .length,
                                       itemBuilder: (context, index) =>
                                           TalkToMentraMessageBox(
                                         message: context
                                             .watch<MentraChatBloc>()
-                                            .allMessage
+                                            .allMessages
                                             .reversed
                                             .toList()[index],
                                       ),
@@ -217,43 +217,6 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
     } else {
       restartSession = false;
     }
-
-    // if (sessionEnded ?? false) {
-    //   final bool? writeReview = await CustomDialogs.showBottomSheet(
-    //       context, const MentraSessionEndedSheet(),
-    //       shape: const RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.only(
-    //         topLeft: Radius.circular(16),
-    //         topRight: Radius.circular(16),
-    //       )),
-    //       constraints: BoxConstraints(maxHeight: 0.9.sh));
-    //
-    //   if (writeReview ?? false) {
-    //     final bool? wroteFeedback =
-    //         await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
-    //             shape: const RoundedRectangleBorder(
-    //                 borderRadius: BorderRadius.only(
-    //               topLeft: Radius.circular(16),
-    //               topRight: Radius.circular(16),
-    //             )),
-    //             constraints: BoxConstraints(maxHeight: 0.9.sh));
-    //
-    //     if (wroteFeedback ?? false) {
-    //       await CustomDialogs.showBottomSheet(
-    //           context, const FeedbackSuccessDialog(),
-    //           shape: const RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.only(
-    //             topLeft: Radius.circular(16),
-    //             topRight: Radius.circular(16),
-    //           )),
-    //           constraints: BoxConstraints(maxHeight: 0.9.sh));
-    //       goBack(context, restart: restart);
-    //     }
-    //     goBack(context, restart: restart);
-    //   } else {
-    //     goBack(context, restart: restart);
-    //   }
-    // }
   }
 
   void goBack(BuildContext context, {bool restart = false}) {
@@ -278,14 +241,6 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
     }
     if (state is EndMentraSessionnSuccessState) {
       context.pop();
-      // await CustomDialogs.showBottomSheet(
-      //     context, const FeedbackSuccessDialog(),
-      //     shape: const RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.only(
-      //       topLeft: Radius.circular(16),
-      //       topRight: Radius.circular(16),
-      //     )),
-      //     constraints: BoxConstraints(maxHeight: 0.9.sh));
 
       if (!restartSession) {
         CustomDialogs.success('Thank you for your feedback.');
@@ -293,7 +248,6 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
       } else {
         bloc.add(GetCurrentSessionEvent());
       }
-// CustomDialogs.success();
     }
 
     if (state is EndMentraSessionFailureState) {
@@ -314,33 +268,27 @@ class _InputBar extends StatelessWidget {
   _InputBar({Key? key}) : super(key: key);
   final controller = TextEditingController();
 
+  bool _enableTextField(MentraChatState state) =>
+      !(state is GetCurrentSessionLoading ||
+          state is ContinueSessionLoading ||
+          state is GetCurrentSessionFailureState ||
+          state is ContinueSessionFailureState);
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // InkWell(
-        //   onTap: () {
-        //     _endSession(context);
-        //   },
-        //   child: const CircleAvatar(
-        //     backgroundColor: Pallets.white,
-        //     radius: 24,
-        //     child: Icon(
-        //       Icons.close,
-        //       color: Pallets.red,
-        //     ),
-        //   ),
-        // ),
-        // 10.horizontalSpace,
         Expanded(
             child: BlocConsumer<MentraChatBloc, MentraChatState>(
-          listener: (context, state) {},
+          bloc: context.read(),
+          listener: (context, state) {
+            logger.i(_enableTextField(state));
+          },
           builder: (context, state) {
             return FilledTextField(
                 hasBorder: false,
                 controller: controller,
-                enabled: state is! GetCurrentSessionLoading &&
-                    state is! ContinueSessionLoading,
+                enabled: _enableTextField(state),
                 hasElevation: false,
                 minLine: 1,
                 maxLine: 5,

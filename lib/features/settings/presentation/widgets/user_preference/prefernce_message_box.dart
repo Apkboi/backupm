@@ -6,6 +6,8 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
+import '../../../../../common/widgets/text_view.dart';
+
 class PreferenceQuestionBox extends StatefulWidget {
   const PreferenceQuestionBox({
     Key? key,
@@ -61,12 +63,15 @@ class _PreferenceQuestionBoxState extends State<PreferenceQuestionBox> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.question.question.reversed.toList()[index],
+                      TextView(
+                        text: widget.question.question.reversed.toList()[index],
+                        lineHeight: 1.5,
                         style: const TextStyle(color: Pallets.white),
                       ),
                       8.verticalSpace,
-                      Text(TimeUtil.formatTime(widget.question.questionTime!),
+                      TextView(
+                          text: TimeUtil.formatTime(
+                              widget.question.questionTime!),
                           style: TextStyle(
                             fontSize: 11.sp,
                             color: Pallets.white,

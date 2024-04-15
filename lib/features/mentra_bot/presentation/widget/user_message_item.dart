@@ -69,9 +69,7 @@ class _UserMessageItemState extends State<UserMessageItem>
         Container(
           constraints: BoxConstraints(maxWidth: 0.7.sw),
           child: ChatBubble(
-            padding: EdgeInsets.symmetric(
-              horizontal: 8.w,vertical: 7
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 7),
             backGroundColor: Pallets.secondary,
             clipper: ChatBubbleClipper3(
                 type: BubbleType.sendBubble, nipSize: 4, radius: 15),

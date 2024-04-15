@@ -62,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             : null,
         title: tittle ??
             TextView(
-              text: tittleText ?? 'My Appbar',
+              text: tittleText ?? '',
               fontSize: 16,
               fontWeight: FontWeight.w600,
               style: GoogleFonts.plusJakartaSans(

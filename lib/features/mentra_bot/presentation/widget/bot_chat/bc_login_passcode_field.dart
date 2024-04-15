@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +65,6 @@ class _BCLoginPasscodeFieldState extends State<BCLoginPasscodeField> {
           answer: '****',
           nextFlow: BotChatFlow.talkToMentra);
 
-
       // context.goNamed(PageUrl.talkToMentraScreen);
     }
 
@@ -76,7 +74,4 @@ class _BCLoginPasscodeFieldState extends State<BCLoginPasscodeField> {
       // _pinController.resetPin();
     }
   }
-
-
-
 }

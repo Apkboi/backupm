@@ -76,12 +76,17 @@ class _HomeTasksWidgetState extends State<HomeTasksWidget> {
         } else {
           return Container(
             width: 1.sw,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+            height: 85.h,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
             decoration: BoxDecoration(
                 color: Pallets.dailyTaskBg.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12.r)),
-            child:
-                const TextView(text: 'You have no daily task assigned to you'),
+            child: const Center(
+                child: TextView(
+              text: 'You have no daily task assigned to you',
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            )),
           );
           //
         }
