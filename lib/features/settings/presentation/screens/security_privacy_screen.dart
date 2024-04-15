@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
+import 'package:mentra/features/authentication/onboarding/presentaion/widgets/language_selection_sheet.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
 
 class SecurityPrivacyScreen extends StatefulWidget {
@@ -88,7 +90,10 @@ class _SecurityPrivacyScreenState extends State<SecurityPrivacyScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(17),
                     child: SettingListTile(
-                        onTap: () {},
+                        onTap: () {
+                          CustomDialogs.showBottomSheet(
+                              context, const LanguageSelectionSheet());
+                        },
                         // leadingWidget: 0.horizontalSpace,
                         tittle: 'Change Language'),
                   ),
