@@ -139,7 +139,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       // const HomeWorkSheetWidget(),
                       // 14.verticalSpace,
                       // const UpcomingSessionsWidget(),
-                      25.verticalSpace,
+                      35.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
                         fontSize: 16,
