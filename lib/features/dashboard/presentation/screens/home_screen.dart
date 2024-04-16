@@ -14,13 +14,10 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/ai_review_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
-import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,8 +32,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    implements MesiboConnectionListener {
-  Mesibo mesibo = Mesibo();
+     {
 
   @override
   void initState() {
@@ -213,27 +209,9 @@ class _HomeScreenState extends State<HomeScreen>
   //   );
   // }
 
-  void _initMesibo() async {
-    // await mesibo.stop();
-    mesibo.setAccessToken(injector.get<UserBloc>().appUser?.mesiboUserToken);
-    mesibo.setListener(this);
-    mesibo.start();
-  }
 
-  @override
-  void Mesibo_onConnectionStatus(int status) {
-    logger.i(status);
-  }
 
-  void _startMentraChat() {
-    if (widget.startConvo) {
-      Future.delayed(const Duration(seconds: 1), () {
-        context.pushNamed(
-          PageUrl.talkToMentraScreen,
-        );
-      });
-    }
-  }
+
 
   void _welcome() async {
     DailyStreakChecker.checkForStreak();

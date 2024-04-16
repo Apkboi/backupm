@@ -13,7 +13,6 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
-import 'package:mentra/features/notification/presentation/widget/notification_item.dart';
 import 'package:mentra/features/streaks/presentation/bloc/daily_streak_bloc.dart';
 import 'package:mentra/features/tasks/presentation/widget/badge_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
@@ -27,7 +26,6 @@ class BadgesScreen extends StatefulWidget {
 }
 
 class _BadgesScreenState extends State<BadgesScreen> {
-  var _streakBloc = DailyStreakBloc(injector.get());
 
   @override
   void initState() {

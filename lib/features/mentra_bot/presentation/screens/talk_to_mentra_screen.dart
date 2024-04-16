@@ -146,6 +146,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
                                     )
                                   : ScrollablePositionedList.builder(
                                       reverse: true,
+                                      padding: EdgeInsets.zero,
                                       itemScrollController: context
                                           .read<MentraChatBloc>()
                                           .scrollController,
@@ -163,6 +164,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
                                             .toList()[index],
                                       ),
                                     )),
+                          16.verticalSpace,
                           _InputBar()
                         ],
                       ),

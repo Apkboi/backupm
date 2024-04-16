@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +10,6 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
-import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/utils/string_extension.dart';
 import 'package:mentra/features/account/presentation/profile_image_widget.dart';

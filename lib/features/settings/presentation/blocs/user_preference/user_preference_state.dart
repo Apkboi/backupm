@@ -39,3 +39,9 @@ class UpdatePreferenceSuccessState extends UserPreferenceState {
 // @override
 // List<Object> get props => [];
 }
+
+class RemoveTypingState extends UserPreferenceState {
+  RemoveTypingState();
+// @override
+// List<Object> get props => [];
+}

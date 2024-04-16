@@ -25,7 +25,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  bool _passwordObscured = true;
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -33,7 +32,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   var year = '';
 
   // final _nameController = TextEditingController();
-  final _bloc = SettingsBloc(injector.get());
 
   @override
   void initState() {
@@ -87,8 +85,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Center(
                                 child: CustomNeumorphicButton(
                                     expanded: false,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 10),
+                                    padding:  EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 10.h),
                                     onTap: () {
                                       context
                                           .pushNamed(PageUrl.editAvatarScreen);

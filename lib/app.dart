@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mentra/core/di/injector.dart';
-import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:mentra/app_config.dart';
 import 'package:mentra/core/services/network/url_config.dart';
@@ -23,14 +21,10 @@ class MentraApp extends StatefulWidget {
   State<MentraApp> createState() => _MentraAppState();
 }
 
-class _MentraAppState extends State<MentraApp>
-    implements MesiboConnectionListener {
-  @override
-  void Mesibo_onConnectionStatus(int status) {
-    logger.i(status);
-  }
+class _MentraAppState extends State<MentraApp> {
 
-  Mesibo mesibo = Mesibo();
+
+
 
   @override
   void initState() {

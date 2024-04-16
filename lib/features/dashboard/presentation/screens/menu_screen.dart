@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -10,19 +9,13 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
-import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/mood_checker_widget.dart';
-import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
-import 'package:mentra/features/dashboard/presentation/widget/upcoming_session.dart';
 import 'package:mentra/features/streaks/presentation/widget/daily_streak_widget.dart';
-import 'package:mentra/features/streaks/presentation/widget/new_streak_dialog.dart';
 import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart';
-import 'package:mentra/features/therapy/presentation/widgets/upcoming_session_widget.dart';
-import 'package:mentra/features/work_sheet/presentation/widgets/hom_worksheet_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {

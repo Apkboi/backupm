@@ -3,16 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
-import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/dormain/services/mentra_message_mapper.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
-import 'package:mentra/features/streaks/presentation/widget/new_streak_dialog.dart';
 
 class LoginSignupListener extends StatefulWidget {
   const LoginSignupListener({super.key, required this.child});

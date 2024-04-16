@@ -5,20 +5,17 @@ abstract class SessionEvent {
 }
 
 class GetMessagesEvent extends SessionEvent {
-  @override
   List<Object?> get props => [];
 }
 
 class SendMessageEvent extends SessionEvent {
-  @override
   List<Object?> get props => [];
 }
 
 class MessageReceivedEvent extends SessionEvent {
-  final MesiboMessage message;
+  final dynamic message;
 
   MessageReceivedEvent(this.message);
 
-  @override
   List<Object?> get props => [message];
 }

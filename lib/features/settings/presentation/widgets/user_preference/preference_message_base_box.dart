@@ -31,7 +31,7 @@ class _PreferenceQuestionBaseBoxState extends State<PreferenceQuestionBaseBox> {
         Container(
             // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
             alignment: Alignment.centerRight,
-            // padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.only(top: 5),
             child: PreferenceAnswerBox(
               question: widget.question,
             )),

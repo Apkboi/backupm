@@ -19,7 +19,6 @@ import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.d
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
-import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'end_therapy_session_dialog.dart';
@@ -34,7 +33,6 @@ class TherapyDetailsSheet extends StatefulWidget {
 }
 
 class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
-  static final MesiboUI _mesiboUi = MesiboUI();
 
   @override
   Widget build(BuildContext context) {
@@ -242,45 +240,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
   }
 
   void launchMessage() async {
-    // PermissionHandlerService().requestPermission(Permission.microphone);
-    // PermissionHandlerService().requestPermission(Permission.mediaLibrary);
-    // PermissionHandlerService().requestPermission(Permission.camera);
-    logger.i(widget.session.therapist.user.mesiboUserToken);
 
-    MesiboProfile pro = MesiboProfile(
-        groupId: 0,
-        uid: int.parse(widget.session.therapist.user.mesiboUserId),
-        selfProfile: false,
-        hash_id: 0);
-    MesiboProfile profile =
-        await Mesibo().getUserProfile(widget.session.therapist.user.email);
-    profile.setImageUrl(widget.session.therapist.user.avatar);
-    // profile.address = ;
-    profile.save();
-    logger.i(widget.session.therapist.user.mesiboUserToken);
-    // profile.setImagePath(widget.session.therapist.user.avatar);
-    // profile.address = widget.session.therapist.user.avatar;
-    _mesiboUi.getUiDefaults().then((MesiboUIOptions options) {
-      options.enableBackButton = true;
-      options.appName = "Mentra";
-      options.toolbarColor = 0xff00868b;
-      options.onlineIndicationTitle = 'Online';
-      options.statusBarColor = Pallets.primary.value;
-      options.toolbarColor = Pallets.primary.value;
-      options.offlineIndicationTitle = 'Offline';
-      options.emptyMessageListMessage = 'No messages here';
-      _mesiboUi.setUiDefaults(options);
-    });
-
-    MesiboUIButtons buttons = MesiboUIButtons();
-    buttons.message = true;
-    buttons.audioCall = false;
-    buttons.videoCall = false;
-    buttons.groupAudioCall = false;
-    buttons.groupVideoCall = false;
-    buttons.endToEndEncryptionInfo = true; // e2// ee should be enabled
-    _mesiboUi.setupBasicCustomization(buttons, null);
-    _mesiboUi.launchMessaging(profile);
   }
 
   void _endSession(BuildContext context) async {

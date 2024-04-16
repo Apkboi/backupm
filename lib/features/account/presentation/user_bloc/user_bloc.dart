@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/database/local/userstorage.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/account/dormain/repository/account_repository.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 

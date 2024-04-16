@@ -7,7 +7,6 @@ import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
-import 'package:mesibo_flutter_sdk/mesibo.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class NotificationDetailsSheet extends StatefulWidget {
@@ -21,7 +20,6 @@ class NotificationDetailsSheet extends StatefulWidget {
 }
 
 class _NotificationDetailsSheetState extends State<NotificationDetailsSheet> {
-  static final MesiboUI _mesiboUi = MesiboUI();
 
   @override
   Widget build(BuildContext context) {

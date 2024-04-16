@@ -104,6 +104,7 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
                                 .toList()[index],
                           ),
                         )),
+                        10.verticalSpace,
                         _InputBar(
                           currentFlow: widget.flow,
                         )
@@ -209,6 +210,7 @@ class _InputBarState extends State<_InputBar> {
       context.read<UserPreferenceCubit>().answerQuestion(
           id: context.read<UserPreferenceCubit>().currentQuestion?.id ?? -1,
           answer: controller.text.trim());
+
       controller.clear();
     }
   }
