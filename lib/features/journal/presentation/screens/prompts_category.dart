@@ -10,15 +10,14 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
+import 'package:mentra/features/journal/presentation/widgets/gouded_category_item.dart';
 import 'package:mentra/features/journal/presentation/widgets/guided_prompt_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class NewJournalSheet extends StatefulWidget {
-  const NewJournalSheet({super.key, this.categoryId});
-
-  final dynamic categoryId;
+  const NewJournalSheet({super.key});
 
   @override
   State<NewJournalSheet> createState() => _NewJournalSheetState();
@@ -96,13 +95,13 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                   listener: _listenToJournalBloc,
                   bloc: _journalBloc,
                   builder: (context, state) {
-                    if (state is GetPromptsLoadingState) {
+                    if (state is GetPromptsCategoryLoadingState) {
                       return Center(
                         child: CustomDialogs.getLoading(size: 30),
                       );
                     }
 
-                    if (state is GetPromptsFailureState) {
+                    if (state is GetPromptsCategoryFailureState) {
                       return Center(
                         child: AppPromptWidget(
                           onTap: () {
@@ -112,7 +111,7 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                       );
                     }
 
-                    if (state is GetPromptsSuccessState) {
+                    if (state is GetPromptsCategorySuccessState) {
                       if (state.response.data.isNotEmpty) {
                         return RefreshIndicator(
                           onRefresh: () async {
@@ -123,7 +122,7 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) => Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
-                              child: GuidedPromptsItem(
+                              child: PromptCategoryItem(
                                 prompt: state.response.data[index],
                               ),
                             ),
@@ -132,7 +131,7 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                       } else {
                         return RefreshIndicator(
                           onRefresh: () async {
-                            _journalBloc.add(GetPromptsEvent());
+                            _journalBloc.add(GetPromptsCategoriesEvent());
                           },
                           child: Center(
                             child: ListView(

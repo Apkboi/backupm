@@ -19,16 +19,18 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<GetJournalsEvent>(_mapGetJournalsEventToState);
     on<DeleteJournalsEvent>(_mapDeleteJournalsEventToState);
     on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
+    on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
+    on<GetPromptsCategoriesEvent>(_mapGetPromptsCategoriesEventToState);
   }
 
   List<GuidedJournal>? journals;
+
   // final
 
   Future<void> _mapUpdateJournalEventToState(
     UpdateJournalEvent event,
     Emitter<JournalState> emit,
   ) async {
-
     emit(UpdateJournalLoadingState());
     try {
       final response = await _journalRepository.updateJournal(
@@ -62,7 +64,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   ) async {
     emit(GetPromptsLoadingState());
     try {
-      final response = await _journalRepository.getPrompts();
+      final response = await _journalRepository.getPrompts(0);
       emit(GetPromptsSuccessState(response: response));
     } catch (e) {
       emit(GetPromptsFailureState(error: e.toString()));
@@ -93,6 +95,17 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
       emit(DeleteJournalsSuccessState(response: response));
     } catch (e) {
       emit(DeleteJournalsFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapGetPromptsCategoriesEventToState(
+      GetPromptsCategoriesEvent event, Emitter<JournalState> emit) async {
+    emit(GetPromptsCategoryLoadingState());
+    try {
+      final response = await _journalRepository.getPromptsCategories();
+      emit(GetPromptsCategorySuccessState(response: response));
+    } catch (e) {
+      emit(GetPromptsCategoryFailureState(error: e.toString()));
     }
   }
 }

@@ -112,9 +112,13 @@ class UrlConfig {
   static const String getJournals = '/guided-journals';
   static const String saveJournals = '/guided-journals/save';
 
+
+  // Journals
   static String deleteJournal(String id) => '/guided-journals/$id/delete';
 
   static String updateJournal(String id) => '/guided-journals/$id/update';
+  static const String getPromptsCategory = '/user/ai-sessions/current';
+
 
 //   Mentra chat
   static const String currentSession = '/user/ai-sessions/current';
