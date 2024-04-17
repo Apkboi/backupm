@@ -35,6 +35,8 @@ import 'package:mentra/features/journal/data/models/get_journals_response.dart';
 import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/presentation/screens/create_journal_screen.dart';
 import 'package:mentra/features/journal/presentation/screens/journal_screen.dart';
+import 'package:mentra/features/journal/presentation/screens/prompts_category.dart';
+import 'package:mentra/features/journal/presentation/widgets/guided_prompts_screen.dart';
 import 'package:mentra/features/library/presentation/screens/all_articles_screen.dart';
 import 'package:mentra/features/library/presentation/screens/article_details_screen.dart';
 import 'package:mentra/features/library/presentation/screens/audio_article_screen.dart';
@@ -445,6 +447,18 @@ class CustomRoutes {
         path: '/badgesScreen',
         name: PageUrl.badgesScreen,
         builder: (context, state) => const BadgesScreen(),
+      ),
+      GoRoute(
+        path: '/promptsCategoryScreen',
+        name: PageUrl.promptsCategoryScreen,
+        builder: (context, state) => const PromptsCategoryScreen(),
+      ),
+      GoRoute(
+        path: '/guidedPromptScreen',
+        name: PageUrl.guidedPromptScreen,
+        builder: (context, state) => GuidedPromptsScreen(
+          categoryId: state.uri.queryParameters[PathParam.id] ?? '',
+        ),
       ),
     ],
   );

@@ -41,22 +41,25 @@ class _DailyTaskTabState extends State<DailyTaskTab> {
                 );
               }
 
-              if (dailyTasks.isNotEmpty) {
+              if (dailyTasks!= null) {
                 return RefreshIndicator(
                   onRefresh: () async {
                     injector.get<DailyTaskBloc>().add(GetDailyTaskEvent());
                   },
-                  child: ListView.builder(
-                    itemCount: dailyTasks.length,
+                  child: ListView(
+
                     padding: const EdgeInsets.symmetric(
                       horizontal: 0,
                     ),
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: DailyTaskItem(
-                        task: dailyTasks[index],
-                      ),
-                    ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: DailyTaskItem(
+                          task: dailyTasks,
+                        ),
+                      )
+                    ],
+
                   ),
                 );
               } else {

@@ -173,13 +173,13 @@ class _PromptWidget extends StatelessWidget {
             width: 1.sw,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: prompt?.backgroundColor.toString().toColor(),
+                color: prompt?.category.backgroundColor.toString().toColor(),
                 borderRadius: BorderRadius.circular(10)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextView(
-                  text: prompt!.title.toString(),
+                  text: prompt!.category.title.toString(),
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Pallets.navy,

@@ -21,19 +21,6 @@ class GetPromptsResponse {
     required this.code,
   });
 
-  GetPromptsResponse copyWith({
-    String? message,
-    List<JournalPrompt>? data,
-    bool? success,
-    int? code,
-  }) =>
-      GetPromptsResponse(
-        message: message ?? this.message,
-        data: data ?? this.data,
-        success: success ?? this.success,
-        code: code ?? this.code,
-      );
-
   factory GetPromptsResponse.fromJson(Map<String, dynamic> json) => GetPromptsResponse(
     message: json["message"],
     data: List<JournalPrompt>.from(json["data"].map((x) => JournalPrompt.fromJson(x))),
@@ -51,59 +38,68 @@ class GetPromptsResponse {
 
 class JournalPrompt {
   final int id;
-  final String title;
+  final Category category;
   final String content;
-  final dynamic status;
-  final dynamic createdAt;
-  final dynamic updatedAt;
-  final dynamic backgroundColor;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   JournalPrompt({
     required this.id,
-    required this.title,
+    required this.category,
     required this.content,
-    required this.status,
     required this.createdAt,
     required this.updatedAt,
-    required this.backgroundColor,
   });
-
-  JournalPrompt copyWith({
-    int? id,
-    String? title,
-    String? content,
-    String? status,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    dynamic backgroundColor,
-  }) =>
-      JournalPrompt(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        content: content ?? this.content,
-        status: status ?? this.status,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-      );
 
   factory JournalPrompt.fromJson(Map<String, dynamic> json) => JournalPrompt(
     id: json["id"],
-    title: json["title"],
+    category: Category.fromJson(json["category"]),
     content: json["content"],
+    createdAt: DateTime.parse(json["created_at"]),
+    updatedAt: DateTime.parse(json["updated_at"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "category": category.toJson(),
+    "content": content,
+    "created_at": createdAt.toIso8601String(),
+    "updated_at": updatedAt.toIso8601String(),
+  };
+}
+
+class Category {
+  final int id;
+  final String title;
+  final String backgroundColor;
+  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+
+  Category({
+    required this.id,
+    required this.title,
+    required this.backgroundColor,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+    id: json["id"],
+    title: json["title"],
+    backgroundColor: json["background_color"],
     status: json["status"],
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
-    backgroundColor: json["background_color"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
-    "content": content,
+    "background_color": backgroundColor,
     "status": status,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
-    "background_color": backgroundColor,
   };
 }

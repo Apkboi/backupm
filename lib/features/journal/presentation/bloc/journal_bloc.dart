@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
+import 'package:mentra/features/journal/data/models/get_prompts_category_endpoint.dart';
 import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/dormain/repository/journals_repository.dart';
 
@@ -19,7 +20,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
     on<GetJournalsEvent>(_mapGetJournalsEventToState);
     on<DeleteJournalsEvent>(_mapDeleteJournalsEventToState);
     on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
-    on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
+    // on<UpdateJournalEvent>(_mapUpdateJournalEventToState);
     on<GetPromptsCategoriesEvent>(_mapGetPromptsCategoriesEventToState);
   }
 
@@ -64,7 +65,7 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   ) async {
     emit(GetPromptsLoadingState());
     try {
-      final response = await _journalRepository.getPrompts(0);
+      final response = await _journalRepository.getPrompts(event.categoryId);
       emit(GetPromptsSuccessState(response: response));
     } catch (e) {
       emit(GetPromptsFailureState(error: e.toString()));

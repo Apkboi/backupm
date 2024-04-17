@@ -107,18 +107,15 @@ class UrlConfig {
   static const String getPlans = '/finance/plans';
   static const String subscribe = '/finance/subscriptions/initiate';
 
-  //  Subscription
-  static const String getPrompts = '/guided-prompts';
+  //  Journals
+  static String getPrompts(String id) => '/guided-prompts-categories/$id/show';
   static const String getJournals = '/guided-journals';
   static const String saveJournals = '/guided-journals/save';
 
-
-  // Journals
   static String deleteJournal(String id) => '/guided-journals/$id/delete';
 
   static String updateJournal(String id) => '/guided-journals/$id/update';
-  static const String getPromptsCategory = '/user/ai-sessions/current';
-
+  static String getPromptsCategory = '/guided-prompts-categories';
 
 //   Mentra chat
   static const String currentSession = '/user/ai-sessions/current';

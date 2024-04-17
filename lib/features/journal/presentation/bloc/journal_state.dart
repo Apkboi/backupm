@@ -132,7 +132,7 @@ class GetPromptsCategoryLoadingState extends JournalState {
 }
 
 class GetPromptsCategorySuccessState extends JournalState {
-  final dynamic response;
+  final GetPromptsCategoryResponse response;
 
   GetPromptsCategorySuccessState({required this.response});
 

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_intro/flutter_intro.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentra/common/screens/intro_demo.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -31,9 +33,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-     {
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _welcome();
@@ -171,6 +171,12 @@ class _HomeScreenState extends State<HomeScreen>
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: CustomNeumorphicButton(
                                   onTap: () {
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           Intro(child: const DemoUsage()),
+                                    //     ));
                                     context
                                         .pushNamed(PageUrl.talkToMentraScreen);
                                   },
@@ -208,10 +214,6 @@ class _HomeScreenState extends State<HomeScreen>
   //     )),
   //   );
   // }
-
-
-
-
 
   void _welcome() async {
     DailyStreakChecker.checkForStreak();

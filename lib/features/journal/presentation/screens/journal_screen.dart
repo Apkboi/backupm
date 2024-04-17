@@ -17,7 +17,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/journal/presentation/widgets/jornal_item.dart';
-import 'package:mentra/features/journal/presentation/widgets/new_journal_sheet.dart';
+import 'package:mentra/features/journal/presentation/widgets/guided_prompts_screen.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -46,8 +46,7 @@ class _JournalScreenState extends State<JournalScreen> {
         child: CustomNeumorphicButton(
           padding: const EdgeInsets.all(16),
           onTap: () {
-            CustomDialogs.showCupertinoBottomSheet(
-                context, const NewJournalSheet());
+            context.pushNamed(PageUrl.promptsCategoryScreen);
           },
           color: Pallets.primary,
           expanded: false,

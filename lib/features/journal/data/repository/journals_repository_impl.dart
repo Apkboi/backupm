@@ -1,7 +1,9 @@
 import 'package:mentra/common/models/success_response.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
+import 'package:mentra/features/journal/data/models/get_prompts_category_endpoint.dart';
 import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
 import 'package:mentra/features/journal/data/models/save_journal_response.dart';
 import 'package:mentra/features/journal/dormain/repository/journals_repository.dart';
@@ -56,7 +58,7 @@ class JournalsRepositoryImpl extends JournalsRepository {
   Future<GetPromptsResponse> getPrompts(dynamic categoryId) async {
     try {
       final response = await _networkService.call(
-        UrlConfig.getPrompts,
+        UrlConfig.getPrompts(categoryId),
         RequestMethod.get,
       );
       return GetPromptsResponse.fromJson(response.data);
@@ -81,14 +83,15 @@ class JournalsRepositoryImpl extends JournalsRepository {
   }
 
   @override
-  Future getPromptsCategories() async {
+  Future<GetPromptsCategoryResponse> getPromptsCategories() async {
     try {
       final response = await _networkService.call(
         UrlConfig.getPromptsCategory,
         RequestMethod.get,
       );
-      return response.data;
-    } catch (e) {
+      return GetPromptsCategoryResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.i(e, stackTrace: stack);
       rethrow;
     }
   }

@@ -15,8 +15,12 @@ class CreateJournalEvent extends JournalEvent {
 }
 
 class GetPromptsEvent extends JournalEvent {
+  final String categoryId;
+
+  const GetPromptsEvent(this.categoryId);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [categoryId];
 }
 
 class GetPromptsCategoriesEvent extends JournalEvent {

@@ -25,7 +25,7 @@ class _HomeTasksWidgetState extends State<HomeTasksWidget> {
       listener: _listenToDailyBlocState,
       builder: (context, state) {
         var dailyTasks = injector.get<DailyTaskBloc>().dailyTasks;
-        if (dailyTasks.isNotEmpty) {
+        if (dailyTasks != null) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
             decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class _HomeTasksWidgetState extends State<HomeTasksWidget> {
                           children: [
                             Expanded(
                                 child: TextView(
-                              text: dailyTasks.first.title,
+                              text: dailyTasks?.title ?? "",
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             )),
