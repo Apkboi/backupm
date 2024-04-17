@@ -72,6 +72,12 @@ class PageUrl {
   static const updatePassword = 'updatePassword';
   static const account = 'account';
 
+
+  // JOURNAL
+  static const guidedPromptScreen = 'guidedPromptScreen';
+  static const promptsCategoryScreen = 'promptsCategoryScreen';
+
+
   ///NOTIFICATIONS
   static const notificationsPage = 'notificationsPage';
 

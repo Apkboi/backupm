@@ -29,34 +29,11 @@ class GuidedPromptsItem extends StatelessWidget {
         padding:
             const EdgeInsets.only(right: 16, left: 16, top: 16, bottom: 16),
         decoration: BoxDecoration(
-            color: prompt.backgroundColor.toString().toColor(),
+            color: prompt.category.backgroundColor.toString().toColor(),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: TextView(
-                    text: prompt.title,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: Pallets.primary,
-                  ),
-                ),
-                CircleAvatar(
-                  foregroundColor: Pallets.primary,
-                  backgroundColor: Pallets.white.withOpacity(0.5),
-                  radius: 12.r,
-                  child: ImageWidget(
-                    imageUrl: Assets.images.svgs.refreshIcon,
-                  ),
-                )
-              ],
-            ),
-            12.verticalSpace,
-
             Html(shrinkWrap: true, data: prompt.content, style: {
               "p": Style(
                   fontSize: FontSize(
@@ -72,6 +49,9 @@ class GuidedPromptsItem extends StatelessWidget {
                   // height: Height(15),
                   fontWeight: FontWeight.w400),
             }),
+
+
+
             // TextView(
             //   text: prompt.content,
             //   fontSize: 16,

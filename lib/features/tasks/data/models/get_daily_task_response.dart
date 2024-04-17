@@ -10,7 +10,7 @@ String getDailyTakResponseToJson(GetDailyTakResponse data) => json.encode(data.t
 
 class GetDailyTakResponse {
   final String message;
-  final List<DailyTaskModel> data;
+  final DailyTaskModel data;
   final bool success;
   final int code;
 
@@ -23,14 +23,14 @@ class GetDailyTakResponse {
 
   factory GetDailyTakResponse.fromJson(Map<String, dynamic> json) => GetDailyTakResponse(
     message: json["message"],
-    data: List<DailyTaskModel>.from(json["data"].map((x) => DailyTaskModel.fromJson(x))),
+    data: DailyTaskModel.fromJson(json["data"]),
     success: json["success"],
     code: json["code"],
   );
 
   Map<String, dynamic> toJson() => {
     "message": message,
-    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": data.toJson(),
     "success": success,
     "code": code,
   };

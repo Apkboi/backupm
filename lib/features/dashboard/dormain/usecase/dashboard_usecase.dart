@@ -14,7 +14,7 @@ class DashboardUsecase {
     injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
     injector.get<TherapyBloc>().add(GetSessionHistoryEvent());
     injector.get<JournalBloc>().add(GetJournalsEvent());
-    injector.get<JournalBloc>().add(GetPromptsEvent());
+    injector.get<JournalBloc>().add(GetPromptsCategoriesEvent());
     injector.get<WellnessLibraryBloc>().add(GetLibraryCategoriesEvent());
     injector.get<DailyTaskBloc>().add(GetDailyTaskEvent());
 

@@ -12,25 +12,26 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
-import 'package:mentra/features/journal/presentation/widgets/gouded_category_item.dart';
 import 'package:mentra/features/journal/presentation/widgets/guided_prompt_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class PromptsCategoryScreen extends StatefulWidget {
-  const PromptsCategoryScreen({super.key});
+class GuidedPromptsScreen extends StatefulWidget {
+  const GuidedPromptsScreen({super.key, required this.categoryId});
+
+  final String categoryId;
 
   @override
-  State<PromptsCategoryScreen> createState() => _PromptsCategoryScreenState();
+  State<GuidedPromptsScreen> createState() => _GuidedPromptsScreenState();
 }
 
-class _PromptsCategoryScreenState extends State<PromptsCategoryScreen> {
+class _GuidedPromptsScreenState extends State<GuidedPromptsScreen> {
   final _journalBloc = JournalBloc(injector.get());
 
   @override
   void initState() {
-    _journalBloc.add(GetPromptsCategoriesEvent());
+    _journalBloc.add(GetPromptsEvent(widget.categoryId));
     super.initState();
   }
 
@@ -38,7 +39,9 @@ class _PromptsCategoryScreenState extends State<PromptsCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(
+        tittleText: 'Guided Prompt',
+      ),
       body: Stack(
         children: [
           const AppBg(),
@@ -49,71 +52,45 @@ class _PromptsCategoryScreenState extends State<PromptsCategoryScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: CustomNeumorphicButton(
-                      onTap: () {
-                        context.pop();
-                        context.pushNamed(
-                          PageUrl.createJournalScreen,
-                        );
-                      },
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      color: Pallets.primary,
-                      child: Row(
-                        children: [
-                          ImageWidget(imageUrl: Assets.images.svgs.editFilled),
-                          5.horizontalSpace,
-                          const TextView(
-                            text: 'Blank Entry',
-                            color: Pallets.white,
-                            fontWeight: FontWeight.w600,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  16.verticalSpace,
-                  const TextView(
-                    text: 'Categories',
-                    fontSize: 16,
-                    color: Pallets.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  16.verticalSpace,
                   Expanded(
                       child: BlocConsumer<JournalBloc, JournalState>(
                     listener: _listenToJournalBloc,
                     bloc: _journalBloc,
                     builder: (context, state) {
-                      if (state is GetPromptsCategoryLoadingState) {
+                      if (state is GetPromptsLoadingState) {
                         return Center(
                           child: CustomDialogs.getLoading(size: 30),
                         );
                       }
 
-                      if (state is GetPromptsCategoryFailureState) {
+                      if (state is GetPromptsFailureState) {
                         return Center(
                           child: AppPromptWidget(
+                            message: state.error,
                             onTap: () {
-                              _journalBloc.add(GetPromptsCategoriesEvent());
+                              // logger.i('message');
+
+                              _journalBloc
+                                  .add(GetPromptsEvent(widget.categoryId));
                             },
                           ),
                         );
                       }
 
-                      if (state is GetPromptsCategorySuccessState) {
+                      if (state is GetPromptsSuccessState) {
                         if (state.response.data.isNotEmpty) {
                           return RefreshIndicator(
                             onRefresh: () async {
-                              _journalBloc.add(GetPromptsCategoriesEvent());
+                              _journalBloc
+                                  .add(GetPromptsEvent(widget.categoryId));
                             },
                             child: ListView.builder(
                               itemCount: state.response.data.length,
                               padding: EdgeInsets.zero,
                               itemBuilder: (context, index) => Padding(
-                                padding: EdgeInsets.only(bottom: 15.h),
-                                child: PromptCategoryItem(
-                                  category: state.response.data.reversed.toList()[index],
+                                padding: const EdgeInsets.only(bottom: 12.0),
+                                child: GuidedPromptsItem(
+                                  prompt: state.response.data[index],
                                 ),
                               ),
                             ),
@@ -121,7 +98,8 @@ class _PromptsCategoryScreenState extends State<PromptsCategoryScreen> {
                         } else {
                           return RefreshIndicator(
                             onRefresh: () async {
-                              _journalBloc.add(GetPromptsCategoriesEvent());
+                              _journalBloc
+                                  .add(GetPromptsEvent(widget.categoryId));
                             },
                             child: Center(
                               child: ListView(
@@ -147,7 +125,7 @@ class _PromptsCategoryScreenState extends State<PromptsCategoryScreen> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );

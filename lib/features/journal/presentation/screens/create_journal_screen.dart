@@ -9,6 +9,7 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/string_extension.dart';
 import 'package:mentra/features/journal/data/models/get_journals_response.dart';
@@ -56,9 +57,8 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
             },
             color: Pallets.primary,
             expanded: false,
-            padding:  const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             text: 'Save',
-
           )
         ],
       ),
@@ -77,31 +77,36 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
                 padding: const EdgeInsets.all(17.0),
                 child: Column(
                   children: [
-                    if ( prompt != null)
+                    if (prompt != null)
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                            color: prompt.backgroundColor.toString().toColor(),
+                            color: prompt.category.backgroundColor
+                                .toString()
+                                .toColor(),
                             borderRadius: BorderRadius.circular(10)),
                         width: 1.sw,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Html(shrinkWrap: true, data: prompt.content, style: {
-                              "p": Style(
-                                  fontSize: FontSize(
-                                    16.sp,
-                                    Unit.px,
-                                  ),
-                                  fontWeight: FontWeight.w400),
-                              "h4": Style(
-                                  fontSize: FontSize(
-                                    16.sp,
-                                    Unit.px,
-                                  ),
-                                  // height: Height(15),
-                                  fontWeight: FontWeight.w400),
-                            }),
+                            Html(
+                                shrinkWrap: true,
+                                data: prompt.content,
+                                style: {
+                                  "p": Style(
+                                      fontSize: FontSize(
+                                        16.sp,
+                                        Unit.px,
+                                      ),
+                                      fontWeight: FontWeight.w400),
+                                  "h4": Style(
+                                      fontSize: FontSize(
+                                        16.sp,
+                                        Unit.px,
+                                      ),
+                                      // height: Height(15),
+                                      fontWeight: FontWeight.w400),
+                                }),
                           ],
                         ),
                       ),
@@ -131,13 +136,11 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       if (widget.journal == null) {
         _bloc.add(CreateJournalEvent(
             body: _noteController.text,
-            promptId:
-                prompt != null ? prompt!.id.toString() : null));
+            promptId: prompt != null ? prompt!.id.toString() : null));
       } else {
         _bloc.add(UpdateJournalEvent(
             body: _noteController.text,
-            promptId:
-                prompt != null ?prompt!.id.toString() : null,
+            promptId: prompt != null ? prompt!.id.toString() : null,
             journalId: widget.journal!.id.toString()));
       }
     } else {
@@ -156,8 +159,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
     }
 
     if (state is CreateJournalSuccessState) {
-      context.pop();
-      context.pop();
+      context.goNamed(PageUrl.guidedJournalScreen);
       CustomDialogs.success('Journal Created Successfully');
       injector.get<JournalBloc>().add(GetJournalsEvent());
     }
