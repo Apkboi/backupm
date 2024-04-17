@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/confirm_sheet.dart';
@@ -87,6 +86,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: NotificationItem(
                                 notification: state.response.data[index],
+                                // notification: MentraNotification(
+                                //     id: 'id',
+                                //     title: 'This is a tittle',
+                                //     message: 'message message message messagemessagemessagemessage message\nmessagemessagemessage',
+                                //     type: '',
+                                //     dataId: 'dataId',
+                                //     readAt: DateTime.now(),
+                                //     createdAt: DateTime.now()),
+                                //
                                 // prompt: state.response.data[index],
                               ),
                             ),
@@ -106,6 +114,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               children: [
                                 AppEmptyState(
                                   hasBg: false,
+                                  tittle: 'You have no notifications',
+                                  subtittle: '',
                                   tittleColor: Pallets.black,
                                   image: Assets.images.pngs.journalNote.path,
                                 ),

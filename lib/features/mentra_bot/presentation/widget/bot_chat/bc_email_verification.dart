@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:go_router/go_router.dart';
@@ -31,6 +32,9 @@ class _BCEmailVerificationFieldState extends State<BCEmailVerificationField> {
         return InputBar(
           hint: "Enter code",
           inputType: TextInputType.number,
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(4),
+          ],
           validator: RequiredValidator(errorText: 'Enter code').call,
           onAnswer: (answer) {
             _bloc.add(VerifyOtpEvent(

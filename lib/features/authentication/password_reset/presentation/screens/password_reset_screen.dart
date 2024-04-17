@@ -171,6 +171,6 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
   void _registerUser() {
     injector.get<RegistrationBloc>().updateFields(password: conFirmPin);
     // logger.i(injector.get<RegistrationBloc>().registrationPayload.toJson());
-    _bloc.add(const ResetPasswordEvent(hashKey: '', password: ''));
+    _bloc.add(const ResetPasswordEvent(code: '', password: ''));
   }
 }

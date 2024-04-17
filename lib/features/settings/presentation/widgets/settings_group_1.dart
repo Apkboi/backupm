@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
@@ -56,7 +55,7 @@ class SettingsGroup1 extends StatelessWidget {
                 ],
               ),
               leadingIconUrl: Assets.images.svgs.bulb,
-              tittle: 'Preferences'),
+              tittle: 'Therapist Preferences'),
           // 24.verticalSpace,
           // SettingListTile(
           //     onTap: () {
@@ -67,7 +66,8 @@ class SettingsGroup1 extends StatelessWidget {
           24.verticalSpace,
           SettingListTile(
               onTap: () {
-                Helpers.launchEmailWithMessage(email: 'support@mentra.com');
+
+                context.pushNamed(PageUrl.supportScreen);
               },
               leadingIconUrl: Assets.images.svgs.supportIcon,
               tittle: 'Support'),

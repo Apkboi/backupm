@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/core/constants/package_exports.dart';
-import 'package:mentra/features/summary/presentation/widgets/summary_item.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 
 class SummaryTab extends StatefulWidget {
@@ -22,7 +21,8 @@ class _SummaryTabState extends State<SummaryTab> {
             padding: EdgeInsets.zero,
             children: const [
               AppEmptyState(
-                tittle: 'Your Summaries Space Awaits',
+                tittle: 'No Summary',
+                subtittle: '',
                 hasBg: false,
               ),
               // Spacer(),

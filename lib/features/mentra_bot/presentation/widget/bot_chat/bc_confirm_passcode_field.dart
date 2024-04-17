@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:go_router/go_router.dart';
@@ -29,13 +30,14 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
       builder: (context, state) {
         return InputBar(
           inputType: TextInputType.number,
-          hint: "Enter passcode",
+          hint: "Enter pin",
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(4),
+          ],
           validator: MultiValidator([
-            RequiredValidator(errorText: 'Enter passcode'),
-            MaxLengthValidator(4,
-                errorText: 'Passcode should be a 4 digit number'),
-            MinLengthValidator(4,
-                errorText: 'Passcode should be a 4 digit number'),
+            RequiredValidator(errorText: 'Enter pin'),
+            MaxLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
+            MinLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
           ]).call,
           onAnswer: (answer) {
             if (injector.get<RegistrationBloc>().confirmPasscode(answer)) {
@@ -44,11 +46,9 @@ class _BcConfirmPasscodeFieldState extends State<BcConfirmPasscodeField> {
               _registrationBloc.add(RegisterEvent(
                   payload:
                       injector.get<RegistrationBloc>().registrationPayload));
-
-
             } else {
               context.read<BotChatCubit>().revertBack();
-              CustomDialogs.error('Password mismatch');
+              CustomDialogs.error('Pin mismatch');
             }
           },
         );

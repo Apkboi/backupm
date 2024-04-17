@@ -14,13 +14,19 @@ class GetCurrentSessionLoading extends MentraChatState {
   List<Object> get props => [];
 }
 
+
+class SignupMessageAdded extends MentraChatState {
+  @override
+  List<Object> get props => [];
+}
+
 class GetCurrentSessionSuccessState extends MentraChatState {
-  final dynamic response;
 
+  final GetCurrentSessionRsponse response;
   const GetCurrentSessionSuccessState(this.response);
-
   @override
   List<Object> get props => [response];
+
 }
 
 class GetCurrentSessionFailureState extends MentraChatState {
@@ -98,6 +104,32 @@ class RetryMessageFailureState extends MentraChatState {
 
 class RetryMessageLoadingState extends MentraChatState {
   const RetryMessageLoadingState();
+
+  @override
+  List<Object> get props => [];
+}
+
+
+class  ReviewMentraSessionFailureState extends MentraChatState {
+  final String error;
+
+  const ReviewMentraSessionFailureState(this.error);
+
+  @override
+  List<Object> get props => [error];
+}
+
+class ReviewMentraSessionSuccessState extends MentraChatState {
+  final dynamic response;
+
+  const ReviewMentraSessionSuccessState(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+
+class ReviewMentraLoadingState extends MentraChatState {
+  const ReviewMentraLoadingState();
 
   @override
   List<Object> get props => [];

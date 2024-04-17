@@ -21,7 +21,7 @@ class UnlockPremiumFeatureDialog extends StatelessWidget {
       padding: const EdgeInsets.all(17),
       child: Container(
         decoration: BoxDecoration(
-            color: Pallets.white, borderRadius: BorderRadius.circular(25)),
+            color: Pallets.bottomSheetColor, borderRadius: BorderRadius.circular(25)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

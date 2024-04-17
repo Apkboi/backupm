@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:mentra/common/widgets/input_bar.dart';
@@ -22,7 +23,15 @@ class _BcSelectYearFieldState extends State<BcSelectYearField> {
     return InputBar(
       inputType: TextInputType.number,
       hint: "Enter birth year",
-      validator: RequiredValidator(errorText: 'Enter birth year').call,
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(4,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced),
+      ],
+      validator: MultiValidator([
+        RequiredValidator(errorText: 'Enter birth year'),
+        MinLengthValidator(4,
+            errorText: 'Birth year should be exactly 4 digits')
+      ]).call,
       onAnswer: (answer) {
         injector
             .get<RegistrationBloc>()

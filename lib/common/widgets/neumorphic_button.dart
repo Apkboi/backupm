@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 // import 'package:neumorphic_ui/neumorphic_ui.dart';
 
@@ -12,7 +14,8 @@ class CustomNeumorphicButton extends StatelessWidget {
       this.expanded = true,
       this.child,
       this.padding,
-      this.mainAxisAlignment = MainAxisAlignment.center, this.shape});
+      this.mainAxisAlignment = MainAxisAlignment.center,
+      this.shape});
 
   final String? text;
   final Widget? child;
@@ -31,12 +34,13 @@ class CustomNeumorphicButton extends StatelessWidget {
         onTap();
       },
       child: Container(
+        constraints: expanded! ? BoxConstraints(maxWidth: 1.sw - 127.w) : null,
         decoration: ShapeDecoration(
           color: color,
-
-          shape: shape?? RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(150),
-          ),
+          shape: shape ??
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(150),
+              ),
         ),
         child: Container(
           decoration: ShapeDecoration(
@@ -51,18 +55,20 @@ class CustomNeumorphicButton extends StatelessWidget {
                 color.withOpacity(0.9)
               ],
             ),
-            shape: shape ?? RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(150),
-                side: BorderSide(color: color)),
+            shape: shape ??
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(150),
+                    side: BorderSide(color: color)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(2.5),
             child: Container(
-              decoration:  ShapeDecoration(
+              decoration: ShapeDecoration(
                 color: color,
-                shape: shape?? RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(150),
-                ),
+                shape: shape ??
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(150),
+                    ),
               ),
               child: Padding(
                 padding: padding ??
@@ -74,11 +80,12 @@ class CustomNeumorphicButton extends StatelessWidget {
                         children: [
                           Center(
                             child: child ??
-                                Text(
-                                  text ?? 'Button',
-                                  textAlign: TextAlign.center,
+                                TextView(
+                                  text: text ?? 'Button',
+                                  align: TextAlign.center,
                                   style: TextStyle(
                                     color: fgColor,
+                                    fontSize: 15.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -86,13 +93,15 @@ class CustomNeumorphicButton extends StatelessWidget {
                         ],
                       )
                     : child ??
-                        Text(
-                          text ?? 'Button',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: fgColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        TextView(
+                          text: text ?? 'Button',
+                          align: TextAlign.center,
+                          color: fgColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15,
+                          // style: TextStyle(
+                          //
+                          // ),
                         ),
               ),
             ),

@@ -32,6 +32,7 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
           //     color: Pallets.secondary),
 
           child: ChatBubble(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             backGroundColor: Pallets.secondary,
             clipper: ChatBubbleClipper3(
                 type: BubbleType.sendBubble, nipSize: 4, radius: 15),
@@ -67,4 +68,6 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
       ],
     );
   }
+
+
 }

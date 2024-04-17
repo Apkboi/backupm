@@ -28,7 +28,7 @@ class PasswordResetRepositoryImpl extends PasswordResetRepository {
     try {
       final response = await _networkService.call(
           UrlConfig.resetPassword, RequestMethod.post,
-          data: {"password": password, "hash": hashKey});
+          data: {"password": password, "code": hashKey});
       return response.data;
     } catch (e, stack) {
       logger.e(e);

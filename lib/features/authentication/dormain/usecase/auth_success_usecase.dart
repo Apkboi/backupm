@@ -7,11 +7,14 @@ import 'package:mentra/features/authentication/data/models/auth_success_response
 class AuthSuccessUsecase {
   final _userStorage = UserStorage();
 
-  Future<void> execute(AuthSuccessResponse response) async {
+  Future<void> execute(AuthSuccessResponse response, {String? passKey}) async {
     SessionManager.instance.isLoggedIn = true;
     _userStorage.saveUserToken(response.data.token);
     _userStorage.saveUser(response.data.user);
     injector.get<UserBloc>().add(SaveUserEvent(response.data.user));
+    // if (passKey != null) {
+    _userStorage.savePasKey(passKey);
+    // }
     logger.i("USER DETAILS SAVED");
   }
 }

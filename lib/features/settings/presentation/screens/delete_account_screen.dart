@@ -77,8 +77,8 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
     CustomDialogs.showBottomSheet(
         context,
         ConfirmSheet(
-          tittle: 'Are you sure you want to delete your account data?',
-          confirmText: "Yes, I understand. Delete my data",
+          tittle: 'Are You Sure You Want to Delete Your Account Data?',
+          confirmText: "Yes, Delete It!",
           subtittle:
               "Deleting your account data will permanently erase all your personalized information. This includes therapy history, preferences, and saved content. Are you certain?",
           onConfirm: () async {
@@ -93,8 +93,9 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
     CustomDialogs.showBottomSheet(
         context,
         ConfirmSheet(
-          tittle: 'Are you sure you want to delete your account?',
-          confirmText: "Yes, I understand. Delete it",
+          tittle: 'Are You Sure You Want to Delete Your Account?',
+          cancelText: 'No, Keep It',
+          confirmText: "Yes, I Understand. Delete It",
           subtittle:
               "Deleting your account will permanently remove all your data, including therapy history, preferences, and account information. This action cannot be undone. Are you absolutely sure?",
           onConfirm: () async {

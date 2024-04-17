@@ -5,6 +5,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/library/presentation/widgets/article_notification_detail.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/ai_review_sheet.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:mentra/core/theme/pallets.dart';
@@ -60,6 +61,7 @@ class _NotificationItemState extends State<NotificationItem> {
                       6.verticalSpace,
                       TextView(
                         text: widget.notification.message,
+                        fontWeight: FontWeight.w500,
                         fontSize: 15,
                         color: Pallets.black80,
                       ),
@@ -95,6 +97,11 @@ class _NotificationItemState extends State<NotificationItem> {
             ArticleNotificationDetailsSheet(
               notification: widget.notification,
             ));
+      case 'ai_session':
+        CustomDialogs.showCustomDialog(
+          const AiReviewSheet(sessionId: '1'),
+          context,
+        );
         break;
     }
   }

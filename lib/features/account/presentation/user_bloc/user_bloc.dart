@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/database/local/userstorage.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/account/dormain/repository/account_repository.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 
@@ -23,7 +22,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this._accountRepository) : super(UserInitial()) {
     on<UserEvent>((event, emit) {});
-
     on<SaveUserEvent>(_mapSaveUserEventToState);
     on<GetUserEvent>(_mapGetUserEventToState);
     on<GetRemoteUser>(_mapGetRemoteUserToState);
@@ -44,7 +42,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (user != null) {
       appUser = user;
 
-      logger.i(appUser?.toJson());
+      // logger.i(appUser?.toJson());
 
       // injector.get<MesiboCubit>().initialize();
       emit(UserCachedState(user));
@@ -53,12 +51,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   FutureOr<void> _mapGetRemoteUserToState(
       GetRemoteUser event, Emitter<UserState> emit) async {
+    emit(UserProfileLoadingState());
     try {
       final response = await _accountRepository.getRemoteUser();
 
       add(SaveUserEvent(response.data));
     } catch (e) {
-      // emit(LoginFailureState(error: e.toString()));
+      emit(GetProfileFailedState(e.toString()));
     }
   }
 }

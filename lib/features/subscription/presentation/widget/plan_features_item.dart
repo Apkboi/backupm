@@ -49,54 +49,70 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                       Container(
                         width: 1.sw,
                         // color: Pallets.grey,
+
                         decoration: ShapeDecoration(
-                            // color: Pallets.white,
+                            color: Pallets.eggShell,
                             shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  color: Pallets.white,
+                                ),
                                 borderRadius: BorderRadius.circular(20))),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 20,
-                              sigmaY: 20,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 16, horizontal: 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 16, horizontal: 16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                30.verticalSpace,
+                                if (widget.plan.name
+                                        .toString()
+                                        .toLowerCase() !=
+                                    'free')
                                   TextView(
                                     text: (!widget.isPreview! &&
                                             widget.plan.isActiveSubscription)
                                         ? 'Current Plan'
                                         : widget.plan.name,
                                     style: GoogleFonts.fraunces(
-                                        color: Pallets.primary,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  5.verticalSpace,
-                                  TextView(
-                                      text: '${widget.plan.price} AED/month',
+                                      fontWeight: FontWeight.w700,
                                       fontSize: 18,
                                       color: Pallets.lightSecondary,
-                                      fontWeight: FontWeight.w500),
-                                  10.verticalSpace,
+                                    ),
+                                  ),
+                                5.verticalSpace,
+                                TextView(
+                                  text: widget.plan.name
+                                              .toString()
+                                              .toLowerCase() ==
+                                          'free'
+                                      ? 'FREE'
+                                      : '${widget.plan.price} AED/month',
+                                  style: GoogleFonts.fraunces(
+                                      color: Pallets.primary,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600),
+
+                                  // fontSize: 18,
+                                  // color: Pallets.lightSecondary,
+                                  // fontWeight: FontWeight.w700
+                                ),
+                                10.verticalSpace,
+                                if (widget.plan.description != null)
                                   TextView(
-                                      text:
-                                          'Upgrade to our ${widget.plan.name}  for enhanced features and a more robust experience.',
+                                      text: widget.plan.description ?? '',
                                       color: Pallets.navy,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500),
-                                  10.verticalSpace,
-                                  ...List.generate(
-                                      widget.plan.benefits.length,
-                                      (index) => PlanFeature(
-                                            benefit:
-                                                widget.plan.benefits[index],
-                                          )),
-                                ],
-                              ),
+                                10.verticalSpace,
+                                ...List.generate(
+                                    widget.plan.benefits.length,
+                                    (index) => PlanFeature(
+                                          benefit:
+                                              widget.plan.benefits[index],
+                                        )),
+                              ],
                             ),
                           ),
                         ),
@@ -105,73 +121,79 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                   ),
                 ),
               ),
-
-              if(!widget.isPreview!)
-              Column(
-                children: [
-                  if (!widget.plan.isActiveSubscription)
-                    Column(
-                      children:
-                      List.generate(widget.plan.durations.length, (index) {
-                        if (widget.plan.durations[index].frequency == 'Monthly') {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                bottom: widget.plan.durations.length > 1 ? 10 : 20),
-                            child: CustomOutlinedButton(
-                              radius: 100,
-                              bgColor: Pallets.white,
-                              outlinedColr: Pallets.primary,
-                              padding: const EdgeInsets.all(12),
-                              child: TextView(
-                                align: TextAlign.center,
-                                text:
-                                'Subscribe Monthly\n(AED ${widget.plan.durations[index].price}/month)',
-                                fontWeight: FontWeight.w600,
+              if (!widget.isPreview!)
+                Column(
+                  children: [
+                    if (!widget.plan.isActiveSubscription)
+                      Column(
+                        children: List.generate(widget.plan.durations.length,
+                            (index) {
+                          if (widget.plan.price == 0) {
+                            return 0.verticalSpace;
+                          }
+                          if (widget.plan.durations[index].frequency ==
+                              'Monthly') {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: widget.plan.durations.length > 1
+                                      ? 10
+                                      : 20),
+                              child: CustomOutlinedButton(
+                                radius: 100,
+                                bgColor: Pallets.white,
+                                outlinedColr: Pallets.primary,
+                                padding: const EdgeInsets.all(12),
+                                child: TextView(
+                                  align: TextAlign.center,
+                                  text:
+                                      'Subscribe Monthly\n(${widget.plan.durations[index].price} AED/month)',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                onPressed: () {
+                                  _subscribe(
+                                      context, widget.plan.durations[index]);
+                                },
                               ),
-                              onPressed: () {
-                                _subscribe(context, widget.plan.durations[index]);
-                              },
-                            ),
-                          );
-                        } else {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: CustomNeumorphicButton(
-                              onTap: () {
-                                // _subscribe(context);
-                                _subscribe(context, widget.plan.durations[index]);
-                              },
-                              color: Pallets.primary,
-                              padding: const EdgeInsets.all(12),
-                              text:
-                              "Subscribe Annually\n(AED ${widget.plan.durations[index].price}/year, Save 20%)",
-                            ),
-                          );
-                        }
-                      }),
-                    ),
-                  if (widget.plan.isActiveSubscription)
-                    TextButton(
-                        onPressed: () {
-                          _cancelSubscription(context);
-                        },
-                        child: const TextView(
-                          fontSize: 16,
-                          text: 'Cancel Subscription',
-                          fontWeight: FontWeight.w600,
-                          color: Pallets.black80,
-                        )),
-                ],
-              ),
-
-              if(widget.isPreview!)
+                            );
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: CustomNeumorphicButton(
+                                onTap: () {
+                                  // _subscribe(context);
+                                  _subscribe(
+                                      context, widget.plan.durations[index]);
+                                },
+                                color: Pallets.primary,
+                                padding: const EdgeInsets.all(12),
+                                text:
+                                    "Subscribe Annually\n(AED ${widget.plan.durations[index].price}/year, Save 20%)",
+                              ),
+                            );
+                          }
+                        }),
+                      ),
+                    if (widget.plan.isActiveSubscription &&
+                        widget.plan.price != 0)
+                      TextButton(
+                          onPressed: () {
+                            _cancelSubscription(context);
+                          },
+                          child: const TextView(
+                            fontSize: 16,
+                            text: 'Cancel Subscription',
+                            fontWeight: FontWeight.w600,
+                            color: Pallets.black80,
+                          )),
+                  ],
+                ),
+              if (widget.isPreview!)
                 CustomNeumorphicButton(
                     text: "Change Plan",
                     onTap: () {
                       context.pushNamed(PageUrl.selectPlanScreen);
                     },
                     color: Pallets.primary),
-
               27.verticalSpace
             ],
           );
@@ -244,7 +266,12 @@ class PlanFeature extends StatelessWidget {
             size: 24,
           ),
           8.horizontalSpace,
-          Expanded(child: TextView(text: benefit.title))
+          Expanded(
+              child: TextView(
+            text: benefit.title,
+            // fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ))
         ],
       ),
     );

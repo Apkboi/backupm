@@ -25,7 +25,7 @@ class MenuItem extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: (0.5 / 2).sh,
+          height: (0.40 / 2).sh,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(22),
               color: bgColor ?? Pallets.white),
@@ -36,7 +36,7 @@ class MenuItem extends StatelessWidget {
               TextView(
                 text: text,
                 style: GoogleFonts.fraunces(
-                  fontSize: 20.sp,
+                  fontSize: 18.sp,
                   color: textColor,
                   fontWeight: FontWeight.w600,
                 ),

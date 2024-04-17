@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
-import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/permission_handler/permission_handler_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,13 +27,13 @@ class BCPermissionsField extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: CustomButton(
             foregroundColor: Pallets.black,
-            bgColor: Pallets.white,
+            bgColor: Pallets.secondary,
             elevation: 0,
             isExpanded: false,
             padding: const EdgeInsets.all(16),
             borderRadius: BorderRadius.circular(100),
             child: TextView(
-              text: 'Yes, please!',
+              text: 'Yes, Please!',
               style: GoogleFonts.plusJakartaSans(
                   fontWeight: FontWeight.w600, fontSize: 14.sp),
             ),
@@ -47,13 +49,13 @@ class BCPermissionsField extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: CustomButton(
             foregroundColor: Pallets.black,
-            bgColor: Pallets.white,
+            bgColor: Pallets.secondary,
             elevation: 0,
             isExpanded: false,
             padding: const EdgeInsets.all(16),
             borderRadius: BorderRadius.circular(100),
             child: TextView(
-              text: 'No,  not now',
+              text: 'No,  Not Now',
               style: GoogleFonts.plusJakartaSans(
                   fontWeight: FontWeight.w600, fontSize: 14.sp),
             ),
@@ -72,14 +74,16 @@ class BCPermissionsField extends StatelessWidget {
       case PermissionsStage.BIOMETRIC:
         context.read<BotChatCubit>().answerQuestion(
             id: message.id,
-            answer: 'Not now',
+            answer: 'Not Now',
             nextPermissionStage: PermissionsStage.NOTIFICATION);
       case PermissionsStage.NOTIFICATION:
         context.read<BotChatCubit>().answerQuestion(
-          id: message.id,
-          answer: 'Not now',
-          nextFlow: BotChatFlow.talkToMentra,
-        );
+              id: message.id,
+              answer: 'Not Now',
+              nextFlow: BotChatFlow.talkToMentra,
+            );
+        injector.get<RegistrationBloc>().add(const SignupCompleteEvent());
+
       case PermissionsStage.NONE:
         break;
     }
@@ -88,22 +92,26 @@ class BCPermissionsField extends StatelessWidget {
   void _requestPermission(BuildContext context) async {
     switch (message.permissionsStage) {
       case PermissionsStage.BIOMETRIC:
-        await PermissionHandlerService().requestPermission(Permission.camera);
-        context.read<BotChatCubit>().answerQuestion(id: message.id,
-            answer: 'Yes, please!',
-            nextPermissionStage: PermissionsStage.NOTIFICATION);
+        await injector.get<LocalAuthCubit>().enableBiometric();
+        if (injector.get<LocalAuthCubit>().biometricEnabled) {
+          context.read<BotChatCubit>().answerQuestion(
+              id: message.id,
+              answer: 'Yes, Please!',
+              nextPermissionStage: PermissionsStage.NOTIFICATION);
+        } else {
+          break;
+        }
+
       case PermissionsStage.NOTIFICATION:
         await PermissionHandlerService()
             .requestPermission(Permission.notification);
-        context.read<BotChatCubit>().answerQuestion(id: message.id,
-            answer: 'Yes, please!',
+        context.read<BotChatCubit>().answerQuestion(
+            id: message.id,
+            answer: 'Yes, Please!',
             nextFlow: BotChatFlow.talkToMentra);
-         context.goNamed(PageUrl.welcomeScreen);
+        injector.get<RegistrationBloc>().add(const SignupCompleteEvent());
       case PermissionsStage.NONE:
         break;
     }
-
-
-
   }
 }

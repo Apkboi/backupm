@@ -23,6 +23,7 @@ class PageUrl {
       'passwordResetEmailVerificationScreen';
   static const passwordResetScreen = 'passwordResetScreen';
   static const passwordResetSuccessScreen = 'passwordResetSuccessScreen';
+  static const passcodeAuthScreen = 'passcodeAuthScreen';
 
   static const homeScreen = 'homeScreen';
   static const menuScreen = 'menuScreen';
@@ -53,6 +54,7 @@ class PageUrl {
   static const createJournalScreen = 'createJournalScreen';
   static const notificationsScreen = 'notificationsScreen';
   static const manageSubscriptionScreen = 'manageSubscriptionScreen';
+  static const supportScreen = 'supportScreen';
 
   static const botChatScreen = 'botChatScreen';
   static const talkToMentraScreen = 'talkToMentraScreen';
@@ -72,4 +74,11 @@ class PageUrl {
 
   ///NOTIFICATIONS
   static const notificationsPage = 'notificationsPage';
+
+
+//   DAILY STREAK
+  static const streakDetailsScreen = 'streakDetailsScreen';
+  static const badgesScreen = 'badgesScreen';
+
+
 }

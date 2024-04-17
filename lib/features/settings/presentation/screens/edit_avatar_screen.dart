@@ -33,6 +33,8 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
+        height: 60,
+        // height: 70,
         tittleText: 'Edit Avatar',
         actions: [
           CustomNeumorphicButton(
@@ -46,7 +48,8 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
             },
             color: Pallets.black,
             expanded: false,
-            padding: const EdgeInsets.all(12),
+            padding:  const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+
             text: 'Save',
           )
         ],

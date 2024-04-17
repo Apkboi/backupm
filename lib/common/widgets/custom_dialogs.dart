@@ -38,7 +38,7 @@ class CustomDialogs {
       useRootNavigator: useRootNavigator!,
       builder: (BuildContext context) => dialog,
       barrierDismissible: true,
-      barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.2),
+      barrierColor: barrierColor ?? Pallets.black80.withOpacity(0.2),
       // barrierColor: barrierColor,
     );
   }
@@ -49,15 +49,19 @@ class CustomDialogs {
     Color? barrierColor,
     BoxConstraints? constraints,
     ShapeBorder? shape,
+  AnimationController? transitionAnimationController
+
   }) {
     return showModalBottomSheet<T>(
         backgroundColor: Colors.transparent,
         context: context,
-        barrierColor: barrierColor ?? Pallets.primary.withOpacity(0.3),
+        barrierColor: barrierColor ?? Pallets.black80.withOpacity(0.3),
         useRootNavigator: true,
         isScrollControlled: true,
         shape: shape,
         constraints: constraints,
+
+        transitionAnimationController: transitionAnimationController,
         builder: (context) {
           return ClipRRect(
             borderRadius: const BorderRadius.only(
@@ -86,6 +90,7 @@ class CustomDialogs {
       context: context,
       backgroundColor: Colors.transparent,
       enableDrag: true,
+
       useRootNavigator: useRootNavigator ?? false,
       builder: (context) => Material(
         child: CupertinoPageScaffold(child: child),
@@ -186,6 +191,7 @@ class CustomDialogs {
                   child: ButtonDialog(
                     bgColor: confirmButtonBgColor,
                     title: confirmText,
+                    fgColor: Pallets.white,
                     onTap: onYes,
                   ),
                 ),
@@ -211,7 +217,7 @@ class CustomDialogs {
       bool? useRootNavigator = false,
       bool? barrierDismissible = true}) async {
     final dialog = Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: Pallets.bottomSheetColor,
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.r),

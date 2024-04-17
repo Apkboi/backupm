@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
-import 'package:mentra/features/dashboard/presentation/widget/new_user_prompt.dart';
-import 'package:mentra/features/therapy/presentation/widgets/subscription_prompt_dialog.dart';
+import 'package:mentra/features/dashboard/presentation/widget/mood_checker_widget.dart';
+import 'package:mentra/features/streaks/presentation/widget/daily_streak_widget.dart';
+import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -27,7 +28,13 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   void initState() {
-    RefreshUserUsecase().execute();
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () {
+        RefreshUserUsecase().execute();
+      },
+    );
+
     super.initState();
   }
 
@@ -36,7 +43,7 @@ class _MenuScreenState extends State<MenuScreen> {
     return WillPopScope(
       onWillPop: () async {
         context.goNamed(PageUrl.homeScreen);
-        logger.i('popping');
+
         return false;
       },
       child: Scaffold(
@@ -56,9 +63,26 @@ class _MenuScreenState extends State<MenuScreen> {
         // ),
         appBar: CustomAppBar(
           tittleText: '',
-          leadingWidth: 80,
-          height: 70,
+          // leadingWidth: 80,
+          // height: 65,
+          onBackPressed: () {
+            context.pushNamed(PageUrl.homeScreen,
+                queryParameters: {PathParam.startConvo: 'false'});
+          },
           actions: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CustomNeumorphicButton(
+                expanded: false,
+                onTap: () {
+                  context.pushNamed(PageUrl.emergencySosScreen);
+                },
+                color: Pallets.primary,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+                text: 'SOS',
+              ),
+            ),
+            16.horizontalSpace,
             InkWell(
               onTap: () {
                 context.pushNamed(PageUrl.notificationsScreen);
@@ -84,17 +108,6 @@ class _MenuScreenState extends State<MenuScreen> {
             ),
             16.horizontalSpace,
           ],
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomNeumorphicButton(
-              onTap: () {
-                context.pushNamed(PageUrl.emergencySosScreen);
-              },
-              color: Pallets.primary,
-              padding: EdgeInsets.zero,
-              text: 'SOS',
-            ),
-          ),
         ),
         body: Stack(
           children: [
@@ -110,17 +123,16 @@ class _MenuScreenState extends State<MenuScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // const TextView(
-                      //   text: 'Upcoming Session',
-                      //   fontSize: 16,
-                      //   fontWeight: FontWeight.w600,
-                      //   color: Pallets.primary,
-                      // ),
-                      // 24.verticalSpace,
-                      // const UpcomingSession(),
-                      // const UnlockPremiumWidget(),
-                      const NewUserPrompt(),
+                      const DailyStreakWidget(),
                       10.verticalSpace,
+                      const MoodCheckerWidget(),
+                      10.verticalSpace,
+                      const HomeTasksWidget(),
+                      // 14.verticalSpace,
+                      // const HomeWorkSheetWidget(),
+                      // 14.verticalSpace,
+                      // const UpcomingSessionsWidget(),
+                      35.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
                         fontSize: 16,
@@ -176,7 +188,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                     )),
                                   ],
                                 ),
-                                10.verticalSpace,
+                                7.verticalSpace,
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
@@ -212,7 +224,6 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                         ),
                       ),
-
                       100.verticalSpace
                     ],
                   ),
@@ -237,17 +248,19 @@ class _MenuScreenState extends State<MenuScreen> {
     if (_userISubscribed()) {
       context.pushNamed(PageUrl.therapyScreen);
     } else {
-      final bool? subscribe = await CustomDialogs.showBottomSheet(
-          context, const SubscriptionPromptDialog(),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          )),
-          constraints: BoxConstraints(maxHeight: 0.9.sh));
-      if (subscribe ?? false) {
-        context.pushNamed(PageUrl.selectPlanScreen);
-      }
+      context.pushNamed(PageUrl.selectPlanScreen);
+
+      // final bool? subscribe = await CustomDialogs.showBottomSheet(
+      //     context, const SubscriptionPromptDialog(),
+      //     shape: const RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(16),
+      //       topRight: Radius.circular(16),
+      //     )),
+      //     constraints: BoxConstraints(maxHeight: 0.9.sh));
+      // if (subscribe ?? false) {
+      //   context.pushNamed(PageUrl.selectPlanScreen);
+      // }
     }
   }
 }

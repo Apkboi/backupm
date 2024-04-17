@@ -24,11 +24,11 @@ class VerifyPasswordResetOtpEvent extends PasswordResetEvent {
 }
 
 class ResetPasswordEvent extends PasswordResetEvent {
-  final String hashKey;
+  final String code;
   final String password;
 
-  const ResetPasswordEvent({required this.hashKey, required this.password});
+  const ResetPasswordEvent({required this.code, required this.password});
 
   @override
-  List<Object?> get props => [hashKey, password];
+  List<Object?> get props => [code, password];
 }

@@ -109,12 +109,14 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                               ),
                             ),
                           ),
-                          CustomNeumorphicButton(
-                              text: 'Continue',
-                              onTap: () {
-                                widget.onSelected(selectedDate);
-                              },
-                              color: Pallets.primary),
+                          Center(
+                            child: CustomNeumorphicButton(
+                                text: 'Continue',
+                                onTap: () {
+                                  widget.onSelected(selectedDate);
+                                },
+                                color: Pallets.primary),
+                          ),
                           20.verticalSpace
                         ],
                       ),

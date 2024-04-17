@@ -55,13 +55,13 @@ class GetPlansResponse {
 
 class SubscriptionPlan {
   final int id;
-  final String name;
-  final bool isActiveSubscription;
-  final String description;
-  final String frequency;
-  final int price;
-  final int discount;
-  final String status;
+  final dynamic name;
+  final dynamic isActiveSubscription;
+  final dynamic description;
+  final dynamic frequency;
+  final dynamic price;
+  final dynamic discount;
+  final dynamic status;
   final List<PlanDuration> durations;
   final List<Benefit> benefits;
   final DateTime createdAt;
@@ -194,10 +194,10 @@ class Benefit {
 
 class PlanDuration {
   final int id;
-  final String frequency;
-  final String duration;
-  final int price;
-  final int discount;
+  final dynamic frequency;
+  final dynamic duration;
+  final dynamic price;
+  final dynamic discount;
   final dynamic stripePriceId;
   final DateTime createdAt;
   final DateTime updatedAt;

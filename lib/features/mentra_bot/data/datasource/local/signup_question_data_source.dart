@@ -73,7 +73,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Appreciated! Let\'s secure your account. Please create a 4-digit passcode.',
+            'Appreciated! Let\'s secure your account. Please create a 4-digit pin.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -84,7 +84,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Appreciated! Let\'s secure your account. Please create a 4-digit passcode.',
+            'Appreciated! Let\'s secure your account. Please create a 4-digit pin.',
         isFromBot: true,
         id: 0,
         isTyping: false,
@@ -95,7 +95,7 @@ class SignupQuestionDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Well done! To ensure it\'s correct, please confirm your passcode.',
+            'Well done! To ensure it\'s correct, please confirm your pin.',
         isFromBot: true,
         id: 0,
         isTyping: false,

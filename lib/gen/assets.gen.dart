@@ -15,8 +15,14 @@ class $AssetsAudioGen {
   /// File path: assets/audio/dummy.mp3
   String get dummy => 'assets/audio/dummy.mp3';
 
+  /// File path: assets/audio/received.mp3
+  String get received => 'assets/audio/received.mp3';
+
+  /// File path: assets/audio/sent.mp3
+  String get sent => 'assets/audio/sent.mp3';
+
   /// List of all assets
-  List<String> get values => [dummy];
+  List<String> get values => [dummy, received, sent];
 }
 
 class $AssetsImagesGen {
@@ -77,6 +83,10 @@ class $AssetsImagesPngsGen {
   AssetGenImage get gJournal =>
       const AssetGenImage('assets/images/pngs/g_journal.png');
 
+  /// File path: assets/images/pngs/happy.png
+  AssetGenImage get happy =>
+      const AssetGenImage('assets/images/pngs/happy.png');
+
   /// File path: assets/images/pngs/home_bg.png
   AssetGenImage get homeBg =>
       const AssetGenImage('assets/images/pngs/home_bg.png');
@@ -96,6 +106,14 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/launcher_icon.png
   AssetGenImage get launcherIcon =>
       const AssetGenImage('assets/images/pngs/launcher_icon.png');
+
+  /// File path: assets/images/pngs/launcher_icon1.png
+  AssetGenImage get launcherIcon1 =>
+      const AssetGenImage('assets/images/pngs/launcher_icon1.png');
+
+  /// File path: assets/images/pngs/launcher_icon_2.png
+  AssetGenImage get launcherIcon2 =>
+      const AssetGenImage('assets/images/pngs/launcher_icon_2.png');
 
   /// File path: assets/images/pngs/logo4.png
   AssetGenImage get logo4 =>
@@ -117,9 +135,21 @@ class $AssetsImagesPngsGen {
   AssetGenImage get mentra =>
       const AssetGenImage('assets/images/pngs/mentra.png');
 
+  /// File path: assets/images/pngs/mentra2.png
+  AssetGenImage get mentra2 =>
+      const AssetGenImage('assets/images/pngs/mentra2.png');
+
   /// File path: assets/images/pngs/mentra_big.png
   AssetGenImage get mentraBig =>
       const AssetGenImage('assets/images/pngs/mentra_big.png');
+
+  /// File path: assets/images/pngs/moody.png
+  AssetGenImage get moody =>
+      const AssetGenImage('assets/images/pngs/moody.png');
+
+  /// File path: assets/images/pngs/normal.png
+  AssetGenImage get normal =>
+      const AssetGenImage('assets/images/pngs/normal.png');
 
   /// File path: assets/images/pngs/onboarding1.png
   AssetGenImage get onboarding1 =>
@@ -149,6 +179,14 @@ class $AssetsImagesPngsGen {
   AssetGenImage get sleep =>
       const AssetGenImage('assets/images/pngs/sleep.png');
 
+  /// File path: assets/images/pngs/slide1.png
+  AssetGenImage get slide1 =>
+      const AssetGenImage('assets/images/pngs/slide1.png');
+
+  /// File path: assets/images/pngs/slide2.png
+  AssetGenImage get slide2 =>
+      const AssetGenImage('assets/images/pngs/slide2.png');
+
   /// File path: assets/images/pngs/small_mentra.png
   AssetGenImage get smallMentra =>
       const AssetGenImage('assets/images/pngs/small_mentra.png');
@@ -161,9 +199,21 @@ class $AssetsImagesPngsGen {
   AssetGenImage get splashLogo =>
       const AssetGenImage('assets/images/pngs/splash_logo.png');
 
+  /// File path: assets/images/pngs/streak_badge.png
+  AssetGenImage get streakBadge =>
+      const AssetGenImage('assets/images/pngs/streak_badge.png');
+
   /// File path: assets/images/pngs/summary.png
   AssetGenImage get summary =>
       const AssetGenImage('assets/images/pngs/summary.png');
+
+  /// File path: assets/images/pngs/tech_lady.png
+  AssetGenImage get techLady =>
+      const AssetGenImage('assets/images/pngs/tech_lady.png');
+
+  /// File path: assets/images/pngs/traveller.png
+  AssetGenImage get traveller =>
+      const AssetGenImage('assets/images/pngs/traveller.png');
 
   /// File path: assets/images/pngs/vertical_logo.png
   AssetGenImage get verticalLogo =>
@@ -191,17 +241,23 @@ class $AssetsImagesPngsGen {
         calender,
         emptyBascket,
         gJournal,
+        happy,
         homeBg,
         insight,
         journalNote,
         launcher,
         launcherIcon,
+        launcherIcon1,
+        launcherIcon2,
         logo4,
         logo5,
         logoF,
         mainLogo,
         mentra,
+        mentra2,
         mentraBig,
+        moody,
+        normal,
         onboarding1,
         onboarding2,
         onboarding3,
@@ -209,10 +265,15 @@ class $AssetsImagesPngsGen {
         placeholder,
         productivity,
         sleep,
+        slide1,
+        slide2,
         smallMentra,
         sorry,
         splashLogo,
+        streakBadge,
         summary,
+        techLady,
+        traveller,
         verticalLogo,
         videoThumbail,
         wLibrary

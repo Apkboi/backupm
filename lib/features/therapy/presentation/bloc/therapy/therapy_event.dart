@@ -11,6 +11,15 @@ class GetUpcomingSessionsEvent extends TherapyEvent {
   List<Object?> get props => [];
 }
 
+class ReportEvent extends TherapyEvent {
+  final String content;
+
+  const ReportEvent(this.content);
+
+  @override
+  List<Object?> get props => [content];
+}
+
 class GetSessionHistoryEvent extends TherapyEvent {
   @override
   List<Object?> get props => [];
@@ -104,6 +113,13 @@ class CreateReviewEvent extends TherapyEvent {
 
 class GetTherapistReviewsEvent extends TherapyEvent {
   const GetTherapistReviewsEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class GetSessionFocusEvent extends TherapyEvent {
+  const GetSessionFocusEvent();
 
   @override
   List<Object?> get props => [];

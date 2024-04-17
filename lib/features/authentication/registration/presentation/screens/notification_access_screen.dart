@@ -6,11 +6,9 @@ import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/custom_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
-import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
-import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../core/services/permission_handler/permission_handler_service.dart';

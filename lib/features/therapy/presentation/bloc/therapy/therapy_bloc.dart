@@ -7,6 +7,7 @@ import 'package:mentra/features/therapy/data/models/accept_therapist_response.da
 import 'package:mentra/features/therapy/data/models/change_therapist_message_model.dart';
 import 'package:mentra/features/therapy/data/models/get_matched_therapist.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+import 'package:mentra/features/therapy/data/models/session_focus_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
@@ -41,10 +42,13 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<TherapistAcceptedEvent>(_mapStartChangeTherapistConversationToState);
     on<GetMatchedTherapistEvent>(_mapGetMatchedTherapistEventToState);
     on<CreateReviewEvent>(_mapCreateReviewEventToState);
+    on<GetSessionFocusEvent>(_mapGetSessionFocusEventToState);
+    on<ReportEvent>(_mapReportEventToState);
   }
 
   List<TherapySession>? upComingSessions;
   List<TherapySession>? sessionsHistory;
+  List sessionFocus = [];
 
   final scrollController = ItemScrollController();
 
@@ -290,12 +294,37 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
       final response = await _therapyRepository.createReview(
           sessionId: event.sessionId,
           comment: event.comment,
-
           rating: event.rating);
       clearPayload();
       emit(CreateReviewSuccessState(response: response));
     } catch (e) {
       emit(CreateReviewFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapGetSessionFocusEventToState(
+      GetSessionFocusEvent event, Emitter<TherapyState> emit) async {
+    emit(const GetSessionFocusLoadingState());
+    try {
+      final response = await _therapyRepository.getSessionFocus();
+
+      sessionFocus = response.data;
+      emit(GetSessionFocusSuccessState(response: response));
+    } catch (e) {
+      emit(GetSessionFocusFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapReportEventToState(
+      ReportEvent event, Emitter<TherapyState> emit) async {
+    emit(const ReportLoadingState());
+    try {
+      final response = await _therapyRepository.report(content: event.content);
+      // sessionFocus = response.data;
+      emit(ReportSuccessState(response: response));
+    } catch (e, stack) {
+      logger.e(e.toString(), stackTrace: stack);
+      emit(ReportFailureState(error: e.toString()));
     }
   }
 }

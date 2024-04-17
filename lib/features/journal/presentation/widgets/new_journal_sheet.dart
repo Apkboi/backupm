@@ -16,7 +16,9 @@ import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class NewJournalSheet extends StatefulWidget {
-  const NewJournalSheet({super.key});
+  const NewJournalSheet({super.key, this.categoryId});
+
+  final dynamic categoryId;
 
   @override
   State<NewJournalSheet> createState() => _NewJournalSheetState();
@@ -44,7 +46,6 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
             padding: const EdgeInsets.symmetric(horizontal: 23.0, vertical: 22),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
                 Align(
                   alignment: Alignment.topLeft,
@@ -59,25 +60,27 @@ class _NewJournalSheetState extends State<NewJournalSheet> {
                   ),
                 ),
                 16.verticalSpace,
-                CustomNeumorphicButton(
-                  onTap: () {
-                    context.pop();
-                    context.pushNamed(
-                      PageUrl.createJournalScreen,
-                    );
-                  },
-                  padding: const EdgeInsets.symmetric(vertical: 18),
-                  color: Pallets.primary,
-                  child: Row(
-                    children: [
-                      ImageWidget(imageUrl: Assets.images.svgs.editFilled),
-                      5.horizontalSpace,
-                      const TextView(
-                        text: 'Blank Entry',
-                        color: Pallets.white,
-                        fontWeight: FontWeight.w600,
-                      )
-                    ],
+                Center(
+                  child: CustomNeumorphicButton(
+                    onTap: () {
+                      context.pop();
+                      context.pushNamed(
+                        PageUrl.createJournalScreen,
+                      );
+                    },
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    color: Pallets.primary,
+                    child: Row(
+                      children: [
+                        ImageWidget(imageUrl: Assets.images.svgs.editFilled),
+                        5.horizontalSpace,
+                        const TextView(
+                          text: 'Blank Entry',
+                          color: Pallets.white,
+                          fontWeight: FontWeight.w600,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 16.verticalSpace,

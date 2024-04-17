@@ -136,13 +136,19 @@ class BCSignupOptionsField extends StatelessWidget {
 
         // context.pushNamed(PageUrl.selectYearScreen);
       } else {
+
         context.read<BotChatCubit>().answerQuestion(
             id: message.id,
-            answer: state.response.data.email.toString(),
-            nextFlow: BotChatFlow.talkToMentra,
-            nextSignupStage: SignupStage.YEAR);
-        context.pop();
-        // context.pushNamed(PageUrl.welcomeScreen);
+            answer: "Continue with Google",
+            nextFlow: BotChatFlow.talkToMentra);
+
+        // context.read<BotChatCubit>().answerQuestion(
+        //     id: message.id,
+        //     answer: state.response.data.email.toString(),
+        //     nextFlow: BotChatFlow.talkToMentra,
+        //     nextSignupStage: SignupStage.YEAR);
+        // context.pop();
+        // context.pushNamed(PageUrl.talkToMentraScreen);
       }
     }
     if (state is OauthFailureState) {

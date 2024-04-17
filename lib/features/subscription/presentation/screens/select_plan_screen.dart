@@ -55,6 +55,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       context.pop();
                       CustomDialogs.error(state.error);
                     }
+                    if (state is SubscriptionFailureState) {
+                      context.pop();
+                      CustomDialogs.error(state.error);
+                    }
                     if (state is SubscribeSuccessState) {
                       context.pop();
                       context.pop();
@@ -84,7 +88,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                           Padding(
                             padding: const EdgeInsets.all(16),
                             child: TextView(
-                              text: 'Select plan',
+                              text: 'Select Plan',
                               style: GoogleFonts.fraunces(
                                   fontSize: 32, fontWeight: FontWeight.w600),
                             ),
@@ -95,12 +99,13 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                             child: PageView.builder(
                               itemCount: state.response.data.length,
                               itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
+                                padding: const EdgeInsets.only(left: 0.0),
                                 child: PlanDetailsItem(
                                     plan: state.response.data[index]),
                               ),
                               padEnds: true,
-                              controller: PageController(viewportFraction: 0.9),
+                              controller:
+                                  PageController(viewportFraction: 0.88),
                             ),
                           )
                         ],

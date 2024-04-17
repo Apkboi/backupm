@@ -19,8 +19,12 @@ import 'package:mentra/features/settings/data/repository/settings_repository_imp
 import 'package:mentra/features/settings/data/repository/user_preference_rpository_impl.dart';
 import 'package:mentra/features/settings/dormain/repository/settings_repository.dart';
 import 'package:mentra/features/settings/dormain/repository/user_preference_rpository.dart';
+import 'package:mentra/features/streaks/data/repository/streaks_repository_impl.dart';
+import 'package:mentra/features/streaks/domain/repository/steaks_repository.dart';
 import 'package:mentra/features/subscription/data/repository/subscription_repository_impl.dart';
 import 'package:mentra/features/subscription/dormain/repository/subscription_repository.dart';
+import 'package:mentra/features/tasks/data/repository/daily_task_repository_impl.dart';
+import 'package:mentra/features/tasks/domain/repository/daily_task_repository.dart';
 import 'package:mentra/features/therapy/data/repository/therapy_repository_impl.dart';
 import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
 
@@ -49,6 +53,8 @@ void setup(GetIt getIt) {
       () => NotificationRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<MentraChatRepository>(
       () => MentraChatRepositoryImpl(getIt.get()));
-
-
+  getIt.registerLazySingleton<DailyTaskRepository>(
+      () => DailyTaskRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<StreaksRepository>(
+      () => StreaksRepositoryImpl(getIt.get()));
 }

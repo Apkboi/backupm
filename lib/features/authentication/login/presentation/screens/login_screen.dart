@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -218,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (state is OauthLoadingState) {
       CustomDialogs.showLoading(context);
     }
-    if (state is OauthSuccessState) {
+    if (state is LoginOauthSuccessState) {
       if (state.response.data.newUser) {
         injector
             .get<regbloc.RegistrationBloc>()

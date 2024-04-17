@@ -125,3 +125,26 @@ class UpdateJournalFailureState extends JournalState {
   @override
   List<Object?> get props => [error];
 }
+
+class GetPromptsCategoryLoadingState extends JournalState {
+  @override
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class GetPromptsCategorySuccessState extends JournalState {
+  final dynamic response;
+
+  GetPromptsCategorySuccessState({required this.response});
+
+  @override
+  List<Object?> get props => [response];
+}
+
+class GetPromptsCategoryFailureState extends JournalState {
+  final String error;
+
+  GetPromptsCategoryFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}

@@ -9,6 +9,7 @@ import 'package:mentra/features/therapy/data/models/fetch_dates_response.dart';
 import 'package:mentra/features/therapy/data/models/fetch_time_slots_response.dart';
 import 'package:mentra/features/therapy/data/models/get_matched_therapist.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+import 'package:mentra/features/therapy/data/models/session_focus_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
 
@@ -182,6 +183,35 @@ class TherapyRepositoryImpl extends TherapyRepository {
     } catch (e, stack) {
       logger.e(e);
       logger.e(stack);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<SessionFocusResponse> getSessionFocus() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.sessionFocus,
+        RequestMethod.get,
+      );
+      return SessionFocusResponse.fromJson(response.data);
+    } catch (e, stack) {
+      logger.e(e);
+      logger.e(stack);
+      rethrow;
+    }
+  }
+
+  @override
+  Future report({required String content}) async {
+    try {
+      final response = await _networkService.call(
+          UrlConfig.report, RequestMethod.post,
+          data: {"content": content});
+      return response.data;
+    } catch (e, stack) {
+      // logger.e(e);
+      logger.e(e, stackTrace: stack);
       rethrow;
     }
   }

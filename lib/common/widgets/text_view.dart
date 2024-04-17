@@ -17,6 +17,7 @@ class TextView extends StatelessWidget {
   final int? maxLines;
   final TextStyle? style;
   final TextDecoration? decoration;
+  final double? wordSpacing;
 
   const TextView({
     super.key,
@@ -34,6 +35,7 @@ class TextView extends StatelessWidget {
     this.decoration,
     this.fontStyle = FontStyle.normal,
     this.decorationColor,
+    this.wordSpacing,
   });
 
   @override
@@ -47,14 +49,15 @@ class TextView extends StatelessWidget {
         // textScaleFactor: ScreenUtil().textScaleFactor,
         style: style?.copyWith(inherit: true) ??
             GoogleFonts.plusJakartaSans(
-              color: color,
-              decoration: decoration,
-              decorationColor: decorationColor,
-              fontWeight: fontWeight,
-              fontSize: fontSize?.sp ?? 14.sp,
-              fontStyle: fontStyle,
-              height: lineHeight,
-            ).copyWith(inherit: true),
+                    color: color,
+                    decoration: decoration,
+                    decorationColor: decorationColor,
+                    fontWeight: fontWeight,
+                    fontSize: fontSize?.sp ?? 15.sp,
+                    fontStyle: fontStyle,
+                    height: lineHeight,
+                    wordSpacing: wordSpacing)
+                .copyWith(inherit: true),
         textAlign: align,
         overflow: textOverflow,
 

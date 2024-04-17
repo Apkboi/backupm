@@ -3,7 +3,10 @@ import 'package:mentra/features/mentra_bot/data/models/get_current_sessions_resp
 abstract class MentraChatRepository {
   Future<GetCurrentSessionRsponse> getCurrentSession();
 
-  Future<GetCurrentSessionRsponse> continueSession(String sessionId, String prompt);
+  Future<GetCurrentSessionRsponse> continueSession(
+      String sessionId, String prompt);
 
-  Future<dynamic> endSession(String sessionId);
+  Future<dynamic> endSession({required String sessionId, required String? feeling, String? comment});
+
+  Future<dynamic> reviewMentraSession({required String sessionId, required String? feeling, String? comment});
 }

@@ -10,7 +10,12 @@ import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_login
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_select_year_field.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_set_passcode_field.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_username_field.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/password_reset_email_field.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/password_reset_verification_screen.dart';
+import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/reset_passcode_field.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/user_email_field.dart';
+
+import 'confirm_passcode_reset_field.dart';
 
 class TalkToMentraInputFields extends StatefulWidget {
   const TalkToMentraInputFields({super.key, required this.currentMessage});
@@ -52,14 +57,20 @@ class _TalkToMentraInputFieldsState extends State<TalkToMentraInputFields> {
           message: widget.currentMessage,
         ),
       AnswerType.USERNAME => BcUserNameField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.EMAIL_PREVIW =>
         BCEmailPreviewField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.LOGIN_PASSCODE =>
         BCLoginPasscodeField(message: widget.currentMessage),
-      // TODO: Handle this case.
       AnswerType.NOTIFICATION_OPTIONS => 0.verticalSpace,
+      AnswerType.PASSWORD_RESET_EMAIL =>
+        PasswordResetEmailField(message: widget.currentMessage),
+      AnswerType.PASSWORD_RESET_OTP => PasswordResetVerificationField(
+          message: widget.currentMessage,
+        ),
+      AnswerType.PASSWORD_RESET_PASSCODE =>
+        ResetPasscodeField(message: widget.currentMessage),
+      AnswerType.PASSWORD_RESET_CONFIRMPASSCODE =>
+        const ConfirmPasswordResetCodeField()
     };
   }
 }

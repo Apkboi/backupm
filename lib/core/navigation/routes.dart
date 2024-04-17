@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/utils/bot_chat_flow_helper.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_preview_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/login_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/new_login.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/new_passcode_screen.dart';
+import 'package:mentra/features/authentication/login/presentation/screens/passcode_auth_screen.dart';
 import 'package:mentra/features/authentication/login/presentation/screens/welcome_screen.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_intro.dart';
 import 'package:mentra/features/authentication/onboarding/presentaion/screens/onboarding_screen.dart';
@@ -39,6 +41,10 @@ import 'package:mentra/features/library/presentation/screens/audio_article_scree
 import 'package:mentra/features/library/presentation/screens/video_article_screen.dart';
 import 'package:mentra/features/library/presentation/screens/video_player_screen.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
+import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
+import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
+
+// import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/bot_chat_screen.dart';
 import 'package:mentra/features/mentra_bot/presentation/screens/talk_to_mentra_screen.dart';
 import 'package:mentra/features/notification/presentation/screens/notifications_screen.dart';
@@ -49,7 +55,10 @@ import 'package:mentra/features/settings/presentation/screens/edit_avatar_screen
 import 'package:mentra/features/settings/presentation/screens/edit_profile_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/security_privacy_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/settings_screen.dart';
+import 'package:mentra/features/settings/presentation/screens/support_screen.dart';
 import 'package:mentra/features/settings/presentation/screens/user_preference_screen.dart';
+import 'package:mentra/features/streaks/presentation/screens/badges_screen.dart';
+import 'package:mentra/features/streaks/presentation/screens/streak_details_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
@@ -133,6 +142,11 @@ class CustomRoutes {
         builder: (context, state) => const NotificationAccessScreen(),
       ),
       GoRoute(
+        path: '/passcodeAuthScreen',
+        name: PageUrl.passcodeAuthScreen,
+        builder: (context, state) => const PasscodeAuthScreen(),
+      ),
+      GoRoute(
         path: '/selectYearScreen',
         name: PageUrl.selectYearScreen,
         builder: (context, state) => const SelectYearScreen(),
@@ -172,7 +186,12 @@ class CustomRoutes {
       GoRoute(
         path: '/homeScreen',
         name: PageUrl.homeScreen,
-        builder: (context, state) => const HomeScreen(),
+        builder: (context, state) => HomeScreen(
+          startConvo: bool.parse(
+              state.uri.queryParameters[PathParam.startConvo] ?? "false"),
+          authenticate: bool.parse(
+              state.uri.queryParameters[PathParam.authenticate] ?? "false"),
+        ),
       ),
       GoRoute(
         path: '/menuScreen',
@@ -185,14 +204,23 @@ class CustomRoutes {
         pageBuilder: (context, state) => buildPageWithDefaultTransition<void>(
           context: context,
           state: state,
-          child: const TalkToMentraScreen(),
+          child: TalkToMentraScreen(
+            authMessages: List.from(jsonDecode(
+                    state.uri.queryParameters[PathParam.authMessages] ?? '[]'))
+                .map((e) => MentraChatModel.fromJson(e as Map<String, dynamic>))
+                .toList(),
+          ),
         ),
         // builder: (context, state) => const TalkToMentraScreen(),
       ),
       GoRoute(
         path: '/botChatScreen',
         name: PageUrl.botChatScreen,
-        builder: (context, state) => const BotChatScreen(),
+        builder: (context, state) => BotChatScreen(
+          botChatFlow: BotChatFlowHelper.fromStringValue(
+              state.uri.queryParameters[PathParam.botChatFlow] ??
+                  BotChatFlow.welcome.name),
+        ),
       ),
       GoRoute(
         path: '/therapistProfile',
@@ -288,6 +316,11 @@ class CustomRoutes {
         path: '/manageSubscriptionScreen',
         name: PageUrl.manageSubscriptionScreen,
         builder: (context, state) => const ManageSubscriptionScreen(),
+      ),
+      GoRoute(
+        path: '/supportScreen',
+        name: PageUrl.supportScreen,
+        builder: (context, state) => const SupportScreen(),
       ),
       GoRoute(
         path: '/editProfileScreen',
@@ -402,6 +435,16 @@ class CustomRoutes {
         path: '/notificationsScreen',
         name: PageUrl.notificationsScreen,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: '/streakDetailsScreen',
+        name: PageUrl.streakDetailsScreen,
+        builder: (context, state) => const StreakDetailsScreen(),
+      ),
+      GoRoute(
+        path: '/badgesScreen',
+        name: PageUrl.badgesScreen,
+        builder: (context, state) => const BadgesScreen(),
       ),
     ],
   );

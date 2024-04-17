@@ -10,6 +10,7 @@ class BotChatmessageModel {
   AnswerType answerType;
   LoginStage loginStage;
   SignupStage signupStage;
+  PasswordResetStage passwordResetStage;
   PermissionsStage permissionsStage;
   String? answer;
   DateTime time;
@@ -25,6 +26,7 @@ class BotChatmessageModel {
       this.isTyping = false,
       required this.answerType,
       this.loginStage = LoginStage.NONE,
+      this.passwordResetStage = PasswordResetStage.NONE,
       this.permissionsStage = PermissionsStage.NONE,
       required this.time,
       this.answerTime,
@@ -48,6 +50,9 @@ class BotChatmessageModel {
       answerTime: DateTime.now(),
       signupStage: SignupStage.NONE,
       flow: BotChatFlow.welcome);
+
+
+
 }
 
 enum AnswerType {
@@ -67,6 +72,10 @@ enum AnswerType {
   AVATAR,
   BIOMETRIC_OPTIONS,
   NOTIFICATION_OPTIONS,
+  PASSWORD_RESET_EMAIL,
+  PASSWORD_RESET_OTP,
+  PASSWORD_RESET_PASSCODE,
+  PASSWORD_RESET_CONFIRMPASSCODE,
   NONE,
 }
 
@@ -74,11 +83,20 @@ enum LoginStage {
   NONE,
   INITIAL,
   EMAILPREVIEW,
+  PASSWORD_RESET_SUCCESS,
   USERNAME,
   AVARTER,
   EMAIL,
   OTP,
   PASSCODE
+}
+
+enum PasswordResetStage {
+  NONE,
+  EMAIL,
+  OTP,
+  PASSCODE,
+  CONFIRM_PASSCODE,
 }
 
 enum PermissionsStage { BIOMETRIC, NOTIFICATION, NONE }

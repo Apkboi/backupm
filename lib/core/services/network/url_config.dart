@@ -76,7 +76,7 @@ class UrlConfig {
   static const String verifyPasscode = '/user/passcode/verify';
   static const String updatePassword = '/user/passcode/update';
   static const String allowNotifications = 'general/account/allow-notification';
-  static const String resetPassword = '/auth/reset-password';
+  static const String resetPassword = '/auth/password/reset';
   static const String getAvatars = '/profile/avatars';
   static const String uploadAvatar = '/user/profile/upload-avatar';
   static const String getProfile = '/user/me';
@@ -95,7 +95,10 @@ class UrlConfig {
   static const String selectTherapist = '/user/session/therapist/select';
   static const String getMatchedTherapist = '/user/session/therapist/select';
   static const String createReview = '/user/session/reviews/create';
+  static const String reviewAiSession = '/user/ai-sessions/send-review';
   static const String getReviews = '/user/session/reviews/list';
+  static const String sessionFocus = '/user/session/focus/list';
+  static const String report = '/user/report/save';
 
 //  NOtification
   static const String getNotifications = '/notifications/list';
@@ -109,11 +112,25 @@ class UrlConfig {
   static const String getJournals = '/guided-journals';
   static const String saveJournals = '/guided-journals/save';
 
+
+  // Journals
   static String deleteJournal(String id) => '/guided-journals/$id/delete';
 
   static String updateJournal(String id) => '/guided-journals/$id/update';
+  static const String getPromptsCategory = '/user/ai-sessions/current';
+
 
 //   Mentra chat
   static const String currentSession = '/user/ai-sessions/current';
   static const String continueSession = '/user/ai-sessions/send-message';
+
+  static String endSession = '/user/ai-sessions/end';
+
+//   MOOD CHECKER
+  static String updateMoodChecker = '/user/mood-checker/save';
+
+  //   MOOD CHECKER
+  static String getDailyTasks = '/daily-tasks/list';
+  static String getStreaks = '/badges/list';
+  static String updateDailyTasks = '/daily-tasks/save';
 }

@@ -9,6 +9,9 @@ part 'password_reset_state.dart';
 
 class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
   final PasswordResetRepository _passwordResetRepository;
+  String email = '';
+  String initialPasscode = '';
+  String otp = '';
 
   PasswordResetBloc(this._passwordResetRepository)
       : super(PasswordResetInitial()) {
@@ -23,6 +26,8 @@ class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
     try {
       emit(PasswordResetOtpLoadingState());
       var response = await _passwordResetRepository.forgotPassword(event.email);
+
+      email = event.email;
       emit(PasswordResetOtpSuccessState(response));
     } catch (e) {
       emit(PasswordResetOtpFailureState(error: e.toString()));
@@ -47,10 +52,13 @@ class PasswordResetBloc extends Bloc<PasswordResetEvent, PasswordResetState> {
     try {
       emit(ResetPasswordLoadingState());
       var response = await _passwordResetRepository.resetPassword(
-          event.password, event.hashKey);
+          event.password, event.code);
       emit(ResetPasswordSuccessState(response));
     } catch (e) {
       emit(ResetPasswordFailureState(error: e.toString()));
     }
   }
+
+  bool confirmPasscode(String passcode)=> initialPasscode == passcode;
+
 }

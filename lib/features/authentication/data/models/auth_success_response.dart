@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:mentra/features/streaks/data/model/get_streaks_response.dart';
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
 
 AuthSuccessResponse authSuccessResponseFromJson(String str) =>
@@ -144,8 +145,6 @@ class ActiveSubscription {
       };
 }
 
-
-
 MentraUser mentraUserFromJson(String str) =>
     MentraUser.fromJson(json.decode(str));
 
@@ -159,10 +158,13 @@ class MentraUser {
   final dynamic avatarBackgroundColor;
   final String username;
   final String email;
-  final String birthYear;
+  final dynamic birthYear;
   final dynamic stripeCustomerId;
   final dynamic mesiboUserId;
   final dynamic mesiboUserToken;
+  final dynamic mood;
+  final dynamic badgeUpdated;
+  final StreakModel? streak;
   final ActiveSubscription? activeSubscription;
   final MatchedTherapist? matchedTherapist;
   final DateTime createdAt;
@@ -172,6 +174,7 @@ class MentraUser {
     required this.id,
     required this.avatar,
     required this.name,
+    required this.mood,
     required this.role,
     required this.avatarBackgroundColor,
     required this.username,
@@ -184,6 +187,8 @@ class MentraUser {
     required this.matchedTherapist,
     required this.createdAt,
     required this.updatedAt,
+    required this.streak,
+    this.badgeUpdated,
   });
 
   MentraUser copyWith({
@@ -191,6 +196,7 @@ class MentraUser {
     String? avatar,
     String? name,
     String? role,
+    String? mood,
     String? avatarBackgroundColor,
     String? username,
     String? email,
@@ -198,8 +204,10 @@ class MentraUser {
     String? stripeCustomerId,
     String? mesiboUserId,
     String? mesiboUserToken,
+    StreakModel? streak,
     ActiveSubscription? activeSubscription,
     MatchedTherapist? matchedTherapist,
+    bool? badgeUpdated,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) =>
@@ -208,6 +216,7 @@ class MentraUser {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
+        mood: mood ?? this.mood,
         avatarBackgroundColor:
             avatarBackgroundColor ?? this.avatarBackgroundColor,
         username: username ?? this.username,
@@ -220,6 +229,8 @@ class MentraUser {
         matchedTherapist: matchedTherapist ?? this.matchedTherapist,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        badgeUpdated: badgeUpdated ?? this.badgeUpdated,
+        streak: streak ?? this.streak,
       );
 
   factory MentraUser.fromJson(Map<String, dynamic> json) => MentraUser(
@@ -227,6 +238,7 @@ class MentraUser {
         avatar: json["avatar"],
         name: json["name"],
         role: json["role"],
+        badgeUpdated: json["badge_updated"],
         avatarBackgroundColor: json["avatar_background_color"],
         username: json["username"],
         email: json["email"],
@@ -234,8 +246,13 @@ class MentraUser {
         stripeCustomerId: json["stripe_customer_id"],
         mesiboUserId: json["mesibo_user_id"],
         mesiboUserToken: json["mesibo_user_token"],
-        activeSubscription:
-        json["active_subscription"] == null ? null:   ActiveSubscription.fromJson(json["active_subscription"]),
+        mood: json["mood"],
+        activeSubscription: json["active_subscription"] == null
+            ? null
+            : ActiveSubscription.fromJson(json["active_subscription"]),
+        streak: json["streak"] == null
+            ? null
+            : StreakModel.fromJson(json["streak"]),
         matchedTherapist: json["matched_therapist"] == null
             ? null
             : MatchedTherapist.fromJson(json["matched_therapist"]),
@@ -255,8 +272,11 @@ class MentraUser {
         "stripe_customer_id": stripeCustomerId,
         "mesibo_user_id": mesiboUserId,
         "mesibo_user_token": mesiboUserToken,
+        "mood": mood,
+        "badge_updated": badgeUpdated,
         "active_subscription": activeSubscription?.toJson(),
         "matched_therapist": matchedTherapist?.toJson(),
+        "streak": streak?.toJson(),
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

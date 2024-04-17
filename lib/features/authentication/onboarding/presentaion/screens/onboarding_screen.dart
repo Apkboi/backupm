@@ -37,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: 0.74.sh,
+                height: 0.75.sh,
                 child: CarouselSlider(
                     // controller: _pageController,
                     options: CarouselOptions(
@@ -61,14 +61,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     // },
                     items: [
                       OnboardingItem(
-                        img: Assets.images.pngs.onboarding1.path,
+                        img: Assets.images.pngs.slide1.path,
                         header: heading1,
-                        text: body1,
+                        text: body2,
+                        index: 0,
                       ),
                       OnboardingItem(
-                        img: Assets.images.pngs.onboarding2.path,
+                        img: Assets.images.pngs.slide2.path,
                         header: heading2,
-                        text: body2,
+                        text: body1,
+                        index: 1,
                       ),
                       // OnboardingItem(
                       //   img: Assets.images.pngs.onboarding3.path,
@@ -77,6 +79,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       // ),
                     ]),
               ),
+              20.verticalSpace,
+              Indicator(
+                seledtedIndex: _currentIndex,
+                items_count: 2,
+              ),
+              10.verticalSpace,
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
@@ -84,11 +92,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    20.verticalSpace,
-                    Indicator(
-                      seledtedIndex: _currentIndex,
-                      items_count: 2,
-                    ),
                     20.verticalSpace,
                     CustomNeumorphicButton(
                       color: Pallets.primary,

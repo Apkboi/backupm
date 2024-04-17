@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/sound/sound_manager.dart';
 import 'package:mentra/features/settings/data/data_sources/preference_questions.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/dormain/repository/user_preference_rpository.dart';
@@ -39,8 +40,11 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
   UserPreferenceCubit(this.userPreferenceRepository)
       : super(UserPreferenceInitial());
 
-  void startMessage() {
+  void startMessage() async {
     stagedMessages.clear();
+    _addTyping();
+    await Future.delayed(const Duration(seconds: 2));
+    await _removeTyping();
     stagedMessages
         .add(dataSource.therapyQuestions.first..questionTime = DateTime.now());
     currentQuestion = dataSource.therapyQuestions.first;
@@ -53,24 +57,25 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
   void _scrollToLast() async {
     // emit(state.copyWith(highlightIndex: -1));
+    // scrollController.jumpTo(
+    //   alignment: 0.5,
+    //   index: 0,
+    //   // curve: Curves.easeOut,
+    //   // duration: kTabScrollDuration,
+    // );
 
-    scrollController.jumpTo(
-      alignment: 0.5,
-      index: 0,
-
-      // curve: Curves.easeOut,
-      // duration: kTabScrollDuration,
-    );
-
-    // emit(state.copyWith(highlightIndex: event.index));
+    // emit(state.copyWith(highlightIndex: event.index));x
   }
 
   void answerQuestion({required int id, required String answer}) {
-    //   Update the question with the answer
+    SoundManager.playMessageSentSound();
 
+    //   Update the question with the answer
     stagedMessages.where((element) => element.id == id).first.answer = answer;
     stagedMessages.where((element) => element.id == id).first.answerTime =
         DateTime.now();
+
+    emit(QuestionUpdatedState());
     //   Check if the answered question is the last question in the list to get next question
     if (id == stagedMessages.last.id) {
       //   Get NextQuestion
@@ -83,9 +88,13 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
         emit(QuestionUpdatedState());
       }
     }
+
   }
 
-  getNextQuestion() {
+  getNextQuestion() async {
+    _addTyping();
+    await Future.delayed(const Duration(seconds: 2));
+    await _removeTyping();
     stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]
       ..questionTime = DateTime.now());
     currentQuestion = stagedMessages.last;
@@ -96,6 +105,9 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
       emit(QuestionUpdatedState());
     }
     _scrollToLast();
+
+    SoundManager.playMessageReceivedSound();
+    
   }
 
   void updateCurrentQuestion(QuestionPromptModel question) {
@@ -109,7 +121,6 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
     for (QuestionPromptModel question in messages) {
       // Use the question key as the map key and the answer as the value
-
       if (question.key == 'age_range') {
         questionsMap[question.key] = agePreferenceMap[question.answer];
       } else {
@@ -137,6 +148,20 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
     // emit(UpdatePreferenceSuccessState(response));
 //   emit(UpdatePreferenceFailureState(error))
+  }
+
+  void _addTyping() async {
+    stagedMessages.add(QuestionPromptModel.typing());
+    currentQuestion = QuestionPromptModel.typing();
+    emit(QuestionUpdatedState());
+    await Future.delayed(const Duration(seconds: 1));
+  }
+
+  Future _removeTyping() async {
+    emit(RemoveTypingState());
+    await Future.delayed(const Duration(milliseconds: 400));
+    stagedMessages.removeWhere((element) => element.isTyping == true);
+    currentQuestion = stagedMessages.lastOrNull;
   }
 
   final agePreferenceMap = {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -11,32 +12,33 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
 import 'package:mentra/gen/assets.gen.dart';
-import 'package:mesibo_flutter_sdk/mesibo.dart';
 import '../../../../core/navigation/route_url.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen(
+      {super.key, this.startConvo = false, this.authenticate = false});
+
+  final bool startConvo;
+  final bool authenticate;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen>
-    implements MesiboConnectionListener {
-  Mesibo mesibo = Mesibo();
+     {
 
   @override
   void initState() {
-    _startMentraChat();
+    _welcome();
     DashboardUsecase().execute();
-    // _initMesibo();
-    // _startMentraChat();
+
     super.initState();
   }
 
@@ -44,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: Pallets.primary,
       appBar: CustomAppBar(
         tittle: ImageWidget(
           imageUrl: Assets.images.svgs.mentraText,
@@ -57,6 +60,8 @@ class _HomeScreenState extends State<HomeScreen>
           InkWell(
             onTap: () {
               context.pushNamed(PageUrl.menuScreen);
+              // _welcome();
+              // DashboardUsecase().execute();
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
@@ -83,7 +88,9 @@ class _HomeScreenState extends State<HomeScreen>
           AppBg(
             image: Assets.images.pngs.homeBg.path,
           ),
-          SafeArea(
+          Container(
+            height: 1.sh,
+            width: 1.sw,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -91,16 +98,18 @@ class _HomeScreenState extends State<HomeScreen>
                   clipBehavior: Clip.none,
                   children: [
                     Positioned(
-                        top: -270.h,
+                        top: -280.h,
                         right: 0,
                         left: 0,
-                        child: HomeBotImage()),
+                        child: const HomeBotImage()),
                     Positioned(
-                        top: -100,
+                        top: -98,
+                        right: 0,
+                        left: 0,
                         child: ImageWidget(
-                            width: 254,
+                            width: 1.sw,
                             height: 254,
-                            fit: BoxFit.scaleDown,
+                            fit: BoxFit.fitWidth,
                             imageUrl: Assets.images.svgs.combinedShape)),
                     Container(
                       width: 1.sw,
@@ -126,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen>
                           }
                           if (state is GetConversationStarterLoadingState) {
                             return SizedBox(
-                              height: 200,
+                              height: 250,
                               child: CustomDialogs.getLoading(
                                   size: 30, color: Pallets.white),
                             );
@@ -200,24 +209,12 @@ class _HomeScreenState extends State<HomeScreen>
   //   );
   // }
 
-  void _initMesibo() async {
-    // await mesibo.stop();
-    mesibo.setAccessToken(injector.get<UserBloc>().appUser?.mesiboUserToken);
-    mesibo.setListener(this);
-    mesibo.start();
-  }
 
-  @override
-  void Mesibo_onConnectionStatus(int status) {
-    logger.i(status);
-  }
 
-  void _startMentraChat() {
-    Future.delayed(const Duration(seconds: 1), () {
-      context.pushNamed(
-        PageUrl.talkToMentraScreen,
-      );
-    });
+
+
+  void _welcome() async {
+    DailyStreakChecker.checkForStreak();
   }
 }
 

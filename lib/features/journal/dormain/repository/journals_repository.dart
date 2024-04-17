@@ -10,9 +10,10 @@ abstract class JournalsRepository {
   Future<SaveJournalResponse> updateJournal(
       {required String journalId, String? promptId, required String body});
 
-  Future<GetPromptsResponse> getPrompts();
+  Future<GetPromptsResponse> getPrompts(dynamic categoryId);
 
   Future<GetJournalsResponse> getJournals();
+  Future<dynamic> getPromptsCategories();
 
   Future<SuccessResponse> deleteJournal({
     required String id,

@@ -15,7 +15,8 @@ class BCWelcomeOption extends StatefulWidget {
   State<BCWelcomeOption> createState() => _BCWelcomeOptionState();
 }
 
-class _BCWelcomeOptionState extends State<BCWelcomeOption> with SingleTickerProviderStateMixin {
+class _BCWelcomeOptionState extends State<BCWelcomeOption>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -49,6 +50,7 @@ class _BCWelcomeOptionState extends State<BCWelcomeOption> with SingleTickerProv
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return FadeTransition(
@@ -69,6 +71,7 @@ class _BCWelcomeOptionState extends State<BCWelcomeOption> with SingleTickerProv
                 },
                 expanded: false,
                 fgColor: Pallets.black,
+                padding: const EdgeInsets.all(15),
                 color: Pallets.secondary,
                 text: "I already have an account",
               ),
@@ -91,6 +94,7 @@ class _BCWelcomeOptionState extends State<BCWelcomeOption> with SingleTickerProv
                 },
                 expanded: false,
                 color: Pallets.primary,
+                padding: const EdgeInsets.all(15),
                 text: "I'd like to create a new account",
               ),
             ],

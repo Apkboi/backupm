@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
+import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
+import 'package:mentra/features/authentication/onboarding/presentaion/widgets/language_selection_sheet.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
 
 class SecurityPrivacyScreen extends StatefulWidget {
@@ -45,29 +51,53 @@ class _SecurityPrivacyScreenState extends State<SecurityPrivacyScreen> {
                               },
                               tittle: 'Change PIN'),
                           35.verticalSpace,
-                          SettingListTile(
-                              onTap: () {},
-                              trailingWidget: CupertinoSwitch(
-                                value: true,
-                                onChanged: (value) {},
-                              ),
-                              tittle: 'Sign in with Face ID'),
+                          BlocBuilder<LocalAuthCubit, LocalAuthState>(
+                            bloc: injector.get(),
+                            builder: (context, state) {
+                              return SettingListTile(
+                                  onTap: () {
+                                    // LocalAuthentication().authenticate(localizedReason: 'c,d');
+                                  },
+                                  trailingWidget: CupertinoSwitch(
+                                    value: injector
+                                        .get<LocalAuthCubit>()
+                                        .biometricEnabled,
+                                    onChanged: (value) {
+                                      if (!injector
+                                          .get<LocalAuthCubit>()
+                                          .biometricEnabled) {
+                                        injector
+                                            .get<LocalAuthCubit>()
+                                            .enableBiometric();
+                                      } else {
+                                        injector
+                                            .get<LocalAuthCubit>()
+                                            .disableBiometric();
+                                      }
+                                    },
+                                  ),
+                                  tittle: 'Sign in with Biometric');
+                            },
+                          ),
                         ],
                       ),
                     )),
                 10.verticalSpace,
-                // Container(
-                //   decoration: BoxDecoration(
-                //       color: Pallets.white,
-                //       borderRadius: BorderRadius.circular(17)),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(17),
-                //     child: SettingListTile(
-                //         onTap: () {},
-                //         leadingWidget: 0.horizontalSpace,
-                //         tittle: 'Change Language'),
-                //   ),
-                // )
+                Container(
+                  decoration: BoxDecoration(
+                      color: Pallets.white,
+                      borderRadius: BorderRadius.circular(17)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(17),
+                    child: SettingListTile(
+                        onTap: () {
+                          CustomDialogs.showBottomSheet(
+                              context, const LanguageSelectionSheet());
+                        },
+                        // leadingWidget: 0.horizontalSpace,
+                        tittle: 'Change Language'),
+                  ),
+                )
               ],
             ),
           ),

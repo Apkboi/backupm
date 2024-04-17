@@ -22,8 +22,6 @@ class OptionsWidget extends StatelessWidget {
 
           return InkWell(
             onTap: () {
-              // TODO UPDATE QUESTION ANSWER
-
               context.read<UserPreferenceCubit>().answerQuestion(
                   id: question.id, answer: question.options[index]);
             },
@@ -48,7 +46,8 @@ class OptionsWidget extends StatelessWidget {
                       child: Center(
                         child: Text(
                           question.options[index],
-                          style: TextStyle(color: Pallets.black, fontSize: 16.sp),
+                          style:
+                              TextStyle(color: Pallets.black, fontSize: 16.sp),
                         ),
                       ),
                     ),

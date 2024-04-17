@@ -19,6 +19,11 @@ class GetPromptsEvent extends JournalEvent {
   List<Object?> get props => [];
 }
 
+class GetPromptsCategoriesEvent extends JournalEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class GetJournalsEvent extends JournalEvent {
   @override
   List<Object?> get props => [];

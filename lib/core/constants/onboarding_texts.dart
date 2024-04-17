@@ -1,10 +1,13 @@
-const String heading1 = "Begin your journey to better mental well-being";
-const String heading2 = "Access resources for mindfulness and self-care";
+const String heading2 = "Begin your journey to better mental and emotional wellbeing";
+const String heading1 = "Personalized Tech-Enabled Support, Anytime, Anywhere";
+
 const String heading3 = "Get matched with a therapist tailored to your needs";
 const String body1 =
-    "Your first step toward improved mental well-being starts here";
+    "Built on evidence-based emotion regulation and psychotherapy techniques";
 const String body2 =
-    "Tap into a world of mindfulness and self-care with our offerings";
+    "Scientific, Safe, and Secure";
+
+
 const String body3 =
     "Get connected with a therapist who understands your specific needs";
 
@@ -17,7 +20,7 @@ const sessionEndedMessage =
 const therapySubscriptionMessage =
     "Sorry you cant access this feature because you are on a free plan,Please upgrade to gain access to this feature.";
 const endSessionMessage =
-    "It's been great talking with you. Remember, I'll clear our chat history for privacy, but I'll send a session summary to your notifications. Would you like to end the session or continue chatting?";
+    "Don’t worry, I’ll send a summary to you and clear the chat for privacy.";
 const registrationSuccesMessage =
     "Thank you for submitting your registration. Your request has been received, and we'll review it promptly. Expect a response within 24 hours.";
 

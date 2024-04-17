@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:mentra/common/widgets/input_bar.dart';
@@ -21,11 +22,14 @@ class _BcSetPasscodeFieldState extends State<BcSetPasscodeField> {
   Widget build(BuildContext context) {
     return InputBar(
       inputType: TextInputType.number,
-      hint: "Enter passcode",
+      hint: "Enter pin",
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(4),
+      ],
       validator: MultiValidator([
-        RequiredValidator(errorText: 'Enter passcode'),
-        MaxLengthValidator(4, errorText: 'Passcode should be a 4 digit number'),
-        MinLengthValidator(4, errorText: 'Passcode should be a 4 digit number'),
+        RequiredValidator(errorText: 'Enter pin'),
+        MaxLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
+        MinLengthValidator(4, errorText: 'Pin should be a 4 digit number'),
       ]).call,
       onAnswer: (answer) {
         injector.get<RegistrationBloc>().initialPasscode = answer;

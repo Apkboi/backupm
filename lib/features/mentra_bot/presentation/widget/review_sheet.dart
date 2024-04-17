@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
+import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
-import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
+
+class MentraReviewModel {
+  String feeling;
+  String comment;
+
+  MentraReviewModel({required this.feeling, required this.comment});
+}
 
 class ReviewSheet extends StatefulWidget {
   const ReviewSheet({Key? key}) : super(key: key);
@@ -20,10 +26,14 @@ class ReviewSheet extends StatefulWidget {
 }
 
 class _ReviewSheetState extends State<ReviewSheet> {
+  final controller = TextEditingController();
+
+  var feeling = 'Happy';
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Pallets.white,
+      color: Pallets.bottomSheetColor,
       padding: const EdgeInsets.all(18),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -32,7 +42,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
             width: 49,
             height: 5,
             decoration: ShapeDecoration(
-              color: const Color(0xFFBCC4CC),
+              // color: const Color(0xFFBCC4CC),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(42),
               ),
@@ -40,63 +50,59 @@ class _ReviewSheetState extends State<ReviewSheet> {
           ),
           10.verticalSpace,
           TextView(
-            text: reviewTittle,
+            text: 'How do you feel after our chat today?',
             align: TextAlign.center,
             style: GoogleFonts.fraunces(
                 fontSize: 24.sp, fontWeight: FontWeight.w600),
           ),
-          22.verticalSpace,
-          const TextView(
-            text: reviewSubtext,
-            align: TextAlign.center,
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Pallets.ink,
-          ),
           20.verticalSpace,
-          const TextView(
-            text: 'Star Rating',
-            align: TextAlign.center,
-            fontWeight: FontWeight.w400,
-            color: Pallets.ink,
-          ),
-          10.verticalSpace,
-          RatingBar.builder(
-            initialRating: 3,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: false,
-            glow: false,
-            itemCount: 5,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => Container(
-              decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      side: BorderSide(
-                          color: Colors.grey.withOpacity(
-                            0.5,
-                          ),
-                          width: 0.5))),
-              child: const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Icon(
-                  Icons.star_rounded,
-                  color: Pallets.yellowBase,
-                  // size: 18,
-                ),
-              ),
-            ),
-            onRatingUpdate: (rating) {
-              // if (kDebugMode) {
-              //   print(rating);
-              // }
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: List.generate(
+                ReviewMoodModel.allMoods.length,
+                (index) => InkWell(
+                      onTap: () {
+                        feeling = ReviewMoodModel.allMoods[index].mood;
+                        setState(() {});
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            border: feeling ==
+                                    ReviewMoodModel.allMoods[index].mood
+                                ? Border.all(width: 1, color: Pallets.secondary)
+                                : null),
+                        child: Column(
+                          children: [
+                            ImageWidget(
+                                height: 70.h,
+                                width: 70.w,
+                                fit: BoxFit.scaleDown,
+                                onTap: () {
+                                  feeling =
+                                      ReviewMoodModel.allMoods[index].mood;
+                                  setState(() {});
+                                },
+                                imageUrl:
+                                    ReviewMoodModel.allMoods[index].avatar),
+                            // 5.verticalSpace,
+                            // TextView(
+                            //   text: ReviewMoodModel.allMoods[index].mood,
+                            //   fontSize: 16,
+                            // )
+                          ],
+                        ),
+                      ),
+                    )),
           ),
           22.verticalSpace,
           Container(
             padding: const EdgeInsets.all(16),
+            // height: 300,
+
             decoration: ShapeDecoration(
+                color: Pallets.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                     side: BorderSide(
@@ -106,36 +112,35 @@ class _ReviewSheetState extends State<ReviewSheet> {
                         width: 0.8))),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 TextView(
                   text: 'Review',
                   style: GoogleFonts.inter(
                       fontSize: 12, fontWeight: FontWeight.w500),
                 ),
-                7.verticalSpace,
-                const FilledTextField(
-                    maxLine: 5,
+                5.verticalSpace,
+                FilledTextField(
+                    // maxLine: 5,
+                    minLine: 1,
+                    maxLine: 20,
                     hasElevation: false,
                     contentPadding: EdgeInsets.zero,
                     hasBorder: false,
+                    // expands: true,
+                    controller: controller,
                     fillColor: Colors.transparent,
-                    hint:
-                        'Share your thoughts! How did Mentra support you today? Your words make a difference.'),
+                    hint: 'Share your thoughts!'),
               ],
             ),
           ),
           43.verticalSpace,
           CustomNeumorphicButton(
             onTap: () {
-              // context.pop();
-              // CustomDialogs.showBottomSheet(
-              //     context, const EndSessionDialog(),
-              //     shape: const RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(16),
-              //           topRight: Radius.circular(16),
-              //         )),
-              //     constraints: BoxConstraints(maxHeight: 0.9.sh));
+              context.pop(MentraReviewModel(
+                comment: controller.text,
+                feeling: feeling,
+              ));
             },
             color: Pallets.primary,
             text: "Submit Review",

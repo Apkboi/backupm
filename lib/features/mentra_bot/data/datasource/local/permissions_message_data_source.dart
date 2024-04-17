@@ -5,7 +5,7 @@ class PermissionMessageDataSource {
   List<BotChatmessageModel> messages = [
     BotChatmessageModel(
         message:
-            'Strong passcode! Would you like to enable Face ID for even quicker access?',
+            'Strong pin! Would you like to enable Face ID for even quicker access?',
         isFromBot: true,
         id: 0,
         isTyping: false,

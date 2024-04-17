@@ -80,7 +80,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     try {
       final response = await _settingsRepository.getAvatars();
       emit(GetAvatarsSuccessState(response: response));
-    } catch (e) {
+    } catch (e, stack) {
+      logger.i(e.toString(), stackTrace: stack);
       emit(GetAvatarsFailureState(error: e.toString()));
     }
   }

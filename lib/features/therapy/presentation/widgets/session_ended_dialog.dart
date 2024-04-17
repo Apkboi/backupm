@@ -32,7 +32,7 @@ class TherapySessionEndedDialog extends StatelessWidget {
             width: 49,
             height: 5,
             decoration: ShapeDecoration(
-              color: const Color(0xFFBCC4CC),
+              color:Pallets.bottomSheetColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(42),
               ),

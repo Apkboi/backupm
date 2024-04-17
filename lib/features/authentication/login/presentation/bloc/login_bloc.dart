@@ -30,14 +30,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoadingState());
 
     try {
-      final authResponse =
-          await _authRepository.login(event.email, event.password);
+      final authResponse = await _authRepository.login(event.email, event.password);
 
       // Assuming loginUser returns the user details upon successful login
-      AuthSuccessUsecase().execute(authResponse);
+      AuthSuccessUsecase().execute(authResponse, passKey: event.password);
 
       emit(LoginSuccessState(response: authResponse));
-    } catch (e,stack) {
+    } catch (e, stack) {
       logger.e(e.toString());
       logger.e(stack.toString());
       emit(LoginFailureState(error: e.toString()));
@@ -71,9 +70,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         provider: 'google',
       ));
       if (!res.data.newUser) {
-        AuthSuccessUsecase().execute(res.toAuthSuccessResponse);
+        AuthSuccessUsecase().execute(
+          res.toAuthSuccessResponse,
+        );
       }
-      emit(OauthSuccessState(res));
+      emit(LoginOauthSuccessState(res));
     } catch (e) {
       emit(OauthFailureState(error: e.toString()));
     }
@@ -93,7 +94,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         AuthSuccessUsecase().execute(res.toAuthSuccessResponse);
       }
 
-      emit(OauthSuccessState(res));
+      emit(LoginOauthSuccessState(res));
     } catch (e) {
       emit(OauthFailureState(error: e.toString()));
     }

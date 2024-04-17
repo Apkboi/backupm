@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
+
 import 'get_current_sessions_response.dart';
 
 enum SendingState { loading, failed, success }
@@ -10,12 +12,14 @@ class MentraChatModel {
   final bool isTyping;
   SendingState? sendingState;
   DateTime? time;
+  List options;
 
   MentraChatModel(
       {required this.content,
       this.isTyping = false,
       required this.isMentraMessage,
       this.sendingState,
+      this.options = const [],
       this.time});
 
   @override
@@ -42,7 +46,8 @@ class MentraChatModel {
       content: message.prompt,
       isMentraMessage: message.user == "assistant",
       sendingState: SendingState.success,
-      time: DateTime.now());
+      options: message.suggestion,
+      time: message.createdAt.toLocal());
 
   factory MentraChatModel.typing() => MentraChatModel(
       content: '',
@@ -57,4 +62,51 @@ class MentraChatModel {
       isTyping: false,
       sendingState: SendingState.failed,
       time: DateTime.now());
+
+  factory MentraChatModel.fromBotChatMessage(BotChatmessageModel message) {
+    return MentraChatModel(
+      content: message.message,
+      isTyping: message.isTyping ?? false,
+      isMentraMessage: message.isFromBot,
+      sendingState: SendingState.success,
+      time: message.time,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'isMentraMessage': isMentraMessage,
+      'isTyping': isTyping,
+      'sendingState': sendingState?.toString(),
+      // Convert SendingState to string
+      'time': time?.toIso8601String(),
+      // Convert DateTime to ISO 8601 string
+      'options': options,
+    };
+  }
+
+  factory MentraChatModel.fromJson(Map<String, dynamic> json) {
+    return MentraChatModel(
+      content: json['content'],
+      isMentraMessage: json['isMentraMessage'],
+      isTyping: json['isTyping'] ?? false,
+      sendingState: _parseSendingState(json['sendingState']),
+      time: json['time'] != null ? DateTime.tryParse(json['time']) : null,
+      options: json['options'] != null ? List.from(json['options']) : [],
+    );
+  }
+
+  static SendingState? _parseSendingState(String? value) {
+    switch (value) {
+      case 'SendingState.loading':
+        return SendingState.loading;
+      case 'SendingState.failed':
+        return SendingState.failed;
+      case 'SendingState.success':
+        return SendingState.success;
+      default:
+        return null;
+    }
+  }
 }

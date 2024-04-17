@@ -31,7 +31,7 @@ class ConfirmSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: Pallets.white,
+          color: Pallets.bottomSheetColor,
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(21), topLeft: Radius.circular(21))),
       child: Padding(
@@ -68,7 +68,7 @@ class ConfirmSheet extends StatelessWidget {
             CustomNeumorphicButton(
               onTap: onCancel,
               color: cancelButtonColor ?? Pallets.primary,
-              text: cancelText ?? "No, keep it.",
+              text: cancelText ?? "No, Keep It.",
             ),
             17.verticalSpace,
             CustomNeumorphicButton(

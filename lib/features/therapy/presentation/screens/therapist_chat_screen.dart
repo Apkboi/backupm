@@ -4,14 +4,12 @@ import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/chat_message.dart';
 import 'package:mentra/features/therapy/presentation/bloc/session/session_bloc.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
-import 'package:mesibo_flutter_sdk/mesibo.dart';
 
 DemoUser user2 = DemoUser(
     '72907e6a689c61c1d5f1572ff97116a28dee3e911a5c673d234eee4ad2f6ja9a4a4cd39a',
@@ -116,25 +114,9 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
     );
   }
 
-  Future<void> _listenForMessages() async {
-    // Mesibo.getInstance().setListener(this);
-    // MesiboProfile profile =
-    //     await Mesibo.getInstance().getUserProfile(user2.token);
-    // MesiboReadSession rs = MesiboReadSession.createReadSummarySession(this);
-    // rs.read(4);
-    // var session = profile.createReadSession(this);
-    // var read = await session.read(4);
-    // logger.i(await session.getTotalMessageCount());
-    // sendMessage();
-  }
 
   Future<void> sendMessage() async {
-    MesiboProfile profile =
-        await Mesibo.getInstance().getUserProfile(user2.token);
-    var message = profile.newMessage();
-    message.message = controller.text;
-    message.send();
-    logger.i('dd');
+
     controller.clear();
   }
 
@@ -149,7 +131,7 @@ class _InputBar extends StatefulWidget {
   State<_InputBar> createState() => _InputBarState();
 }
 
-class _InputBarState extends State<_InputBar> implements MesiboMessageListener {
+class _InputBarState extends State<_InputBar> {
   final controller = TextEditingController();
 
   @override
@@ -180,28 +162,8 @@ class _InputBarState extends State<_InputBar> implements MesiboMessageListener {
   }
 
   Future<void> sendMessage() async {
-    MesiboProfile profile =
-        await Mesibo.getInstance().getUserProfile(user2.token);
-    var message = profile.newMessage();
-    message.message = controller.text;
-    message.send();
-    logger.i('dd');
-    controller.clear();
+
   }
 
-  @override
-  void Mesibo_onMessage(MesiboMessage message) {
-    // TODO: implement Mesibo_onMessage
-    logger.i("Mesibo_onMessag : ${message.message}");
-  }
 
-  @override
-  void Mesibo_onMessageStatus(MesiboMessage message) {
-    // TODO: implement Mesibo_onMessageStatus
-  }
-
-  @override
-  void Mesibo_onMessageUpdate(MesiboMessage message) {
-    // TODO: implement Mesibo_onMessageUpdate
-  }
 }

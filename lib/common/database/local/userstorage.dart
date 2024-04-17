@@ -20,7 +20,9 @@ class UserStorage {
     if (userJson != null) {
       return MentraUser.fromJson(userJson as Map<String, dynamic>);
     }
-    return null; /// Return null if user data doesn't exist
+    return null;
+
+    /// Return null if user data doesn't exist
   }
 
   // Clear user data from SharedPreferences
@@ -30,5 +32,9 @@ class UserStorage {
 
   Future<void> saveUserToken(String token) async {
     SessionManager.instance.authToken = token;
+  }
+
+  Future<void> savePasKey(String? key) async {
+    SessionManager.instance.userPassKeySet = key;
   }
 }

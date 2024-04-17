@@ -8,11 +8,16 @@ import 'package:mentra/core/theme/pallets.dart';
 
 class OnboardingItem extends StatefulWidget {
   const OnboardingItem(
-      {Key? key, required this.text, required this.header, required this.img})
+      {Key? key,
+      required this.text,
+      required this.header,
+      required this.img,
+      required this.index})
       : super(key: key);
   final String text;
   final String header;
   final String img;
+  final int index;
 
   @override
   _OnboardingItemState createState() => _OnboardingItemState();
@@ -36,38 +41,43 @@ class _OnboardingItemState extends State<OnboardingItem> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            // 110.verticalSpace,
+
             Expanded(
-                child: Center(
-                    child: ImageWidget(
-              shape: BoxShape.rectangle,
-              height: 1.sh,
-              width: 1.sw,
-              fit: BoxFit.fill,
-              // borderRadius: BorderRadius.circular(10),
-              imageUrl: widget.img,
-            ))),
-            // 35.verticalSpace,
+              child: ImageWidget(
+                // shape: BoxShape.rectangle,
+                // height: 260.h,
+                width: 1.sw,
+                fit: BoxFit.fill,
+                // borderRadius: BorderRadius.circular(10),
+                imageUrl: widget.img,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(children: [
-                TextView(
-                    text: widget.header,
-                    align: TextAlign.center,
-                    style: GoogleFonts.fraunces(
-                      color: Pallets.navy,
-                      fontSize: 32.sp,
-                      fontWeight: FontWeight.w600,
-                    )),
-               10.h.verticalSpace,
-                TextView(
-                    text: widget.text,
-                    align: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: Pallets.black80,
-                        fontWeight: FontWeight.w500)),
-              ],),
-            )
+              child: Column(
+                children: [
+                  TextView(
+                      text: widget.header,
+                      align: TextAlign.center,
+                      style: GoogleFonts.fraunces(
+                        color: Pallets.navy,
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.w600,
+                      )),
+                  10.h.verticalSpace,
+                  TextView(
+                      text: widget.text,
+                      align: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Pallets.black80,
+                          fontWeight: FontWeight.w500)),
+                ],
+              ),
+            ),
+            10.verticalSpace,
+            // 35.verticalSpace,
 
             // SizedBox(
             //   height: 8,

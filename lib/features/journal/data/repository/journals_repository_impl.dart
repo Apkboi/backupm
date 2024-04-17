@@ -53,7 +53,7 @@ class JournalsRepositoryImpl extends JournalsRepository {
   }
 
   @override
-  Future<GetPromptsResponse> getPrompts() async {
+  Future<GetPromptsResponse> getPrompts(dynamic categoryId) async {
     try {
       final response = await _networkService.call(
         UrlConfig.getPrompts,
@@ -75,6 +75,19 @@ class JournalsRepositoryImpl extends JournalsRepository {
           UrlConfig.updateJournal(journalId.toString()), RequestMethod.post,
           data: {"guided_prompt_id": promptId, "body": body});
       return SaveJournalResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future getPromptsCategories() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.getPromptsCategory,
+        RequestMethod.get,
+      );
+      return response.data;
     } catch (e) {
       rethrow;
     }

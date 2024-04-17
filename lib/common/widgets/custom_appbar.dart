@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
@@ -63,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             : null,
         title: tittle ??
             TextView(
-              text: tittleText ?? 'My Appbar',
+              text: tittleText ?? '',
               fontSize: 16,
               fontWeight: FontWeight.w600,
               style: GoogleFonts.plusJakartaSans(
