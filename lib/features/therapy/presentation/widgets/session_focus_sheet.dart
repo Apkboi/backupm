@@ -44,13 +44,14 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
+          16.verticalSpace,
           TextView(
             text: 'Select Session Focus',
             style: GoogleFonts.sora(
-              fontSize: 20.sp,
+              fontSize: 16.sp,
             ),
           ),
-          20.verticalSpace,
+          16.verticalSpace,
           SizedBox(
             height: 400,
             child: BlocConsumer<TherapyBloc, TherapyState>(
@@ -83,7 +84,7 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                         context.pop(state.response.data[index].name);
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         child: TextView(
                           text: state.response.data[index].name,
                           fontSize: 16,

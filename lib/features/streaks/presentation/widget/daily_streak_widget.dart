@@ -73,6 +73,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                         size: 40,
                         onTap: () {
                           context.pushNamed(PageUrl.badgesScreen);
+
                         },
                         imageUrl:
                             injector.get<UserBloc>().appUser!.badge!.image.url),

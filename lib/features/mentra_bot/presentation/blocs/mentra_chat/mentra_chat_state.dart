@@ -14,19 +14,18 @@ class GetCurrentSessionLoading extends MentraChatState {
   List<Object> get props => [];
 }
 
-
 class SignupMessageAdded extends MentraChatState {
   @override
   List<Object> get props => [];
 }
 
 class GetCurrentSessionSuccessState extends MentraChatState {
-
   final GetCurrentSessionRsponse response;
+
   const GetCurrentSessionSuccessState(this.response);
+
   @override
   List<Object> get props => [response];
-
 }
 
 class GetCurrentSessionFailureState extends MentraChatState {
@@ -58,7 +57,7 @@ class MessageUpdatedState extends MentraChatState {
   const MessageUpdatedState(this.response);
 
   @override
-  List<Object> get props => [response];
+  List<Object?> get props => [const Uuid().v1()];
 }
 
 class ContinueSessionFailureState extends MentraChatState {
@@ -109,8 +108,7 @@ class RetryMessageLoadingState extends MentraChatState {
   List<Object> get props => [];
 }
 
-
-class  ReviewMentraSessionFailureState extends MentraChatState {
+class ReviewMentraSessionFailureState extends MentraChatState {
   final String error;
 
   const ReviewMentraSessionFailureState(this.error);
@@ -133,4 +131,18 @@ class ReviewMentraLoadingState extends MentraChatState {
 
   @override
   List<Object> get props => [];
+}
+
+class PopulateChatSuccessState extends MentraChatState {
+  @override
+  List<Object> get props => [];
+}
+
+class PopulateChatFailedState extends MentraChatState {
+  final String error;
+
+  const PopulateChatFailedState(this.error);
+
+  @override
+  List<Object> get props => [error];
 }
