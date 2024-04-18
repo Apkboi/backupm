@@ -30,7 +30,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
               borderRadius: BorderRadius.circular(15.r)),
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Column(
