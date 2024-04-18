@@ -8,7 +8,7 @@ import 'package:mentra/features/streaks/data/model/get_streaks_response.dart';
 class BadgeItem extends StatelessWidget {
   const BadgeItem({super.key, required this.streak, required this.fadeOut});
 
-  final StreakModel streak;
+  final BadgeModel streak;
   final bool fadeOut;
 
   @override
