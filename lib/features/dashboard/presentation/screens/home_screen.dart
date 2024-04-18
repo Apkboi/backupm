@@ -171,14 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: CustomNeumorphicButton(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              Intro(child: const DemoUsage()),
-                                        ));
-                                    // context
-                                    //     .pushNamed(PageUrl.talkToMentraScreen);
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           Intro(child: const DemoUsage()),
+                                    //     ));
+                                    context
+                                        .pushNamed(PageUrl.talkToMentraScreen);
                                   },
                                   color: Pallets.secondary,
                                   fgColor: Pallets.navy,
