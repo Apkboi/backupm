@@ -146,6 +146,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                     fontSize: 13,
                                     fontWeight: FontWeight.w600,
                                   ),
+                                  6.verticalSpace,
                                   TextView(
                                       text: focus ?? 'Select session focus'),
                                 ],

@@ -133,20 +133,22 @@ class _CardDetailsSheetState extends State<CardDetailsSheet> {
               ],
             ),
             30.verticalSpace,
-            CustomNeumorphicButton(
-              onTap: () {
-                if (_formKey.currentState!.validate()) {
-                  SubscriptionCard card = SubscriptionCard(
-                      cardCvc: 123,
-                      cardExpMonth: 12,
-                      cardExpYear: 36,
-                      cardNumber: _numberController.text,
-                      cardOwnerName: _nameController.text);
-                  context.pop(card);
-                }
-              },
-              color: Pallets.primary,
-              text: 'Proceed',
+            Center(
+              child: CustomNeumorphicButton(
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    SubscriptionCard card = SubscriptionCard(
+                        cardCvc: 123,
+                        cardExpMonth: 12,
+                        cardExpYear: 36,
+                        cardNumber: _numberController.text,
+                        cardOwnerName: _nameController.text);
+                    context.pop(card);
+                  }
+                },
+                color: Pallets.primary,
+                text: 'Proceed',
+              ),
             )
           ],
         ),

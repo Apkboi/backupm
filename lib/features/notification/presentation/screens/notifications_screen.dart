@@ -83,7 +83,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             itemCount: state.response.data.length,
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) => Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(4.0),
                               child: NotificationItem(
                                 notification: state.response.data[index],
                                 // notification: MentraNotification(

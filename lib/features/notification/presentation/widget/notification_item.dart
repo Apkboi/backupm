@@ -27,81 +27,101 @@ class _NotificationItemState extends State<NotificationItem> {
       onTap: () {
         _handleNotificationClick(context);
       },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.notification.readAt == null)
-                  const CircleAvatar(
-                    radius: 6,
-                    backgroundColor: Pallets.red,
-                  ),
-                12.horizontalSpace,
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextView(
-                              text: widget.notification.title,
-                              fontWeight: FontWeight.w600,
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: Pallets.eggShell, borderRadius: BorderRadius.circular(10.r)),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (widget.notification.readAt == null)
+                    const CircleAvatar(
+                      radius: 6,
+                      backgroundColor: Pallets.red,
+                    ),
+                  12.horizontalSpace,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextView(
+                                text: widget.notification.title,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          TextView(
-                            text: timeago.format(widget.notification.createdAt),
-                            color: Pallets.grey,
-                          )
-                        ],
-                      ),
-                      6.verticalSpace,
-                      TextView(
-                        text: widget.notification.message,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 15,
-                        color: Pallets.black80,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                            TextView(
+                              text:
+                                  timeago.format(widget.notification.createdAt),
+                              color: Pallets.grey,
+                            )
+                          ],
+                        ),
+                        6.verticalSpace,
+                        TextView(
+                          text: widget.notification.message,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          color: Pallets.black80,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          const Divider(
-            thickness: 1,
-            color: Pallets.gold,
-          )
-        ],
+            // const Divider(
+            //   thickness: 1,
+            //   color: Pallets.gold,
+            // )
+          ],
+        ),
       ),
     );
   }
 
-  void _handleNotificationClick(BuildContext context) {
+  void markAsRead() {
     widget.notification.readAt = DateTime.now();
     setState(() {});
+    logger.i(widget.notification.type);
     injector
         .get<NotificationsBloc>()
         .add(ReadNotificationEvent(id: widget.notification.id));
+  }
+
+  Future<void> _handleNotificationClick(BuildContext context) async {
     switch (widget.notification.type) {
       case 'session':
+        markAsRead();
         context.pushNamed(PageUrl.therapyScreen);
         break;
       case "welness_course":
         // context.pop();
+        markAsRead();
+
         CustomDialogs.showCupertinoBottomSheet(
             context,
             ArticleNotificationDetailsSheet(
               notification: widget.notification,
             ));
       case 'ai_session':
-        CustomDialogs.showCustomDialog(
-          const AiReviewSheet(sessionId: '1'),
-          context,
-        );
+        if (widget.notification.readAt == null) {
+          var reviewed = await CustomDialogs.showCustomDialog(
+            AiReviewSheet(
+                sessionId: widget.notification.dataId.toString() ?? '1'),
+            context,
+          );
+          if (reviewed ?? false) {
+            markAsRead();
+          }
+        }
+
         break;
     }
   }

@@ -56,7 +56,8 @@ class GetCurrentSessionRsponse {
 
 class Data {
   final int id;
-  final MentraUser user;
+
+  // final MentraUser user;
   final String reference;
   final DateTime startsAt;
   final dynamic endsAt;
@@ -67,7 +68,7 @@ class Data {
 
   Data({
     required this.id,
-    required this.user,
+    // required this.user,
     required this.reference,
     required this.startsAt,
     required this.endsAt,
@@ -90,7 +91,7 @@ class Data {
   }) =>
       Data(
         id: id ?? this.id,
-        user: user ?? this.user,
+        // user: user ?? this.user,
         reference: reference ?? this.reference,
         startsAt: startsAt ?? this.startsAt,
         endsAt: endsAt ?? this.endsAt,
@@ -102,7 +103,7 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
-        user: MentraUser.fromJson(json["user"]),
+        // user: MentraUser.fromJson(json["user"]),
         reference: json["reference"],
         startsAt: DateTime.parse(json["starts_at"]),
         endsAt: json["ends_at"],
@@ -115,7 +116,7 @@ class Data {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "user": user.toJson(),
+        // "user": user.toJson(),
         "reference": reference,
         "starts_at": startsAt.toIso8601String(),
         "ends_at": endsAt,

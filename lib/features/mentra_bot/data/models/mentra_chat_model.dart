@@ -7,20 +7,23 @@ import 'get_current_sessions_response.dart';
 enum SendingState { loading, failed, success }
 
 class MentraChatModel {
+  final int stage;
   final String content;
   final bool isMentraMessage;
   final bool isTyping;
   SendingState? sendingState;
-  DateTime? time;
+  DateTime? time ;
   List options;
 
-  MentraChatModel(
-      {required this.content,
-      this.isTyping = false,
-      required this.isMentraMessage,
-      this.sendingState,
-      this.options = const [],
-      this.time});
+  MentraChatModel({
+    this.stage = 0,
+    required this.content,
+    this.isTyping = false,
+    required this.isMentraMessage,
+    this.sendingState,
+    this.options = const [],
+    this.time,
+  });
 
   @override
   bool operator ==(Object other) {
@@ -34,7 +37,8 @@ class MentraChatModel {
   }
 
   @override
-  int get hashCode => hashList([content, isMentraMessage, sendingState, time]);
+  int get hashCode =>
+      hashList([content, isMentraMessage, sendingState, time, stage]);
 
   factory MentraChatModel.fromPrompt(String prompt) => MentraChatModel(
       content: prompt,
@@ -84,6 +88,10 @@ class MentraChatModel {
       // Convert DateTime to ISO 8601 string
       'options': options,
     };
+  }
+
+  Map<String, dynamic> toRequestJson() {
+    return {"user": isMentraMessage ? "assistant" : "user", "prompt": content};
   }
 
   factory MentraChatModel.fromJson(Map<String, dynamic> json) {

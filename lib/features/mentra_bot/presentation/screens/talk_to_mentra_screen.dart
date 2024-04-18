@@ -256,6 +256,7 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
       context.pop();
       CustomDialogs.error(state.error);
     }
+
   }
 
   void _report() async {
