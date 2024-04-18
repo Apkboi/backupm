@@ -30,7 +30,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
               borderRadius: BorderRadius.circular(15.r)),
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: Column(
@@ -38,7 +38,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                   children: [
                     TextView(
                       text:
-                          'You’re on a ${injector.get<UserBloc>().appUser!.streak?.duration ?? 0}-day streak!',
+                          'You’re on a ${injector.get<UserBloc>().appUser!.streak ?? 0}-day streak!',
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
                     ),
@@ -68,18 +68,14 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
               ),
               Column(
                 children: [
-                  if (injector.get<UserBloc>().appUser!.streak != null)
+                  if (injector.get<UserBloc>().appUser!.badge != null)
                     ImageWidget(
                         size: 40,
                         onTap: () {
                           context.pushNamed(PageUrl.badgesScreen);
                         },
-                        imageUrl: injector
-                            .get<UserBloc>()
-                            .appUser!
-                            .streak!
-                            .image
-                            .url),
+                        imageUrl:
+                            injector.get<UserBloc>().appUser!.badge!.image.url),
                   3.verticalSpace,
                   InkWell(
                     onTap: () {

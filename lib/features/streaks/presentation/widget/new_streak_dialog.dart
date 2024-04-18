@@ -46,7 +46,7 @@ class _NewStreakDialogState extends State<NewStreakDialog> {
               60.verticalSpace,
               TextView(
                 text:
-                    '${injector.get<UserBloc>().appUser?.streak?.duration ?? '0'}-day streak!',
+                    '${injector.get<UserBloc>().appUser?.badge?.duration ?? '0'}-day streak!',
                 style: GoogleFonts.fraunces(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w600,

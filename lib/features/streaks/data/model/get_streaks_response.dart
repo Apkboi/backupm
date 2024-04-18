@@ -12,7 +12,7 @@ String getStreaksResponseToJson(GetStreaksResponse data) =>
 
 class GetStreaksResponse {
   final String message;
-  final List<StreakModel> data;
+  final List<BadgeModel> data;
   final bool success;
   final int code;
 
@@ -26,8 +26,8 @@ class GetStreaksResponse {
   factory GetStreaksResponse.fromJson(Map<String, dynamic> json) =>
       GetStreaksResponse(
         message: json["message"],
-        data: List<StreakModel>.from(
-            json["data"].map((x) => StreakModel.fromJson(x))),
+        data: List<BadgeModel>.from(
+            json["data"].map((x) => BadgeModel.fromJson(x))),
         success: json["success"],
         code: json["code"],
       );
@@ -39,7 +39,7 @@ class GetStreaksResponse {
         "code": code,
       };
 
-  bool shouldFadeOut(StreakModel currentStreak) {
+  bool shouldFadeOut(BadgeModel currentStreak) {
     var usersStreak =
         data.where((element) => element.isCurrentBadge).firstOrNull;
 
@@ -51,7 +51,7 @@ class GetStreaksResponse {
   }
 }
 
-class StreakModel {
+class BadgeModel {
   final int id;
   final String name;
   final dynamic description;
@@ -63,7 +63,7 @@ class StreakModel {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  StreakModel({
+  BadgeModel({
     required this.id,
     required this.name,
     required this.description,
@@ -76,7 +76,7 @@ class StreakModel {
     required this.updatedAt,
   });
 
-  factory StreakModel.fromJson(Map<String, dynamic> json) => StreakModel(
+  factory BadgeModel.fromJson(Map<String, dynamic> json) => BadgeModel(
         id: json["id"],
         name: json["name"],
         description: json["description"],

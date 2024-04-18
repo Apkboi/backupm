@@ -20,7 +20,7 @@ class DailyTaskBloc extends Bloc<DailyTaskEvent, DailyTaskState> {
     on<UpdateDailyTaskEvent>(_mapUpdateDailyTaskEventToState);
   }
 
- DailyTaskModel? dailyTasks ;
+  DailyTaskModel? dailyTasks;
 
   FutureOr<void> _mapGetDailyTaskEventToState(
       GetDailyTaskEvent event, Emitter<DailyTaskState> emit) async {

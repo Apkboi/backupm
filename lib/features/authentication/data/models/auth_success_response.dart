@@ -164,7 +164,8 @@ class MentraUser {
   final dynamic mesiboUserToken;
   final dynamic mood;
   final dynamic badgeUpdated;
-  final StreakModel? streak;
+  final dynamic streak;
+  final BadgeModel? badge;
   final ActiveSubscription? activeSubscription;
   final MatchedTherapist? matchedTherapist;
   final DateTime createdAt;
@@ -188,6 +189,7 @@ class MentraUser {
     required this.createdAt,
     required this.updatedAt,
     required this.streak,
+    required this.badge,
     this.badgeUpdated,
   });
 
@@ -204,7 +206,8 @@ class MentraUser {
     String? stripeCustomerId,
     String? mesiboUserId,
     String? mesiboUserToken,
-    StreakModel? streak,
+    dynamic streak,
+    BadgeModel? badge,
     ActiveSubscription? activeSubscription,
     MatchedTherapist? matchedTherapist,
     bool? badgeUpdated,
@@ -230,6 +233,7 @@ class MentraUser {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         badgeUpdated: badgeUpdated ?? this.badgeUpdated,
+        badge: badge ?? this.badge,
         streak: streak ?? this.streak,
       );
 
@@ -247,12 +251,12 @@ class MentraUser {
         mesiboUserId: json["mesibo_user_id"],
         mesiboUserToken: json["mesibo_user_token"],
         mood: json["mood"],
+        streak: json["streaks"],
         activeSubscription: json["active_subscription"] == null
             ? null
             : ActiveSubscription.fromJson(json["active_subscription"]),
-        streak: json["streak"] == null
-            ? null
-            : StreakModel.fromJson(json["streak"]),
+        badge:
+            json["badge"] == null ? null : BadgeModel.fromJson(json["badge"]),
         matchedTherapist: json["matched_therapist"] == null
             ? null
             : MatchedTherapist.fromJson(json["matched_therapist"]),
@@ -276,7 +280,8 @@ class MentraUser {
         "badge_updated": badgeUpdated,
         "active_subscription": activeSubscription?.toJson(),
         "matched_therapist": matchedTherapist?.toJson(),
-        "streak": streak?.toJson(),
+        "streaks": streak,
+        "badge": badge?.toJson(),
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };
