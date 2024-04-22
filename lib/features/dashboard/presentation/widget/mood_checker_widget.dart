@@ -92,31 +92,35 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
 
                               setState(() {});
                             },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ImageWidget(
-                                onTap: () {
-                                  mood = ReviewMoodModel.allMoods[index].mood;
-
-                                  _debouncer.run(() {
-                                    injector
-                                        .get<DashboardBloc>()
-                                        .add(UpdateMoodCheckerEvent(mood));
-                                  });
-                                  setState(() {});
-                                },
-                                shape: BoxShape.circle,
-                                fit: BoxFit.scaleDown,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
                                 border:
                                     ReviewMoodModel.allMoods[index].mood == mood
                                         ? Border.all(
                                             color: Pallets.moodCheckerBorder)
                                         : null,
-                                imageUrl:
-                                    ReviewMoodModel.allMoods[index].avatar,
-                                height: 40.h,
-                                width: 40.w,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ImageWidget(
+                                  onTap: () {
+                                    mood = ReviewMoodModel.allMoods[index].mood;
+
+                                    _debouncer.run(() {
+                                      injector
+                                          .get<DashboardBloc>()
+                                          .add(UpdateMoodCheckerEvent(mood));
+                                    });
+                                    setState(() {});
+                                  },
+                                  shape: BoxShape.circle,
+                                  fit: BoxFit.scaleDown,
+                                  imageUrl:
+                                      ReviewMoodModel.allMoods[index].avatar,
+                                  height: 35.h,
+                                  width: 35.w,
+                                ),
                               ),
                             ),
                           ))

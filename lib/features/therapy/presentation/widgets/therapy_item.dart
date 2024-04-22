@@ -44,6 +44,8 @@ class TherapyItem extends StatelessWidget {
                     TextView(
                       text: session.focus,
                       fontSize: 16,
+                      maxLines: 1,
+                      textOverflow: TextOverflow.ellipsis,
                       fontWeight: FontWeight.w600,
                     ),
                     8.verticalSpace,
@@ -53,8 +55,7 @@ class TherapyItem extends StatelessWidget {
                     ),
                     8.verticalSpace,
                     TextView(
-                      text:
-                          TimeUtil.formartToDayTime(session.startsAt.toLocal()),
+                      text: TimeUtil.formartToDayTime(session.startsAt.toLocal()),
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,

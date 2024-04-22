@@ -44,7 +44,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                       fontSize: 14,
                     ),
                     14.verticalSpace,
-                    StreakWidget(3)
+                    StreakWidget(5)
                   ],
                 ),
               ),
@@ -121,15 +121,11 @@ class StreakWidget extends StatelessWidget {
   StreakWidget(this.currentStreak);
 
   List get selectedDays {
-    List days = [];
-    int currentDay = 3;
-    int loopCount = (currentStreak > 7 ? 7 - currentDay : currentStreak);
-    for (int i = currentDay; i >= loopCount; i--) {
-      logger.w(i);
-      days.add(i);
-    }
+    List days = List.generate(7, (index) => index);
+    int currentDay = DateTime.now().weekday;
+    var start = currentStreak >= currentDay ? 0 : currentDay - currentStreak;
 
-    return days;
+    return days.getRange(start, currentDay).toList();
   }
 
   @override
@@ -138,13 +134,13 @@ class StreakWidget extends StatelessWidget {
     selectedDays;
 
     List<DayOfWeek> daysOfWeek = [
-      DayOfWeek(name: 'M', isInStreak: selectedDays.contains(1)),
-      DayOfWeek(name: 'T', isInStreak: selectedDays.contains(2)),
-      DayOfWeek(name: 'W', isInStreak: selectedDays.contains(3)),
-      DayOfWeek(name: 'T', isInStreak: selectedDays.contains(4)),
-      DayOfWeek(name: 'F', isInStreak: selectedDays.contains(5)),
+      DayOfWeek(name: 'M', isInStreak: selectedDays.contains(0)),
+      DayOfWeek(name: 'T', isInStreak: selectedDays.contains(1)),
+      DayOfWeek(name: 'W', isInStreak: selectedDays.contains(2)),
+      DayOfWeek(name: 'T', isInStreak: selectedDays.contains(3)),
+      DayOfWeek(name: 'F', isInStreak: selectedDays.contains(4)),
+      DayOfWeek(name: 'S', isInStreak: selectedDays.contains(5)),
       DayOfWeek(name: 'S', isInStreak: selectedDays.contains(6)),
-      DayOfWeek(name: 'S', isInStreak: selectedDays.contains(7)),
     ];
 
     return Row(
@@ -155,8 +151,8 @@ class StreakWidget extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 13,
                   foregroundColor: Pallets.black,
-                  // backgroundColor: daysOfWeek[index].isInStreak
-                  backgroundColor: index == 0
+                  backgroundColor: daysOfWeek[index].isInStreak
+                      // backgroundColor: index == 0
                       ? Pallets.currentStreakBg
                       : Pallets.moodCheckerBg,
                   child: TextView(
