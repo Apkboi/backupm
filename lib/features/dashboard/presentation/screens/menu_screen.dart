@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
@@ -14,6 +16,7 @@ import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.da
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/mood_checker_widget.dart';
+import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:mentra/features/streaks/presentation/widget/daily_streak_widget.dart';
 import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -83,19 +86,7 @@ class _MenuScreenState extends State<MenuScreen> {
               ),
             ),
             16.horizontalSpace,
-            InkWell(
-              onTap: () {
-                context.pushNamed(PageUrl.notificationsScreen);
-              },
-              child: CircleAvatar(
-                backgroundColor: Pallets.white,
-                child: ImageWidget(
-                    onTap: () {
-                      context.pushNamed(PageUrl.notificationsScreen);
-                    },
-                    imageUrl: Assets.images.svgs.bell),
-              ),
-            ),
+            const NotificationBell(),
             10.horizontalSpace,
             InkWell(
               onTap: () {
@@ -263,4 +254,55 @@ class _MenuScreenState extends State<MenuScreen> {
       // }
     }
   }
+}
+
+class NotificationBell extends StatelessWidget {
+  const NotificationBell({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<NotificationsBloc, NotificationsState>(
+      bloc: injector.get(),
+      listener: _listenToNotificationBloc,
+      builder: (context, state) {
+        return InkWell(
+          onTap: () {
+            context.pushNamed(PageUrl.notificationsPage);
+          },
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              InkWell(
+                onTap: () {
+                  context.pushNamed(PageUrl.notificationsScreen);
+                },
+                child: CircleAvatar(
+                  backgroundColor: Pallets.white,
+                  child: ImageWidget(
+                      onTap: () {
+                        context.pushNamed(PageUrl.notificationsScreen);
+                      },
+                      imageUrl: Assets.images.svgs.bell),
+                ),
+              ),
+              if (injector
+                  .get<NotificationsBloc>()
+                  .allNotification
+                  .where((element) => element.readAt == null)
+                  .isNotEmpty)
+                const Positioned(
+                    right: -1,
+                    top: -3,
+                    child: Badge(
+                      smallSize: 13,
+                    ))
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _listenToNotificationBloc(
+      BuildContext context, NotificationsState state) {}
 }

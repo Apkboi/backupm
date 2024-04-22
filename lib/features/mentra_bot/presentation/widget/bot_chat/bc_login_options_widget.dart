@@ -20,6 +20,8 @@ import 'package:mentra/features/authentication/login/presentation/bloc/login_blo
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart'
+    as regbloc;
 
 class BcLoginOptionsWidget extends StatefulWidget {
   const BcLoginOptionsWidget({super.key, required this.message});
@@ -165,7 +167,16 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
     if (state is LoginOauthSuccessState) {
       context.pop();
       if (state.response.data.newUser) {
-        CustomDialogs.error('Account not found, Please sign up.');
+        injector
+            .get<regbloc.RegistrationBloc>()
+            .updateFields(email: state.response.data.email);
+        context.read<BotChatCubit>().answerQuestion(
+            id: widget.message.id,
+            answer: "Continue with Google",
+            nextFlow: BotChatFlow.signup,
+            nextSignupStage: SignupStage.YEAR);
+
+        // CustomDialogs.error('Account not found, Please sign up.');
       } else {
         context.read<BotChatCubit>().answerQuestion(
             id: widget.message.id,

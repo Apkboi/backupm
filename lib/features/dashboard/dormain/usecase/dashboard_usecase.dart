@@ -3,13 +3,19 @@ import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:mentra/features/streaks/presentation/bloc/daily_streak_bloc.dart';
 import 'package:mentra/features/tasks/presentation/bloc/daily_task_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 
 class DashboardUsecase {
   Future<void> execute() async {
-    injector.get<DashboardBloc>().add(GetConversationStarterEvent());
+    if (injector.get<DashboardBloc>().conversationStarter == null) {
+      injector.get<DashboardBloc>().add(GetConversationStarterEvent());
+    }
+    if (injector.get<DailyStreakBloc>().badges.isEmpty) {
+      injector.get<DailyStreakBloc>().add(GetDailyStreakEvent());
+    }
     injector.get<NotificationsBloc>().add(GetNotificationsEvent());
     injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
     injector.get<TherapyBloc>().add(GetSessionHistoryEvent());

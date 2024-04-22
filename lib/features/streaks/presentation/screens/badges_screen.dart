@@ -26,10 +26,11 @@ class BadgesScreen extends StatefulWidget {
 }
 
 class _BadgesScreenState extends State<BadgesScreen> {
-
   @override
   void initState() {
-    injector.get<DailyStreakBloc>().add(GetDailyStreakEvent());
+    if (injector.get<DailyStreakBloc>().badges.isEmpty) {
+      injector.get<DailyStreakBloc>().add(GetDailyStreakEvent());
+    }
     super.initState();
   }
 

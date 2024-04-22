@@ -12,6 +12,7 @@ part 'daily_streak_state.dart';
 
 class DailyStreakBloc extends Bloc<DailyStreakEvent, DailyStreakState> {
   final StreaksRepository _repository;
+  List<BadgeModel> badges = [];
 
   DailyStreakBloc(this._repository) : super(DailyStreakInitial()) {
     on<DailyStreakEvent>((event, emit) {});
@@ -23,9 +24,9 @@ class DailyStreakBloc extends Bloc<DailyStreakEvent, DailyStreakState> {
     emit(GetStreaksLoadingState());
     try {
       var response = await _repository.getStreaks();
+      badges = response.data;
       emit(GetStreaksSuccessState(response));
     } catch (e, stack) {
-
       emit(GetStreaksFailureState(e.toString()));
       logger.e(e.toString(), stackTrace: stack);
       rethrow;

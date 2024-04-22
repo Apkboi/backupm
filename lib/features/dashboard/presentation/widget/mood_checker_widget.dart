@@ -60,20 +60,20 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                   borderRadius: BorderRadius.circular(12.r)),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TextView(
-                          text: 'How are you doing today?',
+                        TextView(
+                          text: 'How are you feeling today?',
                           fontWeight: FontWeight.w700,
-                          fontSize: 13,
-                        ),
-                        6.verticalSpace,
-                        const TextView(
-                          text: 'Please tell us how you feel',
                           fontSize: 14,
                         ),
+                        // 6.verticalSpace,
+                        // const TextView(
+                        //   text: 'Please tell us how you feel',
+                        //   fontSize: 14,
+                        // ),
                       ],
                     ),
                   ),
@@ -92,31 +92,35 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
 
                               setState(() {});
                             },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              child: ImageWidget(
-                                onTap: () {
-                                  mood = ReviewMoodModel.allMoods[index].mood;
-
-                                  _debouncer.run(() {
-                                    injector
-                                        .get<DashboardBloc>()
-                                        .add(UpdateMoodCheckerEvent(mood));
-                                  });
-                                  setState(() {});
-                                },
-                                shape: BoxShape.circle,
-                                fit: BoxFit.scaleDown,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
                                 border:
                                     ReviewMoodModel.allMoods[index].mood == mood
                                         ? Border.all(
                                             color: Pallets.moodCheckerBorder)
                                         : null,
-                                imageUrl:
-                                    ReviewMoodModel.allMoods[index].avatar,
-                                height: 40.h,
-                                width: 40.w,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: ImageWidget(
+                                  onTap: () {
+                                    mood = ReviewMoodModel.allMoods[index].mood;
+
+                                    _debouncer.run(() {
+                                      injector
+                                          .get<DashboardBloc>()
+                                          .add(UpdateMoodCheckerEvent(mood));
+                                    });
+                                    setState(() {});
+                                  },
+                                  shape: BoxShape.circle,
+                                  fit: BoxFit.scaleDown,
+                                  imageUrl:
+                                      ReviewMoodModel.allMoods[index].avatar,
+                                  height: 35.h,
+                                  width: 35.w,
+                                ),
                               ),
                             ),
                           ))

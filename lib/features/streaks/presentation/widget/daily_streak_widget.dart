@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -16,7 +17,7 @@ class DailyStreakWidget extends StatefulWidget {
 }
 
 class _DailyStreakWidgetState extends State<DailyStreakWidget> {
-  List<String> daysOfWeek = ['M', 'T', 'W', 'TH', 'F', 'S', 'SU'];
+  List<String> daysOfWeek = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
   @override
   Widget build(BuildContext context) {
@@ -43,50 +44,40 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                       fontSize: 14,
                     ),
                     14.verticalSpace,
-                    Row(
-                      children: List.generate(
-                          daysOfWeek.length,
-                          (index) => Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: CircleAvatar(
-                                  radius: 13,
-                                  foregroundColor: Pallets.black,
-                                  backgroundColor:
-                                      selectedDay == daysOfWeek[index]
-                                          ? Pallets.currentStreakBg
-                                          : Pallets.moodCheckerBg,
-                                  child: TextView(
-                                    text: daysOfWeek[index],
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              )),
-                    )
+                    StreakWidget(5)
                   ],
                 ),
               ),
+              3.horizontalSpace,
               Column(
                 children: [
-                  if (injector.get<UserBloc>().appUser!.badge != null)
-                    ImageWidget(
-                        size: 40,
-                        onTap: () {
-                          context.pushNamed(PageUrl.badgesScreen);
-
-                        },
-                        imageUrl:
-                            injector.get<UserBloc>().appUser!.badge!.image.url),
-                  3.verticalSpace,
+                  // if (injector.get<UserBloc>().appUser!.badge != null)
+                  //   ImageWidget(
+                  //       size: 40,
+                  //       onTap: () {
+                  //         context.pushNamed(PageUrl.badgesScreen);
+                  //       },
+                  //       imageUrl:
+                  //           injector.get<UserBloc>().appUser!.badge!.image.url),
+                  // 3.verticalSpace,
                   InkWell(
                     onTap: () {
-                      context.pushNamed(PageUrl.badgesScreen);
+                      // context.pushNamed(PageUrl.badgesScreen);
                     },
-                    child: const TextView(
-                      text: 'View badges',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
+                    child: CustomNeumorphicButton(
+                        padding: const EdgeInsets.all(6),
+                        expanded: false,
+                        fgColor: Pallets.black,
+                        onTap: () {
+                          context.pushNamed(PageUrl.badgesScreen);
+                        },
+                        // text: 'View badges',
+                        color: Pallets.secondary,
+                        child: const TextView(
+                          text: 'View badges',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        )),
                   ),
                   3.verticalSpace,
                 ],
@@ -98,8 +89,9 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
     );
   }
 
-  String get selectedDay {
+  int get selectedDay {
     {
+      var user = injector.get<UserBloc>().appUser!.streak;
       // Get the current day of the week (1 for Monday, 7 for Sunday)
       int currentDay = DateTime.now().weekday;
 
@@ -109,9 +101,67 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
       logger.i(currentDay);
 
       // Select the correct item from the list based on the current day
-      String selectedDay = daysOfWeek[currentDay - 1];
+      // String selectedDay = daysOfWeek[currentDay - 1];
 
-      return selectedDay;
+      return currentDay - 1;
     }
+  }
+}
+
+class DayOfWeek {
+  final String name;
+  final bool isInStreak;
+
+  DayOfWeek({required this.name, required this.isInStreak});
+}
+
+class StreakWidget extends StatelessWidget {
+  final int currentStreak;
+
+  StreakWidget(this.currentStreak);
+
+  List get selectedDays {
+    List days = List.generate(7, (index) => index);
+    int currentDay = DateTime.now().weekday;
+    var start = currentStreak >= currentDay ? 0 : currentDay - currentStreak;
+
+    return days.getRange(start, currentDay).toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int currentDay = DateTime.now().weekday;
+    selectedDays;
+
+    List<DayOfWeek> daysOfWeek = [
+      DayOfWeek(name: 'M', isInStreak: selectedDays.contains(0)),
+      DayOfWeek(name: 'T', isInStreak: selectedDays.contains(1)),
+      DayOfWeek(name: 'W', isInStreak: selectedDays.contains(2)),
+      DayOfWeek(name: 'T', isInStreak: selectedDays.contains(3)),
+      DayOfWeek(name: 'F', isInStreak: selectedDays.contains(4)),
+      DayOfWeek(name: 'S', isInStreak: selectedDays.contains(5)),
+      DayOfWeek(name: 'S', isInStreak: selectedDays.contains(6)),
+    ];
+
+    return Row(
+      children: List.generate(
+          daysOfWeek.length,
+          (index) => Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: CircleAvatar(
+                  radius: 13,
+                  foregroundColor: Pallets.black,
+                  backgroundColor: daysOfWeek[index].isInStreak
+                      // backgroundColor: index == 0
+                      ? Pallets.currentStreakBg
+                      : Pallets.moodCheckerBg,
+                  child: TextView(
+                    text: daysOfWeek[index].name,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              )),
+    );
   }
 }

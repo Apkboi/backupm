@@ -30,7 +30,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(LoginLoadingState());
 
     try {
-      final authResponse = await _authRepository.login(event.email, event.password);
+      final authResponse =
+          await _authRepository.login(event.email, event.password);
 
       // Assuming loginUser returns the user details upon successful login
       AuthSuccessUsecase().execute(authResponse, passKey: event.password);
@@ -65,6 +66,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     try {
       final response = await _authRepository.googleAuth();
+      if (response?.accessToken == null) {
+        throw 'Couldn\'t complete google authentication';
+      }
       var res = await _authRepository.oauthSignIn(OauthReqDto(
         token: response?.idToken,
         provider: 'google',
@@ -86,6 +90,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     try {
       final response = await _authRepository.appleAuth();
+      if (response?.identityToken == null) {
+        throw 'Couldn\'t complete apple authentication';
+      }
       var res = await _authRepository.oauthSignIn(OauthReqDto(
         token: response?.identityToken,
         provider: 'apple',

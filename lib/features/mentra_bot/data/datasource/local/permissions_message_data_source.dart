@@ -17,7 +17,7 @@ class PermissionMessageDataSource {
         answerTime: DateTime.now()),
     BotChatmessageModel(
         message:
-            'Cool beans! 😎 We\'re almost there. Can we send you friendly notifications to brighten your day?',
+            'Almost there! Enable notifications? We promise we won’t spam you!',
         isFromBot: true,
         id: 1,
         isTyping: false,
