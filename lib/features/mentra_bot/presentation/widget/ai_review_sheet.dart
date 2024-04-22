@@ -65,7 +65,7 @@ class _AiReviewSheetState extends State<AiReviewSheet> {
                 style: GoogleFonts.fraunces(
                     fontSize: 24.sp, fontWeight: FontWeight.w600),
               ),
-              20.verticalSpace,
+              25.verticalSpace,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(
@@ -78,11 +78,11 @@ class _AiReviewSheetState extends State<AiReviewSheet> {
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
+                                borderRadius: BorderRadius.circular(100.r),
                                 border: feeling ==
                                         ReviewMoodModel.allMoods[index].mood
                                     ? Border.all(
-                                        width: 1, color: Pallets.secondary)
+                                        width: 1, color: Pallets.primary)
                                     : null),
                             child: Column(
                               children: [

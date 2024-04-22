@@ -13,6 +13,7 @@ part 'notification_state.dart';
 // Bloc class
 class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
   final NotificationsRepository _notificationsRepository;
+  List<MentraNotification> allNotification = [];
 
   NotificationsBloc(this._notificationsRepository)
       : super(NotificationsInitial()) {
@@ -28,6 +29,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     emit(GetNotificationsLoadingState());
     try {
       final notifications = await _notificationsRepository.getNotifications();
+
+      allNotification = notifications.data;
       emit(GetNotificationsSuccessState(response: notifications));
     } catch (e) {
       emit(GetNotificationsFailureState(error: e.toString()));

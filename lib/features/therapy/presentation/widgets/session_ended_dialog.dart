@@ -113,6 +113,8 @@ class TherapySessionEndedDialog extends StatelessWidget {
           ),
           16.verticalSpace,
           CustomNeumorphicButton(
+            expanded: false,
+            padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 14.h),
             onTap: () {
               context.pop(true);
             },

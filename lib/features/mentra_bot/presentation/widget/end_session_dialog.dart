@@ -16,7 +16,6 @@ class EndMentraSessionDialog extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
           color: Pallets.bottomSheetColor,
-
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(21), topLeft: Radius.circular(21))),
       child: Padding(
@@ -36,7 +35,7 @@ class EndMentraSessionDialog extends StatelessWidget {
             ),
             10.verticalSpace,
             TextView(
-              text: 'Ready to End Our Chat? ',
+              text: 'Ready to end our chat? ',
               align: TextAlign.center,
               style: GoogleFonts.fraunces(
                   fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -63,7 +62,7 @@ class EndMentraSessionDialog extends StatelessWidget {
                 //     constraints: BoxConstraints(maxHeight: 0.9.sh));
               },
               color: Pallets.primary,
-              text: "Yes, End the Chat",
+              text: "Yes, end the chat",
             ),
             17.verticalSpace,
             CustomOutlinedButton(
@@ -75,7 +74,7 @@ class EndMentraSessionDialog extends StatelessWidget {
               radius: 100,
               padding: const EdgeInsets.all(20),
               child: const TextView(
-                text: 'No, Continue Chatting',
+                text: 'No, continue chatting',
                 fontWeight: FontWeight.w600,
               ),
             ),

@@ -34,8 +34,8 @@ class _HomeTasksWidgetState extends State<HomeTasksWidget> {
             child: IntrinsicHeight(
               child: Row(
                 children: [
-                  const _Indicator(),
-                  17.horizontalSpace,
+                  // const _Indicator(),
+                  // 17.horizontalSpace,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,8 +61,13 @@ class _HomeTasksWidgetState extends State<HomeTasksWidget> {
                                 onTap: () {
                                   context.pushNamed(PageUrl.summariesScreen);
                                 },
-                                text: 'Try this',
-                                color: Pallets.secondary)
+                                // text: 'Try this',
+                                color: Pallets.secondary,
+                                child: const TextView(
+                                  text: 'Try this',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                ))
                           ],
                         ),
                         // 10.verticalSpace

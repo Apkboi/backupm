@@ -197,14 +197,14 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                     Expanded(child: 16.verticalSpace),
                     focus != null
                         ? Center(
-                          child: CustomNeumorphicButton(
-                              text: 'Continue',
-                              onTap: () {
-                                _scheduleSession(context);
-                                // _closeAllSheets(context);
-                              },
-                              color: Pallets.primary),
-                        )
+                            child: CustomNeumorphicButton(
+                                text: 'Continue',
+                                onTap: () {
+                                  _scheduleSession(context);
+                                  // _closeAllSheets(context);
+                                },
+                                color: Pallets.primary),
+                          )
                         : 0.horizontalSpace
                   ],
                 ),
@@ -254,7 +254,9 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
   }
 
   void _scheduleSession(BuildContext context) {
-    injector.get<TherapyBloc>().updatePayload(note: _notesController.text, focus: focus);
+    injector
+        .get<TherapyBloc>()
+        .updatePayload(note: _notesController.text, focus: focus);
     injector.get<TherapyBloc>().scheduleOrRescheduleSession();
   }
 

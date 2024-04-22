@@ -49,7 +49,7 @@ class BCPermissionsField extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: CustomButton(
             foregroundColor: Pallets.black,
-            bgColor: Pallets.secondary,
+            bgColor: Pallets.white,
             elevation: 0,
             isExpanded: false,
             padding: const EdgeInsets.all(16),

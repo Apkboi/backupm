@@ -39,6 +39,23 @@ class $AssetsImagesPngsGen {
   AssetGenImage get avatar4 =>
       const AssetGenImage('assets/images/pngs/Avatar-4.png');
 
+  /// File path: assets/images/pngs/Awful.png
+  AssetGenImage get awful =>
+      const AssetGenImage('assets/images/pngs/Awful.png');
+
+  /// File path: assets/images/pngs/Bad.png
+  AssetGenImage get bad => const AssetGenImage('assets/images/pngs/Bad.png');
+
+  /// File path: assets/images/pngs/Good.png
+  AssetGenImage get good => const AssetGenImage('assets/images/pngs/Good.png');
+
+  /// File path: assets/images/pngs/Great.png
+  AssetGenImage get great =>
+      const AssetGenImage('assets/images/pngs/Great.png');
+
+  /// File path: assets/images/pngs/Okay.png
+  AssetGenImage get okay => const AssetGenImage('assets/images/pngs/Okay.png');
+
   /// File path: assets/images/pngs/anxiety.png
   AssetGenImage get anxiety =>
       const AssetGenImage('assets/images/pngs/anxiety.png');
@@ -230,6 +247,11 @@ class $AssetsImagesPngsGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         avatar4,
+        awful,
+        bad,
+        good,
+        great,
+        okay,
         anxiety,
         article,
         articleImage,

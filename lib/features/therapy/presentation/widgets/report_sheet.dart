@@ -59,7 +59,7 @@ class _ReportSheetState extends State<ReportSheet> {
                 text: 'Report inappropriate content here',
                 align: TextAlign.center,
                 style: GoogleFonts.fraunces(
-                    fontSize: 22.sp, fontWeight: FontWeight.w600),
+                    fontSize: 18.sp, fontWeight: FontWeight.w600),
               ),
               22.verticalSpace,
               Container(
@@ -99,8 +99,10 @@ class _ReportSheetState extends State<ReportSheet> {
                   ],
                 ),
               ),
-              43.verticalSpace,
+              35.verticalSpace,
               CustomNeumorphicButton(
+                expanded: false,
+                padding: EdgeInsets.symmetric(horizontal: 45.w, vertical: 14.h),
                 onTap: () {
                   // if(){}
                   _therapyBloc.add(ReportEvent(controller.text));

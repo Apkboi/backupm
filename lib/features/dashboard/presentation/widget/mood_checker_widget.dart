@@ -60,20 +60,20 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                   borderRadius: BorderRadius.circular(12.r)),
               child: Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const TextView(
-                          text: 'How are you doing today?',
+                        TextView(
+                          text: 'How are you feeling today?',
                           fontWeight: FontWeight.w700,
-                          fontSize: 13,
-                        ),
-                        6.verticalSpace,
-                        const TextView(
-                          text: 'Please tell us how you feel',
                           fontSize: 14,
                         ),
+                        // 6.verticalSpace,
+                        // const TextView(
+                        //   text: 'Please tell us how you feel',
+                        //   fontSize: 14,
+                        // ),
                       ],
                     ),
                   ),
