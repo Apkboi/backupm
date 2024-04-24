@@ -10,6 +10,8 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/password_reset/presentation/bloc/password_reset_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class PasswordResetEmailField extends StatefulWidget {
   const PasswordResetEmailField({super.key, required this.message});
@@ -50,7 +52,7 @@ class _PasswordResetEmailFieldState extends State<PasswordResetEmailField> {
                     EmailValidator(errorText: 'Invalid email')
                   ]).call,
                   hasBorder: false,
-                  suffix: InkWell(
+                  suffix: HapticInkWell(
                     onTap: () async {
                       _goToNextScreen(context);
                     },

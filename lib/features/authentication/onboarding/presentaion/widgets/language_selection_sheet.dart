@@ -5,6 +5,7 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class LanguageSelectionSheet extends StatefulWidget {
   const LanguageSelectionSheet({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
                 tittle: 'Search',
               ),
               30.verticalSpace,
-              InkWell(
+              HapticInkWell(
                   onTap: () {
                     context.pop();
                   },

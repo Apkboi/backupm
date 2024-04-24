@@ -1,19 +1,27 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:mentra/core/services/vibration/haptic_feedback_manager.dart';
+import 'package:sound_mode/sound_mode.dart';
+import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 
 class SoundManager {
   static final cache = AudioCache();
   static final player = AudioPlayer();
 
   static Future<void> playMessageSentSound() async {
+    final ringerStatus = await SoundMode.ringerModeStatus;
 
-    await player.play(AssetSource('audio/sent.mp3'));
+    if (ringerStatus != RingerModeStatus.silent) {
+      await player.play(AssetSource('audio/sent2.mp3'));
+    }
   }
 
   static Future<void> playMessageReceivedSound() async {
-    await player.play(AssetSource('audio/received.mp3'));
-    HapticFeedbackManager.vibrate();
+    final ringerStatus = await SoundMode.ringerModeStatus;
 
+    if (ringerStatus != RingerModeStatus.silent) {
+      await player.play(AssetSource('audio/received1.mp3'));
+      HapticFeedbackManager.vibrate();
+    }
   }
 
 //

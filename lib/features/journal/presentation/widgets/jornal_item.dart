@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -32,7 +33,7 @@ class _JournalItemState extends State<JournalItem> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         setState(() {
           isExpanded = !isExpanded;

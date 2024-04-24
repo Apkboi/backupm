@@ -96,26 +96,31 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                   ),
                 ),
                 16.verticalSpace,
-                SelectableTimeSlots(
-                  widget.date.toCustomString,
-                  onDateSelected: (String selectedTime) {
-                    setState(() {
-                      time = selectedTime;
-                    });
-                  },
+                Expanded(
+                  child: SelectableTimeSlots(
+                    widget.date.toCustomString,
+                    onDateSelected: (String selectedTime) {
+                      setState(() {
+                        time = selectedTime;
+                      });
+                    },
+                  ),
                 ),
-                const Spacer(),
-                20.verticalSpace,
+                // const Spacer(),
+                // 20.verticalSpace,
                 time != null
-                    ? Center(
-                      child: CustomNeumorphicButton(
-                          text: 'Continue',
-                          onTap: () {
-                            _confirmSession(
-                                context: context, selectedTime: time!);
-                          },
-                          color: Pallets.primary),
-                    )
+                    ? Container(
+                        color: Pallets.white,
+                        child: Center(
+                          child: CustomNeumorphicButton(
+                              text: 'Continue',
+                              onTap: () {
+                                _confirmSession(
+                                    context: context, selectedTime: time!);
+                              },
+                              color: Pallets.primary),
+                        ),
+                      )
                     : 0.horizontalSpace,
               ],
             ),
@@ -169,83 +174,86 @@ class _SelectableTimeSlotsState extends State<SelectableTimeSlots> {
             fontWeight: FontWeight.w600,
           ),
           16.verticalSpace,
-          BlocConsumer<TherapyBloc, TherapyState>(
-            bloc: therapyBloc,
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is GetTimeSlotsoadingState) {
-                return SizedBox(
-                  height: 150.h,
-                  child: Center(
-                    child: CustomDialogs.getLoading(size: 40),
-                  ),
-                );
-              }
+          Expanded(
+            child: BlocConsumer<TherapyBloc, TherapyState>(
+              bloc: therapyBloc,
+              listener: (context, state) {},
+              builder: (context, state) {
+                if (state is GetTimeSlotsoadingState) {
+                  return SizedBox(
+                    height: 150.h,
+                    child: Center(
+                      child: CustomDialogs.getLoading(size: 40),
+                    ),
+                  );
+                }
 
-              if (state is GetTimeSlotsSuccessState) {
-                if (state.response.getDataAsList().isNotEmpty) {
-                  return GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3, // Number of columns
-                            crossAxisSpacing: 8.0,
-                            mainAxisSpacing: 8.0,
-                            childAspectRatio: 3),
-                    itemCount: state.response.getDataAsList().length,
-                    itemBuilder: (context, index) {
-                      bool isSelected = index == selectedSlot;
+                if (state is GetTimeSlotsSuccessState) {
+                  if (state.response.getDataAsList().isNotEmpty) {
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3, // Number of columns
+                              crossAxisSpacing: 8.0,
+                              mainAxisSpacing: 6.0,
+                              childAspectRatio: 3),
+                      itemCount: state.response.getDataAsList().length,
+                      itemBuilder: (context, index) {
+                        bool isSelected = index == selectedSlot;
 
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedSlot = isSelected ? -1 : index;
-                          });
+                        return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedSlot = isSelected ? -1 : index;
+                            });
 
-                          widget.onDateSelected(
-                              state.response.getDataAsList()[index].startTime);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? Pallets.lightSecondary
-                                : Pallets.white,
-                            border: Border.all(
-                              color: Colors.black,
-                              width: isSelected ? 0 : 0.9,
+                            widget.onDateSelected(state.response
+                                .getDataAsList()[index]
+                                .startTime);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? Pallets.lightSecondary
+                                  : Pallets.white,
+                              border: Border.all(
+                                color: Colors.black,
+                                width: isSelected ? 0 : 0.9,
+                              ),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Center(
-                            child: Text(
-                              state.response.getDataAsList()[index].startTime,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.w600),
+                            child: Center(
+                              child: Text(
+                                state.response.getDataAsList()[index].startTime,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      },
+                    );
+                  }
+                  return SizedBox(
+                      height: 100.h,
+                      child: const Center(
+                          child: TextView(text: 'No available time slots')));
+                }
+
+                if (state is GetTimeSlotsFailureState) {
+                  return AppPromptWidget(
+                    textColor: Pallets.primary,
+                    retryTextColor: Pallets.primary,
+                    onTap: () {
+                      therapyBloc.add(GetTimeSlotsEvent(date: widget.date));
                     },
                   );
                 }
-                return SizedBox(
-                    height: 100.h,
-                    child: const Center(
-                        child: TextView(text: 'No available time slots')));
-              }
 
-              if (state is GetTimeSlotsFailureState) {
-                return AppPromptWidget(
-                  textColor: Pallets.primary,
-                  retryTextColor: Pallets.primary,
-                  onTap: () {
-                    therapyBloc.add(GetTimeSlotsEvent(date: widget.date));
-                  },
-                );
-              }
-
-              return Container();
-            },
+                return Container();
+              },
+            ),
           ),
         ],
       ),

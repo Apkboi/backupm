@@ -4,13 +4,14 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/summary/presentation/widgets/summary_details_sheet.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class SummaryItem extends StatelessWidget {
   const SummaryItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         CustomDialogs.showCupertinoBottomSheet(
             context, const SummaryDetailsSheet());

@@ -10,6 +10,8 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class SelectYearScreen extends StatefulWidget {
   const SelectYearScreen({super.key});
@@ -85,7 +87,7 @@ class _SelectYearScreenState extends State<SelectYearScreen> {
                           RequiredValidator(errorText: 'Enter birth year').call,
                       hasBorder: false,
                       inputType: TextInputType.number,
-                      suffix: InkWell(
+                      suffix: HapticInkWell(
                         onTap: () {
                           _goToNextScreen(context);
                         },

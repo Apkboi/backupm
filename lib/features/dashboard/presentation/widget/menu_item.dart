@@ -3,7 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/services/vibration/haptic_feedback_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class MenuItem extends StatelessWidget {
   const MenuItem(
@@ -59,8 +61,9 @@ class MenuItem extends StatelessWidget {
             ],
           ),
         ),
-        InkWell(
-          onTap: () {
+        HapticInkWell(
+          onTap: () async {
+
             if (onTap != null) {
               onTap!();
             }

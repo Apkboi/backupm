@@ -10,6 +10,8 @@ import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_typing_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/utils/time_util.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class MentraMessageItem extends StatefulWidget {
   const MentraMessageItem({
@@ -146,7 +148,7 @@ class _OptionsWidgetState extends State<_OptionsWidget> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(
+            HapticInkWell(
               onTap: () {
                 context.read<MentraChatBloc>().add(ContinueSessionEvent(
                     context.read<MentraChatBloc>().sessionId,

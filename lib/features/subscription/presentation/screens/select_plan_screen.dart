@@ -55,10 +55,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       context.pop();
                       CustomDialogs.error(state.error);
                     }
-                    if (state is SubscriptionFailureState) {
-                      context.pop();
-                      CustomDialogs.error(state.error);
-                    }
+
                     if (state is SubscribeSuccessState) {
                       context.pop();
                       context.pop();

@@ -68,7 +68,8 @@ class FilledTextField extends StatefulWidget {
       this.labelText,
       this.labelTextStyle,
       this.suffixIcon,
-      this.inputFormatters,  this.fontSize})
+      this.inputFormatters,
+      this.fontSize})
       : super(key: key);
 
   @override
@@ -80,6 +81,8 @@ class _FilledTextFieldState extends State<FilledTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: TextFormField(
+
+        textCapitalization: TextCapitalization.sentences,
         validator: widget.validator,
         key: widget.formKey,
         controller: widget.controller,
@@ -99,7 +102,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color:
                 widget.textColor ?? Theme.of(context).colorScheme.onBackground,
-            fontSize: widget.fontSize??16,
+            fontSize: widget.fontSize ?? 16,
             fontWeight: FontWeight.w500),
         decoration: AppStyles.filledTextFieldDecoration.copyWith(
 

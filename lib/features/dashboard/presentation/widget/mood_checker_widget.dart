@@ -10,6 +10,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class MoodCheckerWidget extends StatefulWidget {
   const MoodCheckerWidget({
@@ -43,6 +44,7 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
           listener: (context, state) {
             if (state is UpdateMoodCheckerSuccessState) {
               // mood = state.response.data.mood;
+              CustomDialogs.success('Mood updated! Thanks for sharing.');
               injector.get<UserBloc>().add(GetRemoteUser());
               setState(() {});
             }
@@ -79,7 +81,7 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                   ),
                   ...List.generate(
                       ReviewMoodModel.allMoods.length,
-                      (index) => InkWell(
+                      (index) => HapticInkWell(
                             onTap: () {
                               mood = ReviewMoodModel.allMoods[index].mood;
 
@@ -94,7 +96,8 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                                shape: BoxShape.circle,
+                                // borderRadius: BorderRadius.circular(100.r),
                                 border:
                                     ReviewMoodModel.allMoods[index].mood == mood
                                         ? Border.all(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   final AudioPlayer player;
@@ -146,7 +147,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
             // mainAxisSize: MainAxisSize.sp,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              InkWell(
+              HapticInkWell(
                 key: const Key('back'),
                 onTap: (_position?.inSeconds ?? 0) > 10
                     ? () {
@@ -162,7 +163,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                   color: Pallets.white,
                 ),
               ),
-              InkWell(
+              HapticInkWell(
                 key: const Key('play_button'),
                 onTap: _isPlaying ? _pause : _play,
                 child: CircleAvatar(
@@ -181,7 +182,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                         ),
                 ),
               ),
-              InkWell(
+              HapticInkWell(
                 key: const Key('foward'),
                 onTap: (_duration?.inSeconds ?? 0) -
                             (_position?.inSeconds ?? 0) >

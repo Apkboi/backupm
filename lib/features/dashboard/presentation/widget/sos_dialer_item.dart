@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/glass_container.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class SosDialerItem extends StatelessWidget {
   const SosDialerItem(
@@ -21,7 +23,7 @@ class SosDialerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: onTap,
       child: GlassContainer(
           radius: 50,

@@ -18,6 +18,8 @@ import 'package:mentra/features/mentra_bot/presentation/widget/talk_to_mentra_me
 import 'package:mentra/features/therapy/presentation/widgets/report_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class TalkToMentraScreen extends StatefulWidget {
   const TalkToMentraScreen({Key? key, required this.authMessages})
@@ -295,7 +297,7 @@ class _InputBar extends StatelessWidget {
                 hasElevation: false,
                 minLine: 1,
                 maxLine: 5,
-                suffix: InkWell(
+                suffix: HapticInkWell(
                   onTap: () async {
                     context.read<MentraChatBloc>().add(ContinueSessionEvent(
                         context.read<MentraChatBloc>().sessionId,

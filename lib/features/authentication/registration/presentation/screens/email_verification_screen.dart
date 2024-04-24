@@ -12,6 +12,8 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key, required this.email});
@@ -72,7 +74,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                             validator: RequiredValidator(errorText: 'Enter code').call,
                             hasBorder: false,
                             inputType: TextInputType.number,
-                            suffix: InkWell(
+                            suffix: HapticInkWell(
                               onTap: () {
                                 _goToNextScreen(context);
                               },

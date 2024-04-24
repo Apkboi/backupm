@@ -12,6 +12,8 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class UserEmailScreen extends StatefulWidget {
   const UserEmailScreen({super.key, required this.email});
@@ -73,7 +75,7 @@ class _UserEmailScreenState extends State<UserEmailScreen> {
                               EmailValidator(errorText: 'Invalid email')
                             ]).call,
                             hasBorder: false,
-                            suffix: InkWell(
+                            suffix: HapticInkWell(
                               onTap: () async {
                                 _goToNextScreen(context);
                               },

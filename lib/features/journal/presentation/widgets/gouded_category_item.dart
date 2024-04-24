@@ -6,6 +6,7 @@ import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/journal/data/models/get_prompts_category_endpoint.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class PromptCategoryItem extends StatelessWidget {
   const PromptCategoryItem({super.key, required this.category});
@@ -14,7 +15,7 @@ class PromptCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         context.pushNamed(PageUrl.guidedPromptScreen,
             queryParameters: {PathParam.id: category.id.toString()});

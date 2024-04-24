@@ -12,6 +12,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class LoginPreviewScreen extends StatefulWidget {
   const LoginPreviewScreen({
@@ -25,6 +26,7 @@ class LoginPreviewScreen extends StatefulWidget {
 class _LoginPreviewScreenState extends State<LoginPreviewScreen> {
   final _formKey = GlobalKey<FormState>();
   final _controller = TextEditingController();
+
   // final _bloc = RegistrationBloc(injector.get());
 
   @override
@@ -72,7 +74,7 @@ class _LoginPreviewScreenState extends State<LoginPreviewScreen> {
                               EmailValidator(errorText: 'Invalid email')
                             ]).call,
                             hasBorder: false,
-                            suffix: InkWell(
+                            suffix: HapticInkWell(
                               onTap: () async {
                                 _getUserDetails();
                               },
@@ -107,8 +109,6 @@ class _LoginPreviewScreenState extends State<LoginPreviewScreen> {
           .add(LoginPreviewEvent(email: _controller.text.trim()));
     }
   }
-
-
 
   void _listenToLoginBloc(BuildContext context, LoginState state) {
     if (state is LoginPreviewSuccessState) {

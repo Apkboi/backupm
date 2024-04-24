@@ -19,6 +19,8 @@ import 'package:mentra/features/library/data/models/library_courses_response.dar
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/library/presentation/widgets/favorite_acction_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class VideoArticleScreen extends StatefulWidget {
   const VideoArticleScreen({super.key, required this.courseId});
@@ -94,7 +96,7 @@ class _VideoArticleScreenState extends State<VideoArticleScreen> {
                         backgroundColor: Theme.of(context).colorScheme.surface,
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
+                          child: HapticInkWell(
                             onTap: () {
                               context.pop();
                             },

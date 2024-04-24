@@ -9,6 +9,8 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/data/models/get_avatars_response.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class AvartarSelector extends StatefulWidget {
   const AvartarSelector({
@@ -102,7 +104,7 @@ class _AvartarSelectorState extends State<AvartarSelector> {
                                     crossAxisSpacing: 10,
                                     mainAxisExtent: 80,
                                     crossAxisCount: 4),
-                            itemBuilder: (context, index) => InkWell(
+                            itemBuilder: (context, index) => HapticInkWell(
                                 onTap: () {
                                   selectedImageIndex = index;
                                   widget.onAvatarSelected(
@@ -144,7 +146,7 @@ class _AvartarSelectorState extends State<AvartarSelector> {
                               crossAxisSpacing: 10,
                               mainAxisExtent: 72,
                               crossAxisCount: 4),
-                      itemBuilder: (context, index) => InkWell(
+                      itemBuilder: (context, index) => HapticInkWell(
                           onTap: () {
                             selectedColorIndex = index;
                             widget.onBackgroundSelector(

@@ -10,6 +10,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class SessionFocusSheet extends StatefulWidget {
   SessionFocusSheet({super.key});
@@ -79,7 +80,7 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                 if (state is GetSessionFocusSuccessState) {
                   return ListView.builder(
                     itemCount: state.response.data.length,
-                    itemBuilder: (context, index) => InkWell(
+                    itemBuilder: (context, index) => HapticInkWell(
                       onTap: () {
                         context.pop(state.response.data[index].name);
                       },

@@ -20,6 +20,8 @@ import 'package:mentra/features/journal/presentation/widgets/jornal_item.dart';
 import 'package:mentra/features/journal/presentation/widgets/guided_prompts_screen.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -70,7 +72,7 @@ class _JournalScreenState extends State<JournalScreen> {
               color: Pallets.primaryDark),
         ),
         actions: [
-          InkWell(
+          HapticInkWell(
             onTap: () {
               context.goNamed(PageUrl.menuScreen);
             },

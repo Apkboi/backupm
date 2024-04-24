@@ -46,7 +46,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<ReportEvent>(_mapReportEventToState);
   }
 
-  List<TherapySession>? upComingSessions;
+  List<TherapySession> upComingSessions =[];
   List<TherapySession>? sessionsHistory;
   List sessionFocus = [];
 
@@ -188,7 +188,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
           time: DateTime.now(),
           therapist: response.data,
           message: [
-            "Great news! I've found a therapist who matches your preferences. Their name is ${response.data.user.name}, and they specialize in ${(response.data.therapist.techniquesOfExpertise).firstOrNull}. ${response.data.user.name} is a ${response.data.therapist.gender} therapist who speaks ${response.data.therapist.languagesSpoken}."
+            "Great news! I've found a therapist who matches your preferences. Their name is ${response.data.user.name}, ${_getSpecializations(response)} ${response.data.user.name} is a ${response.data.therapist.gender} therapist who speaks ${response.data.therapist.languagesSpoken.firstOrNull}."
           ]));
       changeTherapistMessages.add(ChangeTherapistMessageModel(
           messageType: ChangeTherapistMessageType.therapistSuggestion,
@@ -325,6 +325,14 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
       emit(ReportFailureState(error: e.toString()));
+    }
+  }
+
+  _getSpecializations(MatchTherapistResponse response) {
+    if (response.data.therapist.techniquesOfExpertise.isNotEmpty) {
+      return "and they specialize in ${(response.data.therapist.techniquesOfExpertise).firstOrNull}.";
+    } else {
+      return '';
     }
   }
 }

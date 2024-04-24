@@ -20,6 +20,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
     on<GetNotificationsEvent>(_mapGetNotificationsEventToState);
     on<ReadNotificationEvent>(_mapReadNotificationEventToState);
     on<GetNotificationsDetailsEvent>(_mapGetNotificationsDetailsEventToState);
+    on<ClearNotificationsEvent>(_mapClearNotificationsEventToState);
   }
 
   Future<void> _mapGetNotificationsEventToState(
@@ -62,6 +63,17 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
       emit(GetNotificationsDetailsSuccessState(details: details));
     } catch (e) {
       emit(GetNotificationsDetailsFailureState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _mapClearNotificationsEventToState(
+      ClearNotificationsEvent event, Emitter<NotificationsState> emit) async {
+    emit(ClearNotificationsDetailsLoadingState());
+    try {
+      final details = await _notificationsRepository.clearAllNotifications();
+      emit(ClearNotificationsDetailsSuccessState(details: details));
+    } catch (e) {
+      emit(ClearNotificationsDetailsFailureState(error: e.toString()));
     }
   }
 }

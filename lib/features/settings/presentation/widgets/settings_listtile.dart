@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class SettingListTile extends StatelessWidget {
   const SettingListTile(
@@ -22,7 +24,7 @@ class SettingListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: onTap,
       child: Row(
         children: [

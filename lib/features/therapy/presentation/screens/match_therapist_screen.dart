@@ -7,6 +7,7 @@ import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 
@@ -56,9 +57,8 @@ class _MatchTherapistScreenState extends State<MatchTherapistScreen> {
                           horizontal: 16.0, vertical: 10),
                       child: CustomNeumorphicButton(
                         onTap: () {
-                          context.pop();
-                          context.pop();
                           injector.get<UserBloc>().add(GetRemoteUser());
+                          context.pushReplacementNamed(PageUrl.therapyScreen);
                         },
                         color: Pallets.primary,
                         text: 'Done',
@@ -76,9 +76,21 @@ class _MatchTherapistScreenState extends State<MatchTherapistScreen> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          const Align(
+                          Align(
                               alignment: Alignment.topLeft,
-                              child: CustomBackButton()),
+                              child: CustomBackButton(
+                                onTap: () {
+                                  if (state is TherapistAcceptedState) {
+                                    injector
+                                        .get<UserBloc>()
+                                        .add(GetRemoteUser());
+                                    context.pushReplacementNamed(
+                                        PageUrl.therapyScreen);
+                                  } else {
+                                    context.pop();
+                                  }
+                                },
+                              )),
                           16.verticalSpace,
                           if (messages.isNotEmpty)
                             Expanded(

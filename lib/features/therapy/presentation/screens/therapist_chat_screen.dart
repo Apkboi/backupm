@@ -10,14 +10,16 @@ import 'package:mentra/features/therapy/presentation/bloc/session/session_bloc.d
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 DemoUser user2 = DemoUser(
     '72907e6a689c61c1d5f1572ff97116a28dee3e911a5c673d234eee4ad2f6ja9a4a4cd39a',
     'joel@gmail.com');
 
 class TherapistChatScreen extends StatefulWidget {
-  const TherapistChatScreen({super.key, });
-
+  const TherapistChatScreen({
+    super.key,
+  });
 
   @override
   State<TherapistChatScreen> createState() => _TherapistChatScreenState();
@@ -76,7 +78,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
               children: [
                 Expanded(
                     child: ListView.builder(
-                      reverse: true,
+                  reverse: true,
                   itemCount: Allmessages.length,
                   itemBuilder: (context, index) => TherapyMessageBox(
                     message: Allmessages.reversed.toList()[index],
@@ -90,7 +92,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                             hasBorder: false,
                             hasElevation: false,
                             controller: controller,
-                            suffix: InkWell(
+                            suffix: HapticInkWell(
                               onTap: () {
                                 sendMessage();
                                 // _answerQuestion(context);
@@ -114,15 +116,10 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
     );
   }
 
-
   Future<void> sendMessage() async {
-
     controller.clear();
   }
-
 }
-
-
 
 class _InputBar extends StatefulWidget {
   const _InputBar({Key? key}) : super(key: key);
@@ -143,7 +140,7 @@ class _InputBarState extends State<_InputBar> {
                 hasBorder: false,
                 hasElevation: false,
                 controller: controller,
-                suffix: InkWell(
+                suffix: HapticInkWell(
                   onTap: () {
                     sendMessage();
                     // _answerQuestion(context);
@@ -161,9 +158,5 @@ class _InputBarState extends State<_InputBar> {
     );
   }
 
-  Future<void> sendMessage() async {
-
-  }
-
-
+  Future<void> sendMessage() async {}
 }

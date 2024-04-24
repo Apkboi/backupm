@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class _VideoControllerWidgetState extends State<VideoControllerWidget> {
             CircleAvatar(
               radius: 50,
               backgroundColor: Pallets.white.withOpacity(0.2),
-              child: InkWell(
+              child: HapticInkWell(
                 onTap: () {
                   widget.controller.isPlaying
                       ? widget.controller.play()

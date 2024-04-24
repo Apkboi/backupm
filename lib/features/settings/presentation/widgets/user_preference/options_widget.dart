@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class OptionsWidget extends StatelessWidget {
   const OptionsWidget({super.key, required this.question});
@@ -20,7 +22,7 @@ class OptionsWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           bool isSelected = question.answer == question.options[index];
 
-          return InkWell(
+          return HapticInkWell(
             onTap: () {
               context.read<UserPreferenceCubit>().answerQuestion(
                   id: question.id, answer: question.options[index]);

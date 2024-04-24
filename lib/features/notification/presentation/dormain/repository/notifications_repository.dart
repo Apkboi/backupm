@@ -7,4 +7,6 @@ abstract class NotificationsRepository {
   Future<ReadNotificationResponse> readNotification(String id);
 
   Future<dynamic> getNotificationDetails(String id);
+
+  Future<dynamic> clearAllNotifications();
 }

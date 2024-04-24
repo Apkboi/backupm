@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mentra/app.dart';
+import 'package:mentra/core/constants/pay_configurations.dart';
+import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'core/di/injector.dart';
 import 'core/services/data/hive/hive_manager.dart';
@@ -15,6 +17,7 @@ import 'core/services/firebase/crashlytics.dart';
 import 'core/services/firebase/notifiactions.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
+import 'core/services/pay/pay_service.dart';
 import 'features/account/presentation/user_bloc/user_bloc.dart';
 import 'firebase_options.dart';
 
@@ -41,6 +44,11 @@ class AppConfig {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     // await Firebase.initializeApp();
+
+    PayHelper.instance.initialize(
+        defaultGooglePayConfiguration: defaultGooglePay,
+        defaultApplePayConfiguration: defaultApplePay);
+    StripeService.initialize();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     await DefaultCacheManager().emptyCache();

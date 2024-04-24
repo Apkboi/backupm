@@ -8,5 +8,9 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<key>com.apple.developer.in-app-payments</key>
+	<array>
+		<string>merchant.com.mentra.application</string>
+	</array>
 </dict>
 </plist>

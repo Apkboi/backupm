@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
+
 SubscribeResponse subscribeResponseFromJson(String str) =>
     SubscribeResponse.fromJson(json.decode(str));
 
@@ -54,7 +56,7 @@ class SubscribeResponse {
 
 class Data {
   final int id;
-  final User user;
+  final MentraUser user;
   final Plan plan;
   final dynamic stripeSubscriptionId;
   final dynamic stripeClientSecret;
@@ -75,7 +77,7 @@ class Data {
 
   Data copyWith({
     int? id,
-    User? user,
+    MentraUser? user,
     Plan? plan,
     String? stripeSubscriptionId,
     dynamic stripeClientSecret,
@@ -96,7 +98,7 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
-        user: User.fromJson(json["user"]),
+        user: MentraUser.fromJson(json["user"]),
         plan: Plan.fromJson(json["plan"]),
         stripeSubscriptionId: json["stripe_subscription_id"],
         stripeClientSecret: json["stripe_client_secret"],
@@ -309,90 +311,6 @@ class Duration {
         "price": price,
         "discount": discount,
         "stripe_price_id": stripePriceId,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-      };
-}
-
-class User {
-  final int id;
-  final String avatar;
-  final String name;
-  final String role;
-  final dynamic avatarBackgroundColor;
-  final String username;
-  final String email;
-  final String birthYear;
-  final String stripeCustomerId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  User({
-    required this.id,
-    required this.avatar,
-    required this.name,
-    required this.role,
-    required this.avatarBackgroundColor,
-    required this.username,
-    required this.email,
-    required this.birthYear,
-    required this.stripeCustomerId,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  User copyWith({
-    int? id,
-    String? avatar,
-    String? name,
-    String? role,
-    dynamic avatarBackgroundColor,
-    String? username,
-    String? email,
-    String? birthYear,
-    String? stripeCustomerId,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  }) =>
-      User(
-        id: id ?? this.id,
-        avatar: avatar ?? this.avatar,
-        name: name ?? this.name,
-        role: role ?? this.role,
-        avatarBackgroundColor:
-            avatarBackgroundColor ?? this.avatarBackgroundColor,
-        username: username ?? this.username,
-        email: email ?? this.email,
-        birthYear: birthYear ?? this.birthYear,
-        stripeCustomerId: stripeCustomerId ?? this.stripeCustomerId,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-      );
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"],
-        avatar: json["avatar"],
-        name: json["name"],
-        role: json["role"],
-        avatarBackgroundColor: json["avatar_background_color"],
-        username: json["username"],
-        email: json["email"],
-        birthYear: json["birth_year"],
-        stripeCustomerId: json["stripe_customer_id"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "avatar": avatar,
-        "name": name,
-        "role": role,
-        "avatar_background_color": avatarBackgroundColor,
-        "username": username,
-        "email": email,
-        "birth_year": birthYear,
-        "stripe_customer_id": stripeCustomerId,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

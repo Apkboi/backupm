@@ -8,6 +8,8 @@ import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -75,7 +77,7 @@ class _PasswordResetEmailScreenState extends State<PasswordResetEmailScreen> {
                               EmailValidator(errorText: 'Invalid email')
                             ]).call,
                             hasBorder: false,
-                            suffix: InkWell(
+                            suffix: HapticInkWell(
                               onTap: () async {
                                 _goToNextScreen(context);
                               },

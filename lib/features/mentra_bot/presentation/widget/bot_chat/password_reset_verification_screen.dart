@@ -9,6 +9,8 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/password_reset/presentation/bloc/password_reset_bloc.dart';
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class PasswordResetVerificationField extends StatefulWidget {
   const PasswordResetVerificationField({
@@ -50,7 +52,7 @@ class _PasswordResetVerificationFieldState
                   validator: RequiredValidator(errorText: 'Enter code').call,
                   hasBorder: false,
                   inputType: TextInputType.number,
-                  suffix: InkWell(
+                  suffix: HapticInkWell(
                     onTap: () {
                       _goToNextScreen(context);
                     },

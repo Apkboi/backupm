@@ -18,7 +18,7 @@
 // class _LocationItemState extends State<LocationItem> {
 //   @override
 //   Widget build(BuildContext context) {
-//     return InkWell(
+//     return HapticInkWell(
 //       onTap: () {
 //         widget.onLocationSelected(widget.place);
 //       },

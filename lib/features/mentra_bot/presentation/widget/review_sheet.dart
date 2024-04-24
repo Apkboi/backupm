@@ -10,6 +10,8 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class MentraReviewModel {
   String feeling;
@@ -60,7 +62,7 @@ class _ReviewSheetState extends State<ReviewSheet> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(
                 ReviewMoodModel.allMoods.length,
-                (index) => InkWell(
+                (index) => HapticInkWell(
                       onTap: () {
                         feeling = ReviewMoodModel.allMoods[index].mood;
                         setState(() {});
@@ -68,7 +70,8 @@ class _ReviewSheetState extends State<ReviewSheet> {
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100.r),
+                            // borderRadius: BorderRadius.circular(100.r),
+                            shape: BoxShape.circle,
                             border: feeling ==
                                     ReviewMoodModel.allMoods[index].mood
                                 ? Border.all(width: 1, color: Pallets.primary)

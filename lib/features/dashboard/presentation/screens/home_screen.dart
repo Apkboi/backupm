@@ -15,12 +15,15 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
+import 'package:mentra/core/services/pay/pay_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/navigation/route_url.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen(
@@ -57,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: 80,
         leadingWidth: 80,
         actions: [
-          InkWell(
+          HapticInkWell(
             onTap: () {
               context.pushNamed(PageUrl.menuScreen);
               // _welcome();
@@ -179,6 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //     ));
                                     context
                                         .pushNamed(PageUrl.talkToMentraScreen);
+
                                   },
                                   color: Pallets.secondary,
                                   fgColor: Pallets.navy,

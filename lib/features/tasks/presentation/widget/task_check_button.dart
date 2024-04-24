@@ -4,6 +4,8 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/tasks/presentation/bloc/daily_task_bloc.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class TaskCheckButton extends StatefulWidget {
   const TaskCheckButton({super.key, required this.done, required this.id});
@@ -45,7 +47,7 @@ class _TaskCheckButtonState extends State<TaskCheckButton> {
         }
       },
       builder: (context, state) {
-        return InkWell(
+        return HapticInkWell(
           onTap: () {
             taskBloc.add(UpdateDailyTaskEvent(widget.id));
           },

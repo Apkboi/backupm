@@ -13,6 +13,8 @@ import 'package:mentra/features/summary/presentation/screens/summary_tab.dart';
 import 'package:mentra/features/summary/presentation/screens/work_sheet_tab.dart';
 import 'package:mentra/features/tasks/presentation/screens/daily_task_tab.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class MyActivitiesScreen extends StatefulWidget {
   const MyActivitiesScreen({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
               color: Pallets.primaryDark),
         ),
         actions: [
-          InkWell(
+          HapticInkWell(
             onTap: () {
               context.goNamed(PageUrl.menuScreen);
             },

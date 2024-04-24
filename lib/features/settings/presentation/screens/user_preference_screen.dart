@@ -14,6 +14,7 @@ import 'package:mentra/features/settings/presentation/blocs/user_preference/user
 import 'package:mentra/features/settings/presentation/widgets/user_preference/preference_message_base_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
   const UserPreferenceScreen({super.key, required this.flow});
@@ -159,8 +160,9 @@ class _InputBarState extends State<_InputBar> {
                         child: FilledTextField(
                             hasBorder: false,
                             hasElevation: false,
+                            enabled:!bloc.currentQuestion!.isTyping ,
                             controller: controller,
-                            suffix: InkWell(
+                            suffix: HapticInkWell(
                               onTap: () async {
                                 _answerQuestion(context);
                               },
@@ -183,7 +185,7 @@ class _InputBarState extends State<_InputBar> {
                             radius: 45,
                             hint: 'Message')),
                     // 10.horizontalSpace,
-                    // InkWell(
+                    // HapticInkWell(
                     //   onTap: () {
                     //     _answerQuestion(context);
                     //     // _endSession(context);
