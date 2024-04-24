@@ -12,7 +12,6 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class NotificationItem extends StatefulWidget {
   const NotificationItem({super.key, required this.notification});
 
@@ -27,10 +26,11 @@ class _NotificationItemState extends State<NotificationItem> {
   Widget build(BuildContext context) {
     return HapticInkWell(
       onTap: () {
+        // logger.w(widget.notification.type);
         _handleNotificationClick(context);
       },
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: Pallets.eggShell, borderRadius: BorderRadius.circular(10.r)),
         child: Column(
@@ -51,6 +51,9 @@ class _NotificationItemState extends State<NotificationItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
+
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
                           children: [
                             Expanded(
                               child: TextView(
@@ -58,6 +61,7 @@ class _NotificationItemState extends State<NotificationItem> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                            10.horizontalSpace,
                             TextView(
                               text:
                                   timeago.format(widget.notification.createdAt),
@@ -102,6 +106,10 @@ class _NotificationItemState extends State<NotificationItem> {
       case 'session':
         markAsRead();
         context.pushNamed(PageUrl.therapyScreen);
+        break;
+      case 'badge':
+        markAsRead();
+        context.pushNamed(PageUrl.badgesScreen);
         break;
       case "welness_course":
         // context.pop();

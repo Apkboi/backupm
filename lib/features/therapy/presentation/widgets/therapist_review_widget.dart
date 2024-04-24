@@ -18,14 +18,18 @@ class TherapistsReviewWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(17), color: Pallets.white),
-      child: Column(
+      child: const Column(
         children: [
-          ...List.generate(
-              3,
-              (index) => const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: ReviewItem(),
-                  ))
+          SizedBox(
+              height: 100,
+              child: Center(child: TextView(text: 'No Reviews')))
+
+          // ...List.generate(
+          //     3,
+          //     (index) => const Padding(
+          //           padding: EdgeInsets.symmetric(vertical: 16),
+          //           child: ReviewItem(),
+          //         ))
         ],
       ),
     );
@@ -86,7 +90,10 @@ class ReviewItem extends StatelessWidget {
           ],
         ),
         16.verticalSpace,
-         TextView(text: lorem, style: GoogleFonts.plusJakartaSans(),),
+        TextView(
+          text: lorem,
+          style: GoogleFonts.plusJakartaSans(),
+        ),
       ],
     );
   }

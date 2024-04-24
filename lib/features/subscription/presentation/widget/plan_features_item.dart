@@ -19,7 +19,6 @@ import 'package:mentra/features/subscription/data/models/card_details_payload.da
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
-import 'package:pay/pay.dart';
 
 import '../../../../core/services/pay/pay_service.dart';
 import 'card_details_sheet.dart';
@@ -184,6 +183,8 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                           onPressed: () {
                             // _makePayment();
                             _cancelSubscription(context);
+                            // _subscribe(
+                            //     context, widget.plan.durations[0]);
                           },
                           child: const TextView(
                             fontSize: 16,
@@ -225,6 +226,8 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
       planId: widget.plan.id,
       planDurationId: duration.id,
       cardToken: 'tok_visa',
+      amount: widget.plan.price.toString(),
+      planName: widget.plan.name,
     );
     _bloc.add(SubscribeEvent(payload));
     // }

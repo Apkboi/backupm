@@ -30,7 +30,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
           decoration: BoxDecoration(
               color: Pallets.streakBg.withOpacity(0.5),
               borderRadius: BorderRadius.circular(15.r)),
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 11),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -38,6 +38,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     TextView(
                       text:
                           'You’re on a ${injector.get<UserBloc>().appUser!.streak ?? 0}-day streak!',
@@ -46,6 +47,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                     ),
                     14.verticalSpace,
                     StreakWidget(injector.get<UserBloc>().appUser!.streak)
+
                   ],
                 ),
               ),
@@ -62,12 +64,13 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                   //           injector.get<UserBloc>().appUser!.badge!.image.url),
                   // 3.verticalSpace,
                   CustomNeumorphicButton(
-                      padding: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(4),
                       expanded: false,
                       fgColor: Pallets.black,
                       onTap: () {
                         context.pushNamed(PageUrl.badgesScreen);
                       },
+
                       // text: 'View badges',
                       color: Pallets.secondary,
                       child: const IgnorePointer(
@@ -78,7 +81,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                           fontWeight: FontWeight.w700,
                         ),
                       )),
-                  3.verticalSpace,
+                  // 3.verticalSpace,
                 ],
               )
             ],

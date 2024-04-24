@@ -359,7 +359,7 @@ class BotChatCubit extends Cubit<BotChatState> {
                       ),
                   children: [
                 TextSpan(
-                    text: 'Forgot pin ? ',
+                    text: 'Forgot pin?',
                     style: GoogleFonts.plusJakartaSans(
                       fontWeight: FontWeight.w600,
                       color: Pallets.secondary,

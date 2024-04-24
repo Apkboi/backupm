@@ -11,8 +11,6 @@ class TherapistAboutWidget extends StatelessWidget {
 
   final SuggestedTherapist therapist;
 
-
-
   @override
   Widget build(BuildContext context) {
     logger.i(therapist.toJson());
@@ -25,7 +23,7 @@ class TherapistAboutWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextView(
-              text: therapist.therapist.bio??
+              text: therapist.therapist.bio ??
                   therapist.therapist.field.toString()),
           10.verticalSpace,
           if (therapist.therapist.degrees != null)
@@ -48,7 +46,7 @@ class TherapistAboutWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TextView(
-                  text: "Certifications:",
+                  text: "Licenses and Certifications:",
                   fontWeight: FontWeight.w500,
                 ),
                 ...List.generate(
@@ -62,7 +60,7 @@ class TherapistAboutWidget extends StatelessWidget {
               ],
             ),
           const TextView(
-            text: "Experience::",
+            text: "Years of experience:",
             fontWeight: FontWeight.w500,
           ),
           5.verticalSpace,

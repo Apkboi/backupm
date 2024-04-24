@@ -60,9 +60,9 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   Future<Map<String, dynamic>> _makePayment(SubscriptionPayload payload) async {
     if (Platform.isAndroid) {
       var googlePayResult = await PayHelper.instance.requestGooglePayPayment([
-        const PaymentItem(
-            label: 'Total',
-            amount: '100',
+         PaymentItem(
+            label: payload.planName,
+            amount: payload.amount,
             status: PaymentItemStatus.final_price,
             type: PaymentItemType.total),
       ]);
@@ -82,8 +82,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       paymentResult, SubscriptionPayload payload) async {
     // final response = await StripeService().createTestPaymentSheet();
     // final clientSecret = response['client_secret'];
-    final token =
-        paymentResult['paymentMethodData']['tokenizationData']['token'];
+    // final token =
+    //     paymentResult['paymentMethodData']['tokenizationData']['token'];
     // final tokenJson = Map.castFrom(json.decode(token));
     final params = PaymentMethodParams.cardFromToken(
       paymentMethodData:

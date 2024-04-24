@@ -74,7 +74,8 @@ class TimeUtil {
   }
 
   static String formatFromDate(DateTime date) {
-    return DateFormat.yMMMMd().format(date);
+    final formatter = DateFormat('MMMM d,  y'); // Customize format as needed
+    return formatter.format(date);
   }
 
   static String formatToFullDate(DateTime dateTime) {

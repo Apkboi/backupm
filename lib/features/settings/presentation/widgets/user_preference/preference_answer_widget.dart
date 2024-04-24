@@ -11,7 +11,6 @@ import 'package:mentra/features/settings/presentation/blocs/user_preference/user
 import 'package:mentra/features/settings/presentation/widgets/user_preference/options_widget.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class PreferenceAnswerBox extends StatefulWidget {
   const PreferenceAnswerBox({
     super.key,
@@ -41,31 +40,30 @@ class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
               children: [
                 Container(
                   constraints: BoxConstraints(maxWidth: 0.7.sw),
-
-
                   child: ChatBubble(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 7),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 7),
                     backGroundColor: Pallets.secondary,
                     clipper: ChatBubbleClipper3(
                         type: BubbleType.sendBubble, nipSize: 4, radius: 15),
                     alignment: Alignment.centerRight,
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          TextView(
-                              text: widget.question.answer??'',
-                              fontSize: 15.sp,
-                              color: Pallets.black,
-                              lineHeight: 1.5,
-                              fontWeight: FontWeight.w500),
-                          // 8.verticalSpace,
-                          // Text(TimeUtil.formatTime(widget.question.answerTime!),
-                          //     style: TextStyle(
-                          //       fontSize: 11.sp,
-                          //       fontWeight: FontWeight.w600,
-                          //     ))
-                        ],
-                      ),
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextView(
+                            text: widget.question.answer ?? '',
+                            fontSize: 15.sp,
+                            color: Pallets.black,
+                            lineHeight: 1.5,
+                            fontWeight: FontWeight.w500),
+                        // 8.verticalSpace,
+                        // Text(TimeUtil.formatTime(widget.question.answerTime!),
+                        //     style: TextStyle(
+                        //       fontSize: 11.sp,
+                        //       fontWeight: FontWeight.w600,
+                        //     ))
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -73,7 +71,9 @@ class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(TimeUtil.formatTime(widget.question.answerTime??DateTime.now()),
+                  child: Text(
+                      TimeUtil.formatTime(
+                          widget.question.answerTime ?? DateTime.now()),
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 11.sp,

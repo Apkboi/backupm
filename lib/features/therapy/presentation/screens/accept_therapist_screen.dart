@@ -19,7 +19,6 @@ import 'package:mentra/features/therapy/presentation/widgets/therapists_spcializ
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class AcceptTherapistScreen extends StatefulWidget {
   const AcceptTherapistScreen({super.key, required this.suggestedTherapist});
 
@@ -99,11 +98,12 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                         Column(
                           children: [
                             Container(
-                              height: 300,
+                              height: 400,
                               width: 1.sw,
                               decoration: BoxDecoration(
                                   color: Pallets.primary,
                                   image: DecorationImage(
+                                      fit: BoxFit.cover,
                                       image: NetworkImage(widget
                                           .suggestedTherapist.user.avatar))),
                               child: const Align(
@@ -142,7 +142,7 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                                     TextView(
                                         align: TextAlign.center,
                                         text:
-                                            '${widget.suggestedTherapist.therapist.field ?? widget.suggestedTherapist.therapist.certifications ?? (widget.suggestedTherapist.therapist.techniquesOfExpertise).firstOrNull.toString()}'),
+                                            '${widget.suggestedTherapist.therapist.field ?? (widget.suggestedTherapist.therapist.certifications as List).firstOrNull ?? (widget.suggestedTherapist.therapist.techniquesOfExpertise).firstOrNull.toString()}'),
                                     16.verticalSpace,
                                     HapticInkWell(
                                       onTap: () {
@@ -167,7 +167,7 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                                                 size: 13,
                                               ),
                                               const TextView(
-                                                text: ' 4.7',
+                                                text: '0',
                                                 color: Pallets.pendingColor,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -193,8 +193,9 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const TextView(
-                              text: 'About Nour',
+                            TextView(
+                              text:
+                                  'About ${widget.suggestedTherapist.user.name}',
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             ),

@@ -96,7 +96,8 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                                shape: BoxShape.circle,
+                                // borderRadius: BorderRadius.circular(100.r),
                                 border:
                                     ReviewMoodModel.allMoods[index].mood == mood
                                         ? Border.all(
