@@ -77,14 +77,15 @@ class HapticInkWell extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        if (enableHapticsOnTap) {
+          HapticFeedbackManager.vibrate();
+        }
       onTap!();
 
         if (onTap != null) {
         }
 
-        if (enableHapticsOnTap) {
-          HapticFeedbackManager.vibrate();
-        }
+
       },
       onDoubleTap: () {
         if (enableHapticsOnDoubleTap) {

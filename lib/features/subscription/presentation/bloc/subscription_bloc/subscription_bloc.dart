@@ -47,6 +47,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       var paymentInfo = await _makePayment(event.payload);
 
       var response = await onPayResult(paymentInfo, event.payload);
+      injector.get<UserBloc>().add(GetRemoteUser());
 
       emit(SubscribeSuccessState(response));
     } catch (e, stack) {
@@ -88,7 +89,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       paymentMethodData:
           PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
     );
-    injector.get<UserBloc>().add(GetRemoteUser());
     return await subscriptionRepository.subscribe(payload);
 
     // Confirm Google pay payment method

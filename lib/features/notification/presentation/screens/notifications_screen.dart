@@ -41,7 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           PopupMenuButton(
             position: PopupMenuPosition.over,
             // constraints: const BoxConstraints(maxHeight: 60,),
-            constraints: const BoxConstraints(maxWidth: 110),
+            constraints: const BoxConstraints(maxWidth: 200),
             padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.r)),
@@ -62,7 +62,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   value: 'clear',
                   height: 30,
                   child: Text(
-                    'Clear Notifications',
+                    'Clear All',
                     style: TextStyle(fontSize: 14.sp),
                   ),
                 ),

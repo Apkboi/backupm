@@ -12,7 +12,6 @@ import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class MoodCheckerWidget extends StatefulWidget {
   const MoodCheckerWidget({
     super.key,
@@ -45,6 +44,7 @@ class _MoodCheckerWidgetState extends State<MoodCheckerWidget> {
           listener: (context, state) {
             if (state is UpdateMoodCheckerSuccessState) {
               // mood = state.response.data.mood;
+              CustomDialogs.success('Mood updated! Thanks for sharing.');
               injector.get<UserBloc>().add(GetRemoteUser());
               setState(() {});
             }

@@ -45,7 +45,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
                       fontSize: 14,
                     ),
                     14.verticalSpace,
-                    StreakWidget(5)
+                    StreakWidget(injector.get<UserBloc>().appUser!.streak)
                   ],
                 ),
               ),
