@@ -76,3 +76,27 @@ class GetNotificationsDetailsFailureState extends NotificationsState {
   @override
   List<Object?> get props => [error];
 }
+
+class ClearNotificationsDetailsLoadingState extends NotificationsState {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+}
+
+class ClearNotificationsDetailsSuccessState extends NotificationsState {
+  final dynamic details;
+
+  const ClearNotificationsDetailsSuccessState({required this.details});
+
+  @override
+  List<Object?> get props => [details];
+}
+
+class ClearNotificationsDetailsFailureState extends NotificationsState {
+  final String error;
+
+  const ClearNotificationsDetailsFailureState({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}

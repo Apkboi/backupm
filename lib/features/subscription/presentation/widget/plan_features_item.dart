@@ -19,6 +19,7 @@ import 'package:mentra/features/subscription/data/models/card_details_payload.da
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
+import 'package:pay/pay.dart';
 
 import '../../../../core/services/pay/pay_service.dart';
 import 'card_details_sheet.dart';
@@ -152,11 +153,10 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                                   fontWeight: FontWeight.w600,
                                 ),
                                 onPressed: () {
-                                  _makePayment();
                                   // StripeService().initPaymentSheet();
 
-                                  // _subscribe(
-                                  //     context, widget.plan.durations[index]);
+                                  _subscribe(
+                                      context, widget.plan.durations[index]);
                                 },
                               ),
                             );
@@ -182,6 +182,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                         widget.plan.price != 0)
                       TextButton(
                           onPressed: () {
+                            // _makePayment();
                             _cancelSubscription(context);
                           },
                           child: const TextView(
@@ -209,27 +210,24 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
 
   void _subscribe(BuildContext context, PlanDuration duration) async {
     // log(widget.plan.id.toString());
-    final SubscriptionCard? cardDetails = await CustomDialogs.showBottomSheet(
-      context,
-      const CardDetailsSheet(),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(16),
-        topRight: Radius.circular(16),
-      )),
-    );
+    // final SubscriptionCard? cardDetails = await CustomDialogs.showBottomSheet(
+    //   context,
+    //   const CardDetailsSheet(),
+    //   shape: const RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.only(
+    //         topLeft: Radius.circular(16),
+    //         topRight: Radius.circular(16),
+    //       )),
+    // );
 
-    if (cardDetails != null) {
-      SubscriptionPayload payload = SubscriptionPayload(
-          planId: widget.plan.id,
-          planDurationId: duration.id,
-          cardOwnerName: cardDetails.cardOwnerName,
-          cardNumber: cardDetails.cardNumber,
-          cardExpMonth: 12,
-          cardExpYear: 34,
-          cardCvc: 122);
-      _bloc.add(SubscribeEvent(payload));
-    }
+    // if (cardDetails != null) {
+    SubscriptionPayload payload = SubscriptionPayload(
+      planId: widget.plan.id,
+      planDurationId: duration.id,
+      cardToken: 'tok_visa',
+    );
+    _bloc.add(SubscribeEvent(payload));
+    // }
   }
 
   void _listenToSubscriptionBloc(
@@ -251,37 +249,6 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
             context.pop();
           },
         ));
-  }
-
-  void _makePayment() async {
-    if (Platform.isAndroid) {
-      var googlePayResult =
-          await PayHelper.instance.requestGooglePayPayment([]);
-      logger.w(googlePayResult.toString());
-      onGooglePayResult(googlePayResult);
-    } else {
-      var googlePayResult = await PayHelper.instance.requestApplePayPayment([]);
-      logger.w(googlePayResult.toString());
-      onGooglePayResult(googlePayResult);
-    }
-  }
-
-  Future<void> onGooglePayResult(paymentResult) async {
-    final response = await StripeService().createTestPaymentSheet();
-    final clientSecret = response['client_secret'];
-    final token =
-        paymentResult['paymentMethodData']['tokenizationData']['token'];
-    // final tokenJson = Map.castFrom(json.decode(token));
-    final params = PaymentMethodParams.cardFromToken(
-      paymentMethodData:
-          PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
-    );
-    // Confirm Google pay payment method
-    var paymentIntent = await Stripe.instance.confirmPayment(
-      data: params,
-      paymentIntentClientSecret: clientSecret,
-    );
-    logger.w(paymentIntent.toJson());
   }
 }
 

@@ -8,7 +8,7 @@ class ReviewMoodModel {
 
   static List<ReviewMoodModel> get allMoods => [
         ReviewMoodModel(avatar: Assets.images.pngs.awful.path, mood: 'Moody'),
-        ReviewMoodModel(avatar: Assets.images.pngs.good.path, mood: 'Normal'),
+        ReviewMoodModel(avatar: Assets.images.pngs.okay.path, mood: 'Normal'),
         ReviewMoodModel(avatar: Assets.images.pngs.great.path, mood: 'Happy'),
       ];
 }

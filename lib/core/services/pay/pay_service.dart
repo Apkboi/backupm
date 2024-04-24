@@ -52,18 +52,8 @@ class PayHelper {
   Future<Map<String, dynamic>> requestPayment(
       PayProvider provider, List<PaymentItem> paymentItems) async {
     try {
-      final result = await _payClient.showPaymentSelector(provider, [
-        // PaymentItem(
-        //     amount: '200',
-        //     type: PaymentItemType.total,
-        //     label: 'Testing',
-        //     status: PaymentItemStatus.final_price),
-        const PaymentItem(
-          amount: '2000',
-          type: PaymentItemType.total,
-          label: 'Pay for subscription',
-        ),
-      ]);
+      final result =
+          await _payClient.showPaymentSelector(provider, _paymentItems);
       return result;
     } on PlatformException catch (error) {
       // Handle platform errors (e.g., payment cancelled, network issues)

@@ -22,7 +22,6 @@ import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
@@ -294,7 +293,7 @@ class NotificationBell extends StatelessWidget {
                   .isNotEmpty)
                 const Positioned(
                     right: -1,
-                    top: -3,
+                    top: -0,
                     child: Badge(
                       smallSize: 13,
                     ))

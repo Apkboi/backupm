@@ -35,6 +35,8 @@ class UrlConfig {
   static const String getNotificationDetailsEndpoint =
       "/getNotificationDetailsEndpoint";
 
+  static const String clearNotifications = "/clearNotifications";
+
   static String readNotificationEndpoint(String id) =>
       "/notifications/$id/show";
 

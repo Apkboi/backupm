@@ -34,4 +34,14 @@ class NotificationRepositoryImpl extends NotificationsRepository {
 
     return response.data;
   }
+
+  @override
+  Future clearAllNotifications() async {
+    final response = await _networkService.call(
+      UrlConfig.clearNotifications,
+      RequestMethod.post,
+    );
+
+    return response.data;
+  }
 }

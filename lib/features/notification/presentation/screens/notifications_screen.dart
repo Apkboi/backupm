@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/confirm_sheet.dart';
@@ -34,8 +35,45 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         tittleText: 'Notifications',
+        actions: [
+          PopupMenuButton(
+            position: PopupMenuPosition.over,
+            // constraints: const BoxConstraints(maxHeight: 60,),
+            constraints: const BoxConstraints(maxWidth: 110),
+            padding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.r)),
+            onSelected: (value) {
+              switch (value) {
+                case "clear":
+                  injector
+                      .get<NotificationsBloc>()
+                      .add(const ClearNotificationsEvent());
+                  break;
+                case "report":
+                  break;
+              }
+            },
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem<String>(
+                  value: 'clear',
+                  height: 30,
+                  child: Text(
+                    'Clear Notifications',
+                    style: TextStyle(fontSize: 14.sp),
+                  ),
+                ),
+              ];
+            },
+            child: const CircleAvatar(
+                backgroundColor: Pallets.white,
+                foregroundColor: Pallets.black,
+                child: Icon(Icons.more_vert)),
+          )
+        ],
       ),
       body: Stack(
         children: [
@@ -163,7 +201,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
   // bool _buildWhen(NotificationsState previous, NotificationsState current) {}
 
-  void _listenToJournalBloc(BuildContext context, NotificationsState state) {}
+  void _listenToJournalBloc(BuildContext context, NotificationsState state) {
+    if (state is ClearNotificationsDetailsLoadingState) {
+      CustomDialogs.showLoading(context);
+    }
+
+    if (state is ClearNotificationsDetailsFailureState) {
+      context.pop();
+      CustomDialogs.error(state.error);
+    }
+
+    if (state is ClearNotificationsDetailsSuccessState) {
+      context.pop();
+      CustomDialogs.success('Notifications cleared');
+      injector.get<NotificationsBloc>().add(GetNotificationsEvent());
+    }
+  }
 
   bool _buildWhen(NotificationsState previous, NotificationsState current) {
     return current is GetNotificationsLoadingState ||

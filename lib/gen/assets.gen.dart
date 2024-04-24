@@ -18,11 +18,17 @@ class $AssetsAudioGen {
   /// File path: assets/audio/received.mp3
   String get received => 'assets/audio/received.mp3';
 
+  /// File path: assets/audio/received1.mp3
+  String get received1 => 'assets/audio/received1.mp3';
+
   /// File path: assets/audio/sent.mp3
   String get sent => 'assets/audio/sent.mp3';
 
+  /// File path: assets/audio/sent2.mp3
+  String get sent2 => 'assets/audio/sent2.mp3';
+
   /// List of all assets
-  List<String> get values => [dummy, received, sent];
+  List<String> get values => [dummy, received, received1, sent, sent2];
 }
 
 class $AssetsImagesGen {

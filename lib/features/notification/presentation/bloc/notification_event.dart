@@ -26,3 +26,10 @@ class GetNotificationsDetailsEvent extends NotificationsEvent {
   @override
   List<Object?> get props => throw UnimplementedError();
 }
+
+class ClearNotificationsEvent extends NotificationsEvent {
+  const ClearNotificationsEvent();
+
+  @override
+  List<Object?> get props => [];
+}
