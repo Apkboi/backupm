@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class InputBar extends StatelessWidget {
   InputBar(
@@ -34,7 +35,7 @@ class InputBar extends StatelessWidget {
               controller: controller,
             fontSize: 17,
               validator: validator,
-              suffix: InkWell(
+              suffix: HapticInkWell(
                 onTap: () async {
                   if (_formKey.currentState!.validate()) {
                     onAnswer(controller.text);

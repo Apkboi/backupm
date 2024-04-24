@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class _ImageWidgetState extends State<ImageWidget> {
           if (widget.imageUrl == '') {
             return _ErrorWidget();
           }
-          return InkWell(
+          return HapticInkWell(
             onTap: () {
               if (widget.canPreview!) {
                 showDialog(
@@ -104,7 +105,7 @@ class _ImageWidgetState extends State<ImageWidget> {
           );
         }
 
-        return InkWell(
+        return HapticInkWell(
           onTap: () {
             if (widget.canPreview!) {
               showDialog(

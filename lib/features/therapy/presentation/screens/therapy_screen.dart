@@ -26,6 +26,8 @@ import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.d
 import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class TherapyScreen extends StatefulWidget {
   const TherapyScreen({Key? key}) : super(key: key);
@@ -52,7 +54,7 @@ class _TherapyScreenState extends State<TherapyScreen> {
               color: Pallets.primaryDark),
         ),
         actions: [
-          InkWell(
+          HapticInkWell(
             onTap: () {
               context.goNamed(PageUrl.menuScreen);
             },

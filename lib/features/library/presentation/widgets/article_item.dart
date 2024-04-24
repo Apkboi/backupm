@@ -8,6 +8,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/data/models/library_courses_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class ArticleItem extends StatelessWidget {
   const ArticleItem({super.key, required this.course});
@@ -16,7 +17,7 @@ class ArticleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         if (course.courseType == 'Video') {
           context.pushNamed(PageUrl.videoArticleScreen,

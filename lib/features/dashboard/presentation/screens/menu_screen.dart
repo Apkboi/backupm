@@ -20,6 +20,8 @@ import 'package:mentra/features/notification/presentation/bloc/notification_bloc
 import 'package:mentra/features/streaks/presentation/widget/daily_streak_widget.dart';
 import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -88,7 +90,7 @@ class _MenuScreenState extends State<MenuScreen> {
             16.horizontalSpace,
             const NotificationBell(),
             10.horizontalSpace,
-            InkWell(
+            HapticInkWell(
               onTap: () {
                 context.pushNamed(PageUrl.settingsScreen);
               },
@@ -265,14 +267,14 @@ class NotificationBell extends StatelessWidget {
       bloc: injector.get(),
       listener: _listenToNotificationBloc,
       builder: (context, state) {
-        return InkWell(
+        return HapticInkWell(
           onTap: () {
             context.pushNamed(PageUrl.notificationsPage);
           },
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              InkWell(
+              HapticInkWell(
                 onTap: () {
                   context.pushNamed(PageUrl.notificationsScreen);
                 },

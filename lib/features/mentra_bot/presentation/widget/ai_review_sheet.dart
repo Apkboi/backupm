@@ -12,6 +12,8 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/mentra_bot/data/models/review_mood_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class MentraReviewModel {
   String feeling;
@@ -70,7 +72,7 @@ class _AiReviewSheetState extends State<AiReviewSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: List.generate(
                     ReviewMoodModel.allMoods.length,
-                    (index) => InkWell(
+                    (index) => HapticInkWell(
                           onTap: () {
                             feeling = ReviewMoodModel.allMoods[index].mood;
                             setState(() {});

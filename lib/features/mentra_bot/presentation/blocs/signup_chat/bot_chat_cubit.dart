@@ -16,6 +16,7 @@ import 'package:mentra/features/mentra_bot/data/datasource/local/welcome_message
 import 'package:mentra/features/mentra_bot/data/models/bot_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_resend_otp_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 part 'bot_chat_state.dart';
 
@@ -82,7 +83,7 @@ class BotChatCubit extends Cubit<BotChatState> {
       await Future.delayed(const Duration(milliseconds: 300));
       stagedMessages.add(message..time = DateTime.now());
       currentQuestion = message;
-      SoundManager.playMessageReceivedSound();
+      await SoundManager.playMessageReceivedSound();
 
       emit(QuestionUpdatedState());
       await Future.delayed(const Duration(seconds: 1));
@@ -297,7 +298,7 @@ class BotChatCubit extends Cubit<BotChatState> {
         isFromBot: true,
         id: 0,
         isTyping: false,
-        child: InkWell(
+        child: HapticInkWell(
           onTap: () {
             Helpers.launchRawUrl('https://yourmentra.com/terms-and-conditions');
           },
@@ -336,7 +337,7 @@ class BotChatCubit extends Cubit<BotChatState> {
         isFromBot: true,
         id: 0,
         isTyping: false,
-        child: InkWell(
+        child: HapticInkWell(
           onTap: () {
             answerQuestion(
               id: 0,

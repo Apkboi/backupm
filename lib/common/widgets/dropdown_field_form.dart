@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 import 'package:mentra/core/theme/pallets.dart';
 
@@ -22,7 +23,7 @@ class DropdownFieldButton extends StatefulWidget {
 class _DropdownFieldButtonState extends State<DropdownFieldButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () => widget.onTap(),
       child: Container(
         decoration: BoxDecoration(

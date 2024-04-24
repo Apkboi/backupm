@@ -12,6 +12,8 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class UsernamePage extends StatefulWidget {
   const UsernamePage({super.key});
@@ -68,7 +70,7 @@ class _UsernamePageState extends State<UsernamePage> {
                         outline: false,
 
                         hasBorder: false,
-                        suffix: InkWell(
+                        suffix: HapticInkWell(
                           onTap: () {
                             _goToNextScreen(context);
                           },

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,7 @@ class LibraryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         context.pushNamed(PageUrl.allArticlesScreen, queryParameters: {
           PathParam.libraryCategory: jsonEncode(category.toJson()),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class TextView extends StatelessWidget {
   final GlobalKey? textKey;

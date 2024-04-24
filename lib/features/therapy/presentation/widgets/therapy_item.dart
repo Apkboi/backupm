@@ -8,6 +8,8 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class TherapyItem extends StatelessWidget {
   const TherapyItem({super.key, required this.session});
@@ -16,7 +18,7 @@ class TherapyItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         CustomDialogs.showCupertinoBottomSheet(
             context,

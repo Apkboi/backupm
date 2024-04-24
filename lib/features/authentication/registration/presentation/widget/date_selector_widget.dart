@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class DateSelectorWidget extends StatefulWidget {
   const DateSelectorWidget({
@@ -60,7 +62,7 @@ class _SelectableYearsListState extends State<DateSelectorWidget> {
 
         return Align(
           alignment: widget.alignment ?? Alignment.centerRight,
-          child: InkWell(
+          child: HapticInkWell(
             onTap: () {
               setState(() {
                 selectedYear = year;

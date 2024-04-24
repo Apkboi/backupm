@@ -11,6 +11,8 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class SignupIntroScreen extends StatefulWidget {
   const SignupIntroScreen({Key? key}) : super(key: key);
@@ -26,7 +28,7 @@ class _SignupIntroScreenState extends State<SignupIntroScreen> {
       backgroundColor: Pallets.bgLight,
       appBar: CustomAppBar(
         bgColor: Pallets.bgLight,
-        leading: InkWell(
+        leading: HapticInkWell(
           onTap: () {
             context.pop();
           },
@@ -48,7 +50,7 @@ class _SignupIntroScreenState extends State<SignupIntroScreen> {
                   fontSize: 32.sp, fontWeight: FontWeight.w600),
             ),
             30.verticalSpace,
-            InkWell(
+            HapticInkWell(
               onTap: () {
                 injector.get<RegistrationBloc>().updateFields(role: 'User');
                 context.pushNamed(PageUrl.usernameScreen);
@@ -93,7 +95,7 @@ class _SignupIntroScreenState extends State<SignupIntroScreen> {
               ),
             ),
             16.verticalSpace,
-            // InkWell(
+            // HapticInkWell(
             //   onTap: () {
             //     // context.pushNamed(PageUrl.usernameScreen);
             //   },

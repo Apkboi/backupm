@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class CustomButtomNav extends StatefulWidget {
   const CustomButtomNav(
@@ -30,7 +31,7 @@ class _CustomButtomNavState extends State<CustomButtomNav> {
     var items = List.generate(
         widget.navItem.length,
         (index) => Expanded(
-              child: InkWell(
+              child: HapticInkWell(
                 onTap: () {
                   widget.onTap(index);
                   _switchTab(index);

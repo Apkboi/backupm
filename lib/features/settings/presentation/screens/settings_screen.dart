@@ -23,6 +23,8 @@ import 'package:mentra/features/settings/presentation/widgets/settings_group_3.d
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_group_2.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -61,7 +63,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               color: Pallets.primaryDark),
         ),
         actions: [
-          InkWell(
+          HapticInkWell(
             onTap: () {
               context.goNamed(PageUrl.menuScreen);
             },

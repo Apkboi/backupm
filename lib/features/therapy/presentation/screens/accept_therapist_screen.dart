@@ -17,6 +17,8 @@ import 'package:mentra/features/therapy/presentation/widgets/therapist_about_wid
 import 'package:mentra/features/therapy/presentation/widgets/therapist_review_widget.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapists_spcialization_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class AcceptTherapistScreen extends StatefulWidget {
   const AcceptTherapistScreen({super.key, required this.suggestedTherapist});
@@ -142,7 +144,7 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                                         text:
                                             '${widget.suggestedTherapist.therapist.field ?? widget.suggestedTherapist.therapist.certifications ?? (widget.suggestedTherapist.therapist.techniquesOfExpertise).firstOrNull.toString()}'),
                                     16.verticalSpace,
-                                    InkWell(
+                                    HapticInkWell(
                                       onTap: () {
                                         logger.i(
                                             widget.suggestedTherapist.toJson());

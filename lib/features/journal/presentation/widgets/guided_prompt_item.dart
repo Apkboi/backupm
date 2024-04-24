@@ -1,16 +1,16 @@
 import 'dart:convert';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/common/widgets/text_view.dart';
+
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
-import 'package:mentra/core/theme/pallets.dart';
+
 import 'package:mentra/features/journal/data/models/get_prompts_response.dart';
-import 'package:mentra/gen/assets.gen.dart';
+
 
 class GuidedPromptsItem extends StatelessWidget {
   const GuidedPromptsItem({super.key, required this.prompt});
@@ -19,7 +19,7 @@ class GuidedPromptsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         context.pop();
         context.pushNamed(PageUrl.createJournalScreen,

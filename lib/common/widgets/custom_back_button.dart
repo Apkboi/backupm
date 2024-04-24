@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -16,7 +17,7 @@ class CustomBackButton extends StatefulWidget {
 class _CustomBackButtonState extends State<CustomBackButton> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         if (widget.onTap != null) {
           widget.onTap!();

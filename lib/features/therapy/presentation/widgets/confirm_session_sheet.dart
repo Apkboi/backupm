@@ -19,6 +19,8 @@ import 'package:mentra/features/therapy/data/models/create_session_response.dart
 import 'package:mentra/features/therapy/presentation/widgets/session_focus_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class ConfirmSessionSheet extends StatefulWidget {
   const ConfirmSessionSheet({super.key});
@@ -127,7 +129,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                       ),
                     ),
                     16.verticalSpace,
-                    InkWell(
+                    HapticInkWell(
                       onTap: () {
                         _selectSessionFocus();
                       },

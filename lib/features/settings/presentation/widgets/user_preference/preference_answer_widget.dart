@@ -9,6 +9,8 @@ import 'package:mentra/features/settings/data/data_sources/preference_questions.
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/widgets/user_preference/options_widget.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class PreferenceAnswerBox extends StatefulWidget {
   const PreferenceAnswerBox({
@@ -28,7 +30,7 @@ class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
     return (widget.question.answer != null &&
             context.read<UserPreferenceCubit>().currentQuestion?.id !=
                 widget.question.id)
-        ? InkWell(
+        ? HapticInkWell(
             onTap: () {
               context
                   .read<UserPreferenceCubit>()

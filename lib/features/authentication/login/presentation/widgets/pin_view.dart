@@ -6,6 +6,8 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class PinView extends StatefulWidget {
   const PinView(
@@ -88,7 +90,7 @@ class _PinViewState extends State<PinView> {
                         ? _getBioMetricButton()
                         : index == 9 && !widget.hasBiometric!
                             ? const SizedBox.shrink()
-                            : InkWell(
+                            : HapticInkWell(
                                 borderRadius: BorderRadius.circular(32),
                                 // splashColor: Colors.red,
                                 // hoverColor: Colors.red,

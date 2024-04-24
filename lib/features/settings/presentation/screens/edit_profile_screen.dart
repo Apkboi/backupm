@@ -16,6 +16,8 @@ import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/date_selector_widget.dart';
 import 'package:mentra/features/library/presentation/screens/wellness_library_screen.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -99,7 +101,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     )),
                               ),
                               45.verticalSpace,
-                              InkWell(
+                              HapticInkWell(
                                 onTap: () {
                                   CustomDialogs.showBottomSheet(
                                       context,
@@ -188,7 +190,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               //     label: 'Passcode',
                               //
                               //     obscured: _passwordObscured,
-                              //     suffix: InkWell(
+                              //     suffix: HapticInkWell(
                               //       onTap: () {
                               //         setState(() {
                               //           _passwordObscured = !_passwordObscured;

@@ -44,7 +44,7 @@ class _BcUserEmailFieldState extends State<BcUserEmailField> {
               },
             ),
             // 10.verticalSpace,
-            // InkWell(
+            // HapticInkWell(
             //   onTap: () {
             //     Helpers.launchRawUrl('https://yourmentra.com/privacy-policy');
             //   },

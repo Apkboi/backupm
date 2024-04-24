@@ -4,6 +4,7 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class FavoriteActionButton extends StatefulWidget {
   const FavoriteActionButton(
@@ -43,7 +44,7 @@ class _FavoriteActionButtonState extends State<FavoriteActionButton> {
         }
       },
       builder: (context, state) {
-        return InkWell(
+        return HapticInkWell(
           onTap: () {
             libraryBloc.add(UpdateFavouriteEvent(widget.id));
           },

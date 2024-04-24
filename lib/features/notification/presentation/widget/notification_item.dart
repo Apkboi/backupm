@@ -10,6 +10,8 @@ import 'package:mentra/features/notification/presentation/bloc/notification_bloc
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class NotificationItem extends StatefulWidget {
   const NotificationItem({super.key, required this.notification});
@@ -23,7 +25,7 @@ class NotificationItem extends StatefulWidget {
 class _NotificationItemState extends State<NotificationItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return HapticInkWell(
       onTap: () {
         _handleNotificationClick(context);
       },

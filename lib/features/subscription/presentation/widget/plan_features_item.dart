@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/confirm_sheet.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -10,12 +13,14 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/subscription/data/models/card_details_payload.dart';
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 
+import '../../../../core/services/pay/pay_service.dart';
 import 'card_details_sheet.dart';
 
 class PlanDetailsItem extends StatefulWidget {
@@ -66,9 +71,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 30.verticalSpace,
-                                if (widget.plan.name
-                                        .toString()
-                                        .toLowerCase() !=
+                                if (widget.plan.name.toString().toLowerCase() !=
                                     'free')
                                   TextView(
                                     text: (!widget.isPreview! &&
@@ -109,8 +112,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                                 ...List.generate(
                                     widget.plan.benefits.length,
                                     (index) => PlanFeature(
-                                          benefit:
-                                              widget.plan.benefits[index],
+                                          benefit: widget.plan.benefits[index],
                                         )),
                               ],
                             ),
@@ -150,8 +152,11 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                                   fontWeight: FontWeight.w600,
                                 ),
                                 onPressed: () {
-                                  _subscribe(
-                                      context, widget.plan.durations[index]);
+                                  _makePayment();
+                                  // StripeService().initPaymentSheet();
+
+                                  // _subscribe(
+                                  //     context, widget.plan.durations[index]);
                                 },
                               ),
                             );
@@ -246,6 +251,37 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
             context.pop();
           },
         ));
+  }
+
+  void _makePayment() async {
+    if (Platform.isAndroid) {
+      var googlePayResult =
+          await PayHelper.instance.requestGooglePayPayment([]);
+      logger.w(googlePayResult.toString());
+      onGooglePayResult(googlePayResult);
+    } else {
+      var googlePayResult = await PayHelper.instance.requestApplePayPayment([]);
+      logger.w(googlePayResult.toString());
+      onGooglePayResult(googlePayResult);
+    }
+  }
+
+  Future<void> onGooglePayResult(paymentResult) async {
+    final response = await StripeService().createTestPaymentSheet();
+    final clientSecret = response['client_secret'];
+    final token =
+        paymentResult['paymentMethodData']['tokenizationData']['token'];
+    // final tokenJson = Map.castFrom(json.decode(token));
+    final params = PaymentMethodParams.cardFromToken(
+      paymentMethodData:
+          PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
+    );
+    // Confirm Google pay payment method
+    var paymentIntent = await Stripe.instance.confirmPayment(
+      data: params,
+      paymentIntentClientSecret: clientSecret,
+    );
+    logger.w(paymentIntent.toJson());
   }
 }
 

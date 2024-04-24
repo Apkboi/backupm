@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/common/widgets/haptic_inkwell.dart';
+
 
 class AvatarGridView extends StatefulWidget {
   final Function(String) onAvatarSelected;
@@ -40,7 +42,7 @@ class _AvatarGridViewState extends State<AvatarGridView> {
 
         bool isSelected = index == selectedIndex;
 
-        return InkWell(
+        return HapticInkWell(
           onTap: () {
             setState(() {
               selectedAvatar = avatar;
