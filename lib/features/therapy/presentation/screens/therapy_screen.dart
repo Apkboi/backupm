@@ -28,7 +28,6 @@ import 'package:mentra/features/therapy/presentation/widgets/therapy_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class TherapyScreen extends StatefulWidget {
   const TherapyScreen({Key? key}) : super(key: key);
 

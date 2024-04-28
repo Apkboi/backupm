@@ -1,30 +1,80 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/routes.dart';
+import 'package:mentra/core/services/signalling_service/signalling.service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/presentation/screens/call_screen.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:sdp_transform/sdp_transform.dart';
 
+import '../../../../core/services/pusher/pusher_channel_service.dart';
+import '../screens/webrtc_screen.dart';
 
-class TherapyItem extends StatelessWidget {
+class TherapyItem extends StatefulWidget {
   const TherapyItem({super.key, required this.session});
 
   final TherapySession session;
 
   @override
+  State<TherapyItem> createState() => _TherapyItemState();
+}
+
+class _TherapyItemState extends State<TherapyItem> {
+  final String selfCallerID =
+      Random().nextInt(999999).toString().padLeft(6, '0');
+
+  @override
+  void initState() {
+    _listenForIncomingCalls();
+
+    // listen for incoming video call
+    // SignallingService.instance.socket!.on("newCall", (data) {
+    //   if (mounted) {
+    //     // set SDP Offer of incoming call
+    //     // setState(() => incomingSDPOffer = data);
+    //   }
+    // });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _disconnect();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return HapticInkWell(
       onTap: () {
-        CustomDialogs.showCupertinoBottomSheet(
+        Navigator.push(
             context,
-            TherapyDetailsSheet(
-              session: session,
+            MaterialPageRoute(
+              builder: (context) =>
+                  CallScreen(callerId: selfCallerID, calleeId: 'calleeId'),
             ));
+
+        // CustomDialogs.showCupertinoBottomSheet(
+        //     context,
+        //     TherapyDetailsSheet(
+        //       session: widget.session,
+        //     ));
         // context.pushNamed(PageUrl.therapistChatScreen);
       },
       child: Container(
@@ -44,7 +94,7 @@ class TherapyItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextView(
-                      text: session.focus,
+                      text: widget.session.focus,
                       fontSize: 16,
                       maxLines: 1,
                       textOverflow: TextOverflow.ellipsis,
@@ -52,27 +102,30 @@ class TherapyItem extends StatelessWidget {
                     ),
                     8.verticalSpace,
                     TextView(
-                      text: 'Session with ${session.therapist.user.name}.',
+                      text:
+                          'Session with ${widget.session.therapist.user.name}.',
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
                     TextView(
-                      text: TimeUtil.formartToDayTime(session.startsAt.toLocal()),
+                      text: TimeUtil.formartToDayTime(
+                          widget.session.startsAt.toLocal()),
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
                     SessionButton(
-                      startDate: session.startsAt.toLocal(),
-                      endDate: (session.endsAt ??
-                              session.startsAt.add(const Duration(hours: 1)))
+                      startDate: widget.session.startsAt.toLocal(),
+                      endDate: (widget.session.endsAt ??
+                              widget.session.startsAt
+                                  .add(const Duration(hours: 1)))
                           .toLocal(),
-                      session: session,
+                      session: widget.session,
                     )
                   ],
                 ),
               ),
               ImageWidget(
-                imageUrl: session.therapist.user.avatar,
+                imageUrl: widget.session.therapist.user.avatar,
                 size: 45,
                 borderRadius: BorderRadius.circular(30),
               )
@@ -81,6 +134,87 @@ class TherapyItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  onEventReceived(event) {
+    logger.w('Event from server:${event}');
+    var data = (event as PusherEvent).data;
+
+    if ((event).eventName == 'newCall') {
+      // if (true) {
+
+      try {
+        IncomingCallResponse incomingCall =
+            IncomingCallResponse.fromJson(jsonDecode(data));
+
+        logger.i(event.data);
+        // dynamic offer = data["sdpOffer"];
+        // String callerId = data["callerId"];
+
+        CustomDialogs.showBottomSheet(
+            rootNavigatorKey.currentState!.context,
+            Container(
+              height: 100,
+              color: Pallets.white,
+              child: Center(
+                child: CustomNeumorphicButton(
+                    text: 'Accept',
+                    onTap: () {
+                      Navigator.push(
+                          rootNavigatorKey.currentState!.context,
+                          MaterialPageRoute(
+                            builder: (context) => CallScreen(
+                                callerId: incomingCall.callerId,
+                                calleeId: '2',
+                                offer: incomingCall.sdpOffer),
+                          ));
+                    },
+                    color: Pallets.primary),
+              ),
+            ));
+
+        logger.w('New call');
+      } catch (e, stack) {
+        logger.e(e.toString(), stackTrace: stack);
+      }
+    }
+  }
+
+  onSubscriptionError(message, d) {}
+
+  void _listenForIncomingCalls() async {
+    var pusherService = await PusherChannelService.getInstance;
+    var pusher = await pusherService.getClient;
+    if (pusher != null) {
+      logger.w('connecting');
+      if (!pusher.channels.containsKey('user_2')) {
+        PusherChannel channel = await pusher.subscribe(
+          channelName: 'user_2',
+          onSubscriptionError: (message, d) => onSubscriptionError(message, d),
+          onSubscriptionSucceeded: (data) {
+            // log('subscribed');
+            // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
+            // return data;a
+          },
+          onEvent: (event) => onEventReceived(event),
+        );
+        logger.w('connected');
+      } else {
+        logger.w('connected2');
+
+        // pusher.getChannel('user_2')?.onEvent = onEventReceived;
+      }
+
+      await pusher.connect();
+    }
+  }
+
+  void _disconnect() async {
+    var pusherService = await PusherChannelService.getInstance;
+    var pusher = await pusherService.getClient;
+    pusher?.unsubscribe(channelName: 'user_2');
+
+    logger.i('disconnected');
   }
 }
 

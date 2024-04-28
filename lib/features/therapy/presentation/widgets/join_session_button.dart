@@ -5,6 +5,8 @@ import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 
+import '../screens/webrtc_screen.dart';
+
 class DemoUser {
   String token = "";
   String address = "";
@@ -38,7 +40,6 @@ class _SessionButtonState extends State<SessionButton> {
     });
   }
 
-
   bool _showButton = false;
 
   Timer? timer;
@@ -62,7 +63,7 @@ class _SessionButtonState extends State<SessionButton> {
             text: 'Join session',
             padding: const EdgeInsets.all(10),
             onTap: () async {
-              _groupCall();
+              _groupCall(context);
             },
             color: Pallets.primary)
         : const SizedBox();
@@ -74,4 +75,6 @@ class _SessionButtonState extends State<SessionButton> {
   }
 }
 
-void _groupCall() async {}
+void _groupCall(BuildContext context) async {
+
+}

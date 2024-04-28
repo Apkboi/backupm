@@ -75,6 +75,7 @@ class _PinViewState extends State<PinView> {
             GridView.count(
                 childAspectRatio: widget.aspectRatio ?? 1.5,
                 padding: EdgeInsets.zero,
+                // crossAxisSpacing: 10,
                 // padding: const EdgeInsets.only(horizontal: 18,b: 6),
                 // crossAxisSpacing: 10,
                 // mainAxisSpacing: 8,
@@ -89,11 +90,13 @@ class _PinViewState extends State<PinView> {
                         : index == 9 && !widget.hasBiometric!
                             ? const SizedBox.shrink()
                             : Material(
-                                shape: const StadiumBorder(),
                                 color: Colors.transparent,
+                                type: MaterialType.circle,
                                 child: HapticInkWell(
                                   splashColor: Pallets.eggShell,
                                   borderRadius: BorderRadius.circular(100),
+                                  radius: 100,
+
                                   // splashColor: Colors.red,
                                   // hoverColor: Colors.red,
                                   //

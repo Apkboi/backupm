@@ -18,6 +18,7 @@ import 'core/services/firebase/notifiactions.dart';
 import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 import 'core/services/pay/pay_service.dart';
+import 'core/services/pusher/pusher_channel_service.dart';
 import 'features/account/presentation/user_bloc/user_bloc.dart';
 import 'firebase_options.dart';
 
@@ -79,6 +80,8 @@ class AppConfig {
     await sessionManager.init();
     injector.registerLazySingleton<SessionManager>(() => sessionManager);
     initFirebaseServices();
+    var pusherService = await PusherChannelService.getInstance;
+    await pusherService.initialize();
   }
 
   Future<void> initFirebaseServices() async {
