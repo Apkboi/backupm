@@ -1,0 +1,162 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:shap_shap_customer/core/extensions/dartz_extension.dart';
+import 'package:shap_shap_customer/core/helpers/app_enums.dart';
+import 'package:shap_shap_customer/core/helpers/app_utils.dart';
+import 'package:shap_shap_customer/core/services/pusher_channel_service.dart';
+import 'package:shap_shap_customer/features/chats/data/model/fetch_messages_response.dart';
+import 'package:shap_shap_customer/features/chats/data/model/new_message_response.dart';
+import 'package:shap_shap_customer/features/chats/dormain/repository/chat_repo.dart';
+
+part 'chat_event.dart';
+
+part 'chat_state.dart';
+
+class ChatBloc extends Bloc<ChatEvent, ChatState> {
+  ChatBloc(this._chatRepo) : super(const ChatState()) {
+    on<ScrollToChatEvent>(_scrollTo);
+    on<ListenToChatEvent>(_mapListenToChatEventsToState);
+    on<StartReplyMessageEvent>(_mapStartReplyMessageEventToState);
+    on<UndoReplyMessageEvent>(_mapUndoReplyMessageEventToState);
+    on<FetchMessagesEvent>(_mapListenToFetchMessagesEventToState);
+    on<SendChatMessageEvent>(_mapSendChatMessageEventToState);
+  }
+
+  final ChatRepo _chatRepo;
+  ValueNotifier<List<ChatMessage>> chatMessagesNotifier = ValueNotifier([]);
+  final scrollController = ItemScrollController();
+
+  void _scrollTo(ScrollToChatEvent event, Emitter<ChatState> emit) async {
+    // emit(state.copyWith(highlightIndex: -1));
+
+    await scrollController.scrollTo(
+      alignment: 0.5,
+      index: event.index,
+      curve: Curves.easeOut,
+      duration: kTabScrollDuration,
+    );
+
+    // emit(state.copyWith(highlightIndex: event.index));
+  }
+
+  FutureOr<void> _mapListenToChatEventsToState(
+      ListenToChatEvent event, Emitter<ChatState> emit) async {
+    try {
+
+      var pusherService = await PusherChannelService.getInstance;
+      var pusher = await pusherService.getClient;
+
+      if (pusher != null) {
+        if (!pusher.channels.containsKey('chat-${event.tripId}-driver-${event.driverId}')) {
+
+          PusherChannel channel = await pusher.subscribe(
+            channelName: 'chat-${event.tripId}-driver-${event.driverId}',
+            onSubscriptionError: (message, d) =>
+                onSubscriptionError(message, d),
+            onSubscriptionSucceeded: (data) {
+              log('subscribed');
+              // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
+              // return data;
+            },
+            onEvent: (event) => onEventReceived(event),
+          );
+
+        } else {
+          pusher
+              .getChannel('chat-${event.tripId}-driver-${event.driverId}')
+              ?.onEvent = onEventReceived;
+        }
+
+        await pusher.connect();
+      }
+
+    } catch (e) {
+      log("Message Event Error: $e");
+    }
+  }
+
+  void pushMessage(ChatMessage message) {
+    chatMessagesNotifier.value =
+        List<ChatMessage>.from(chatMessagesNotifier.value..add(message));
+  }
+
+  FutureOr<void> _mapListenToFetchMessagesEventToState(
+      FetchMessagesEvent event, Emitter<ChatState> emit) async {
+    emit(FetchMessageLoadingState());
+    var result = await _chatRepo.getMessages(tripId: event.tripId);
+    if (result.isRight) {
+      chatMessagesNotifier.value = result.asRight().data.conversation.messages;
+      emit(MessagesFetchedState(result.asRight()));
+    } else {
+      emit(FetchMessageFailedState(result.asLeft().errorMessage));
+    }
+
+    // emit(result.fold(
+    //   (l) => FetchMessageFailedState(l.message!),
+    //   (r) => MessagesFetchedState(r),
+    // ));
+
+    log(result.isLeft.toString());
+  }
+
+  FutureOr<void> _mapSendChatMessageEventToState(
+      SendChatMessageEvent event, Emitter<ChatState> emit) async {
+    emit(SendMessageLoadingState());
+
+    log('sending message');
+    // pushMessage(event.chatMessage);
+    var result = await _chatRepo.sendMessage(
+        tripId: event.chatMessage.tripId.toString(),
+        message: event.chatMessage.message);
+
+    if (result.isRight) {
+      // chatMessagesNotifier.value = result.asRight().data.;
+      emit(MessageSentState());
+    } else {
+      emit(SendMessageFailedState(result.asLeft().errorMessage));
+    }
+  }
+
+  FutureOr<void> _mapStartReplyMessageEventToState(
+      StartReplyMessageEvent event, Emitter<ChatState> emit) {
+    emit(ReplyingMessageState(event.repliedMessage));
+  }
+
+  FutureOr<void> _mapUndoReplyMessageEventToState(
+      UndoReplyMessageEvent event, Emitter<ChatState> emit) {
+    emit(const UndoReplyingMessageState());
+  }
+
+  onEventReceived(event) {
+    try {
+      if (event.eventName == EventNames.chat_message.name) {
+        final newMessageResponseModel = NewMessageEventResponse.fromJson(
+            jsonDecode((event as PusherEvent).data));
+
+        if (!newMessageResponseModel.message.isCustomer) {
+          log('isNot sender');
+          pushMessage(newMessageResponseModel.message);
+        }
+
+        log(newMessageResponseModel.toJson().toString());
+
+        // add()
+        // _handleTripStatusUpdateEvent(event);
+      }
+    } on Exception catch (e) {
+      log(e.toString());
+      AppUtils.showCustomToast(e.toString());
+    }
+    // AppUtils.showCustomToast('Event Received');
+  }
+
+  onSubscriptionError(String message, dynamic e) {
+    // AppUtils.showCustomToast("onSubscriptionError: $message Exception: $e");
+  }
+}

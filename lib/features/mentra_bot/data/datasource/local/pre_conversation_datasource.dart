@@ -26,7 +26,7 @@ class PreConversationDataSource {
       stage: 3,
       time: DateTime.now(),
       content:
-          "Lastly, are there any specific areas you'd like to focus on in your well-being journey with me?",
+          "I’ll take that into account. Lastly, are there any specific areas you’d like to focus on in your well-being journey with me?",
       isMentraMessage: true,
       options: [
         'Managing anxiety or stress',
@@ -34,13 +34,14 @@ class PreConversationDataSource {
         'Relationship issues',
         'Personal growth',
         'Other'
+
       ],
     ),
     MentraChatModel(
       stage: 4,
       time: DateTime.now(),
       content:
-          "You’ve selected 'Other', could you tell me a bit more about what you're looking to focus on? OR Could you tell me more about your relationships/stress?",
+          "You’ve selected ‘Other’, could you tell me a bit more about what you’re looking to focus on?",
       isMentraMessage: true,
     ),
     // Continue adding more chat messages as needed
@@ -54,8 +55,7 @@ class PreConversationDataSource {
     }
 
     // Checks the third message answer to determine the next message
-    if (currentMessage.stage == 3 &&
-        answer.toString().toLowerCase() != 'other') {
+    if (currentMessage.stage == 3 && answer.toString().toLowerCase() != 'other') {
       return null;
     }
 
@@ -65,8 +65,6 @@ class PreConversationDataSource {
     }
 
     // Returning the next message
-    return chatMessages
-        .where((element) => element.stage == currentMessage.stage + 1)
-        .first;
+    return chatMessages.where((element) => element.stage == currentMessage.stage + 1).first;
   }
 }

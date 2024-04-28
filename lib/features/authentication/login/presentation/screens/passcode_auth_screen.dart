@@ -63,20 +63,14 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
                             ?.avatarBackgroundColor
                             .toString()
                             .toColor(),
-                        imageUrl: injector
-                            .get<UserBloc>()
-                            .appUser
-                            ?.avatar,
+                        imageUrl: injector.get<UserBloc>().appUser?.avatar,
                         // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
                       ),
                       7.verticalSpace,
                       Center(
                         child: TextView(
                           text:
-                          'Welcome ${injector
-                              .get<UserBloc>()
-                              .appUser
-                              ?.name}',
+                              'Welcome ${injector.get<UserBloc>().appUser?.name}',
                           align: TextAlign.center,
                           style: GoogleFonts.fraunces(
                               fontSize: 32.sp, fontWeight: FontWeight.w600),
@@ -107,7 +101,7 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
                             context.pushNamed(PageUrl.botChatScreen,
                                 queryParameters: {
                                   PathParam.botChatFlow:
-                                  BotChatFlow.passwordReset.name
+                                      BotChatFlow.passwordReset.name
                                 });
                           },
                           child: TextView(
@@ -172,10 +166,7 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
       CustomDialogs.error('Pin is incomplete');
     } else {
       _loginBloc.add(LoginUserEvent(
-          email: "${injector
-              .get<UserBloc>()
-              .appUser
-              ?.email}", password: pin));
+          email: "${injector.get<UserBloc>().appUser?.email}", password: pin));
     }
 
     // injector.get<CacheCubit>().validatePin(pin);
@@ -200,16 +191,13 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
 
   void _authenticateWithBioMetric() async {
     var bioMetricAuthenticated =
-    await injector.get<LocalAuthCubit>().authenticateUser();
+        await injector.get<LocalAuthCubit>().authenticateUser();
 
     if (bioMetricAuthenticated) {
       var passcode = await SessionManager.instance.userPassKeyGet;
       if (passcode != null) {
         _loginBloc.add(LoginUserEvent(
-            email: injector
-                .get<UserBloc>()
-                .appUser!
-                .email,
+            email: injector.get<UserBloc>().appUser!.email,
             password: passcode));
       } else {
         injector.get<UserBloc>().add(GetRemoteUser());
