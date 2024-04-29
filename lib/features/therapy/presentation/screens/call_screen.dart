@@ -54,6 +54,7 @@ class _CallScreenState extends State<CallScreen> {
     // initializing renderers
     _localRTCVideoRenderer.initialize();
     _remoteRTCVideoRenderer.initialize();
+
     // setup Peer Connection
     _setupPeerConnection();
     // _listenToPusher();
@@ -86,6 +87,7 @@ class _CallScreenState extends State<CallScreen> {
         }
       ]
     });
+
     _rtcPeerConnection!.onIceCandidate = (candidate) {
       if (candidate.candidate != null) {
         // print("My peer connection");
@@ -98,20 +100,21 @@ class _CallScreenState extends State<CallScreen> {
         });
       }
     };
+
     _rtcPeerConnection!.onAddStream = (stream) {
       print('addStream: ' + stream.id);
       print(stream);
-      logger.f('remote stream');
-
       _remoteRTCVideoRenderer.srcObject = stream;
       setState(() {});
     };
+
     // listen for remotePeer mediaTrack event
     // _rtcPeerConnection!.onTrack = (event) {
     //   print('New track: ');
     //   _remoteRTCVideoRenderer.srcObject = event.streams[0];
     //   setState(() {});
     // };
+
     // get localStream
     _localStream = await navigator.mediaDevices.getUserMedia({
       'audio': isAudioOn,
@@ -119,18 +122,17 @@ class _CallScreenState extends State<CallScreen> {
           ? {'facingMode': isFrontCameraSelected ? 'user' : 'environment'}
           : false,
     });
+
     // add mediaTrack to peerConnection
     _localStream!.getTracks().forEach((track) {
       _rtcPeerConnection!.addTrack(track, _localStream!);
-      logger.f('stream added');
-
     });
+
     // set source for local video renderer
     _localRTCVideoRenderer.srcObject = _localStream;
     setState(() {});
 
     _listenToPusher();
-
     // listen for Remote IceCandidate
     // socket!.on("IceCandidate", (data) {
     //   String candidate = data["iceCandidate"]["candidate"];
@@ -144,6 +146,7 @@ class _CallScreenState extends State<CallScreen> {
     //     sdpMLineIndex,
     //   ));
     // });
+
     // set SDP offer as remoteDescription for peerConnection
     await _rtcPeerConnection!.setRemoteDescription(
       RTCSessionDescription(widget.offer?.sdp, widget.offer?.type),
@@ -158,11 +161,15 @@ class _CallScreenState extends State<CallScreen> {
     //   "callerId": widget.callerId,
     //   "sdpAnswer": answer.toMap(),
     // });
+
     _answerCall(widget.callerId, answer.toMap());
+
     // print("Candidates count");
     // print(rtcIceCandidates.length);
+
     // for (RTCIceCandidate candidate in rtcIceCandidates) {
     //   print('pushing candidate to stream');
+
     //   _pushCandidate(widget.callerId, {
     //     'candidate': candidate.candidate,
     //     'sdpMid': candidate.sdpMid.toString(),
@@ -188,6 +195,7 @@ class _CallScreenState extends State<CallScreen> {
   _toggleCamera() {
     // change status
     isVideoOn = !isVideoOn;
+
     // enable or disable video track
     _localStream?.getVideoTracks().forEach((track) {
       track.enabled = isVideoOn;
@@ -198,6 +206,7 @@ class _CallScreenState extends State<CallScreen> {
   _switchCamera() {
     // change status
     isFrontCameraSelected = !isFrontCameraSelected;
+
     // switch camera
     _localStream?.getVideoTracks().forEach((track) {
       // ignore: deprecated_member_use
@@ -306,8 +315,10 @@ class _CallScreenState extends State<CallScreen> {
         logger.w('connected');
       } else {
         logger.w('connected2');
+
         pusher.getChannel('user_2')?.onEvent = onEventReceived;
       }
+
       await pusher.connect();
     }
   }
@@ -315,18 +326,22 @@ class _CallScreenState extends State<CallScreen> {
   onEventReceived(event) {
     logger.w('Event from server:$event');
     var data = (event as PusherEvent).data;
+
     if ((event).eventName == 'IceCandidate') {
       IceCandidateResponse iceCandidateResponse =
           IceCandidateResponse.fromJson(jsonDecode(data));
+
       // String candidate = data["iceCandidate"]["candidate"];
       // String sdpMid = data["iceCandidate"]["sdpMid"];
       // int sdpMLineIndex = data["iceCandidate"]["sdpMLineIndex"];
+
       // add iceCandidate
       _rtcPeerConnection!.addCandidate(RTCIceCandidate(
         iceCandidateResponse.iceCandidate.candidate,
         iceCandidateResponse.iceCandidate.sdpMid,
         iceCandidateResponse.iceCandidate.sdpMLineIndex,
       ));
+
       logger.i("Added iceCandidate to rtcPeerConnection");
     }
   }
@@ -341,8 +356,10 @@ class _CallScreenState extends State<CallScreen> {
         "calleeId": widget.calleeId,
         "sdpAnswer": map,
       };
+
       logger.w('Pushing answer');
       logger.w(body);
+
       var respose = await networkService.call(
           'https://webrtc.yourmentra.com/answerCall', RequestMethod.post,
           data: body);
@@ -361,8 +378,10 @@ class _CallScreenState extends State<CallScreen> {
         "iceCandidate": candidate,
         "sender": "user"
       };
+
       logger.w('Pushing candidate');
       logger.w(body);
+
       var respose = await networkService.call(
           'https://webrtc.yourmentra.com/IceCandidate', RequestMethod.post,
           data: body);
@@ -371,6 +390,4 @@ class _CallScreenState extends State<CallScreen> {
       logger.e(e.toString(), stackTrace: stack);
     }
   }
-
-
 }

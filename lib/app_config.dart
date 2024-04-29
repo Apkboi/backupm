@@ -125,10 +125,9 @@ class AppConfig {
 }
 
 // Add this function
-Future<void> _ensureScreenSize(FlutterView window) async {
-  return window.physicalSize.isEmpty
-      ? Future.delayed(
-          const Duration(milliseconds: 10), () => _ensureScreenSize(window))
-      : Future.value();
+Future<void> _ensureScreenSize(SingletonFlutterWindow window) async {
+  // return window.physicalGeometry.isEmpty
+  //     ? Future.delayed(
+  //         const Duration(milliseconds: 10), () => _ensureScreenSize(window))
+  //     : Future.value();
 }
-
