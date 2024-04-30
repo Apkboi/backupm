@@ -62,6 +62,10 @@ class $AssetsImagesPngsGen {
   /// File path: assets/images/pngs/Okay.png
   AssetGenImage get okay => const AssetGenImage('assets/images/pngs/Okay.png');
 
+  /// File path: assets/images/pngs/Speaking.png
+  AssetGenImage get speaking =>
+      const AssetGenImage('assets/images/pngs/Speaking.png');
+
   /// File path: assets/images/pngs/anxiety.png
   AssetGenImage get anxiety =>
       const AssetGenImage('assets/images/pngs/anxiety.png');
@@ -258,6 +262,7 @@ class $AssetsImagesPngsGen {
         good,
         great,
         okay,
+        speaking,
         anxiety,
         article,
         articleImage,
@@ -359,8 +364,14 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/edit_filled.svg
   String get editFilled => 'assets/images/svgs/edit_filled.svg';
 
+  /// File path: assets/images/svgs/end_call.svg
+  String get endCall => 'assets/images/svgs/end_call.svg';
+
   /// File path: assets/images/svgs/facebook.svg
   String get facebook => 'assets/images/svgs/facebook.svg';
+
+  /// File path: assets/images/svgs/flip.svg
+  String get flip => 'assets/images/svgs/flip.svg';
 
   /// File path: assets/images/svgs/forward.svg
   String get forward => 'assets/images/svgs/forward.svg';
@@ -413,6 +424,9 @@ class $AssetsImagesSvgsGen {
   /// File path: assets/images/svgs/message_icon.svg
   String get messageIcon => 'assets/images/svgs/message_icon.svg';
 
+  /// File path: assets/images/svgs/mute.svg
+  String get mute => 'assets/images/svgs/mute.svg';
+
   /// File path: assets/images/svgs/onboarding1.svg
   String get onboarding1 => 'assets/images/svgs/onboarding1.svg';
 
@@ -436,6 +450,9 @@ class $AssetsImagesSvgsGen {
 
   /// File path: assets/images/svgs/sorry.svg
   String get sorry => 'assets/images/svgs/sorry.svg';
+
+  /// File path: assets/images/svgs/speaker.svg
+  String get speaker => 'assets/images/svgs/speaker.svg';
 
   /// File path: assets/images/svgs/splash_logo.svg
   String get splashLogo => 'assets/images/svgs/splash_logo.svg';
@@ -491,7 +508,9 @@ class $AssetsImagesSvgsGen {
         combinedShape,
         delete,
         editFilled,
+        endCall,
         facebook,
+        flip,
         forward,
         forwardButton,
         gJournal,
@@ -509,6 +528,7 @@ class $AssetsImagesSvgsGen {
         mentraText,
         menuIcon,
         messageIcon,
+        mute,
         onboarding1,
         pTherapy,
         refresh,
@@ -517,6 +537,7 @@ class $AssetsImagesSvgsGen {
         share,
         shareFilled,
         sorry,
+        speaker,
         splashLogo,
         star,
         sub,

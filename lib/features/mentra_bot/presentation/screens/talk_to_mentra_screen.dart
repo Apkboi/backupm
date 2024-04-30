@@ -20,7 +20,6 @@ import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class TalkToMentraScreen extends StatefulWidget {
   const TalkToMentraScreen({Key? key, required this.authMessages})
       : super(key: key);
@@ -258,7 +257,6 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
       context.pop();
       CustomDialogs.error(state.error);
     }
-
   }
 
   void _report() async {

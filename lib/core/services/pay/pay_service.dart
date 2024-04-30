@@ -68,6 +68,6 @@ class PayHelper {
   }
 
   Future requestApplePayPayment(List<PaymentItem> paymentItems) async {
-    return await requestPayment(PayProvider.apple_pay, paymentItems);
+    return await requestPayment(PayProvider.apple_pay, _paymentItems);
   }
 }

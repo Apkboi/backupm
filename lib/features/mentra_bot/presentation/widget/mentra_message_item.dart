@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/options_color_scheme.dart';
 import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_typing_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/utils/time_util.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
-
 
 class MentraMessageItem extends StatefulWidget {
   const MentraMessageItem({
@@ -165,14 +165,15 @@ class _OptionsWidgetState extends State<_OptionsWidget> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       // shape: BoxShape.circle,
-                      color: Pallets.secondary,
+                      color: OptionsColorScheme.fromIndex(index).bgColor,
                     ),
                     child: Center(
                       child: TextView(
                         text: widget.message.options[index],
                         lineHeight: 1.5,
                         style: TextStyle(
-                            color: Pallets.black,
+                            color:
+                                OptionsColorScheme.fromIndex(index).textColor,
                             fontSize: 15.sp,
                             fontWeight: FontWeight.w500),
                       ),
