@@ -27,12 +27,12 @@
 const String defaultApplePay = '''{
   "provider": "apple_pay",
   "data": {
-    "merchantIdentifier": "merchant.com.sams.fish",
+    "merchantIdentifier": "merchant.com.mentra.application",
     "displayName": "Sam's Fish",
     "merchantCapabilities": ["3DS", "debit", "credit"],
     "supportedNetworks": ["amex", "visa", "discover", "masterCard"],
-    "countryCode": "US",
-    "currencyCode": "USD",
+    "countryCode": "AE",
+    "currencyCode": "AED",
     "requiredBillingContactFields": ["emailAddress", "name", "phoneNumber", "postalAddress"],
     "requiredShippingContactFields": [],
     "shippingMethods": [
@@ -92,8 +92,8 @@ const String defaultGooglePay = '''{
       "merchantName": "Example Merchant Name"
     },
     "transactionInfo": {
-      "countryCode": "NG",
-      "currencyCode": "NGN"
+      "countryCode": "AE",
+      "currencyCode": "AED"
     }
   }
 }''';

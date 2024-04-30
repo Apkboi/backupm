@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/pay/pay_service.dart';
@@ -27,8 +28,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     on<SubscribeEvent>(_mapSubscribeEventToState);
   }
 
-  FutureOr<void> _mapGetPlansEventToState(
-      GetPlansEvent event, Emitter<SubscriptionState> emit) async {
+  FutureOr<void> _mapGetPlansEventToState(GetPlansEvent event, Emitter<SubscriptionState> emit) async {
     emit(GetPlansLoadingState());
     try {
       final response = await subscriptionRepository.getPlans();
@@ -40,8 +40,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     }
   }
 
-  FutureOr<void> _mapSubscribeEventToState(
-      SubscribeEvent event, Emitter<SubscriptionState> emit) async {
+  FutureOr<void> _mapSubscribeEventToState(SubscribeEvent event, Emitter<SubscriptionState> emit) async {
     emit(SubscriptionLoadingState());
     try {
       var paymentInfo = await _makePayment(event.payload);
@@ -50,17 +49,21 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       injector.get<UserBloc>().add(GetRemoteUser());
 
       emit(SubscribeSuccessState(response));
-    } catch (e, stack) {
-      logger.e(e.toString());
+    } on PlatformException catch (e, stack) {
+      logger.e(e.message);
       logger.e(stack.toString());
-      emit(SubscriptionFailureState(e.toString()));
+      emit(SubscriptionFailureState(e.message ?? "Something went wrong"));
+    } catch (exception, stack) {
+      logger.e(exception.toString());
+      logger.e(stack.toString());
+      emit(SubscriptionFailureState(exception.toString()));
     }
   }
 
   Future<Map<String, dynamic>> _makePayment(SubscriptionPayload payload) async {
     if (Platform.isAndroid) {
       var googlePayResult = await PayHelper.instance.requestGooglePayPayment([
-         PaymentItem(
+        PaymentItem(
             label: payload.planName,
             amount: payload.amount,
             status: PaymentItemStatus.final_price,
@@ -78,16 +81,14 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     }
   }
 
-  Future<dynamic> onPayResult(
-      paymentResult, SubscriptionPayload payload) async {
+  Future<dynamic> onPayResult(paymentResult, SubscriptionPayload payload) async {
     // final response = await StripeService().createTestPaymentSheet();
     // final clientSecret = response['client_secret'];
     // final token =
     //     paymentResult['paymentMethodData']['tokenizationData']['token'];
     // final tokenJson = Map.castFrom(json.decode(token));
     final params = PaymentMethodParams.cardFromToken(
-      paymentMethodData:
-          PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
+      paymentMethodData: PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
     );
     return await subscriptionRepository.subscribe(payload);
 

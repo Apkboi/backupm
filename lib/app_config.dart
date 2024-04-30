@@ -48,7 +48,7 @@ class AppConfig {
     PayHelper.instance.initialize(
         defaultGooglePayConfiguration: defaultGooglePay,
         defaultApplePayConfiguration: defaultApplePay);
-    StripeService.initialize();
+    //StripeService.initialize();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     await DefaultCacheManager().emptyCache();

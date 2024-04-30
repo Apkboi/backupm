@@ -56,6 +56,7 @@ class _MentraAppState extends State<MentraApp> {
           child: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
               title: "Mentra",
               //TODO: SET LOCALE HERE
               // locale: ref.watch(localeProvider).locale,
