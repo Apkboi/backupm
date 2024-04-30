@@ -13,6 +13,7 @@ import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/presentation/screens/incoming_call_screen.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
@@ -138,37 +139,16 @@ class _TherapyItemState extends State<TherapyItem> {
         // dynamic offer = data["sdpOffer"];
         // String callerId = data["callerId"];
 
-        CustomDialogs.showBottomSheet(
-            rootNavigatorKey.currentState!.context,
-            Container(
-              height: 100,
-              color: Pallets.white,
-              child: Center(
-                child: CustomNeumorphicButton(
-                    text: 'Accept',
-                    onTap: () {
-
-                      logger.w('CallerId :${incomingCall.callerId} CalleeId:2');
-
-                      context.pushNamed(PageUrl.therapyCallScreen,
-                          queryParameters: {
-                            PathParam.calleeId:'2',
-                            PathParam.callerId:  incomingCall.callerId,
-                            PathParam.offer: jsonEncode(incomingCall.sdpOffer.toJson()),
-                          });
-
-                      // Navigator.push(
-                      //     rootNavigatorKey.currentState!.context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => CallScreen(
-                      //           callerId: incomingCall.callerId,
-                      //           calleeId: '2',
-                      //           offer: incomingCall.sdpOffer),
-                      //     ));
-                    },
-                    color: Pallets.primary),
-              ),
-            ));
+        showGeneralDialog(
+          context: context,
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return IncomingCallScreen(
+              callerId: incomingCall.callerId,
+              calleeId: '2',
+              offer: incomingCall.sdpOffer,
+            );
+          },
+        );
 
         logger.w('New call');
       } catch (e, stack) {

@@ -19,7 +19,7 @@ class SoundManager {
     final ringerStatus = await SoundMode.ringerModeStatus;
 
     if (ringerStatus != RingerModeStatus.silent) {
-      await player.play(AssetSource('audio/received1.mp3'));
+      await player.play(AssetSource('audio/mentra.mp3'));
       HapticFeedbackManager.vibrate();
     }
   }
