@@ -53,7 +53,7 @@ class PayHelper {
       PayProvider provider, List<PaymentItem> paymentItems) async {
     try {
       final result =
-          await _payClient.showPaymentSelector(provider, _paymentItems);
+          await _payClient.showPaymentSelector(provider, paymentItems);
       return result;
     } on PlatformException catch (error) {
       // Handle platform errors (e.g., payment cancelled, network issues)

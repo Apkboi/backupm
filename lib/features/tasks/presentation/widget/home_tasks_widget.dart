@@ -8,7 +8,6 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/tasks/presentation/bloc/daily_task_bloc.dart';
-import 'package:mentra/features/tasks/presentation/bloc/daily_task_bloc.dart';
 
 class HomeTasksWidget extends StatefulWidget {
   const HomeTasksWidget({super.key});

@@ -4,7 +4,7 @@ class PreferenceQuestionsDataSource {
   final List<QuestionPromptModel> therapyQuestions = [
     QuestionPromptModel(
       question: [
-        "let's personalize your experience. How are you feeling right now?"
+        "Let's personalize your experience. How are you feeling right now?"
       ],
       answer: null,
       options: [
@@ -20,7 +20,7 @@ class PreferenceQuestionsDataSource {
     ),
     QuestionPromptModel(
       question: [
-        ' Understanding where you\'re at is important to us. Have you ever tried therapy or counseling before?'
+        'Understanding where you\'re at is important to us. Have you ever tried therapy or counseling before?'
       ],
       answer: null,
       options: ['Yes', 'No'],
@@ -32,7 +32,7 @@ class PreferenceQuestionsDataSource {
         'Do you have any particular gender preference when it comes to discussing your feelings and thoughts?'
       ],
       answer: null,
-      options: ["Male", "Female", "Female", 'No preference'],
+      options: ["Male", "Female",'No preference'],
       key: 'gender',
       id: 2,
     ),

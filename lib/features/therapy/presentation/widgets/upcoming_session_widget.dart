@@ -4,10 +4,14 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/time_util.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class UpcomingSessionsWidget extends StatefulWidget {
-  const UpcomingSessionsWidget({super.key});
+  const UpcomingSessionsWidget({super.key, required this.session});
+
+  final TherapySession session;
 
   @override
   State<UpcomingSessionsWidget> createState() => _UpcomingSessionsWidgetState();
@@ -17,7 +21,7 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
       decoration: BoxDecoration(
           color: Pallets.dailyTaskBg.withOpacity(0.5),
           borderRadius: BorderRadius.circular(12.r)),
@@ -25,25 +29,26 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const _Indicator(),
-            17.horizontalSpace,
+            // const _Indicator(),
+            // 17.horizontalSpace,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const TextView(
-                    text: 'Session with Laila Abbas',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 13,
+                  TextView(
+                    text: 'Session with ${widget.session.therapist.user.name}.',
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
                   ),
                   8.verticalSpace,
                   Row(
                     children: [
                       ImageWidget(imageUrl: Assets.images.svgs.icCalender),
                       5.horizontalSpace,
-                      const TextView(
-                        text: 'Sunday, 12 June',
+                      TextView(
+                        text: TimeUtil.formartToDayTime(
+                            widget.session.startsAt.toLocal()),
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -54,9 +59,9 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
                     children: [
                       ImageWidget(imageUrl: Assets.images.svgs.icClock),
                       5.horizontalSpace,
-
-                      const TextView(
-                        text: '11:00 - 12:00 AM',
+                      TextView(
+                        text:
+                            '${TimeUtil.formatTime(widget.session.startsAt.toLocal())} - ${TimeUtil.formatTime(widget.session.startsAt.add(const Duration(hours: 1)))}',
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
                       ),
@@ -69,7 +74,7 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
             Column(
               children: [
                 ImageWidget(
-                  imageUrl: Assets.images.pngs.avatar1.path,
+                  imageUrl: widget.session.user.avatar,
                   shape: BoxShape.circle,
                   size: 50,
                 ),

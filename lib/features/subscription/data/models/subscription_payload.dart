@@ -14,13 +14,15 @@ class SubscriptionPayload {
   final int planId;
   final int planDurationId;
   final String cardToken;
-
+  final String amount;
+  final String planName;
 
   SubscriptionPayload({
     required this.planId,
     required this.planDurationId,
     required this.cardToken,
-
+    required this.amount,
+    required this.planName,
   });
 
   // SubscriptionPayload copyWith({
@@ -47,13 +49,13 @@ class SubscriptionPayload {
         planId: json["plan_id"],
         planDurationId: json["plan_duration_id"],
         cardToken: json["card_token"],
-
+        planName: json["planName"],
+        amount: json["amount"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "plan_id": planId,
         "plan_duration_id": planDurationId,
-        "card_token": cardToken,};
-
+        "card_token": cardToken,
+      };
 }

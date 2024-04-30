@@ -16,7 +16,6 @@ import 'package:mentra/gen/assets.gen.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class UserPreferenceScreen extends StatefulWidget {
   const UserPreferenceScreen({super.key, required this.flow});
 
@@ -161,6 +160,7 @@ class _InputBarState extends State<_InputBar> {
                         child: FilledTextField(
                             hasBorder: false,
                             hasElevation: false,
+                            enabled:!bloc.currentQuestion!.isTyping ,
                             controller: controller,
                             suffix: HapticInkWell(
                               onTap: () async {

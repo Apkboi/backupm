@@ -70,7 +70,8 @@ class _ReviewSheetState extends State<ReviewSheet> {
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100.r),
+                            // borderRadius: BorderRadius.circular(100.r),
+                            shape: BoxShape.circle,
                             border: feeling ==
                                     ReviewMoodModel.allMoods[index].mood
                                 ? Border.all(width: 1, color: Pallets.primary)

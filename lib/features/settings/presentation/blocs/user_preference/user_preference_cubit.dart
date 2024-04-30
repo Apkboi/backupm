@@ -88,7 +88,6 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
         emit(QuestionUpdatedState());
       }
     }
-
   }
 
   getNextQuestion() async {
@@ -107,7 +106,6 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     _scrollToLast();
 
     SoundManager.playMessageReceivedSound();
-    
   }
 
   void updateCurrentQuestion(QuestionPromptModel question) {
@@ -164,10 +162,11 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     currentQuestion = stagedMessages.lastOrNull;
   }
 
+  
   final agePreferenceMap = {
     'Younger (20s-30s)': '20-30',
     'Middle-aged (40s-50s)': '40-50',
     'Older (60s+)': '60 -100',
-    'No preference': '0'
+    'No preference': '0-100'
   };
 }

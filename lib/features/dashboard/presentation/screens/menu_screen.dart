@@ -14,11 +14,13 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/dormain/usecases/refresh_user_usecase.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/widget/home_upcoming_session_widget.dart';
 import 'package:mentra/features/dashboard/presentation/widget/menu_item.dart';
 import 'package:mentra/features/dashboard/presentation/widget/mood_checker_widget.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:mentra/features/streaks/presentation/widget/daily_streak_widget.dart';
 import 'package:mentra/features/tasks/presentation/widget/home_tasks_widget.dart';
+import 'package:mentra/features/therapy/presentation/widgets/upcoming_session_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
@@ -119,11 +121,11 @@ class _MenuScreenState extends State<MenuScreen> {
                       10.verticalSpace,
                       const MoodCheckerWidget(),
                       10.verticalSpace,
-                      const HomeTasksWidget(),
+                      // const HomeTasksWidget(),
                       // 14.verticalSpace,
                       // const HomeWorkSheetWidget(),
-                      // 14.verticalSpace,
-                      // const UpcomingSessionsWidget(),
+                      14.verticalSpace,
+                      const HomeUpcomingSessionWidget(),
                       35.verticalSpace,
                       const TextView(
                         text: 'Your Journey',
