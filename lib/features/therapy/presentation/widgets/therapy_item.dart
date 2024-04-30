@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
@@ -10,20 +8,17 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/routes.dart';
-import 'package:mentra/core/services/signalling_service/signalling.service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
-import 'package:mentra/features/therapy/presentation/screens/call_screen.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
-import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-import 'package:sdp_transform/sdp_transform.dart';
-
+import '../../../../core/navigation/route_url.dart';
 import '../../../../core/services/pusher/pusher_channel_service.dart';
-import '../screens/webrtc_screen.dart';
 
 class TherapyItem extends StatefulWidget {
   const TherapyItem({super.key, required this.session});
@@ -55,7 +50,6 @@ class _TherapyItemState extends State<TherapyItem> {
   @override
   void dispose() {
     _disconnect();
-
     super.dispose();
   }
 
@@ -63,18 +57,11 @@ class _TherapyItemState extends State<TherapyItem> {
   Widget build(BuildContext context) {
     return HapticInkWell(
       onTap: () {
-        Navigator.push(
+        CustomDialogs.showCupertinoBottomSheet(
             context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  CallScreen(callerId: selfCallerID, calleeId: 'calleeId'),
+            TherapyDetailsSheet(
+              session: widget.session,
             ));
-
-        // CustomDialogs.showCupertinoBottomSheet(
-        //     context,
-        //     TherapyDetailsSheet(
-        //       session: widget.session,
-        //     ));
         // context.pushNamed(PageUrl.therapistChatScreen);
       },
       child: Container(
@@ -160,14 +147,24 @@ class _TherapyItemState extends State<TherapyItem> {
                 child: CustomNeumorphicButton(
                     text: 'Accept',
                     onTap: () {
-                      Navigator.push(
-                          rootNavigatorKey.currentState!.context,
-                          MaterialPageRoute(
-                            builder: (context) => CallScreen(
-                                callerId: incomingCall.callerId,
-                                calleeId: '2',
-                                offer: incomingCall.sdpOffer),
-                          ));
+
+                      logger.w('CallerId :${incomingCall.callerId} CalleeId:2');
+
+                      context.pushNamed(PageUrl.therapyCallScreen,
+                          queryParameters: {
+                            PathParam.calleeId:'2',
+                            PathParam.callerId:  incomingCall.callerId,
+                            PathParam.offer: jsonEncode(incomingCall.sdpOffer.toJson()),
+                          });
+
+                      // Navigator.push(
+                      //     rootNavigatorKey.currentState!.context,
+                      //     MaterialPageRoute(
+                      //       builder: (context) => CallScreen(
+                      //           callerId: incomingCall.callerId,
+                      //           calleeId: '2',
+                      //           offer: incomingCall.sdpOffer),
+                      //     ));
                     },
                     color: Pallets.primary),
               ),
@@ -213,6 +210,7 @@ class _TherapyItemState extends State<TherapyItem> {
     var pusherService = await PusherChannelService.getInstance;
     var pusher = await pusherService.getClient;
     pusher?.unsubscribe(channelName: 'user_2');
+    // pusher?.(channelName: 'user_2');
 
     logger.i('disconnected');
   }

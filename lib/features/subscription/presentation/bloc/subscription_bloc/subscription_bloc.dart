@@ -45,7 +45,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     emit(SubscriptionLoadingState());
     try {
       var paymentInfo = await _makePayment(event.payload);
-
       var response = await onPayResult(paymentInfo, event.payload);
       injector.get<UserBloc>().add(GetRemoteUser());
 
@@ -98,4 +97,6 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     // );
     // logger.w(paymentIntent.toJson());
   }
+
+
 }

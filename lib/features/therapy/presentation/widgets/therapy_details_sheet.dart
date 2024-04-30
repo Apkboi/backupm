@@ -33,7 +33,6 @@ class TherapyDetailsSheet extends StatefulWidget {
 }
 
 class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
-
   @override
   Widget build(BuildContext context) {
     return CupertinoScaffold(
@@ -91,7 +90,6 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                   CustomOutlinedButton(
                     bgColor: Colors.white,
                     outlinedColr: Pallets.primary,
-
                     padding: const EdgeInsets.all(10),
                     isExpanded: false,
                     radius: 148,
@@ -239,9 +237,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
     launchMessage();
   }
 
-  void launchMessage() async {
-
-  }
+  void launchMessage() async {}
 
   void _endSession(BuildContext context) async {
     final bool? sessionEnded = await CustomDialogs.showBottomSheet(

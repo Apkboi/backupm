@@ -24,5 +24,9 @@ class PathParam {
   static const startConvo = 'startConvo';
   static const authenticate = 'authenticate';
 
+  static const offer = 'offer';
+  static const callerId = 'callerId';
+  static const calleeId = 'calleeId';
+
 // static const chatId = 'chatId';
 }

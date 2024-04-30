@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/utils/bot_chat_flow_helper.dart';
@@ -63,12 +65,15 @@ import 'package:mentra/features/streaks/presentation/screens/badges_screen.dart'
 import 'package:mentra/features/streaks/presentation/screens/streak_details_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
+import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/screens/accept_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/change_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/match_therapist_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_chat_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapist_profile_screen.dart';
+import 'package:mentra/features/therapy/presentation/screens/therapy_call_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
 
 import '../../features/subscription/presentation/screens/manage_subscription_screen.dart';
@@ -460,6 +465,18 @@ class CustomRoutes {
           categoryId: state.uri.queryParameters[PathParam.id] ?? '',
         ),
       ),
+      GoRoute(
+          path: '/therapyCallScreen',
+          name: PageUrl.therapyCallScreen,
+          builder: (context, state) => TherapyCallScreen(
+              callerId:
+                  state.uri.queryParameters[PathParam.callerId] ?? '',
+              calleeId:
+                  state.uri.queryParameters[PathParam.calleeId] ?? '',
+              offer: SdpOffer.fromJson(
+                jsonDecode(
+                    state.uri.queryParameters[PathParam.offer] ?? ''),
+              ))),
     ],
   );
 
