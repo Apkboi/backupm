@@ -36,7 +36,7 @@ class _TherapyItemState extends State<TherapyItem> {
 
   @override
   void initState() {
-    _listenForIncomingCalls();
+    // _listenForIncomingCalls();
 
     // listen for incoming video call
     // SignallingService.instance.socket!.on("newCall", (data) {
