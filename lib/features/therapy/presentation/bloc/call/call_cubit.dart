@@ -52,7 +52,7 @@ class CallCubit extends Cubit<CallState> {
     _callerId = callerId;
     _offer = offer;
 
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(milliseconds: 1));
     // initializing renderers
     localRTCVideoRenderer.initialize();
     remoteRTCVideoRenderer.initialize();

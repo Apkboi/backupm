@@ -1,7 +1,7 @@
 name: mentra
 description: Mentra Mobile App.
 # The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+# pub.dev using flutter pub publish. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -23,10 +23,10 @@ environment:
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# consider running flutter pub upgrade --major-versions. Alternatively,
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
+# versions available, run flutter pub outdated.
 dependencies:
   flutter:
     sdk: flutter
@@ -34,7 +34,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  google_fonts: ^6.1.0
+  google_fonts: ^5.0.0
   flutter_svg: ^2.0.7
   flutter_screenutil: ^5.5.3+2
   flutter_native_splash: ^2.2.6
@@ -53,19 +53,19 @@ dependencies:
   fluttertoast: ^8.1.1
   flutter_spinkit: ^5.1.0
   url_launcher: ^6.1.6
-  package_info_plus: ^7.0.0
+  package_info_plus: ^5.0.1
   hive_flutter: ^1.1.0
   permission_handler: ^11.0.1
   #  system_settings: ^2.1.0
   flutter_secure_storage: ^9.0.0
-  file_picker: ^8.0.3
+  file_picker: ^6.1.1
   get_it: ^7.2.0
   image_cropper: ^5.0.0
-  share_plus: ^9.0.0
+  share_plus: ^7.1.0
   #  google_sign_in: ^6.1.0
   #  sign_in_with_apple: ^4.2.0
   #  shimmer: ^3.0.0
-  flutter_local_notifications: ^17.1.0
+  flutter_local_notifications: ^16.2.0
   firebase_messaging: ^14.7.19
   uuid: ^4.2.1
   firebase_core: ^2.27.0
@@ -77,13 +77,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_timer_countdown: ^1.0.5
-  device_info_plus: ^10.1.0
+  device_info_plus: ^9.0.3
   dart_ipify: ^1.1.1
   #  local_auth: ^2.1.6
-  go_router: ^14.0.1
+  go_router: ^13.0.1
   firebase_crashlytics: ^3.4.18
 
-  flutter_udid: ^3.0.0
+  flutter_udid: ^2.0.1
   timeago: ^3.5.0
   #  grouped_list: ^5.1.2
   #  fast_contacts: ^3.0.3
@@ -94,15 +94,15 @@ dependencies:
   #  intl_phone_field: ^3.2.0
   #  mocktail: ^1.0.0
   #  font_awesome_flutter: ^10.5.0
-  geolocator: ^11.0.0
-  geocoding: ^3.0.0
+  geolocator: ^10.1.0
+  geocoding: ^2.1.0
   collection:
   firebase_database: ^10.4.9
   flutter_cache_manager: ^3.3.1
   firebase_auth: ^4.17.7
   multi_dropdown: ^2.1.0
   path_provider: ^2.1.1
-  photo_view: ^0.15.0
+  photo_view: ^0.14.0
   equatable: ^2.0.5
   either_dart: ^1.0.0
   flutter_asset_generator: ^1.0.2
@@ -120,7 +120,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   flutter_html: ^3.0.0-beta.2
   google_sign_in: ^6.1.6
-  sign_in_with_apple: ^6.1.0
+  sign_in_with_apple: ^5.0.0
   chewie: ^1.7.5
   video_thumbnail: ^0.5.3
   #  mesibo_flutter_sdk: ^2.2.7
@@ -128,7 +128,7 @@ dependencies:
   flutter_gen: ^5.4.0
   flutter_staggered_animations: ^1.1.1
   flutter_chat_bubble: ^2.0.2
-  audioplayers: ^6.0.0
+  audioplayers: ^5.2.1
   local_auth: ^2.2.0
   flutter_vibrate: ^1.3.0
   confetti: ^0.7.0
@@ -136,10 +136,14 @@ dependencies:
   sound_mode: ^3.0.0
   flutter_stripe: ^10.1.1
   pay: ^2.0.0
-  flutter_webrtc: ^0.10.3
-  sdp_transform: ^0.3.2
-  socket_io_client: ^2.0.3+1
   pusher_channels_flutter: ^2.2.1
+  socket_io_client: ^2.0.3+1
+  flutter_webrtc: ^0.9.48+hotfix.1
+  sdp_transform: ^0.3.2
+
+dependency_overrides:
+  # Overrides for specific package versions
+  stripe_android: "9.5.0+1"
 
 
 flutter_native_splash:
