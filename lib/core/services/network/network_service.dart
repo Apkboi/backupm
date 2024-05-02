@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/sentory/sentory_service.dart';
+
 import '../data/session_manager.dart';
 import 'api_error.dart';
 import 'url_config.dart';
@@ -135,6 +137,7 @@ class NetworkService {
       } else {
         if (response.data['errors'] != null) {
           logger.i(response.data.toString());
+          SentryService.captureException('${response.data}', stackTrace: StackTrace.current);
           var apiError = ApiError.fromResponse(response);
           return Future.error(apiError);
         } else {
@@ -158,6 +161,10 @@ class NetworkService {
 
         var apiError = ApiError.fromDio(error);
 
+        SentryService.captureException(
+            '${apiError.apiErrorModel?.msg}${apiError.errorDescription}',
+            stackTrace: stackTrace);
+
         return Future.error(apiError, stackTrace);
       }
 
@@ -166,6 +173,9 @@ class NetworkService {
       var apiError = ApiError.unknown(error);
       if (apiError.errorType == 401) {}
 
+      SentryService.captureException(
+          '${apiError.apiErrorModel?.msg}${apiError.errorDescription}',
+          stackTrace: stackTrace);
       return Future.error(apiError, stackTrace);
     }
   }
@@ -173,7 +183,7 @@ class NetworkService {
   _getOptions() {
     return Options(contentType: Headers.jsonContentType, headers: {
       HttpHeaders.authorizationHeader:
-          "Bearer ${SessionManager.instance.authToken}",
+      "Bearer ${SessionManager.instance.authToken}",
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     });

@@ -19,6 +19,7 @@ import 'core/services/network/url_config.dart';
 import 'package:mentra/core/di/injector.dart' as di;
 import 'core/services/pay/pay_service.dart';
 import 'core/services/pusher/pusher_channel_service.dart';
+import 'core/services/sentory/sentory_service.dart';
 import 'features/account/presentation/user_bloc/user_bloc.dart';
 import 'firebase_options.dart';
 
@@ -42,9 +43,10 @@ class AppConfig {
   }
 
   Future<void> _setup() async {
-    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+   WidgetsFlutterBinding.ensureInitialized();
     // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     // await Firebase.initializeApp();
+    // https: //b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920
 
     PayHelper.instance.initialize(
         defaultGooglePayConfiguration: defaultGooglePay,
@@ -61,7 +63,10 @@ class AppConfig {
     await initCore();
     await setup();
 
-    runApp(const MentraApp());
+    SentryService.initializeApp(
+        'https://b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920',
+        () => runApp(const MentraApp()));
+    // runApp(const MentraApp());
     // FlutterNativeSplash.remove();
   }
 
@@ -125,7 +130,7 @@ class AppConfig {
 }
 
 // Add this function
-Future<void> _ensureScreenSize(SingletonFlutterWindow window) async {
+Future<void> _ensureScreenSize(FlutterView window) async {
   // return window.physicalGeometry.isEmpty
   //     ? Future.delayed(
   //         const Duration(milliseconds: 10), () => _ensureScreenSize(window))
