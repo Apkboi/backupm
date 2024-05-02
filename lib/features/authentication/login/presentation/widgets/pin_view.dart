@@ -91,7 +91,7 @@ class _PinViewState extends State<PinView> {
                             ? const SizedBox.shrink()
                             : Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 25.0,vertical: 5),
+                                    horizontal: 25.0, vertical: 5),
                                 child: Material(
                                   color: Colors.transparent,
                                   type: MaterialType.circle,

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:mentra/core/services/sentory/sentory_service.dart';
 import 'package:pay/pay.dart';
 
 class PayHelper {
@@ -55,8 +56,10 @@ class PayHelper {
       final result =
           await _payClient.showPaymentSelector(provider, paymentItems);
       return result;
-    } on PlatformException catch (error) {
+    } on PlatformException catch (error, trace) {
       // Handle platform errors (e.g., payment cancelled, network issues)
+
+      SentryService.captureException(error, stackTrace: trace);
       debugPrint(error.toString());
       rethrow;
     }
@@ -68,6 +71,14 @@ class PayHelper {
   }
 
   Future requestApplePayPayment(List<PaymentItem> paymentItems) async {
-    return await requestPayment(PayProvider.apple_pay, _paymentItems);
+    try {
+      return await requestPayment(PayProvider.apple_pay, _paymentItems);
+    } catch (e, trace) {
+
+
+      SentryService.captureException(e, stackTrace: trace);
+
+      rethrow;
+    }
   }
 }
