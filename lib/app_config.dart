@@ -49,7 +49,7 @@ class AppConfig {
     PayHelper.instance.initialize(
         defaultGooglePayConfiguration: defaultGooglePay,
         defaultApplePayConfiguration: defaultApplePay);
-    //StripeService.initialize();
+    StripeService.initialize();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     await DefaultCacheManager().emptyCache();
@@ -125,10 +125,9 @@ class AppConfig {
 }
 
 // Add this function
-Future<void> _ensureScreenSize(FlutterView window) async {
-  return window.physicalSize.isEmpty
-      ? Future.delayed(
-          const Duration(milliseconds: 10), () => _ensureScreenSize(window))
-      : Future.value();
+Future<void> _ensureScreenSize(SingletonFlutterWindow window) async {
+  // return window.physicalGeometry.isEmpty
+  //     ? Future.delayed(
+  //         const Duration(milliseconds: 10), () => _ensureScreenSize(window))
+  //     : Future.value();
 }
-
