@@ -89,74 +89,79 @@ class _PinViewState extends State<PinView> {
                         ? _getBioMetricButton()
                         : index == 9 && !widget.hasBiometric!
                             ? const SizedBox.shrink()
-                            : Material(
-                                color: Colors.transparent,
-                                type: MaterialType.circle,
-                                child: HapticInkWell(
-                                  splashColor: Pallets.eggShell,
-                                  borderRadius: BorderRadius.circular(100),
-                                  radius: 100,
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 25.0,vertical: 5),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  type: MaterialType.circle,
+                                  child: HapticInkWell(
+                                    splashColor: Pallets.eggShell,
+                                    borderRadius: BorderRadius.circular(100),
+                                    radius: 100,
 
-                                  // splashColor: Colors.red,
-                                  // hoverColor: Colors.red,
-                                  //
-                                  // overlayColor:MaterialStateColor.resolveWith((states) => Colors.red) ,
-                                  onTap: () {
-                                    int number = index + 1;
-                                    if (number != 10 &&
-                                        number != 11 &&
-                                        number != 12) {
-                                      widget.onDigitPressed(number);
-                                      if (output.length < 4) {
-                                        output += number.toString();
+                                    // splashColor: Colors.red,
+                                    // hoverColor: Colors.red,
+                                    //
+                                    // overlayColor:MaterialStateColor.resolveWith((states) => Colors.red) ,
+                                    onTap: () {
+                                      int number = index + 1;
+                                      if (number != 10 &&
+                                          number != 11 &&
+                                          number != 12) {
+                                        widget.onDigitPressed(number);
+                                        if (output.length < 4) {
+                                          output += number.toString();
+                                        }
+                                      } else if (number == 11) {
+                                        widget.onDigitPressed(0);
+                                        if (output.length < 4) {
+                                          output += '0';
+                                        }
+                                      } else if (number == 10) {
+                                        widget.onDelete();
+                                        if (output.isNotEmpty) {
+                                          output = output.substring(
+                                              0, output.length - 1);
+                                        }
                                       }
-                                    } else if (number == 11) {
-                                      widget.onDigitPressed(0);
-                                      if (output.length < 4) {
-                                        output += '0';
-                                      }
-                                    } else if (number == 10) {
-                                      widget.onDelete();
-                                      if (output.isNotEmpty) {
-                                        output = output.substring(
-                                            0, output.length - 1);
-                                      }
-                                    }
-                                    setState(() {
-                                      if (output.length == 4) {
-                                        logger.i('Done');
-                                        widget.onDone(output);
-                                      }
-                                    });
+                                      setState(() {
+                                        if (output.length == 4) {
+                                          logger.i('Done');
+                                          widget.onDone(output);
+                                        }
+                                      });
 
-                                    widget.onOutput(output.length - 1);
-                                  },
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
+                                      widget.onOutput(output.length - 1);
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 8),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                          child: index == 9
+                                              ? ImageWidget(
+                                                  imageUrl: Assets
+                                                      .images.svgs.backspace,
+                                                  size: 20,
+                                                )
+                                              : Text(
+                                                  index == 10
+                                                      ? '0'
+                                                      : '${index + 1}',
+                                                  style: GoogleFonts
+                                                      .plusJakartaSans(
+                                                          fontSize: 25.sp,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .colorScheme
+                                                                  .onBackground,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                )),
                                     ),
-                                    child: Center(
-                                        child: index == 9
-                                            ? ImageWidget(
-                                                imageUrl: Assets
-                                                    .images.svgs.backspace,
-                                                size: 20,
-                                              )
-                                            : Text(
-                                                index == 10
-                                                    ? '0'
-                                                    : '${index + 1}',
-                                                style:
-                                                    GoogleFonts.plusJakartaSans(
-                                                        fontSize: 25.sp,
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .onBackground,
-                                                        fontWeight:
-                                                            FontWeight.w500),
-                                              )),
                                   ),
                                 ),
                               )).toList()),

@@ -43,7 +43,7 @@ class AppConfig {
   }
 
   Future<void> _setup() async {
-   WidgetsFlutterBinding.ensureInitialized();
+    WidgetsFlutterBinding.ensureInitialized();
     // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
     // await Firebase.initializeApp();
     // https: //b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920
