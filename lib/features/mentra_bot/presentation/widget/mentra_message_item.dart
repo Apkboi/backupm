@@ -175,7 +175,7 @@ class _OptionsWidgetState extends State<_OptionsWidget> {
                             color:
                                 OptionsColorScheme.fromIndex(index).textColor,
                             fontSize: 15.sp,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w600),
                       ),
                     ),
                   ),
