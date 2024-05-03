@@ -18,11 +18,17 @@ class IceCandidateResponse {
     required this.iceCandidate,
   });
 
-  factory IceCandidateResponse.fromJson(Map<String, dynamic> json) =>
-      IceCandidateResponse(
+  factory IceCandidateResponse.fromJson(Map<String, dynamic> json) {
+    return IceCandidateResponse(
         callerId: json["callerId"],
-        iceCandidate: IceCandidate.fromJson(json["iceCandidate"]),
-      );
+        iceCandidate: IceCandidate.fromJson(jsonDecode(
+          utf8.decode(
+            base64.decode(
+              json["iceCandidate"],
+            ),
+          ),
+        )));
+  }
 
   Map<String, dynamic> toJson() => {
         "callerId": callerId,
@@ -50,13 +56,10 @@ class IceCandidate {
         usernameFragment: json["usernameFragment"],
       );
 
-
   Map<String, dynamic> toJson() => {
         "candidate": candidate,
         "sdpMid": sdpMid,
         "sdpMLineIndex": sdpMLineIndex,
         "usernameFragment": usernameFragment,
       };
-
-
 }

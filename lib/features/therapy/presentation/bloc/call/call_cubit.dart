@@ -122,7 +122,9 @@ class CallCubit extends Cubit<CallState> {
       setState(() {});
       _listenToPusher();
 
-      logger.w('OFFER:${_offer?.toJson()}');
+       print("Offer data");
+      print(jsonEncode(_offer?.sdp));
+
       await _rtcPeerConnection!.setRemoteDescription(
         RTCSessionDescription(_offer?.sdp, _offer?.type),
       );
@@ -130,12 +132,12 @@ class CallCubit extends Cubit<CallState> {
       // create SDP answer
       RTCSessionDescription answer =
           await _rtcPeerConnection!.createAnswer({'offerToReceiveVideo': 1});
-      // dynamic answer  = '' ;
-
-      // logger.w('Answer: ${answer.toMap()}');
 
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
+
+      print("Anwer data");
+      print(jsonEncode(answer.toMap()));
 
       // send SDP answer to remote peer
       _answerCall(_callerId, answer.toMap());
@@ -242,6 +244,7 @@ class CallCubit extends Cubit<CallState> {
         iceCandidateResponse.iceCandidate.sdpMLineIndex,
       ));
       logger.i("Added iceCandidate to rtcPeerConnection");
+      logger.i(iceCandidateResponse.iceCandidate.toJson());
     }
   }
 
@@ -253,7 +256,7 @@ class CallCubit extends Cubit<CallState> {
       var body = {
         "callerId": callerId,
         "calleeId": _calleeId,
-        "sdpAnswer": map,
+        "sdpAnswer": base64.encode(utf8.encode(jsonEncode(map))),
       };
 
       logger.w('Pushing answer');
@@ -275,7 +278,7 @@ class CallCubit extends Cubit<CallState> {
       var body = {
         "callerId": callerId,
         "calleeId": _calleeId,
-        "iceCandidate": candidate,
+        "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
         "sender": "user"
       };
       logger.w('Pushing candidate');

@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-IncomingCallResponse incomingCallResponseFromJson(String str) => IncomingCallResponse.fromJson(json.decode(str));
+IncomingCallResponse incomingCallResponseFromJson(String str) =>
+    IncomingCallResponse.fromJson(json.decode(str));
 
-String incomingCallResponseToJson(IncomingCallResponse data) => json.encode(data.toJson());
+String incomingCallResponseToJson(IncomingCallResponse data) =>
+    json.encode(data.toJson());
 
 class IncomingCallResponse {
   final dynamic callerId;
@@ -17,15 +19,30 @@ class IncomingCallResponse {
     required this.sdpOffer,
   });
 
-  factory IncomingCallResponse.fromJson(Map<String, dynamic> json) => IncomingCallResponse(
-    callerId: json["callerId"],
-    sdpOffer: SdpOffer.fromJson(json["sdpOffer"]),
-  );
+  // factory IncomingCallResponse.fromJson(Map<String, dynamic> json) => IncomingCallResponse(
+  //   callerId: json["callerId"],
+  //   sdpOffer: SdpOffer.fromJson(jsonDecode(utf8.decode(base64.decode(json["sdpOffer"])))),
+  // );
+
+  factory IncomingCallResponse.fromJson(Map<String, dynamic> json) {
+    return IncomingCallResponse(
+      callerId: json["callerId"],
+      sdpOffer: SdpOffer.fromJson(
+        jsonDecode(
+          utf8.decode(
+            base64.decode(
+              json["sdpOffer"],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "callerId": callerId,
-    "sdpOffer": sdpOffer.toJson(),
-  };
+        "callerId": callerId,
+        "sdpOffer": sdpOffer.toJson(),
+      };
 }
 
 class SdpOffer {
@@ -38,12 +55,12 @@ class SdpOffer {
   });
 
   factory SdpOffer.fromJson(Map<String, dynamic> json) => SdpOffer(
-    type: json["type"],
-    sdp: json["sdp"],
-  );
+        type: json["type"],
+        sdp: json["sdp"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "type": type,
-    "sdp": sdp,
-  };
+        "type": type,
+        "sdp": sdp,
+      };
 }
