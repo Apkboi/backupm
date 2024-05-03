@@ -10,7 +10,7 @@ class TherapyCallScreen extends StatefulWidget {
   const TherapyCallScreen(
       {super.key, required this.callerId, required this.calleeId, this.offer});
 
-  final String callerId, calleeId;
+  final int callerId, calleeId;
   final SdpOffer? offer;
 
   @override
@@ -27,6 +27,9 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
         milliseconds: 300,
       ),
       () {
+
+        logger.w(widget.offer?.toJson());
+
         callBloc.startCall(widget.callerId, widget.calleeId, widget.offer);
       },
     );

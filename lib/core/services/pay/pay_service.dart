@@ -74,8 +74,6 @@ class PayHelper {
     try {
       return await requestPayment(PayProvider.apple_pay, _paymentItems);
     } catch (e, trace) {
-
-
       SentryService.captureException(e, stackTrace: trace);
 
       rethrow;

@@ -59,7 +59,7 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       final response = await _repository.getCurrentSession();
       sessionId = response.data.id.toString();
       if (response.data.messages.isEmpty) {
-        await startSimulation(emit);
+        await startSimulation(emit, response);
       } else {
         allMessages = [
           ...messagesFromAuthenticationFlow,
@@ -81,7 +81,6 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       ContinueSessionEvent event, Emitter<MentraChatState> emit) async {
     SoundManager.playMessageSentSound();
     final MentraChatModel message = MentraChatModel.fromPrompt(event.prompt);
-
     _addTyping();
     _scrollToLast();
     _removeTyping();
@@ -192,6 +191,7 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
     emit(SignupMessageAdded());
   }
 
+
   FutureOr<void> _mapReviewMentraSessionEventToState(
       ReviewMentraSessionEvent event, Emitter<MentraChatState> emit) async {
     emit(const ReviewMentraLoadingState());
@@ -201,13 +201,27 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
           feeling: event.feeling,
           sessionId: event.sessionId,
           comment: event.comment);
-      emit(ReviewMentraSessionSuccessState(response));
+      emit(ReviewMentraSessionSuccessState(response) );
     } catch (e) {
+
       emit(ReviewMentraSessionFailureState(e.toString()));
     }
   }
 
-  Future startSimulation(Emitter<MentraChatState> emit1) async {
+  Future startSimulation(
+      Emitter<MentraChatState> emit1, GetCurrentSessionRsponse response) async {
+    List<MentraChatModel> starterMessages = [];
+    var index = 1;
+
+    for (var message in response.data.conversationStarter) {
+      starterMessages
+          .add(MentraChatModel.fromCurrentChatResponse(message, index));
+
+      index++;
+    }
+
+    _preConversationDataSource.loadMessages(starterMessages);
+
     currentFlow = MentraChatFlow.simulation;
     await Future.delayed(
       const Duration(seconds: 2),
@@ -242,13 +256,10 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
   FutureOr<void> _mapPopulateChatEventToState(
       PopulateChatEvent event, Emitter<MentraChatState> emit) async {
     try {
-
       // allMessages.removeLast();
-      await _repository.populateChat(sessionId: sessionId, messages: allMessages);
-
-
+      await _repository.populateChat(
+          sessionId: sessionId, messages: allMessages);
       currentFlow = MentraChatFlow.realtime;
-
       add(ContinueSessionEvent(sessionId, prompt));
     } catch (e) {
       _removeTyping();
@@ -257,7 +268,6 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       allMessages
           .map((msg) => msg == allMessages.last ? updatedMessage : msg)
           .toList();
-
       logger.e(e.toString());
       emit(PopulateChatFailedState(e.toString()));
     }

@@ -12,7 +12,8 @@ class MentraChatModel {
   final bool isMentraMessage;
   final bool isTyping;
   SendingState? sendingState;
-  DateTime? time ;
+  DateTime? time;
+
   List options;
 
   MentraChatModel({
@@ -75,6 +76,17 @@ class MentraChatModel {
       sendingState: SendingState.success,
       time: message.time,
     );
+  }
+
+  factory MentraChatModel.fromCurrentChatResponse(
+      CStarterClass message, int index) {
+    return MentraChatModel(
+        content: message.content,
+        isTyping: false,
+        isMentraMessage: true,
+        options: message.options,
+        sendingState: SendingState.success,
+        stage: index);
   }
 
   Map<String, dynamic> toJson() {

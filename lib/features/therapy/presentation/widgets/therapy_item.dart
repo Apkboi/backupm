@@ -121,67 +121,9 @@ class _TherapyItemState extends State<TherapyItem> {
     );
   }
 
-  onEventReceived(event) {
-    logger.w('Event from server:${event}');
-    var data = (event as PusherEvent).data;
 
-    if ((event).eventName == 'newCall') {
-      // if (true) {
 
-      try {
-        IncomingCallResponse incomingCall =
-            IncomingCallResponse.fromJson(jsonDecode(data));
 
-        logger.i(event.data);
-        // dynamic offer = data["sdpOffer"];
-        // String callerId = data["callerId"];
-
-        showGeneralDialog(
-          context: context,
-          pageBuilder: (context, animation, secondaryAnimation) {
-            return IncomingCallScreen(
-              callerId: incomingCall.callerId,
-              calleeId: '2',
-              offer: incomingCall.sdpOffer,
-            );
-          },
-        );
-
-        logger.w('New call');
-      } catch (e, stack) {
-        logger.e(e.toString(), stackTrace: stack);
-      }
-    }
-  }
-
-  onSubscriptionError(message, d) {}
-
-  void _listenForIncomingCalls() async {
-    var pusherService = await PusherChannelService.getInstance;
-    var pusher = await pusherService.getClient;
-    if (pusher != null) {
-      logger.w('connecting');
-      if (!pusher.channels.containsKey('user_2')) {
-        PusherChannel channel = await pusher.subscribe(
-          channelName: 'user_2',
-          onSubscriptionError: (message, d) => onSubscriptionError(message, d),
-          onSubscriptionSucceeded: (data) {
-            // log('subscribed');
-            // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
-            // return data;a
-          },
-          onEvent: (event) => onEventReceived(event),
-        );
-        logger.w('connected');
-      } else {
-        logger.w('connected2');
-
-        // pusher.getChannel('user_2')?.onEvent = onEventReceived;
-      }
-
-      await pusher.connect();
-    }
-  }
 
   void _disconnect() async {
     var pusherService = await PusherChannelService.getInstance;

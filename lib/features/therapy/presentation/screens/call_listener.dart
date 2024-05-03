@@ -12,6 +12,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/screens/incoming_call_screen.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
@@ -62,8 +63,7 @@ class _CallListenerState extends State<CallListener> {
       // if (true) {
 
       try {
-        IncomingCallResponse incomingCall =
-            IncomingCallResponse.fromJson(jsonDecode(data));
+        IncomingCallResponse incomingCall = IncomingCallResponse.fromJson(jsonDecode(data));
 
         logger.i(event.data);
         // dynamic offer = data["sdpOffer"];
@@ -74,7 +74,7 @@ class _CallListenerState extends State<CallListener> {
           pageBuilder: (context, animation, secondaryAnimation) {
             return IncomingCallScreen(
               callerId: incomingCall.callerId,
-              calleeId: '2',
+              calleeId: injector.get<UserBloc>().appUser!.id,
               offer: incomingCall.sdpOffer,
             );
           },
@@ -115,6 +115,7 @@ class _CallListenerState extends State<CallListener> {
         logger.w('New call');
       } catch (e, stack) {
         logger.e(e.toString(), stackTrace: stack);
+        logger.w(stack);
       }
     }
   }
@@ -126,9 +127,9 @@ class _CallListenerState extends State<CallListener> {
     var pusher = await pusherService.getClient;
     if (pusher != null) {
       logger.w('connecting');
-      if (!pusher.channels.containsKey('user_2')) {
+      if (!pusher.channels.containsKey(injector.get<UserBloc>().userChannel)) {
         PusherChannel channel = await pusher.subscribe(
-          channelName: 'user_2',
+          channelName: injector.get<UserBloc>().userChannel,
           onSubscriptionError: (message, d) => onSubscriptionError(message, d),
           onSubscriptionSucceeded: (data) {
             // log('subscribed');
@@ -151,7 +152,7 @@ class _CallListenerState extends State<CallListener> {
   void _disconnect() async {
     var pusherService = await PusherChannelService.getInstance;
     var pusher = await pusherService.getClient;
-    pusher?.unsubscribe(channelName: 'user_2');
+    pusher?.unsubscribe(channelName: injector.get<UserBloc>().userChannel);
     // pusher?.(channelName: 'user_2');
 
     logger.i('disconnected');

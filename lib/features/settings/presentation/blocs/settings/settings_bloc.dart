@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/settings/data/models/get_avatars_response.dart';
 import 'package:mentra/features/settings/data/models/update_profile_response.dart';
@@ -19,6 +20,9 @@ part 'settings_state.dart';
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final SettingsRepository _settingsRepository;
 
+  bool soundEnabled = false;
+  bool notificationsEnabled = false;
+
   SettingsBloc(this._settingsRepository) : super(SettingsInitial()) {
     on<UpdateProfileEvent>(_mapUpdateProfileEventToState);
     on<VerifyPasscodeEvent>(_mapVerifyPasscodeEventToState);
@@ -27,6 +31,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<UploadImageEvent>(_mapUploadImageEventToState);
     on<DeleteAccountEvent>(_mapDeleteAccountEventToState);
     on<EraseDataEvent>(_mapEraseDataEventToState);
+    on<SwitchSoundEnabledEvent>(_mapSwitchSoundEnabledEventToState);
+    on<SwitchNotificationEnabledEvent>(
+        _mapSwitchNotificationEnabledEventToState);
   }
 
   Future<void> _mapUpdateProfileEventToState(
@@ -117,6 +124,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     EraseDataEvent event,
     Emitter<SettingsState> emit,
   ) async {
+
     emit(EraseDataLoadingState());
     try {
       // Call repository method to erase data
@@ -125,5 +133,26 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     } catch (e) {
       emit(EraseDataFailureState(e.toString()));
     }
+
+
+  }
+
+  FutureOr<void> _mapSwitchSoundEnabledEventToState(
+      SwitchSoundEnabledEvent event, Emitter<SettingsState> emit) {
+    SessionManager.instance.soundEnabled = event.enabled;
+    soundEnabled = event.enabled;
+    emit(SoundsSwitchedState(event.enabled));
+  }
+
+  FutureOr<void> _mapSwitchNotificationEnabledEventToState(
+      SwitchNotificationEnabledEvent event, Emitter<SettingsState> emit) {
+    SessionManager.instance.notificationEnabled = event.enabled;
+    notificationsEnabled = event.enabled;
+    emit(NotificationsSwitchedState(event.enabled));
+  }
+
+  init() {
+    notificationsEnabled = SessionManager.instance.notificationEnabled;
+    soundEnabled = SessionManager.instance.soundEnabled;
   }
 }

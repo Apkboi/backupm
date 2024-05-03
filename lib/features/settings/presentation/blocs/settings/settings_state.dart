@@ -169,3 +169,21 @@ class EraseDataFailureState extends SettingsState {
   @override
   List<Object?> get props => [error];
 }
+
+class NotificationsSwitchedState extends SettingsState {
+  final bool enabled;
+
+  const NotificationsSwitchedState(this.enabled);
+
+  @override
+  List<Object?> get props => [enabled];
+}
+
+class SoundsSwitchedState extends SettingsState {
+  final bool enabled;
+
+  const SoundsSwitchedState(this.enabled);
+
+  @override
+  List<Object?> get props => [enabled];
+}

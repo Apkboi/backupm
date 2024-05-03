@@ -28,7 +28,11 @@ class _HomeUpcomingSessionWidgetState extends State<HomeUpcomingSessionWidget> {
                 .where((element) => element.startsAt.isToday)
                 .isNotEmpty) {
               return UpcomingSessionsWidget(
-                session: injector.get<TherapyBloc>().upComingSessions.first,
+                session: injector
+                    .get<TherapyBloc>()
+                    .upComingSessions
+                    .where((element) => element.startsAt.isToday)
+                    .first,
               );
             }
 

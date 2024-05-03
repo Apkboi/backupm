@@ -9,7 +9,7 @@ IncomingCallResponse incomingCallResponseFromJson(String str) => IncomingCallRes
 String incomingCallResponseToJson(IncomingCallResponse data) => json.encode(data.toJson());
 
 class IncomingCallResponse {
-  final String callerId;
+  final dynamic callerId;
   final SdpOffer sdpOffer;
 
   IncomingCallResponse({
@@ -29,8 +29,8 @@ class IncomingCallResponse {
 }
 
 class SdpOffer {
-  final String type;
-  final String sdp;
+  final dynamic type;
+  final dynamic sdp;
 
   SdpOffer({
     required this.type,

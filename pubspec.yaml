@@ -142,6 +142,7 @@ dependencies:
   flutter_webrtc: ^0.9.48+hotfix.1
   sdp_transform: ^0.3.2
   sentry_flutter: ^8.1.0
+#  audio_manager: ^0.8.2
 
 dependency_overrides:
   # Overrides for specific package versions

@@ -25,7 +25,6 @@ import 'package:mentra/features/settings/presentation/widgets/settings_group_2.d
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 

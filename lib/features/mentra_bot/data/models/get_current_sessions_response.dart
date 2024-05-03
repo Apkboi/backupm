@@ -65,6 +65,7 @@ class Data {
   final dynamic status;
   final List<AiMessage> messages;
   final bool isNew;
+  final List<CStarterClass> conversationStarter;
 
   Data({
     required this.id,
@@ -76,6 +77,7 @@ class Data {
     required this.status,
     required this.messages,
     required this.isNew,
+    required this.conversationStarter,
   });
 
   Data copyWith({
@@ -88,6 +90,7 @@ class Data {
     dynamic status,
     bool? isNew,
     List<AiMessage>? messages,
+    List<CStarterClass>? conversationStarter,
   }) =>
       Data(
         id: id ?? this.id,
@@ -99,6 +102,7 @@ class Data {
         status: status ?? this.status,
         messages: messages ?? this.messages,
         isNew: isNew ?? this.isNew,
+        conversationStarter: conversationStarter ?? this.conversationStarter,
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -112,6 +116,8 @@ class Data {
         isNew: json["is_new"],
         messages: List<AiMessage>.from(
             json["messages"].map((x) => AiMessage.fromJson(x))),
+        conversationStarter: List<CStarterClass>.from(
+            json["messages"].map((x) => CStarterClass.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -124,6 +130,8 @@ class Data {
         "status": status,
         "is_new": isNew,
         "messages": List<dynamic>.from(messages.map((x) => x.toJson())),
+        "conversaton_starter":
+            List<dynamic>.from(conversationStarter.map((x) => x.toJson())),
       };
 }
 
@@ -176,4 +184,25 @@ class AiMessage {
         "suggestions": suggestion,
         "created_at": createdAt.toIso8601String(),
       };
+}
+
+class CStarterClass {
+  final String content;
+  final List<String> options;
+
+  CStarterClass({required this.content, required this.options});
+
+  factory CStarterClass.fromJson(Map<String, dynamic> json) {
+    return CStarterClass(
+      content: json['content'] ?? '',
+      options: List<String>.from(json['options'] ?? []),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'options': options,
+    };
+  }
 }

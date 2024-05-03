@@ -132,7 +132,7 @@ class _CallScreenState extends State<CallScreen> {
     _localRTCVideoRenderer.srcObject = _localStream;
     setState(() {});
 
-    _listenToPusher();
+    // _listenToPusher();
     // listen for Remote IceCandidate
     // socket!.on("IceCandidate", (data) {
     //   String candidate = data["iceCandidate"]["candidate"];
@@ -361,7 +361,9 @@ class _CallScreenState extends State<CallScreen> {
       logger.w(body);
 
       var respose = await networkService.call(
-          'https://webrtc.yourmentra.com/answerCall', RequestMethod.post,
+          // 'https://webrtc.yourmentra.com/answerCall',
+          'https://staging.app.yourmentra.com/api/v1/webrtc/answer-call',
+          RequestMethod.post,
           data: body);
       logger.w(respose.data);
     } catch (e, stack) {
@@ -383,7 +385,9 @@ class _CallScreenState extends State<CallScreen> {
       logger.w(body);
 
       var respose = await networkService.call(
-          'https://webrtc.yourmentra.com/IceCandidate', RequestMethod.post,
+          // 'https://webrtc.yourmentra.com/IceCandidate',
+          'https://staging.app.yourmentra.com/api/v1/webrtc/ice-candidate',
+          RequestMethod.post,
           data: body);
       logger.w(respose.data);
     } catch (e, stack) {

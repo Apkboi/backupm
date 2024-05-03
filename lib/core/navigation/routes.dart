@@ -469,13 +469,12 @@ class CustomRoutes {
           path: '/therapyCallScreen',
           name: PageUrl.therapyCallScreen,
           builder: (context, state) => TherapyCallScreen(
-              callerId:
-                  state.uri.queryParameters[PathParam.callerId] ?? '',
-              calleeId:
-                  state.uri.queryParameters[PathParam.calleeId] ?? '',
+              callerId: int.parse(
+                    state.uri.queryParameters[PathParam.callerId] ?? '0'),
+              calleeId: int.parse(
+                  state.uri.queryParameters[PathParam.calleeId] ?? '0'),
               offer: SdpOffer.fromJson(
-                jsonDecode(
-                    state.uri.queryParameters[PathParam.offer] ?? ''),
+                jsonDecode(state.uri.queryParameters[PathParam.offer] ?? ''),
               ))),
     ],
   );

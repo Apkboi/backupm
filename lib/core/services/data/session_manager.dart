@@ -34,6 +34,8 @@ class SessionManager {
   static const String HAS_ONBOARDED = 'has_onboarded';
   static const String KEY_IS_LOGIN = 'is_logged_in';
   static const String BIOMETRIC_ENABLED = 'biometric_enabled';
+  static const String SOUND_ENABLED = 'sound_enabled';
+  static const String NOTIFICATIONS_ENABLED = 'notifications_enabled';
   static const String IS_CONTACT_PERMITTED = 'permit_contact';
   static const String KEY_USER_EMAIL = 'logged_in_user_email';
 
@@ -100,6 +102,19 @@ class SessionManager {
   bool get isLoggedIn => sharedPreferences!.getBool(KEY_IS_LOGIN) ?? false;
 
   bool get hasOnboarded => sharedPreferences!.getBool(HAS_ONBOARDED) ?? false;
+
+  set soundEnabled(bool soundEnabled) {
+    sharedPreferences!.setBool(SOUND_ENABLED, soundEnabled);
+  }
+
+  bool get soundEnabled => sharedPreferences!.getBool(SOUND_ENABLED) ?? false;
+
+  set notificationEnabled(bool enabled) {
+    sharedPreferences!.setBool(SOUND_ENABLED, enabled);
+  }
+
+  bool get notificationEnabled =>
+      sharedPreferences!.getBool(SOUND_ENABLED) ?? false;
 
   Future<bool> logOut() async {
     // final holdEmail = sharedPreferences?.getString(KEY_USER_EMAIL);

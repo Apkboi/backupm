@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/services/vibration/haptic_feedback_manager.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
@@ -10,7 +11,8 @@ class SoundManager {
   static Future<void> playMessageSentSound() async {
     final ringerStatus = await SoundMode.ringerModeStatus;
 
-    if (ringerStatus != RingerModeStatus.silent) {
+    if (ringerStatus != RingerModeStatus.silent &&
+        SessionManager.instance.soundEnabled) {
       await player.play(AssetSource('audio/sent2.mp3'));
     }
   }
@@ -18,7 +20,8 @@ class SoundManager {
   static Future<void> playMessageReceivedSound() async {
     final ringerStatus = await SoundMode.ringerModeStatus;
 
-    if (ringerStatus != RingerModeStatus.silent) {
+    if (ringerStatus != RingerModeStatus.silent &&
+        SessionManager.instance.soundEnabled) {
       await player.play(AssetSource('audio/mentra.mp3'));
       HapticFeedbackManager.vibrate();
     }

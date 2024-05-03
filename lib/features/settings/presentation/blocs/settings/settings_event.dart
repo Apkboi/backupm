@@ -65,3 +65,21 @@ class EraseDataEvent extends SettingsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class SwitchSoundEnabledEvent extends SettingsEvent {
+  final bool enabled;
+
+  const SwitchSoundEnabledEvent(this.enabled);
+
+  @override
+  List<Object?> get props => [];
+}
+
+class SwitchNotificationEnabledEvent extends SettingsEvent {
+  final bool enabled;
+
+  const SwitchNotificationEnabledEvent(this.enabled);
+
+  @override
+  List<Object?> get props => [];
+}

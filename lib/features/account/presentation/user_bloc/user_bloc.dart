@@ -18,6 +18,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   MentraUser? appUser;
 
+  String get userChannel => 'user_${appUser?.id}';
+
   final _userStorage = UserStorage();
 
   UserBloc(this._accountRepository) : super(UserInitial()) {

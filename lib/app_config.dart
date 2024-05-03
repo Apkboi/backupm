@@ -10,6 +10,7 @@ import 'package:mentra/app.dart';
 import 'package:mentra/core/constants/pay_configurations.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
+import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'core/di/injector.dart';
 import 'core/services/data/hive/hive_manager.dart';
 import 'core/services/data/session_manager.dart';
@@ -73,6 +74,7 @@ class AppConfig {
   Future setup() async {
     injector.get<UserBloc>().add(GetUserEvent());
     injector.get<LocalAuthCubit>().init();
+    injector.get<SettingsBloc>().init();
 
     // injector.get<DashboardBloc>().add(GetConversationStarterEvent());
   }

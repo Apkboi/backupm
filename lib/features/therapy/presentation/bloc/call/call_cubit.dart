@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
@@ -9,13 +8,15 @@ import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart'
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../../../../account/presentation/user_bloc/user_bloc.dart';
+
 part 'call_state.dart';
 
 class CallCubit extends Cubit<CallState> {
   CallCubit() : super(CallInitial());
 
-  String _callerId = '';
-  String _calleeId = '';
+  int _callerId = 0;
+  int _calleeId = 0;
   SdpOffer? _offer;
 
   // videoRenderer for localPeer
@@ -47,7 +48,7 @@ class CallCubit extends Cubit<CallState> {
     );
   }
 
-  Future<void> startCall(String callerId, calleeId, SdpOffer? offer) async {
+  Future<void> startCall(int callerId, calleeId, SdpOffer? offer) async {
     _calleeId = calleeId;
     _callerId = callerId;
     _offer = offer;
@@ -121,19 +122,26 @@ class CallCubit extends Cubit<CallState> {
       setState(() {});
       _listenToPusher();
 
+      logger.w('OFFER:${_offer?.toJson()}');
       await _rtcPeerConnection!.setRemoteDescription(
         RTCSessionDescription(_offer?.sdp, _offer?.type),
       );
+
       // create SDP answer
       RTCSessionDescription answer =
           await _rtcPeerConnection!.createAnswer({'offerToReceiveVideo': 1});
+      // dynamic answer  = '' ;
+
+      // logger.w('Answer: ${answer.toMap()}');
+
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
 
       // send SDP answer to remote peer
       _answerCall(_callerId, answer.toMap());
-    } catch (e) {
+    } catch (e, stack) {
       logger.e(e.toString());
+      logger.e(stack.toString());
     }
   }
 
@@ -197,9 +205,9 @@ class CallCubit extends Cubit<CallState> {
     var pusher = await pusherService.getClient;
     if (pusher != null) {
       logger.w('connecting');
-      if (!pusher.channels.containsKey('user_2')) {
+      if (!pusher.channels.containsKey(injector.get<UserBloc>().userChannel)) {
         PusherChannel channel = await pusher.subscribe(
-          channelName: 'user_2',
+          channelName: injector.get<UserBloc>().userChannel,
           onSubscriptionError: (message, d) => onSubscriptionError(message, d),
           onSubscriptionSucceeded: (data) {
             // log('subscribed');
@@ -211,7 +219,8 @@ class CallCubit extends Cubit<CallState> {
         logger.w('connected');
       } else {
         logger.w('connected2');
-        pusher.getChannel('user_2')?.onEvent = onEventReceived;
+        pusher.getChannel(injector.get<UserBloc>().userChannel)?.onEvent =
+            onEventReceived;
       }
       await pusher.connect();
     }
@@ -238,7 +247,7 @@ class CallCubit extends Cubit<CallState> {
 
   onSubscriptionError(message, d) {}
 
-  void _answerCall(String callerId, map) async {
+  void _answerCall(int callerId, map) async {
     try {
       var networkService = injector.get<NetworkService>();
       var body = {
@@ -246,10 +255,13 @@ class CallCubit extends Cubit<CallState> {
         "calleeId": _calleeId,
         "sdpAnswer": map,
       };
+
       logger.w('Pushing answer');
       logger.w(body);
+
       var respose = await networkService.call(
-          'https://webrtc.yourmentra.com/answerCall', RequestMethod.post,
+          'https://staging.app.yourmentra.com/api/v1/webrtc/answer-call',
+          RequestMethod.post,
           data: body);
       logger.w(respose.data);
     } catch (e, stack) {
@@ -257,7 +269,7 @@ class CallCubit extends Cubit<CallState> {
     }
   }
 
-  void _pushCandidate(String callerId, candidate) async {
+  void _pushCandidate(int callerId, candidate) async {
     try {
       var networkService = injector.get<NetworkService>();
       var body = {
@@ -269,7 +281,8 @@ class CallCubit extends Cubit<CallState> {
       logger.w('Pushing candidate');
       logger.w(body);
       var respose = await networkService.call(
-          'https://webrtc.yourmentra.com/IceCandidate', RequestMethod.post,
+          'https://staging.app.yourmentra.com/api/v1/webrtc/ice-candidate',
+          RequestMethod.post,
           data: body);
       logger.w(respose.data);
     } catch (e, stack) {

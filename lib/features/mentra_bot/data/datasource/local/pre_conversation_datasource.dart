@@ -1,3 +1,4 @@
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 
 class PreConversationDataSource {
@@ -34,7 +35,6 @@ class PreConversationDataSource {
         'Relationship issues',
         'Personal growth',
         'Other'
-
       ],
     ),
     MentraChatModel(
@@ -55,7 +55,8 @@ class PreConversationDataSource {
     }
 
     // Checks the third message answer to determine the next message
-    if (currentMessage.stage == 3 && answer.toString().toLowerCase() != 'other') {
+    if (currentMessage.stage == 3 &&
+        answer.toString().toLowerCase() != 'other') {
       return null;
     }
 
@@ -65,6 +66,13 @@ class PreConversationDataSource {
     }
 
     // Returning the next message
-    return chatMessages.where((element) => element.stage == currentMessage.stage + 1).first;
+    return chatMessages
+        .where((element) => element.stage == currentMessage.stage + 1)
+        .first;
+  }
+
+  void loadMessages(List<MentraChatModel> messages) {
+    chatMessages = messages;
+    logger.i('Messages loaded');
   }
 }

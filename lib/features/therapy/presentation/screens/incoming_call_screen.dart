@@ -5,9 +5,11 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/common/widgets/user_image_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -15,7 +17,7 @@ class IncomingCallScreen extends StatefulWidget {
   const IncomingCallScreen(
       {super.key, required this.callerId, required this.calleeId, this.offer});
 
-  final String callerId, calleeId;
+  final int callerId, calleeId;
   final SdpOffer? offer;
 
   @override
@@ -104,9 +106,11 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
   }
 
   _answerCall(BuildContext context) {
-    context.pushReplacementNamed(PageUrl.therapyCallScreen, queryParameters: {
-      PathParam.calleeId: '2',
-      PathParam.callerId: widget.callerId,
+    // log
+
+    context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+      PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
+      PathParam.callerId: widget.callerId.toString(),
       PathParam.offer: jsonEncode(widget.offer?.toJson()),
     });
   }

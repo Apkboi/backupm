@@ -22,10 +22,6 @@ class MentraApp extends StatefulWidget {
 }
 
 class _MentraAppState extends State<MentraApp> {
-
-
-
-
   @override
   void initState() {
     // _initMesibo();
