@@ -5,6 +5,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:pay/pay.dart';
 
 class StripeService {
   static const String _publishableKey = 'your_publishable_key';
@@ -52,19 +53,22 @@ class StripeService {
           // preferredNetworks: [CardBrand.Amex],
           // Customer params
           customerId: data['customer'],
+
           customerEphemeralKeySecret: data['ephemeralKey'],
           returnURL: 'flutterstripe://redirect',
 
           // Extra params
           primaryButtonLabel: 'Pay now',
           applePay: PaymentSheetApplePay(
-            merchantCountryCode: 'NGN',
-          ),
+              merchantCountryCode: 'AED',
+              buttonType: PlatformButtonType.subscribe),
           googlePay: const PaymentSheetGooglePay(
-            merchantCountryCode: 'NGN',
-            testEnv: true,
-          ),
+              merchantCountryCode: 'AED',
+              testEnv: true,
+              amount: '500',
+              buttonType: PlatformButtonType.subscribe),
           style: ThemeMode.dark,
+
           appearance: const PaymentSheetAppearance(
             colors: PaymentSheetAppearanceColors(
               background: Colors.lightBlue,
@@ -110,12 +114,16 @@ class StripeService {
   Future<void> presentPaymentSheet() async {
     try {
       // 3. display the payment sheet.
-      // Stripe.instance.presentPaymentSheet();
-      var res = await Stripe.instance.confirmPlatformPayPaymentIntent(
+      // Stripe.instance.presentGooglePay(PresentGooglePayParams(clientSecret: clientSecret));
+      var res = await Stripe.instance.confirmPlatformPaySetupIntent(
           clientSecret: clientSecret,
           confirmParams: const PlatformPayConfirmParams.googlePay(
               googlePay: GooglePayParams(
-                  merchantCountryCode: 'NGN', currencyCode: 'NGN')));
+                  allowCreditCards: true,
+                  merchantName: 'Mentra',
+                  testEnv: true,
+                  merchantCountryCode: 'AED',
+                  currencyCode: 'AED')));
       // logger.w('presenting${res?.toJson()}');
 
       // setState(() {
@@ -131,6 +139,8 @@ class StripeService {
       logger.w('Error${e.toString()}');
 
       if (e is StripeException) {
+        logger.w('Error${e.error.localizedMessage}');
+
         // ScaffoldMessenger.of(context).showSnackBar(
         //   SnackBar(
         //     content: Text('Error from Stripe: ${e.error.localizedMessage}'),
@@ -180,7 +190,7 @@ class StripeService {
   Future<Map<String, dynamic>> createTestPaymentSheet() async {
     Map<String, dynamic> payload = {
       "amount": '100000',
-      "currency": 'NGN',
+      "currency": 'AED',
       "payment_method_types[]": ["card"],
       "metadata": {
         "order_id": 'orderId',

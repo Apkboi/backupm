@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mentra/app.dart';
 import 'package:mentra/core/constants/pay_configurations.dart';
+import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
@@ -21,8 +23,11 @@ import 'package:mentra/core/di/injector.dart' as di;
 import 'core/services/pay/pay_service.dart';
 import 'core/services/pusher/pusher_channel_service.dart';
 import 'core/services/sentory/sentory_service.dart';
+import 'core/services/vibration/haptic_feedback_manager.dart';
 import 'features/account/presentation/user_bloc/user_bloc.dart';
 import 'firebase_options.dart';
+
+Isolate? vibrationIsolate;
 
 enum Flavor { dev, staging, prod }
 
@@ -49,6 +54,7 @@ class AppConfig {
     // await Firebase.initializeApp();
     // https: //b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920
 
+    await CallKitService.instance.initialize();
     PayHelper.instance.initialize(
         defaultGooglePayConfiguration: defaultGooglePay,
         defaultApplePayConfiguration: defaultApplePay);

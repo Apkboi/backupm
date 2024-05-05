@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:mentra/core/services/vibration/haptic_feedback_manager.dart';
 
 class HapticInkWell extends StatelessWidget {
@@ -76,29 +77,20 @@ class HapticInkWell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
+        onTap!();
+
         if (enableHapticsOnTap) {
           HapticFeedbackManager.vibrate();
         }
-      onTap!();
 
-        if (onTap != null) {
-        }
-
-
+        await Future.delayed(Duration(milliseconds: 300));
+        //
+        // if (onTap != null) {
+        // }
       },
-      onDoubleTap: () {
-        if (enableHapticsOnDoubleTap) {
-          HapticFeedbackManager.vibrate();
-        }
-        if (onDoubleTap != null) onDoubleTap!();
-      },
-      onLongPress: () {
-        if (enableHapticsOnLongPress) {
-          HapticFeedback.mediumImpact();
-        }
-        if (onLongPress != null) onLongPress!();
-      },
+      onDoubleTap: null,
+      onLongPress: null,
       child: child,
       key: key,
       borderRadius: borderRadius,

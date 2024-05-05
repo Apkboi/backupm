@@ -6,7 +6,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
-
 // import 'package:plain_notification_token/plain_notification_token.dart';
 
 final NotificationService notificationService = NotificationService();

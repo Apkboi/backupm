@@ -96,7 +96,7 @@ class _PinViewState extends State<PinView> {
                                   color: Colors.transparent,
                                   type: MaterialType.circle,
                                   child: HapticInkWell(
-                                    splashColor: Pallets.eggShell,
+                                    // splashColor: Pallets.eggShell,
                                     borderRadius: BorderRadius.circular(100),
                                     radius: 100,
 

@@ -84,7 +84,8 @@ class MentraChatModel {
         content: message.content,
         isTyping: false,
         isMentraMessage: true,
-        options: message.options,
+        time: DateTime.now(),
+        options: message.options ?? [],
         sendingState: SendingState.success,
         stage: index);
   }

@@ -72,7 +72,9 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
         _scrollToLast();
         emit(GetCurrentSessionSuccessState(response));
       }
-    } catch (e) {
+    } catch (e,stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
       emit(GetCurrentSessionFailureState(e.toString()));
     }
   }
@@ -220,7 +222,13 @@ class MentraChatBloc extends Bloc<MentraChatEvent, MentraChatState> {
       index++;
     }
 
+
+
     _preConversationDataSource.loadMessages(starterMessages);
+
+    logger.w(response.data.conversationStarter.length);
+
+
 
     currentFlow = MentraChatFlow.simulation;
     await Future.delayed(

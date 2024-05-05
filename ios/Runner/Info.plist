@@ -40,19 +40,23 @@
 		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+		<key>UIBackgroundModes</key>
+        <array>
+            <string>voip</string>
+            <string>remote-notification</string>
+            <string>processing</string> //you can add this if needed
+        </array>
 		<key>NSAppleMusicUsageDescription</key>
-        <string>This enables you to send media files using mesibo</string>
+        <string>This enables you to send media files using mentra</string>
         <key>NSCameraUsageDescription</key>
-        <string>This allows Mesibo to make video calls and send your pictures directly from your camera.</string>
-        <key>NSContactsUsageDescription</key>
-        <string>Mesibo syncs phone numbers from your contacts to Mesibo servers to help you connect with other Mesibo users and to provide a better experience</string>
+        <string>This allows Mentra to make video calls and send your pictures directly from your camera.</string>
 
 		<key>NSMicrophoneUsageDescription</key>
-		<string>This allows Mesibo to use your microphone for voice and video calls</string>
+		<string>This allows Mentra to use your microphone for voice and video calls</string>
 		<key>NSAppleMusicUsageDescription</key>
-		<string>This enables you to send media files using mesibo</string>
+		<string>This enables you to send media files using mentra</string>
 		<key>NSContactsUsageDescription</key>
-		<string>Mentra syncs phone numbers from your contacts to Mesibo servers to help you connect with other Mesibo users and to provide a better experience</string>
+		<string>Syncs phone numbers from your contacts  to help you connect with other Mentra users and to provide a better experience</string>
 		<key>NSCameraUsageDescription</key>
 		<string>Mentra will use this feature to let you add your card, upload documents, scan QR codes or take a selfie.</string>
 		<key>NSFaceIDUsageDescription</key>
