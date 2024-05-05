@@ -70,6 +70,7 @@ class CallCubit extends Cubit<CallState> {
           {
             'urls': [
               'stun:stun1.l.google.com:19302',
+              'stun:stun.rtc.yourmentra.com',
             ]
           },
           {
