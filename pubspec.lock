@@ -614,6 +614,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
+  flutter_callkit_incoming:
+    dependency: "direct main"
+    description:
+      name: flutter_callkit_incoming
+      sha256: "6a3ae7d00ba1774ec9870cf11ea38875a3b6ea9d87462f2c76102e1b11c6a031"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.4"
   flutter_chat_bubble:
     dependency: "direct main"
     description:

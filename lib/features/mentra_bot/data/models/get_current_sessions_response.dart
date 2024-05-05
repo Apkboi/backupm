@@ -117,7 +117,7 @@ class Data {
         messages: List<AiMessage>.from(
             json["messages"].map((x) => AiMessage.fromJson(x))),
         conversationStarter: List<CStarterClass>.from(
-            json["messages"].map((x) => CStarterClass.fromJson(x))),
+            json["conversation_starter"].map((x) => CStarterClass.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -130,7 +130,7 @@ class Data {
         "status": status,
         "is_new": isNew,
         "messages": List<dynamic>.from(messages.map((x) => x.toJson())),
-        "conversaton_starter":
+        "conversation_starter":
             List<dynamic>.from(conversationStarter.map((x) => x.toJson())),
       };
 }
@@ -188,7 +188,7 @@ class AiMessage {
 
 class CStarterClass {
   final String content;
-  final List<String> options;
+  final List<String>? options;
 
   CStarterClass({required this.content, required this.options});
 

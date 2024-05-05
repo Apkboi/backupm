@@ -2,7 +2,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 
 class PreConversationDataSource {
-  List<MentraChatModel> chatMessages = [
+  List<MentraChatModel> _chatMessages = [
     MentraChatModel(
       stage: 1,
       content: "All set! How are you feeling right now?",
@@ -46,6 +46,13 @@ class PreConversationDataSource {
     ),
     // Continue adding more chat messages as needed
   ];
+
+
+  List<MentraChatModel> get chatMessages => _chatMessages;
+
+  set chatMessages(List<MentraChatModel> value) {
+    _chatMessages = value;
+  }
 
   MentraChatModel? getNextQuestion(MentraChatModel? currentMessage,
       {String? answer}) {
