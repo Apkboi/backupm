@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
+import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
@@ -25,7 +26,10 @@ class PusherChannelService {
 
       maxReconnectGapInSeconds: 1,
       onEvent: (event) {
-        logger.w(event.data);
+
+        injector.get<PusherCubit>().triggerPusherEvent(event);
+
+        // logger.w(event.data);
         // AppUtils.showCustomToast(event.data.toString());
       },
       onSubscriptionError: (d, a) {

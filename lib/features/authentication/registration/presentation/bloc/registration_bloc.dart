@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/core/services/firebase/notifiactions.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
 import 'package:mentra/features/authentication/data/models/onauth_response.dart';
 import 'package:mentra/features/authentication/data/models/register_payload.dart';
 import 'package:mentra/features/authentication/dormain/repository/auth_repository.dart';
 import 'package:mentra/features/authentication/dormain/usecase/auth_success_usecase.dart';
+
 part 'registration_event.dart';
 
 part 'registration_state.dart';
@@ -31,9 +33,11 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
     try {
       // Call your registration API here
-      var authResponse = await _authRepository.register(event.payload);
+      var authResponse = await _authRepository
+          .register(event.payload.copyWith(token: notiToken));
 
-      AuthSuccessUsecase().execute(authResponse,passKey:event.payload.password);
+      AuthSuccessUsecase()
+          .execute(authResponse, passKey: event.payload.password);
 
       emit(RegistrationSuccessState(authResponse));
     } catch (e) {
@@ -77,6 +81,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     String? password,
     String? avatarPath,
     String? role,
+    String? token,
   }) {
     registrationPayload = RegistrationPayload(
       name: name ?? registrationPayload.name,
@@ -85,6 +90,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       password: password ?? registrationPayload.password,
       avatar: avatarPath ?? registrationPayload.avatar,
       role: role ?? registrationPayload.role,
+      token: token ?? registrationPayload.token,
     );
   }
 
@@ -145,12 +151,10 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     }
   }
 
-  bool confirmPasscode(String passcode)=> initialPasscode == passcode;
+  bool confirmPasscode(String passcode) => initialPasscode == passcode;
 
-  FutureOr<void> _mapSignupCompleteEventToState(SignupCompleteEvent event, Emitter<RegistrationState> emit) {
-
-
+  FutureOr<void> _mapSignupCompleteEventToState(
+      SignupCompleteEvent event, Emitter<RegistrationState> emit) {
     emit(SignupCompleteState());
-
   }
 }

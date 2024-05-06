@@ -1,4 +1,6 @@
+import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
@@ -23,6 +25,7 @@ class DashboardUsecase {
     injector.get<JournalBloc>().add(GetPromptsCategoriesEvent());
     injector.get<WellnessLibraryBloc>().add(GetLibraryCategoriesEvent());
     injector.get<DailyTaskBloc>().add(GetDailyTaskEvent());
+    injector.get<PusherCubit>().subscribeToChannel(injector.get<UserBloc>().userChannel);
 
     // void _initMesibo() async {
     //   Mesibo mesibo = Mesibo();

@@ -29,5 +29,9 @@ class CallConnectedState extends CallState {
   @override
   List<Object> get props => [];
 }
+class AcceptCallState extends CallState {
+  @override
+  List<Object> get props => [];
+}
 
 

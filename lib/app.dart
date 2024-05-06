@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mentra/features/therapy/presentation/screens/call_listener.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:mentra/app_config.dart';
 import 'package:mentra/core/services/network/url_config.dart';
@@ -51,26 +52,28 @@ class _MentraAppState extends State<MentraApp> {
         return OverlaySupport.global(
           child: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              title: "Mentra",
-              //TODO: SET LOCALE HERE
-              // locale: ref.watch(localeProvider).locale,
-              localizationsDelegates: const [
-                S.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: S.delegate.supportedLocales,
+            child: CallListener(
+              child: MaterialApp.router(
+                debugShowCheckedModeBanner: false,
+                title: "Mentra",
+                //TODO: SET LOCALE HERE
+                // locale: ref.watch(localeProvider).locale,
+                localizationsDelegates: const [
+                  S.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                ],
+                supportedLocales: S.delegate.supportedLocales,
 
-              // theme: ThemeData(
-              //   primarySwatch: Colors.blueGrey,
-              // ),
-              //
-              theme: AppTheme.lightTheme,
-              // darkTheme: AppTheme.darkTheme,
-              routerConfig: CustomRoutes.goRouter,
+                // theme: ThemeData(
+                //   primarySwatch: Colors.blueGrey,
+                // ),
+                //
+                theme: AppTheme.lightTheme,
+                // darkTheme: AppTheme.darkTheme,
+                routerConfig: CustomRoutes.goRouter,
+              ),
             ),
           ),
         );

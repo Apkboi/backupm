@@ -3,8 +3,13 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/navigation/routes.dart';
+import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 
 // import 'package:plain_notification_token/plain_notification_token.dart';
 
@@ -22,13 +27,19 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   logger.i('Handling a background message ${message.data}');
-  await notificationService.initializeNotification();
-
-  notificationService.triggerHeadsUp(
-    message.notification.hashCode,
-    message.notification?.title ?? message.data['title'],
-    message.notification?.body ?? message.data['body'],
-  );
+  logger.i('Handling a background message ${message.notification?.title}');
+  var body = message.notification?.body ?? message.data['body'];
+  // await notificationService.initializeNotification();
+  if (message.notification?.title.toString() == 'Incoming Call') {
+    logger.w('Incoming call');
+    CallKitService.instance.showIncomingCall('callerId', 'callerName');
+  } else {
+    notificationService.triggerHeadsUp(
+      message.notification.hashCode,
+      message.notification?.title ?? message.data['title'],
+      message.notification?.body ?? message.data['body'],
+    );
+  }
 }
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
@@ -45,8 +56,8 @@ class NotificationService {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     flutterLocalNotificationsPlugin.initialize(
-      InitializationSettings(
-        android: AndroidInitializationSettings('@drawable/launch'),
+      const InitializationSettings(
+        android: AndroidInitializationSettings('@drawable/launcher'),
         iOS: DarwinInitializationSettings(),
       ),
     );
@@ -143,16 +154,25 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       logger.i('Got a message whilst in the foreground!');
       logger.i('Message data: ${message.data}');
+
+      if (message.notification?.title.toString() == 'Incoming Call') {
+        logger.w('Incoming call');
+        CallKitService.instance.showIncomingCall('callerId', 'callerName');
+      } else {
+        triggerHeadsUp(
+            message.notification.hashCode,
+            message.notification?.title ?? message.data['title'],
+            message.notification?.body ?? message.data['body']);
+      }
+
       //
-      triggerHeadsUp(
-          message.notification.hashCode,
-          message.notification?.title ?? message.data['title'],
-          message.notification?.body ?? message.data['body']);
     });
   }
 
   void _openMessageApp() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+
+
       logger.i(
           'A new onMessageOpenedApp event was published! ${message.data['test']}');
     });
@@ -189,7 +209,7 @@ class NotificationService {
         android: AndroidNotificationDetails(
           channel.id,
           channel.name,
-          icon: "@drawable/launch",
+          icon: "launcher",
           importance: Importance.defaultImportance,
           priority: Priority.high,
           enableLights: true,

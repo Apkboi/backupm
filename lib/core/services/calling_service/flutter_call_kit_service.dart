@@ -6,6 +6,9 @@ import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/navigation/routes.dart';
+import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -34,6 +37,13 @@ class CallKitService {
           // TODO: accepted an incoming call
           // TODO: show screen calling in Flutter
 
+          Future.delayed(
+            const Duration(seconds: 20),
+            () {
+              // CustomRoutes.goRouter.pushNamed(PageUrl.signUpIntro);
+            },
+          );
+          // injector.get<CallCubit>().acceptCall();
           logger.w(event.body['extra']);
           break;
         case Event.actionCallDecline:
@@ -73,7 +83,8 @@ class CallKitService {
     });
   }
 
-  Future<void> showIncomingCall(String callerId, String callerName) async {
+  Future<void> showIncomingCall(String callerId, String callerName,
+      {Map<String, dynamic>? extra}) async {
     // Configure CallKit with your desired settings
     this._currentUuid = const Uuid().v4();
     CallKitParams callKitParams = const CallKitParams(
@@ -83,7 +94,7 @@ class CallKitService {
       normalHandle: 1,
       avatar: 'https://i.pravatar.cc/100',
       handle: '0123456789',
-      type: 0,
+      type: 1,
       textAccept: 'Accept',
       textDecline: 'Decline',
       missedCallNotification: NotificationParams(

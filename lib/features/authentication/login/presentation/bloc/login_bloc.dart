@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/firebase/notifiactions.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 import 'package:mentra/features/authentication/data/models/login_preview_response.dart';
 import 'package:mentra/features/authentication/data/models/oauth_req_dto.dart';
@@ -70,9 +71,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         throw 'Couldn\'t complete google authentication';
       }
       var res = await _authRepository.oauthSignIn(OauthReqDto(
-        token: response?.idToken,
-        provider: 'google',
-      ));
+          token: response?.idToken, provider: 'google', fcmToken: notiToken));
       if (!res.data.newUser) {
         AuthSuccessUsecase().execute(
           res.toAuthSuccessResponse,
@@ -94,9 +93,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         throw 'Couldn\'t complete apple authentication';
       }
       var res = await _authRepository.oauthSignIn(OauthReqDto(
-        token: response?.identityToken,
-        provider: 'apple',
-      ));
+          token: response?.identityToken,
+          provider: 'apple',
+          fcmToken: notiToken));
       if (!res.data.newUser) {
         AuthSuccessUsecase().execute(res.toAuthSuccessResponse);
       }

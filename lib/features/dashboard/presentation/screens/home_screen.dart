@@ -44,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     _welcome();
     DashboardUsecase().execute();
-
     super.initState();
   }
 
@@ -192,7 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       //     PageUrl.talkToMentraScreen);
 
                                       // StripeService().initPaymentSheet();
-                                      CallKitService.instance.showIncomingCall('callerId', 'callerName');
+                                      CallKitService.instance.showIncomingCall(
+                                          'callerId', 'callerName');
                                     },
                                     color: Pallets.secondary,
                                     fgColor: Pallets.navy,

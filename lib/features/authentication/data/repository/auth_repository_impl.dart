@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image/image.dart';
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/firebase/notifiactions.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
@@ -39,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       final response = await _networkService.call(
         UrlConfig.register, RequestMethod.post,
-        data: payload.toJson(),
+        data: payload.copyWith(token: notiToken).toJson(),
         // data: formData
       );
 
@@ -90,7 +91,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<AuthSuccessResponse> login(String email, String password) async {
     final response = await _networkService.call(
         UrlConfig.login, RequestMethod.post,
-        data: {"email": email, "password": password});
+        data: {"email": email, "password": password, 'fcm_token': notiToken});
 
     return AuthSuccessResponse.fromJson(response.data);
   }
@@ -103,7 +104,7 @@ class AuthRepositoryImpl extends AuthRepository {
           data: {"email": email});
 
       return LoginPreviewResponse.fromJson(response.data);
-    }  catch (e,stack) {
+    } catch (e, stack) {
       logger.e(e.toString());
       logger.e(stack.toString());
       rethrow;
@@ -149,7 +150,7 @@ class AuthRepositoryImpl extends AuthRepository {
       final response = await _networkService(
         UrlConfig.oauthLogin,
         RequestMethod.post,
-        data: data.toJson(),
+        data: data.copyWith(fcmToken: notiToken).toJson(),
       );
 
       return OauthResponse.fromJson(response.data);

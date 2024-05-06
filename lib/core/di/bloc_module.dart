@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
@@ -47,6 +48,7 @@ void setup(GetIt getIt) {
       () => DailyTaskBloc(injector.get()));
   getIt.registerLazySingleton<DailyStreakBloc>(
       () => DailyStreakBloc(injector.get()));
+  getIt.registerLazySingleton<PusherCubit>(() => PusherCubit());
   getIt.registerLazySingleton<CallCubit>(() => CallCubit());
 
   // getIt.registerLazySingleton<MentraChatBloc>(

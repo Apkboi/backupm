@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
 import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-
 import '../../../../account/presentation/user_bloc/user_bloc.dart';
 
 part 'call_state.dart';
@@ -66,19 +66,31 @@ class CallCubit extends Cubit<CallState> {
     // create peer connection
     try {
       _rtcPeerConnection = await createPeerConnection({
-        'iceServers': [
+        "iceServers": [
           {
-            'urls': [
-              'stun:stun1.l.google.com:19302',
-              'stun:stun.rtc.yourmentra.com',
-            ]
+            "url": "stun:global.stun.twilio.com:3478",
+            "urls": "stun:global.stun.twilio.com:3478"
           },
           {
-            'urls': [
-              'turn:turn.rtc.yourmentra.com',
-            ],
-            'username': 'turn',
-            'credential': 'Turn09865',
+            "url": "turn:global.turn.twilio.com:3478?transport=udp",
+            "username":
+                "a433218b11c4ca840c61325423fbb7b79439319f02c2efd462ce66a5dc352bf9",
+            "urls": "turn:global.turn.twilio.com:3478?transport=udp",
+            "credential": "TOXPtZss6Qj7XWCj6mXFp2SskSRD3opkhDZSGojNdbI="
+          },
+          {
+            "url": "turn:global.turn.twilio.com:3478?transport=tcp",
+            "username":
+                "a433218b11c4ca840c61325423fbb7b79439319f02c2efd462ce66a5dc352bf9",
+            "urls": "turn:global.turn.twilio.com:3478?transport=tcp",
+            "credential": "TOXPtZss6Qj7XWCj6mXFp2SskSRD3opkhDZSGojNdbI="
+          },
+          {
+            "url": "turn:global.turn.twilio.com:443?transport=tcp",
+            "username":
+                "a433218b11c4ca840c61325423fbb7b79439319f02c2efd462ce66a5dc352bf9",
+            "urls": "turn:global.turn.twilio.com:443?transport=tcp",
+            "credential": "TOXPtZss6Qj7XWCj6mXFp2SskSRD3opkhDZSGojNdbI="
           }
         ]
       });
@@ -123,7 +135,7 @@ class CallCubit extends Cubit<CallState> {
       setState(() {});
       _listenToPusher();
 
-       print("Offer data");
+      print("Offer data");
       print(jsonEncode(_offer?.sdp));
 
       await _rtcPeerConnection!.setRemoteDescription(
@@ -185,15 +197,6 @@ class CallCubit extends Cubit<CallState> {
     setState(() {});
   }
 
-  // void _createOffer() async {
-  //   RTCSessionDescription description =
-  //   await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
-  //   var session = parse(description.sdp.toString());
-  //   log(json.encode(session));
-  //   // _offer = true;
-  //   _rtcPeerConnection!.setLocalDescription(description);
-  // }
-
   void dispose() {
     localRTCVideoRenderer.dispose();
     remoteRTCVideoRenderer.dispose();
@@ -230,6 +233,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   onEventReceived(event) {
+    // injector.get<PusherCubit>().triggerPusherEvent(event);
     logger.w('Event from server:$event');
     var data = (event as PusherEvent).data;
     if ((event).eventName == 'IceCandidate') {
@@ -292,5 +296,9 @@ class CallCubit extends Cubit<CallState> {
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
+  }
+
+  void acceptCall() {
+    emit(AcceptCallState());
   }
 }

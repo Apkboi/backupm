@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:mentra/core/services/firebase/notifiactions.dart';
+
 RegistrationPayload registrationPayloadFromJson(String str) =>
     RegistrationPayload.fromJson(json.decode(str));
 
@@ -17,6 +19,7 @@ class RegistrationPayload {
   final String password;
   final String avatar;
   final String role;
+  final String token;
 
   RegistrationPayload({
     required this.name,
@@ -25,6 +28,7 @@ class RegistrationPayload {
     required this.password,
     required this.avatar,
     required this.role,
+    required this.token,
   });
 
   RegistrationPayload copyWith({
@@ -34,6 +38,7 @@ class RegistrationPayload {
     String? password,
     String? avatar,
     String? role,
+    String? token,
   }) =>
       RegistrationPayload(
         name: name ?? this.name,
@@ -42,6 +47,7 @@ class RegistrationPayload {
         password: password ?? this.password,
         avatar: avatar ?? this.avatar,
         role: role ?? this.role,
+        token: token ?? this.token,
       );
 
   factory RegistrationPayload.fromJson(Map<String, dynamic> json) =>
@@ -52,10 +58,17 @@ class RegistrationPayload {
         password: json["password"],
         avatar: json["avatar_id"],
         role: json["role"],
+        token: json["fcm_token"],
       );
 
   factory RegistrationPayload.empty() => RegistrationPayload(
-      name: '', email: '', birthYear: '', password: '', avatar: '', role: '');
+      name: '',
+      email: '',
+      birthYear: '',
+      password: '',
+      avatar: '',
+      role: '',
+      token: notiToken);
 
   Map<String, dynamic> toJson() => {
         "name": name,
@@ -64,5 +77,6 @@ class RegistrationPayload {
         "password": password,
         "avatar": avatar,
         "role": role,
+        "fcm_token": token,
       };
 }
