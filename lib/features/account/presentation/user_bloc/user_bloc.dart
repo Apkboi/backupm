@@ -7,7 +7,6 @@ import 'package:mentra/features/account/dormain/repository/account_repository.da
 import 'package:mentra/features/authentication/data/models/auth_success_response.dart';
 
 part 'user_event.dart';
-
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {

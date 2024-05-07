@@ -27,7 +27,6 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
         milliseconds: 300,
       ),
       () {
-
         logger.w(widget.offer?.toJson());
 
         callBloc.startCall(widget.callerId, widget.calleeId, widget.offer);
