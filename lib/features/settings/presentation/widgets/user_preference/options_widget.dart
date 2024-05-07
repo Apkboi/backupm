@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/options_color_scheme.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
-
 
 class OptionsWidget extends StatelessWidget {
   const OptionsWidget({super.key, required this.question});
@@ -43,13 +43,15 @@ class OptionsWidget extends StatelessWidget {
                         // shape: BoxShape.circle,
                         color: isSelected
                             ? Pallets.lightSecondary
-                            : Pallets.lightTurquoise,
+                            : OptionsColorScheme.fromIndex(index).bgColor,
                       ),
                       child: Center(
                         child: Text(
                           question.options[index],
-                          style:
-                              TextStyle(color: Pallets.black, fontSize: 16.sp),
+                          style: TextStyle(
+                              color:
+                                  OptionsColorScheme.fromIndex(index).textColor,
+                              fontSize: 16.sp),
                         ),
                       ),
                     ),

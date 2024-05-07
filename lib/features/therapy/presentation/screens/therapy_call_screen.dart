@@ -23,13 +23,12 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
   @override
   void initState() {
     Future.delayed(
-      Duration(
+      const Duration(
         milliseconds: 300,
       ),
       () {
 
         logger.w(widget.offer?.toJson());
-
         callBloc.startCall(widget.callerId, widget.calleeId, widget.offer);
       },
     );
@@ -46,7 +45,9 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
             logger.w('event received');
           },
           builder: (context, state) {
+
             var bloc = context.watch<CallCubit>();
+
             return Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

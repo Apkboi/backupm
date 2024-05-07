@@ -94,15 +94,20 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     _addTyping();
     await Future.delayed(const Duration(seconds: 2));
     await _removeTyping();
+
     stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]
       ..questionTime = DateTime.now());
     currentQuestion = stagedMessages.last;
     // Check if questions are complete
     if (stagedMessages.length == dataSource.therapyQuestions.length) {
-      emit(QuestionsCompletedState());
+      await Future.delayed(const Duration(milliseconds: 500));
+      updatePreferences(convertQuestionsToMap(stagedMessages));
+
+      // emit(QuestionsCompletedState());
     } else {
       emit(QuestionUpdatedState());
     }
+
     _scrollToLast();
 
     SoundManager.playMessageReceivedSound();
@@ -162,7 +167,6 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     currentQuestion = stagedMessages.lastOrNull;
   }
 
-  
   final agePreferenceMap = {
     'Younger (20s-30s)': '20-30',
     'Middle-aged (40s-50s)': '40-50',
