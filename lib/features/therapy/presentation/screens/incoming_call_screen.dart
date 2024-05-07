@@ -107,7 +107,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
 
   _answerCall(BuildContext context) {
     // log
-
+    Navigator.pop(context);
     context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
       PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
       PathParam.callerId: widget.callerId.toString(),

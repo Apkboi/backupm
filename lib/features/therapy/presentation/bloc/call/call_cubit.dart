@@ -66,31 +66,19 @@ class CallCubit extends Cubit<CallState> {
     // create peer connection
     try {
       _rtcPeerConnection = await createPeerConnection({
-        "iceServers": [
+        'iceServers': [
           {
-            "url": "stun:global.stun.twilio.com:3478",
-            "urls": "stun:global.stun.twilio.com:3478"
+            'urls': [
+              'stun:stun1.l.google.com:19302', // Public STUN server (consider private for production)
+              'stun:stun.rtc.yourmentra.com', // Your TURN server's STUN endpoint (if available)
+            ]
           },
           {
-            "url": "turn:global.turn.twilio.com:3478?transport=udp",
-            "username":
-                "a433218b11c4ca840c61325423fbb7b79439319f02c2efd462ce66a5dc352bf9",
-            "urls": "turn:global.turn.twilio.com:3478?transport=udp",
-            "credential": "TOXPtZss6Qj7XWCj6mXFp2SskSRD3opkhDZSGojNdbI="
-          },
-          {
-            "url": "turn:global.turn.twilio.com:3478?transport=tcp",
-            "username":
-                "a433218b11c4ca840c61325423fbb7b79439319f02c2efd462ce66a5dc352bf9",
-            "urls": "turn:global.turn.twilio.com:3478?transport=tcp",
-            "credential": "TOXPtZss6Qj7XWCj6mXFp2SskSRD3opkhDZSGojNdbI="
-          },
-          {
-            "url": "turn:global.turn.twilio.com:443?transport=tcp",
-            "username":
-                "a433218b11c4ca840c61325423fbb7b79439319f02c2efd462ce66a5dc352bf9",
-            "urls": "turn:global.turn.twilio.com:443?transport=tcp",
-            "credential": "TOXPtZss6Qj7XWCj6mXFp2SskSRD3opkhDZSGojNdbI="
+            'urls': [
+              'turn:turn.rtc.yourmentra.com', // Your TURN server URL
+            ],
+            'username': 'turn',
+            'credential': 'Turn09865', // Replace with your actual credentials
           }
         ]
       });
@@ -103,20 +91,18 @@ class CallCubit extends Cubit<CallState> {
           });
         }
       };
-      _rtcPeerConnection!.onAddStream = (stream) {
-        print('addStream: ' + stream.id);
-        print(stream);
-        remoteRTCVideoRenderer.srcObject = stream;
-        logger.f('stream added');
-        setState(() {});
-      };
-      logger.w('message');
-      // listen for remotePeer mediaTrack event
-      // _rtcPeerConnection!.onTrack = (event) {
-      //   print('New track: ');
-      //   _remoteRTCVideoRenderer.srcObject = event.streams[0];
+      // _rtcPeerConnection!.onAddStream = (stream) {
+      //   print('addStream: ' + stream.id);
+      //   print(stream);
+      //   remoteRTCVideoRenderer.srcObject = stream;
+      //   logger.f('stream added');
       //   setState(() {});
       // };
+      // listen for remotePeer mediaTrack event
+      _rtcPeerConnection!.onTrack = (event) {
+        remoteRTCVideoRenderer.srcObject = event.streams[0];
+        setState(() {});
+      };
       // get localStream
       _localStream = await navigator.mediaDevices.getUserMedia({
         'audio': isAudioOn,
@@ -127,7 +113,6 @@ class CallCubit extends Cubit<CallState> {
       // add mediaTrack to peerConnection
       _localStream!.getTracks().forEach((track) {
         _rtcPeerConnection!.addTrack(track, _localStream!);
-        logger.w('adding');
         setState(() {});
       });
       // set source for local video renderer
@@ -153,11 +138,21 @@ class CallCubit extends Cubit<CallState> {
       print(jsonEncode(answer.toMap()));
 
       // send SDP answer to remote peer
-      _answerCall(_callerId, answer.toMap());
+      await _answerCall(_callerId, answer.toMap());
+
+      _createOffer();
     } catch (e, stack) {
       logger.e(e.toString());
       logger.e(stack.toString());
     }
+  }
+
+  void _createOffer() async {
+    RTCSessionDescription offer =
+        await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
+
+    _rtcPeerConnection!.setLocalDescription(offer);
+    await _offerCall(_callerId, offer.toMap());
   }
 
   _leaveCall() {
@@ -232,7 +227,7 @@ class CallCubit extends Cubit<CallState> {
     }
   }
 
-  onEventReceived(event) {
+  onEventReceived(event) async {
     // injector.get<PusherCubit>().triggerPusherEvent(event);
     logger.w('Event from server:$event');
     var data = (event as PusherEvent).data;
@@ -251,11 +246,42 @@ class CallCubit extends Cubit<CallState> {
       logger.i("Added iceCandidate to rtcPeerConnection");
       logger.i(iceCandidateResponse.iceCandidate.toJson());
     }
+
+    if ((event).eventName == 'callAnswered') {
+      IncomingCallResponse answerResponse =
+          IncomingCallResponse.fromJson(jsonDecode(data));
+      await _rtcPeerConnection!.setRemoteDescription(
+        RTCSessionDescription(
+            answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
+      );
+    }
   }
 
   onSubscriptionError(message, d) {}
 
-  void _answerCall(int callerId, map) async {
+  _offerCall(int callerId, map) async {
+    try {
+      var networkService = injector.get<NetworkService>();
+      var body = {
+        "callerId": _calleeId,
+        "calleeId": callerId,
+        "sdpOffer": base64.encode(utf8.encode(jsonEncode(map))),
+      };
+
+      logger.w('Pushing answer');
+      logger.w(body);
+
+      var respose = await networkService.call(
+          'https://staging.app.yourmentra.com/api/v1/webrtc/make-call',
+          RequestMethod.post,
+          data: body);
+      logger.w(respose.data);
+    } catch (e, stack) {
+      logger.e(e.toString(), stackTrace: stack);
+    }
+  }
+
+  _answerCall(int callerId, map) async {
     try {
       var networkService = injector.get<NetworkService>();
       var body = {
