@@ -17,5 +17,6 @@ class HapticFeedbackManager {
 
   static Future<void> vibrate() async {
     Vibrate.feedback(FeedbackType.success);
+
   }
 }

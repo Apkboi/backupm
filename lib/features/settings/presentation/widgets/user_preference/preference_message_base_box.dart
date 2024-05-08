@@ -9,7 +9,7 @@ class PreferenceQuestionBaseBox extends StatefulWidget {
     required this.question,
   }) : super(key: key);
 
-  final QuestionPromptModel question;
+  final TherapyPreferenceMessageModel question;
 
   @override
   State<PreferenceQuestionBaseBox> createState() =>

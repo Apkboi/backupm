@@ -1,7 +1,6 @@
 part of 'call_cubit.dart';
 
-
-abstract class CallState  {
+abstract class CallState {
   const CallState();
 }
 
@@ -29,9 +28,17 @@ class CallConnectedState extends CallState {
   @override
   List<Object> get props => [];
 }
+
 class AcceptCallState extends CallState {
-  @override
-  List<Object> get props => [];
+  final String callerId;
+
+  AcceptCallState(this.callerId);
+
+  List<Object> get props => [callerId];
 }
 
+class CallEndedState extends CallState {
+  CallEndedState();
 
+  List<Object> get props => [];
+}

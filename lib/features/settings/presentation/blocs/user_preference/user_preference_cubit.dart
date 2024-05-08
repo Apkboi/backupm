@@ -33,8 +33,8 @@ UserPreferenceFlow stringToUserPreferenceFlow(String value) {
 
 class UserPreferenceCubit extends Cubit<UserPreferenceState> {
   final UserPreferenceRepository userPreferenceRepository;
-  List<QuestionPromptModel> stagedMessages = [];
-  QuestionPromptModel? currentQuestion;
+  List<TherapyPreferenceMessageModel> stagedMessages = [];
+  TherapyPreferenceMessageModel? currentQuestion;
   PreferenceQuestionsDataSource dataSource = PreferenceQuestionsDataSource();
 
   UserPreferenceCubit(this.userPreferenceRepository)
@@ -69,13 +69,12 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
 
   void answerQuestion({required int id, required String answer}) {
     SoundManager.playMessageSentSound();
-
     //   Update the question with the answer
     stagedMessages.where((element) => element.id == id).first.answer = answer;
-    stagedMessages.where((element) => element.id == id).first.answerTime =
-        DateTime.now();
+    stagedMessages.where((element) => element.id == id).first.answerTime = DateTime.now();
 
     emit(QuestionUpdatedState());
+
     //   Check if the answered question is the last question in the list to get next question
     if (id == stagedMessages.last.id) {
       //   Get NextQuestion
@@ -95,9 +94,9 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     await Future.delayed(const Duration(seconds: 2));
     await _removeTyping();
 
-    stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]
-      ..questionTime = DateTime.now());
+    stagedMessages.add(dataSource.therapyQuestions[currentQuestion!.id + 1]..questionTime = DateTime.now());
     currentQuestion = stagedMessages.last;
+
     // Check if questions are complete
     if (stagedMessages.length == dataSource.therapyQuestions.length) {
       await Future.delayed(const Duration(milliseconds: 500));
@@ -113,16 +112,16 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
     SoundManager.playMessageReceivedSound();
   }
 
-  void updateCurrentQuestion(QuestionPromptModel question) {
+  void updateCurrentQuestion(TherapyPreferenceMessageModel question) {
     currentQuestion = question;
     emit(QuestionUpdatedState());
   }
 
   Map<String, dynamic> convertQuestionsToMap(
-      List<QuestionPromptModel> messages) {
+      List<TherapyPreferenceMessageModel> messages) {
     Map<String, dynamic> questionsMap = {};
 
-    for (QuestionPromptModel question in messages) {
+    for (TherapyPreferenceMessageModel question in messages) {
       // Use the question key as the map key and the answer as the value
       if (question.key == 'age_range') {
         questionsMap[question.key] = agePreferenceMap[question.answer];
@@ -154,8 +153,8 @@ class UserPreferenceCubit extends Cubit<UserPreferenceState> {
   }
 
   void _addTyping() async {
-    stagedMessages.add(QuestionPromptModel.typing());
-    currentQuestion = QuestionPromptModel.typing();
+    stagedMessages.add(TherapyPreferenceMessageModel.typing());
+    currentQuestion = TherapyPreferenceMessageModel.typing();
     emit(QuestionUpdatedState());
     await Future.delayed(const Duration(seconds: 1));
   }

@@ -12,7 +12,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/app_styles.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
-import 'package:mentra/features/mentra_bot/presentation/widget/session_scheduled_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/session_scheduled_dialog.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 import 'package:mentra/features/therapy/data/models/create_session_response.dart';

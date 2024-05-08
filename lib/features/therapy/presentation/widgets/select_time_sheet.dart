@@ -54,7 +54,7 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                 ),
                 16.verticalSpace,
                 TextView(
-                  text: 'Select time',
+                  text: 'Select Time',
                   style: GoogleFonts.fraunces(
                       color: Pallets.navy,
                       fontSize: 32.sp,

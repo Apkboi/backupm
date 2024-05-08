@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
 import 'package:flutter_callkit_incoming/entities/call_kit_params.dart';
@@ -6,8 +7,10 @@ import 'package:flutter_callkit_incoming/entities/ios_params.dart';
 import 'package:flutter_callkit_incoming/entities/notification_params.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/navigation/routes.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 
 import 'package:uuid/uuid.dart';
@@ -16,6 +19,8 @@ class CallKitService {
   static final CallKitService instance = CallKitService._internal();
 
   var _currentUuid;
+
+  get currentUuid => _currentUuid;
 
   CallKitService._internal();
 
@@ -37,14 +42,8 @@ class CallKitService {
           // TODO: accepted an incoming call
           // TODO: show screen calling in Flutter
 
-          Future.delayed(
-            const Duration(seconds: 20),
-            () {
-              // CustomRoutes.goRouter.pushNamed(PageUrl.signUpIntro);
-            },
-          );
-          // injector.get<CallCubit>().acceptCall();
-          logger.w(event.body['extra']);
+          _onAcceptCall(event);
+
           break;
         case Event.actionCallDecline:
           // TODO: declined an incoming call
@@ -84,30 +83,30 @@ class CallKitService {
   }
 
   Future<void> showIncomingCall(String callerId, String callerName,
-      {Map<String, dynamic>? extra}) async {
+      {Map<String, dynamic>? extra, required String callerImage}) async {
     // Configure CallKit with your desired settings
-    this._currentUuid = const Uuid().v4();
-    CallKitParams callKitParams = const CallKitParams(
-      id: '_currentUuid',
-      nameCaller: 'Hien Nguyen',
-      appName: 'Callkit',
-      normalHandle: 1,
-      avatar: 'https://i.pravatar.cc/100',
-      handle: '0123456789',
-      type: 1,
+    this._currentUuid = Uuid().v4();
+    CallKitParams callKitParams = CallKitParams(
+      id: _currentUuid,
+      nameCaller: callerName.toString(),
+      appName: 'CallKit',
+      normalHandle: 2,
+      avatar: callerImage.toString(),
+      // handle: '0123456789',
+      type: 4,
       textAccept: 'Accept',
       textDecline: 'Decline',
       missedCallNotification: NotificationParams(
         showNotification: true,
-        isShowCallback: true,
+        isShowCallback: false,
         subtitle: 'Missed call',
-        callbackText: 'Call back',
+        // callbackText: 'Call back',
       ),
       duration: 30000,
-      extra: <String, dynamic>{'userId': '1a2b3c4d'},
+      extra: extra,
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
       android: AndroidParams(
-          isCustomNotification: true,
+          isCustomNotification: false,
           isShowLogo: false,
           ringtonePath: 'system_ringtone_default',
           backgroundColor: '#0955fa',
@@ -137,11 +136,66 @@ class CallKitService {
     await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
   }
 
-  void endCall(String callId) async {
+  void endCall() async {
     await FlutterCallkitIncoming.endCall(_currentUuid);
+    _currentUuid = null;
   }
 
   void endAllCalls() async {
+    _currentUuid = null;
     await FlutterCallkitIncoming.endAllCalls();
+  }
+
+  void _onAcceptCall(CallEvent event) {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        logger.w(isAppInForeground());
+        if (isAppInForeground()) {
+          injector
+              .get<CallCubit>()
+              .acceptCall(event.body['extra']['webrtc_description_id']);
+        }
+      },
+    );
+    logger.w(event.body['extra']);
+  }
+
+  bool isAppInForeground() {
+    return WidgetsBinding.instance.lifecycleState == AppLifecycleState.resumed;
+  }
+
+  Future<void> checkAndNavigationCallingPage() async {
+    // TODO: ACCEPT CALLERID
+    Future.delayed(
+      const Duration(seconds: 0),
+      () async {
+        var currentCall = await getCurrentCall();
+        if (currentCall != null &&
+            (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
+          CustomRoutes.goRouter
+              .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+            PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
+            PathParam.callerId: '1',
+          });
+          //Navigate to your call screen.
+        }
+      },
+    );
+  }
+
+  Future<dynamic> getCurrentCall() async {
+    //check current call from pushkit if possible
+    var calls = await FlutterCallkitIncoming.activeCalls();
+    if (calls is List) {
+      if (calls.isNotEmpty) {
+        print('DATA: $calls');
+        _currentUuid = calls[0]['id'];
+        return calls[0];
+      } else {
+        _currentUuid = "";
+        return null;
+      }
+    }
   }
 }

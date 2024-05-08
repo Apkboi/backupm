@@ -48,7 +48,7 @@ class _MentraAppState extends State<MentraApp> {
       // designSize: ScreenUtil.defaultSize,
       useInheritedMediaQuery: true,
       minTextAdapt: true,
-      builder: (contextAlt, child) {
+      builder: (context, child) {
         return OverlaySupport.global(
           child: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

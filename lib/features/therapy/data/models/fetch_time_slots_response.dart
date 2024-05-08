@@ -59,7 +59,6 @@ class FetchTimeSlotsResponse {
     if (data is List) {
       // If the data is already a list, return it
       return List<TimeSlot>.from(data);
-
     } else if (data is Map<String, TimeSlot>) {
       // If the data is a map, convert it to a list of TimeSlot objects
       return (data as Map<String, TimeSlot>)

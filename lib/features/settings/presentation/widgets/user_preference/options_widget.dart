@@ -10,7 +10,7 @@ import 'package:mentra/common/widgets/haptic_inkwell.dart';
 class OptionsWidget extends StatelessWidget {
   const OptionsWidget({super.key, required this.question});
 
-  final QuestionPromptModel question;
+  final TherapyPreferenceMessageModel question;
 
   @override
   Widget build(BuildContext context) {

@@ -1,15 +1,13 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/navigation/route_url.dart';
-import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
+import 'package:mentra/core/services/firebase/deep_link_naigator.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 
 // import 'package:plain_notification_token/plain_notification_token.dart';
 
@@ -30,10 +28,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   logger.i('Handling a background message ${message.notification?.title}');
   var body = message.notification?.body ?? message.data['body'];
   // await notificationService.initializeNotification();
-  if (message.notification?.title.toString() == 'Incoming Call') {
-    logger.w('Incoming call');
-    CallKitService.instance.showIncomingCall('callerId', 'callerName');
-  } else {
+  // await Firebase.initializeApp();
+  DeepLinkNavigator.handleBackgroundMessages(message);
+  if (message.notification?.title.toString() != 'Incoming Call') {
     notificationService.triggerHeadsUp(
       message.notification.hashCode,
       message.notification?.title ?? message.data['title'],
@@ -155,14 +152,13 @@ class NotificationService {
       logger.i('Got a message whilst in the foreground!');
       logger.i('Message data: ${message.data}');
 
-      if (message.notification?.title.toString() == 'Incoming Call') {
-        logger.w('Incoming call');
-        CallKitService.instance.showIncomingCall('callerId', 'callerName');
-      } else {
-        triggerHeadsUp(
-            message.notification.hashCode,
-            message.notification?.title ?? message.data['title'],
-            message.notification?.body ?? message.data['body']);
+      DeepLinkNavigator.handleForegroundMessages(message);
+      if (message.notification?.title.toString() != 'Incoming Call') {
+        notificationService.triggerHeadsUp(
+          message.notification.hashCode,
+          message.notification?.title ?? message.data['title'],
+          message.notification?.body ?? message.data['body'],
+        );
       }
 
       //
@@ -171,8 +167,6 @@ class NotificationService {
 
   void _openMessageApp() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-
-
       logger.i(
           'A new onMessageOpenedApp event was published! ${message.data['test']}');
     });

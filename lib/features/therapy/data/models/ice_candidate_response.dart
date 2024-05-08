@@ -10,7 +10,7 @@ String iceCandidateResponseToJson(IceCandidateResponse data) =>
     json.encode(data.toJson());
 
 class IceCandidateResponse {
-  final String callerId;
+  final int callerId;
   final IceCandidate iceCandidate;
 
   IceCandidateResponse({

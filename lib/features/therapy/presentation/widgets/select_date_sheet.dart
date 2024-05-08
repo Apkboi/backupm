@@ -63,7 +63,7 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                   ),
                   16.verticalSpace,
                   TextView(
-                    text: widget.tittle ?? 'Select date',
+                    text: widget.tittle ?? 'Select Date',
                     style: GoogleFonts.fraunces(
                         color: Pallets.navy,
                         fontSize: 32.sp,

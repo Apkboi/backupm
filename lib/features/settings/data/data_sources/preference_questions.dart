@@ -1,8 +1,8 @@
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 
 class PreferenceQuestionsDataSource {
-  final List<QuestionPromptModel> therapyQuestions = [
-    QuestionPromptModel(
+  final List<TherapyPreferenceMessageModel> therapyQuestions = [
+    TherapyPreferenceMessageModel(
       question: [
         "Let's personalize your experience. How are you feeling right now?"
       ],
@@ -18,7 +18,7 @@ class PreferenceQuestionsDataSource {
       key: 'state_of_mind',
       id: 0,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: [
         'Understanding where you\'re at is important to us. Have you ever tried therapy or counseling before?'
       ],
@@ -27,16 +27,16 @@ class PreferenceQuestionsDataSource {
       key: 'had_therapy',
       id: 1,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: [
         'Do you have any particular gender preference when it comes to discussing your feelings and thoughts?'
       ],
       answer: null,
-      options: ["Male", "Female",'No preference'],
+      options: ["Male", "Female", 'No preference'],
       key: 'gender',
       id: 2,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: ['Is there an age range you\'d prefer for your therapist?'],
       answer: null,
       options: [
@@ -48,7 +48,7 @@ class PreferenceQuestionsDataSource {
       key: 'age_range',
       id: 3,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: [
         'Are there any cultural or religious factors that you\'d like us to consider when assisting you?'
       ],
@@ -57,7 +57,7 @@ class PreferenceQuestionsDataSource {
       key: 'culture_factor',
       id: 4,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: [
         'Are there particular therapeutic approaches or techniques that resonate with you?'
       ],
@@ -66,7 +66,7 @@ class PreferenceQuestionsDataSource {
       key: 'therapeutic_approach',
       id: 5,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: [
         'Are there any specific areas or concerns you\'d like to address through your conversations?'
       ],
@@ -75,7 +75,7 @@ class PreferenceQuestionsDataSource {
       key: 'specific_concerns',
       id: 6,
     ),
-    QuestionPromptModel(
+    TherapyPreferenceMessageModel(
       question: [
         'Your answers help us understand you better and ensure that we\'re well-equipped to provide the support you need.',
         'We\'re here to listen and assist with your well-being. 😊'
@@ -91,7 +91,7 @@ class PreferenceQuestionsDataSource {
   Map<String, dynamic> convertQuestionsToMap() {
     Map<String, dynamic> questionsMap = {};
 
-    for (QuestionPromptModel question in therapyQuestions) {
+    for (TherapyPreferenceMessageModel question in therapyQuestions) {
       // Use the question key as the map key and the answer as the value
       questionsMap[question.key] = question.answer;
     }

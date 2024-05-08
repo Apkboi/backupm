@@ -333,7 +333,7 @@ class BotChatCubit extends Cubit<BotChatState> {
 
   void _addPasswordResetMessage() async {
     var termsMessage = BotChatmessageModel(
-        message: 'Password Reset',
+        message: 'Forgot pin?',
         isFromBot: true,
         id: 0,
         isTyping: false,

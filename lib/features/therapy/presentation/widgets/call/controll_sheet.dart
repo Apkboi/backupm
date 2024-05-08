@@ -4,6 +4,7 @@ import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -79,36 +80,44 @@ class _CallControllSheetState extends State<CallControllSheet> {
             runAlignment: WrapAlignment.start,
             spacing: 16,
             children: [
-              _ControlSwitchButton(
+              ControlSwitchButton(
                 isActive: true,
                 icon: ImageWidget(imageUrl: Assets.images.svgs.endCall),
                 tittle: 'End',
                 onTap: () {
+                  CallKitService.instance.endCall();
                   context.pop();
                   context.pop();
                   // isActive:  context.read<CallCubit>()., // Adjust isActive based on your logic
                 },
               ),
-              _ControlSwitchButton(
-                isActive:  context.watch<CallCubit>().isVideoOn, // Adjust isActive based on your logic
-                icon: const Icon(Icons.switch_video),
+              ControlSwitchButton(
+                isActive: context
+                    .watch<CallCubit>()
+                    .isVideoOn, // Adjust isActive based on your logic
+                icon: const Icon(Icons.cameraswitch_rounded),
                 tittle: 'Camera',
                 onTap: () {
                   context.read<CallCubit>().toggleCamera();
-
                 },
               ),
-              _ControlSwitchButton(
+              ControlSwitchButton(
                 isActive: !context
                     .watch<CallCubit>()
                     .isAudioOn, // Adjust isActive based on your logic
-                icon: ImageWidget(imageUrl: Assets.images.svgs.mute),
+                icon: Icon(
+                  context.watch<CallCubit>().isAudioOn
+                      ? Icons.mic
+                      : Icons.mic_off_sharp,
+                  size: 30,
+                  color: Pallets.white,
+                ),
                 tittle: 'Mute',
                 onTap: () {
                   context.read<CallCubit>().toggleMic();
                 },
               ),
-              _ControlSwitchButton(
+              ControlSwitchButton(
                 isActive: false, // Adjust isActive based on your logic
                 icon: ImageWidget(imageUrl: Assets.images.svgs.flip),
                 tittle: 'Flip',
@@ -125,24 +134,26 @@ class _CallControllSheetState extends State<CallControllSheet> {
   }
 }
 
-class _ControlSwitchButton extends StatefulWidget {
-  const _ControlSwitchButton(
+class ControlSwitchButton extends StatefulWidget {
+  const ControlSwitchButton(
       {super.key,
       required this.isActive,
       required this.icon,
       required this.tittle,
-      required this.onTap});
+      required this.onTap,
+      this.bgColor});
 
   final bool isActive;
   final Widget icon;
   final String tittle;
   final VoidCallback onTap;
+  final Color? bgColor;
 
   @override
-  State<_ControlSwitchButton> createState() => _ControlSwitchButtonState();
+  State<ControlSwitchButton> createState() => ControlSwitchButtonState();
 }
 
-class _ControlSwitchButtonState extends State<_ControlSwitchButton> {
+class ControlSwitchButtonState extends State<ControlSwitchButton> {
   @override
   Widget build(BuildContext context) {
     return HapticInkWell(

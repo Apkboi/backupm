@@ -470,12 +470,15 @@ class CustomRoutes {
           name: PageUrl.therapyCallScreen,
           builder: (context, state) => TherapyCallScreen(
               callerId: int.parse(
-                    state.uri.queryParameters[PathParam.callerId] ?? '0'),
+                  state.uri.queryParameters[PathParam.callerId] ?? '0'),
               calleeId: int.parse(
                   state.uri.queryParameters[PathParam.calleeId] ?? '0'),
-              offer: SdpOffer.fromJson(
-                jsonDecode(state.uri.queryParameters[PathParam.offer] ?? ''),
-              ))),
+              offer: state.uri.queryParameters[PathParam.offer] != null
+                  ? SdpOffer.fromJson(
+                      jsonDecode(
+                          state.uri.queryParameters[PathParam.offer] ?? ''),
+                    )
+                  : null)),
     ],
   );
 

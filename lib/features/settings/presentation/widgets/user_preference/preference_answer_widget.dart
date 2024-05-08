@@ -17,7 +17,7 @@ class PreferenceAnswerBox extends StatefulWidget {
     required this.question,
   });
 
-  final QuestionPromptModel question;
+  final TherapyPreferenceMessageModel question;
 
   @override
   State<PreferenceAnswerBox> createState() => _PreferenceAnswerBoxState();
@@ -26,9 +26,7 @@ class PreferenceAnswerBox extends StatefulWidget {
 class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
   @override
   Widget build(BuildContext context) {
-    return (widget.question.answer != null &&
-            context.read<UserPreferenceCubit>().currentQuestion?.id !=
-                widget.question.id)
+    return (widget.question.answer != null && context.read<UserPreferenceCubit>().currentQuestion?.id != widget.question.id)
         ? HapticInkWell(
             onTap: () {
               context
@@ -84,12 +82,9 @@ class _PreferenceAnswerBoxState extends State<PreferenceAnswerBox> {
               ],
             ),
           )
-        : (widget.question.options.isNotEmpty &&
-                context.read<UserPreferenceCubit>().currentQuestion?.id ==
-                    widget.question.id)
+        : (widget.question.options.isNotEmpty && context.read<UserPreferenceCubit>().currentQuestion?.id == widget.question.id)
             ? OptionsWidget(question: widget.question)
-            : widget.question.id !=
-                    PreferenceQuestionsDataSource().therapyQuestions.last.id
+            : widget.question.id != PreferenceQuestionsDataSource().therapyQuestions.last.id
                 ? 0.verticalSpace
                 : 0.horizontalSpace;
   }

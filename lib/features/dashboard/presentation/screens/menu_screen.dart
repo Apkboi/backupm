@@ -34,6 +34,7 @@ class _MenuScreenState extends State<MenuScreen> {
     Future.delayed(
       const Duration(milliseconds: 100),
       () {
+
         RefreshUserUsecase().execute();
       },
     );

@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
 import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart';
@@ -48,7 +50,12 @@ class CallCubit extends Cubit<CallState> {
     );
   }
 
-  Future<void> startCall(int callerId, calleeId, SdpOffer? offer) async {
+  Future<void> startCall(
+    int callerId,
+    calleeId,
+    SdpOffer? offer,
+  ) async {
+    emit(CallConnectingState());
     _calleeId = calleeId;
     _callerId = callerId;
     _offer = offer;
@@ -57,6 +64,10 @@ class CallCubit extends Cubit<CallState> {
     // initializing renderers
     localRTCVideoRenderer.initialize();
     remoteRTCVideoRenderer.initialize();
+
+    if (_offer == null) {
+      _getOfferFromRemote();
+    }
     // setup Peer Connection
     _setupPeerConnection();
     // _listenToPusher();
@@ -69,8 +80,10 @@ class CallCubit extends Cubit<CallState> {
         'iceServers': [
           {
             'urls': [
-              'stun:stun1.l.google.com:19302', // Public STUN server (consider private for production)
-              'stun:stun.rtc.yourmentra.com', // Your TURN server's STUN endpoint (if available)
+              'stun:stun1.l.google.com:19302',
+              // Public STUN server (consider private for production)
+              'stun:stun.rtc.yourmentra.com',
+              // Your TURN server's STUN endpoint (if available)
             ]
           },
           {
@@ -100,6 +113,7 @@ class CallCubit extends Cubit<CallState> {
       // };
       // listen for remotePeer mediaTrack event
       _rtcPeerConnection!.onTrack = (event) {
+        logger.w(event.track.muted);
         remoteRTCVideoRenderer.srcObject = event.streams[0];
         setState(() {});
       };
@@ -109,6 +123,7 @@ class CallCubit extends Cubit<CallState> {
         'video': isVideoOn
             ? {'facingMode': isFrontCameraSelected ? 'user' : 'environment'}
             : false,
+        "echoCancellation": true
       });
       // add mediaTrack to peerConnection
       _localStream!.getTracks().forEach((track) {
@@ -119,9 +134,6 @@ class CallCubit extends Cubit<CallState> {
       localRTCVideoRenderer.srcObject = _localStream;
       setState(() {});
       _listenToPusher();
-
-      print("Offer data");
-      print(jsonEncode(_offer?.sdp));
 
       await _rtcPeerConnection!.setRemoteDescription(
         RTCSessionDescription(_offer?.sdp, _offer?.type),
@@ -142,6 +154,7 @@ class CallCubit extends Cubit<CallState> {
 
       _createOffer();
     } catch (e, stack) {
+      emit(CallConnectingFailedState());
       logger.e(e.toString());
       logger.e(stack.toString());
     }
@@ -160,6 +173,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   toggleMic() {
+    // remoteRTCVideoRenderer.audioOutput('deviceId')
     // change status
     isAudioOn = !isAudioOn;
     // enable or disable audio track
@@ -175,6 +189,7 @@ class CallCubit extends Cubit<CallState> {
     // change status
     isVideoOn = !isVideoOn;
     // enable or disable video track
+
     _localStream?.getVideoTracks().forEach((track) {
       track.enabled = isVideoOn;
     });
@@ -230,6 +245,7 @@ class CallCubit extends Cubit<CallState> {
   onEventReceived(event) async {
     // injector.get<PusherCubit>().triggerPusherEvent(event);
     logger.w('Event from server:$event');
+
     var data = (event as PusherEvent).data;
     if ((event).eventName == 'IceCandidate') {
       IceCandidateResponse iceCandidateResponse =
@@ -254,6 +270,12 @@ class CallCubit extends Cubit<CallState> {
         RTCSessionDescription(
             answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
       );
+      emit(CallConnectedState());
+    }
+
+    if ((event).eventName == 'callEnded') {
+      CallKitService.instance.endCall();
+      emit(CallEndedState());
     }
   }
 
@@ -284,6 +306,7 @@ class CallCubit extends Cubit<CallState> {
   _answerCall(int callerId, map) async {
     try {
       var networkService = injector.get<NetworkService>();
+
       var body = {
         "callerId": callerId,
         "calleeId": _calleeId,
@@ -292,13 +315,37 @@ class CallCubit extends Cubit<CallState> {
 
       logger.w('Pushing answer');
       logger.w(body);
-
       var respose = await networkService.call(
           'https://staging.app.yourmentra.com/api/v1/webrtc/answer-call',
           RequestMethod.post,
           data: body);
       logger.w(respose.data);
     } catch (e, stack) {
+      // TODO: Emit Call Failed State
+      logger.e(e.toString(), stackTrace: stack);
+    }
+  }
+
+  endCall() async {
+    emit(CallEndedState());
+    try {
+      var networkService = injector.get<NetworkService>();
+
+      var body = {
+        "callerId": _callerId,
+        "calleeId": _calleeId,
+        "sender": _calleeId,
+      };
+
+      logger.w('Pushing answer');
+      logger.w(body);
+      var respose = await networkService.call(
+          'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
+          RequestMethod.post,
+          data: body);
+      logger.w(respose.data);
+    } catch (e, stack) {
+      // TODO: Emit Call Failed State
       logger.e(e.toString(), stackTrace: stack);
     }
   }
@@ -324,7 +371,30 @@ class CallCubit extends Cubit<CallState> {
     }
   }
 
-  void acceptCall() {
-    emit(AcceptCallState());
+  void acceptCall(
+    String descriptionId,
+  ) {
+    emit(AcceptCallState(descriptionId));
+  }
+
+  void _getOfferFromRemote() async {
+    try {
+      var networkService = injector.get<NetworkService>();
+      var body = {
+        "callerId": _callerId,
+        "calleeId": _calleeId,
+        // "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
+        "sender": "user"
+      };
+      logger.w('Pushing candidate');
+      logger.w(body);
+      var respose = await networkService.call(
+          'https://staging.app.yourmentra.com/api/v1/webrtc/ice-candidate',
+          RequestMethod.post,
+          data: body);
+      logger.w(respose.data);
+    } catch (e, stack) {
+      logger.e(e.toString(), stackTrace: stack);
+    }
   }
 }

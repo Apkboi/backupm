@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
@@ -10,6 +11,7 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
+import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/utils/string_extension.dart';
 import 'package:mentra/features/account/presentation/profile_image_widget.dart';
@@ -34,6 +36,17 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
   final _loginBloc = LoginBloc(injector.get());
 
   String pinCode = '';
+
+  @override
+  void initState() {
+    injector
+        .get<PusherCubit>()
+        .subscribeToChannel(injector.get<UserBloc>().userChannel);
+
+    CallKitService.instance.checkAndNavigationCallingPage();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

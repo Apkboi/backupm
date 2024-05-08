@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/widgets/call/therapist_video_widget.dart';
@@ -40,11 +43,8 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
       create: (context) => callBloc,
       child: Scaffold(
         body: BlocConsumer<CallCubit, CallState>(
-          listener: (context, state) {
-            logger.w('event received');
-          },
+          listener: _listentoCallEvents,
           builder: (context, state) {
-
             var bloc = context.watch<CallCubit>();
 
             return Column(
@@ -75,6 +75,20 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
   @override
   void dispose() {
     callBloc.dispose();
+    CallKitService.instance.endCall();
     super.dispose();
+  }
+
+  void _listentoCallEvents(BuildContext context, CallState state) {
+    if (state is CallEndedState) {
+      context.pop();
+      CustomDialogs.success('Call Ended');
+    }
+
+    if (state is CallConnectingFailedState) {
+      context.pop();
+      CustomDialogs.error('Call connecting failed');
+      callBloc.endCall();
+    }
   }
 }
