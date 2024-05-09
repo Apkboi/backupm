@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
+import 'package:mentra/features/settings/presentation/widgets/user_preference/change_therapist_answer_widget.dart';
 import 'package:mentra/features/settings/presentation/widgets/user_preference/prefernce_message_box.dart';
 import 'package:mentra/features/settings/presentation/widgets/user_preference/preference_answer_widget.dart';
+import 'package:mentra/features/therapy/presentation/widgets/change_therapist_chat/change_therapist_message_box.dart';
 
 class PreferenceQuestionBaseBox extends StatefulWidget {
   const PreferenceQuestionBaseBox({
@@ -28,6 +30,7 @@ class _PreferenceQuestionBaseBoxState extends State<PreferenceQuestionBaseBox> {
             child: PreferenceQuestionBox(
               question: widget.question,
             )),
+        if(widget.question.therapyMessageType == TherapyMessageType.updatePreferenceMessage)
         Container(
             // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
             alignment: Alignment.centerRight,
@@ -35,6 +38,14 @@ class _PreferenceQuestionBaseBoxState extends State<PreferenceQuestionBaseBox> {
             child: PreferenceAnswerBox(
               question: widget.question,
             )),
+        if(widget.question.therapyMessageType == TherapyMessageType.changeTherapistMessage)
+          Container(
+            // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(top: 5),
+              child: ChangeTherapistAnswerWidget(
+                question: widget.question,
+              )),
       ],
     );
   }

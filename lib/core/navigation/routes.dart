@@ -367,6 +367,8 @@ class CustomRoutes {
         builder: (context, state) => UserPreferenceScreen(
           flow: stringToUserPreferenceFlow(
               state.uri.queryParameters[PathParam.userPreferenceFlow] ?? ''),
+          intent: stringToTherapyPreferenceIntent(
+              state.uri.queryParameters[PathParam.chatIntent] ?? ''),
         ),
       ),
       GoRoute(
@@ -469,16 +471,24 @@ class CustomRoutes {
           path: '/therapyCallScreen',
           name: PageUrl.therapyCallScreen,
           builder: (context, state) => TherapyCallScreen(
-              callerId: int.parse(
-                  state.uri.queryParameters[PathParam.callerId] ?? '0'),
-              calleeId: int.parse(
-                  state.uri.queryParameters[PathParam.calleeId] ?? '0'),
-              offer: state.uri.queryParameters[PathParam.offer] != null
-                  ? SdpOffer.fromJson(
-                      jsonDecode(
-                          state.uri.queryParameters[PathParam.offer] ?? ''),
-                    )
-                  : null)),
+                callerId: int.parse(
+                    state.uri.queryParameters[PathParam.callerId] ?? '0'),
+                calleeId: int.parse(
+                    state.uri.queryParameters[PathParam.calleeId] ?? '0'),
+                offer: state.uri.queryParameters[PathParam.offer] != null
+                    ? SdpOffer.fromJson(
+                        jsonDecode(
+                            state.uri.queryParameters[PathParam.offer] ?? ''),
+                      )
+                    : null,
+                therapist: state.uri.queryParameters[PathParam.caller] != null
+                    ? Caller.fromJson(
+                        jsonDecode(
+                            state.uri.queryParameters[PathParam.caller] ?? ''),
+                      )
+                    : null,
+                sessionId: state.uri.queryParameters[PathParam.sessionId] ?? 0,
+              )),
     ],
   );
 

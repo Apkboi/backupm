@@ -11,7 +11,7 @@ import 'package:mentra/features/therapy/data/models/create_session_response.dart
 import 'package:mentra/gen/assets.gen.dart';
 
 class SessionScheduledDialog extends StatelessWidget {
-  const SessionScheduledDialog({
+  SessionScheduledDialog({
     super.key,
     required this.sessionDetails,
     this.tittle,
@@ -19,6 +19,13 @@ class SessionScheduledDialog extends StatelessWidget {
 
   final SessionDetails sessionDetails;
   final String? tittle;
+
+  final List<String> tasks = [
+    "Find a quiet environment with minimal background noise.",
+    "Ensure a stable internet connection.",
+    "Use headphones for clear audio.",
+    "Be ready and logged in a few minutes before the session starts."
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,67 +62,96 @@ class SessionScheduledDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(17)),
             padding: const EdgeInsets.all(10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ImageWidget(
-                  imageUrl: sessionDetails.therapist.user.avatar,
-                  size: 60,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                10.verticalSpace,
-                const TextView(
-                  text: 'Session with',
-                  align: TextAlign.center,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-                10.verticalSpace,
+                // ImageWidget(
+                //   imageUrl: sessionDetails.therapist.user.avatar,
+                //   size: 60,
+                //   borderRadius: BorderRadius.circular(50),
+                // ),
+                // 10.verticalSpace,
+                // const TextView(
+                //   text: 'Session with',
+                //   align: TextAlign.center,
+                //   fontSize: 14,
+                //   fontWeight: FontWeight.w500,
+                // ),
+                // 10.verticalSpace,
+                // TextView(
+                //   text: sessionDetails.therapist.user.name,
+                //   align: TextAlign.center,
+                //   fontSize: 16,
+                //   fontWeight: FontWeight.w500,
+                //   color: Pallets.primary,
+                // ),
+                // 10.verticalSpace,
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     ImageWidget(imageUrl: Assets.images.svgs.icCalender),
+                //     10.horizontalSpace,
+                //     TextView(
+                //       text: TimeUtil.formatToFullDate(
+                //           DateTime.parse(sessionDetails.startsAt)),
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ],
+                // ),
+                // 10.verticalSpace,
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     ImageWidget(imageUrl: Assets.images.svgs.icClock),
+                //     10.horizontalSpace,
+                //     TextView(
+                //       text: TimeUtil.formatTime(
+                //         DateTime.parse(sessionDetails.startsAt),
+                //       ),
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ],
+                // ),
+
                 TextView(
-                  text: sessionDetails.therapist.user.name,
-                  align: TextAlign.center,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Pallets.primary,
-                ),
-                10.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageWidget(imageUrl: Assets.images.svgs.icCalender),
-                    10.horizontalSpace,
-                    TextView(
-                      text: TimeUtil.formatToFullDate(
-                          DateTime.parse(sessionDetails.startsAt)),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
-                ),
-                10.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageWidget(imageUrl: Assets.images.svgs.icClock),
-                    10.horizontalSpace,
-                    TextView(
-                      text: TimeUtil.formatTime(
-                        DateTime.parse(sessionDetails.startsAt),
-                      ),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
-                ),
+                    color: Pallets.grey60,
+                    text:
+                        'Your session with Nour will begin on ${TimeUtil.formartToDayTime(DateTime.parse(sessionDetails.startsAt))}. To make the call seamless, here are a few tips:'),
+                16.verticalSpace,
+                ...List.generate(
+                    tasks.length,
+                    (index) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child:
+                              _CallTipItem(index: index + 1, tip: tasks[index]),
+                        ))
               ],
             ),
           ),
-          16.verticalSpace,
+          20.verticalSpace,
           CustomNeumorphicButton(
             onTap: () {
               context.pop();
             },
             color: Pallets.primary,
-            text: 'Done',
+            text: 'Got it',
           )
         ],
       ),
+    );
+  }
+}
+
+class _CallTipItem extends StatelessWidget {
+  const _CallTipItem({super.key, required this.index, required this.tip});
+
+  final int index;
+  final String tip;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextView(
+      text: '$index. $tip',
+      color: Pallets.grey60,
     );
   }
 }

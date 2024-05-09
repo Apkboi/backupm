@@ -10,6 +10,7 @@ import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:mentra/features/notification/presentation/bloc/notification_bloc.dart';
+import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/widgets/settings_listtile.dart';
@@ -74,7 +75,9 @@ class SettingsGroup1 extends StatelessWidget {
                     context.pushNamed(PageUrl.userPreferenceScreen,
                         queryParameters: {
                           PathParam.userPreferenceFlow:
-                              UserPreferenceFlow.updatePreference.name
+                              UserPreferenceFlow.updatePreference.name,
+                          PathParam.chatIntent:
+                              TherapyPreferenceIntent.updatePreference.name,
                         });
                   },
                   leadingWidget: Row(

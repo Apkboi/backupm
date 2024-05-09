@@ -9,7 +9,9 @@ import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.d
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 
 class RetryButton extends StatelessWidget {
-  const RetryButton({super.key});
+  const RetryButton({super.key, required this.onTap});
+
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +24,17 @@ class RetryButton extends StatelessWidget {
         elevation: 0,
         padding: const EdgeInsets.all(16),
         borderRadius: BorderRadius.circular(100),
+        // onPressed: () {
+        //   context
+        //       .read<TherapyBloc>()
+        //       .add(const MatchTherapistEvent(updatedPreference: false));
+        // },
+        onPressed: onTap,
         child: TextView(
           text: 'Retry',
           style: GoogleFonts.plusJakartaSans(
               fontWeight: FontWeight.w600, fontSize: 14.sp),
         ),
-        onPressed: () {
-          context
-              .read<TherapyBloc>()
-              .add(const MatchTherapistEvent(updatedPreference: false));
-        },
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:mentra/features/therapy/data/models/incoming_response.dart';
+
 class IncomingCallNotificationData {
   final String webrtcDescriptionId;
   final Caller therapist;
@@ -22,36 +24,4 @@ class IncomingCallNotificationData {
       };
 }
 
-class Caller {
-  final String role;
-  final String? avatarBackgroundColor;
-  final String name;
-  final String avatar;
-  final String email;
 
-  Caller({
-    required this.role,
-    this.avatarBackgroundColor,
-    required this.name,
-    required this.avatar,
-    required this.email,
-  });
-
-  factory Caller.fromJson(Map<String, dynamic> json) {
-    return Caller(
-      role: json['role'] as String,
-      avatarBackgroundColor: json['avatar_background_color'] as String?,
-      name: json['name'] as String,
-      avatar: json['avatar'] as String,
-      email: json['email'] as String,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'role': role,
-        'avatar_background_color': avatarBackgroundColor,
-        'name': name,
-        'avatar': avatar,
-        'email': email,
-      };
-}

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/sentory/sentory_service.dart';
+import 'package:mentra/core/services/time_zone/time_zone_service.dart';
 
 import '../data/session_manager.dart';
 import 'api_error.dart';
@@ -137,7 +138,8 @@ class NetworkService {
       } else {
         if (response.data['errors'] != null) {
           logger.i(response.data.toString());
-          SentryService.captureException('${response.data}', stackTrace: StackTrace.current);
+          SentryService.captureException('${response.data}',
+              stackTrace: StackTrace.current);
           var apiError = ApiError.fromResponse(response);
           return Future.error(apiError);
         } else {
@@ -183,9 +185,10 @@ class NetworkService {
   _getOptions() {
     return Options(contentType: Headers.jsonContentType, headers: {
       HttpHeaders.authorizationHeader:
-      "Bearer ${SessionManager.instance.authToken}",
+          "Bearer ${SessionManager.instance.authToken}",
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      "timezone": TimezoneService().currentTimeZone
     });
   }
 }

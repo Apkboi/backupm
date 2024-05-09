@@ -17,10 +17,14 @@ import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.d
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
 
-class TherapyReviewSheet extends StatefulWidget {
-  const TherapyReviewSheet({super.key, required this.session});
+import '../../data/models/incoming_response.dart';
 
-  final TherapySession session;
+class TherapyReviewSheet extends StatefulWidget {
+  const TherapyReviewSheet(
+      {super.key, required this.sessionId, required this.therapist});
+
+  final String sessionId;
+  final Caller therapist;
 
   @override
   State<TherapyReviewSheet> createState() => _TherapyReviewSheetState();
@@ -42,7 +46,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
       listener: _listenToTherapyBloc,
       builder: (context, state) {
         return Container(
-          color: Pallets.white,
+          color: Pallets.bottomSheetColor,
           padding: const EdgeInsets.all(18),
           child: SingleChildScrollView(
             child: Column(
@@ -52,7 +56,6 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                   width: 49,
                   height: 5,
                   decoration: ShapeDecoration(
-                    color: const Color(0xFFBCC4CC),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(42),
                     ),
@@ -61,7 +64,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                 10.verticalSpace,
                 TextView(
                   text:
-                      "Hey ${injector.get<UserBloc>().appUser?.name}! 👋 How was your session with ${widget.session.therapist.user.name}?",
+                      "Hey ${injector.get<UserBloc>().appUser?.name}! 👋 How was your session with ${widget.therapist.name}?",
                   align: TextAlign.center,
                   style: GoogleFonts.fraunces(
                       fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -104,6 +107,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                       child: Icon(
                         Icons.star_rounded,
                         color: Pallets.yellowBase,
+                        size: 35,
                         // size: 18,
                       ),
                     ),
@@ -120,7 +124,10 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                   key: _formKey,
                   child: Container(
                     padding: const EdgeInsets.all(16),
+                    // height: 300,
+
                     decoration: ShapeDecoration(
+                        color: Pallets.white,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                             side: BorderSide(
@@ -130,25 +137,25 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                                 width: 0.8))),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         TextView(
                           text: 'Review',
                           style: GoogleFonts.inter(
-                              fontSize: 12.sp, fontWeight: FontWeight.w500),
+                              fontSize: 12, fontWeight: FontWeight.w500),
                         ),
-                        7.verticalSpace,
+                        5.verticalSpace,
                         FilledTextField(
-                            maxLine: 5,
+                            // maxLine: 5,
+                            minLine: 1,
+                            maxLine: 20,
                             hasElevation: false,
                             contentPadding: EdgeInsets.zero,
                             hasBorder: false,
+                            // expands: true,
                             controller: _reviewController,
-                            validator:
-                                RequiredValidator(errorText: 'Enter a comment')
-                                    .call,
                             fillColor: Colors.transparent,
-                            hint:
-                                'Share your thoughts! How did Mentra support you today? Your words make a difference.'),
+                            hint: 'Share your thoughts!'),
                       ],
                     ),
                   ),
@@ -158,7 +165,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       _therapyBloc.add(CreateReviewEvent(
-                          widget.session.id.toString(),
+                          widget.sessionId.toString(),
                           _reviewController.text,
                           userRating.round()));
                     }

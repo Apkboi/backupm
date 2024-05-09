@@ -45,7 +45,9 @@ class _ChangeTherapistMessageBoxState extends State<ChangeTherapistMessageBox> {
                       message: widget.message,
                     ),
               // TODO: Handle this case.
-              ChangeTherapistMessageType.retry => const RetryButton(),
+              ChangeTherapistMessageType.retry => RetryButton(
+                  onTap: () {},
+                ),
               // TODO: Handle this case.
               ChangeTherapistMessageType.therapistSuggestion =>
                 ViewProfileButton(therapist: widget.message.therapist!),

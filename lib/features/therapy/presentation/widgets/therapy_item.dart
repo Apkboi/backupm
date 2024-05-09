@@ -1,27 +1,23 @@
-import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
-import 'package:mentra/features/therapy/presentation/screens/incoming_call_screen.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
-import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../../core/services/pusher/pusher_channel_service.dart';
 
 class TherapyItem extends StatefulWidget {
-  const TherapyItem({super.key, required this.session});
+  const TherapyItem({super.key, required this.session, this.isUpcoming = true});
 
   final TherapySession session;
+  final bool isUpcoming;
 
   @override
   State<TherapyItem> createState() => _TherapyItemState();
@@ -29,7 +25,7 @@ class TherapyItem extends StatefulWidget {
 
 class _TherapyItemState extends State<TherapyItem> {
   final String selfCallerID =
-      Random().nextInt(999999).toString().padLeft(6, '0');
+  Random().nextInt(999999).toString().padLeft(6, '0');
 
   @override
   void initState() {
@@ -88,21 +84,23 @@ class _TherapyItemState extends State<TherapyItem> {
                     8.verticalSpace,
                     TextView(
                       text:
-                          'Session with ${widget.session.therapist.user.name}.',
+                      'Session with ${widget.session.therapist.user.name}.',
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
                     TextView(
-                      text: TimeUtil.formartToDayTime(
-                          widget.session.startsAt.toLocal()),
+                      text: widget.isUpcoming ? TimeUtil.formartToDayTime(
+                        widget.session.startsAt,) : TimeUtil
+                          .formatOperationsDate(
+                          widget.session.startsAt.toString(), 0),
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
                     SessionButton(
                       startDate: widget.session.startsAt.toLocal(),
                       endDate: (widget.session.endsAt ??
-                              widget.session.startsAt
-                                  .add(const Duration(hours: 1)))
+                          widget.session.startsAt
+                              .add(const Duration(hours: 1)))
                           .toLocal(),
                       session: widget.session,
                     )
@@ -120,10 +118,6 @@ class _TherapyItemState extends State<TherapyItem> {
       ),
     );
   }
-
-
-
-
 
   void _disconnect() async {
     var pusherService = await PusherChannelService.getInstance;

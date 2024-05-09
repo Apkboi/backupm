@@ -24,6 +24,9 @@ import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_
 import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
 import 'package:mentra/features/therapy/presentation/screens/call_listener.dart';
 import 'package:mentra/features/therapy/presentation/screens/incoming_call_screen.dart';
+import 'package:mentra/features/therapy/presentation/widgets/confirm_session_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/end_therapy_session_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import '../../../../core/navigation/route_url.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
@@ -186,8 +189,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //       builder: (context) =>
                                     //           Intro(child: const DemoUsage()),
                                     //     ));
-                                    context.pushNamed(
-                                        PageUrl.talkToMentraScreen);
+                                    // context.pushNamed(
+                                    //     PageUrl.talkToMentraScreen);
+
+                                    // CustomDialogs.showBottomSheet(context,  TherapyReviewSheet(session: '1'));
 
                                     // StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(

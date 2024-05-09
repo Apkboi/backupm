@@ -68,7 +68,7 @@ class _CallListenerState extends State<CallListener> {
   void _listenToPusherEvent(BuildContext context, PusherState state) {
     if (state is PusherEventReceivedState) {
       var event = state.event;
-      logger.w('Event from server:${event.data}');
+      logger.w('Event from server:${event}');
       d.log('Event from server:${event.data}');
       var data = (event).data;
       if ((event).eventName == 'newCall') {
@@ -79,15 +79,19 @@ class _CallListenerState extends State<CallListener> {
           var currentRoute = CustomRoutes
               .goRouter.routerDelegate.currentConfiguration.last.route.path;
           logger.i(currentRoute);
+          logger.w(incomingCall.therapist.toJson());
+
           Debouncer(milliseconds: 500).run(() {
             if (currentRoute != '/${PageUrl.therapyCallScreen}') {
               showGeneralDialog(
                 context: rootNavigatorKey.currentState!.context,
                 pageBuilder: (context, animation, secondaryAnimation) {
                   return IncomingCallScreen(
-                    callerId: incomingCall.callerId??0,
+                    callerId: incomingCall.callerId ?? 0,
                     calleeId: injector.get<UserBloc>().appUser!.id,
                     offer: incomingCall.sdpOffer,
+                    caller: incomingCall.therapist,
+                    sessionId: incomingCall.therapySessionId,
                   );
                 },
               );

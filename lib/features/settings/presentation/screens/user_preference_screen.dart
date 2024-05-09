@@ -10,6 +10,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/settings/presentation/widgets/user_preference/preference_message_base_box.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -17,20 +18,25 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
-  const UserPreferenceScreen({super.key, required this.flow});
+  const UserPreferenceScreen(
+      {super.key,
+      required this.flow,
+      this.intent = TherapyPreferenceIntent.updatePreference});
 
   final UserPreferenceFlow flow;
+  final TherapyPreferenceIntent intent;
 
   @override
   State<UserPreferenceScreen> createState() => _UserPreferenceScreenState();
 }
 
 class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
-  final userPreferenceBloc = UserPreferenceCubit(injector.get());
+  final userPreferenceBloc =
+      UserPreferenceCubit(injector.get(), injector.get());
 
   @override
   void initState() {
-    userPreferenceBloc.startMessage();
+    userPreferenceBloc.startChat(widget.intent);
     super.initState();
   }
 
@@ -48,11 +54,11 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
         ),
         body: BlocConsumer<UserPreferenceCubit, UserPreferenceState>(
           listener: (context, state) {
-            if (state is UpdatePreferenceLoadingState) {
-              CustomDialogs.showLoading(context);
-            }
+            // if (state is UpdatePreferenceLoadingState) {
+            //   CustomDialogs.showLoading(context);
+            // }
             if (state is UpdatePreferenceFailureState) {
-              context.pop();
+              // context.pop();
               CustomDialogs.error(state.error);
             }
             if (state is UpdatePreferenceSuccessState) {
@@ -106,9 +112,15 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
                           ),
                         )),
                         10.verticalSpace,
-                        _InputBar(
-                          currentFlow: widget.flow,
-                        )
+                        if (context
+                                .watch<UserPreferenceCubit>()
+                                .stagedMessages
+                                .last
+                                .therapyMessageType !=
+                            TherapyMessageType.changeTherapistMessage)
+                          _InputBar(
+                            currentFlow: widget.flow,
+                          )
                       ],
                     ),
                   ),
@@ -160,7 +172,7 @@ class _InputBarState extends State<_InputBar> {
                         child: FilledTextField(
                             hasBorder: false,
                             hasElevation: false,
-                            enabled:!bloc.currentQuestion!.isTyping ,
+                            enabled: !bloc.currentQuestion!.isTyping,
                             controller: controller,
                             suffix: HapticInkWell(
                               onTap: () async {

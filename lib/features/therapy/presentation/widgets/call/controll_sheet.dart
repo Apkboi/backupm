@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/common/widgets/success_dialog.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
+import 'package:mentra/features/therapy/presentation/widgets/end_therapy_session_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
+import '../../../data/models/incoming_response.dart';
 
 class CallControllSheet extends StatefulWidget {
-  const CallControllSheet({super.key});
+  const CallControllSheet({super.key, this.sessionId, required this.caller});
+
+  final dynamic sessionId;
+  final Caller caller;
 
   @override
   State<CallControllSheet> createState() => _CallControllSheetState();
@@ -85,9 +95,8 @@ class _CallControllSheetState extends State<CallControllSheet> {
                 icon: ImageWidget(imageUrl: Assets.images.svgs.endCall),
                 tittle: 'End',
                 onTap: () {
-                  CallKitService.instance.endCall();
-                  context.pop();
-                  context.pop();
+                  _endCall(context);
+
                   // isActive:  context.read<CallCubit>()., // Adjust isActive based on your logic
                 },
               ),
@@ -131,6 +140,73 @@ class _CallControllSheetState extends State<CallControllSheet> {
         ],
       ),
     );
+  }
+
+  // void _endCall(BuildContext context) {
+  //   CustomDialogs.showBottomSheet(
+  //       context, EndTherapySessionDialog(sessionId: widget.sessionId));
+  // }
+
+  void _endCall(BuildContext context) async {
+    final bool? sessionEnded = await CustomDialogs.showBottomSheet(
+        context, EndTherapySessionDialog(sessionId: widget.sessionId));
+
+    if (sessionEnded ?? false) {
+      CallKitService.instance.endCall();
+      context.read<CallCubit>().endCall();
+      // final bool? writeReview = await CustomDialogs.showCustomDialog(
+      //     TherapySessionEndedDialog(
+      //       therapist: widget.caller,
+      //     ),
+      //     context);
+      //
+      //
+      // // context.pop();
+      // // context.pop();
+      // // logger.i(writeReview);
+      //
+      // if (writeReview ?? false) {
+      //   final bool? wroteFeedback = await CustomDialogs.showBottomSheet(
+      //       context,
+      //       TherapyReviewSheet(
+      //         therapist: widget.caller,
+      //         sessionId: widget.sessionId,
+      //       ),
+      //       shape: const RoundedRectangleBorder(
+      //           borderRadius: BorderRadius.only(
+      //         topLeft: Radius.circular(16),
+      //         topRight: Radius.circular(16),
+      //       )),
+      //       constraints: BoxConstraints(maxHeight: 0.9.sh));
+      //
+      //   if (wroteFeedback ?? false) {
+      //     await CustomDialogs.showBottomSheet(
+      //         context,
+      //         SuccessDialog(
+      //           tittle: feedbackSuccessMessage,
+      //           onClose: () {
+      //             context.pop();
+      //           },
+      //         ),
+      //         shape: const RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.only(
+      //           topLeft: Radius.circular(16),
+      //           topRight: Radius.circular(16),
+      //         )),
+      //         constraints: BoxConstraints(maxHeight: 0.9.sh));
+      //     context.pop();
+      //     context.pop();
+      //   }else{
+      //     context.pop();
+      //     context.pop();
+      //   }
+      //
+      // } else {
+      //   context.pop();
+      //   context.pop();
+      // }
+    }
+
   }
 }
 

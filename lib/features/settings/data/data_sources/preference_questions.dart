@@ -1,3 +1,6 @@
+import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/settings/data/models/change_therapist_stage.dart';
 import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 
 class PreferenceQuestionsDataSource {
@@ -86,6 +89,51 @@ class PreferenceQuestionsDataSource {
       id: 7,
     ),
     // Add more questions as needed
+
+    //   ==================================== Change Therapist Questions ==================
+
+
+
+    // TherapyPreferenceMessageModel(
+    //   question: [
+    //     'Give me a moment to find a therapist that matches your criteria.'
+    //   ],
+    //   therapyMessageType: TherapyMessageType.changeTherapistMessage,
+    //   changeTherapistStage: ChangeTherapistStage.searchingForTherapist,
+    //   answer: '',
+    //   options: [],
+    //   key: 'greeting',
+    //   id: 7,
+    // ),
+  ];
+
+
+  var changeTherapistStarter = [
+    TherapyPreferenceMessageModel(
+      question: [
+        // 'Hey ${injector.get<UserBloc>().appUser?.name}!',
+        ' Hey ${injector
+            .get<UserBloc>()
+            .appUser
+            ?.name}!,\nOf course, I\'m here to help you . Before we proceed, may I ask if you have specific preferences in mind for your new therapist?',
+      ],
+      therapyMessageType: TherapyMessageType.changeTherapistMessage,
+      changeTherapistStage: ChangeTherapistStage.updatePreferenceOption,
+      answer: null,
+      options: ['Yes, update my  preference', 'No, keep as it is'],
+      key: 'greeting',
+      id: 7,
+    ),
+
+    // TherapyPreferenceMessageModel(
+    //   question: [''],
+    //   therapyMessageType: TherapyMessageType.changeTherapistMessage,
+    //   changeTherapistStage: ChangeTherapistStage.initial,
+    //   answer: 'Hi Mentra, I\'d like to change my therapist.',
+    //   options: [],
+    //   key: 'greeting',
+    //   id: 7,
+    // ),
   ];
 
   Map<String, dynamic> convertQuestionsToMap() {
@@ -98,4 +146,22 @@ class PreferenceQuestionsDataSource {
 
     return questionsMap;
   }
+
+
+  // TherapyPreferenceMessageModel getNextChangeTherapistQuestion(
+  //     TherapyPreferenceMessageModel lastQuestion) {
+  //
+  //   if(lastQuestion.changeTherapistStage == ChangeTherapistStage.updatePreferenceOption){
+  //
+  //     if(lastQuestion.answer == 'No, keep as it is'){
+  //
+  //       return therapyQuestions.where((element) => element == element.changeTherapistStage.)
+  //     }
+  //
+  //
+  //   }
+  //
+  //   throw;
+  //
+  // }
 }

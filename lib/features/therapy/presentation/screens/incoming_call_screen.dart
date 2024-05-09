@@ -23,10 +23,17 @@ import 'package:vibration/vibration.dart';
 
 class IncomingCallScreen extends StatefulWidget {
   const IncomingCallScreen(
-      {super.key, required this.callerId, required this.calleeId, this.offer});
+      {super.key,
+      required this.callerId,
+      required this.calleeId,
+      this.offer,
+      this.caller,
+      this.sessionId});
 
   final int callerId, calleeId;
+  final dynamic sessionId;
   final SdpOffer? offer;
+  final Caller? caller;
 
   @override
   State<IncomingCallScreen> createState() => _IncomingCallScreenState();
@@ -98,8 +105,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
                             icon: ImageWidget(
                                 imageUrl: Assets.images.svgs.endCall),
                             onTap: () {
-                              CallKitService.instance.endAllCalls();
-                              Navigator.pop(context);
+                              _declineCall(context);
                             },
                           ),
                         ),
@@ -137,6 +143,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
     context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
       PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
       PathParam.callerId: widget.callerId.toString(),
+      PathParam.caller: jsonEncode(widget.caller?.toJson()),
       if (widget.offer != null)
         PathParam.offer: jsonEncode(widget.offer?.toJson()),
     });
@@ -152,5 +159,11 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
       context.pop();
       CallKitService.instance.endCall();
     }
+  }
+
+  void _declineCall(BuildContext context) {
+    // injector.get<CallCubit>().endCall();
+    CallKitService.instance.endAllCalls();
+    Navigator.pop(context);
   }
 }

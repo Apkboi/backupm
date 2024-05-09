@@ -11,6 +11,7 @@ import 'package:mentra/app.dart';
 import 'package:mentra/core/constants/pay_configurations.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
+import 'package:mentra/core/services/time_zone/time_zone_service.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'core/di/injector.dart';
@@ -59,6 +60,7 @@ class AppConfig {
         defaultGooglePayConfiguration: defaultGooglePay,
         defaultApplePayConfiguration: defaultApplePay);
     StripeService.initialize();
+    await TimezoneService().init();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     await DefaultCacheManager().emptyCache();
@@ -74,11 +76,8 @@ class AppConfig {
         'https://b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920',
         () => runApp(const MentraApp()));
 
-
     // runApp(const MentraApp());
     // FlutterNativeSplash.remove();
-
-
   }
 
   Future setup() async {

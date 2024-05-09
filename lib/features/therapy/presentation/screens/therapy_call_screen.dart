@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/success_dialog.dart';
+import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/widgets/call/therapist_video_widget.dart';
 import 'package:mentra/features/therapy/presentation/widgets/call/user_video_widget.dart';
+import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 
 class TherapyCallScreen extends StatefulWidget {
   const TherapyCallScreen(
-      {super.key, required this.callerId, required this.calleeId, this.offer});
+      {super.key,
+      required this.callerId,
+      required this.calleeId,
+      required this.sessionId,
+      this.offer,
+      this.therapist});
 
   final int callerId, calleeId;
+  final dynamic sessionId;
   final SdpOffer? offer;
+  final Caller? therapist;
 
   @override
   State<TherapyCallScreen> createState() => _TherapyCallScreenState();
@@ -31,7 +43,8 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
       ),
       () {
         logger.w(widget.offer?.toJson());
-        callBloc.startCall(widget.callerId, widget.calleeId, widget.offer);
+        callBloc.startCall(
+            widget.callerId, widget.calleeId, widget.offer, widget.sessionId);
       },
     );
     super.initState();
@@ -54,6 +67,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
                     child: TherapistVideoWidget(
                   remoteRenderer:
                       context.watch<CallCubit>().remoteRTCVideoRenderer,
+                  caller: widget.therapist,
                 )),
                 Expanded(
                     child: BlocProvider.value(
@@ -62,6 +76,8 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
                     localRenderer:
                         context.watch<CallCubit>().localRTCVideoRenderer,
                     mirror: context.watch<CallCubit>().isFrontCameraSelected,
+                    sessionId: widget.sessionId,
+                    therapist: widget.therapist ?? Caller.dummy(),
                   ),
                 ))
               ],
@@ -81,14 +97,45 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
 
   void _listentoCallEvents(BuildContext context, CallState state) {
     if (state is CallEndedState) {
-      context.pop();
-      CustomDialogs.success('Call Ended');
+      _reviewCall(context);
+    }
+    if (state is EndCallLoadingState) {
+      CustomDialogs.showLoading(context);
     }
 
     if (state is CallConnectingFailedState) {
       context.pop();
       CustomDialogs.error('Call connecting failed');
-      callBloc.endCall();
+      CallKitService.instance.endCall();
+      // callBloc.endCall();
+    }
+  }
+
+  void _reviewCall(BuildContext context) async {
+    CustomDialogs.hideLoading(context);
+    final bool? writeReview = await CustomDialogs.showCustomDialog(
+        TherapySessionEndedDialog(
+          therapist: widget.therapist!,
+        ),
+        context);
+
+    if (writeReview ?? false) {
+      await CustomDialogs.showBottomSheet(
+          rootNavigatorKey.currentState!.context,
+          TherapyReviewSheet(
+            therapist: widget.therapist!,
+            sessionId: widget.sessionId,
+          ),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
+          )),
+          constraints: BoxConstraints(maxHeight: 0.9.sh));
+    } else {
+      context.pop();
+      context.pop();
+      context.pop();
     }
   }
 }

@@ -53,6 +53,7 @@ class CallKitService {
           break;
         case Event.actionCallTimeout:
           // TODO: missed an incoming call
+          endAllCalls();
           break;
         case Event.actionCallCallback:
           // TODO: only Android - click action `Call back` from missed call notification
@@ -85,7 +86,7 @@ class CallKitService {
   Future<void> showIncomingCall(String callerId, String callerName,
       {Map<String, dynamic>? extra, required String callerImage}) async {
     // Configure CallKit with your desired settings
-    this._currentUuid = Uuid().v4();
+    this._currentUuid = callerId;
     CallKitParams callKitParams = CallKitParams(
       id: _currentUuid,
       nameCaller: callerName.toString(),
@@ -96,7 +97,7 @@ class CallKitService {
       type: 4,
       textAccept: 'Accept',
       textDecline: 'Decline',
-      missedCallNotification: NotificationParams(
+      missedCallNotification: const NotificationParams(
         showNotification: true,
         isShowCallback: false,
         subtitle: 'Missed call',
@@ -105,7 +106,7 @@ class CallKitService {
       duration: 30000,
       extra: extra,
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-      android: AndroidParams(
+      android: const AndroidParams(
           isCustomNotification: false,
           isShowLogo: false,
           ringtonePath: 'system_ringtone_default',
@@ -176,7 +177,7 @@ class CallKitService {
           CustomRoutes.goRouter
               .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
             PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
-            PathParam.callerId: '1',
+            PathParam.callerId: currentCall['id'],
           });
           //Navigate to your call screen.
         }

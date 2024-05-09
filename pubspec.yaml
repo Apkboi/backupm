@@ -144,6 +144,7 @@ dependencies:
   sentry_flutter: ^8.1.0
   flutter_callkit_incoming: ^2.0.4
   vibration: ^1.8.4
+  flutter_timezone: ^1.0.8
 #  audio_manager: ^0.8.2
 
 dependency_overrides:

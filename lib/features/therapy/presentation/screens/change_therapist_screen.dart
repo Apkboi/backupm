@@ -14,6 +14,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/widget/question_box.dart';
+import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 
 class ChangeTherapistScreen extends StatefulWidget {
@@ -55,7 +56,7 @@ class _ChangeTherapistScreenState extends State<ChangeTherapistScreen> {
                         const QuestionBox(message: [
                           'Hi Mentra, I\'d like to change my therapist.',
                         ], isSender: true),
-                         QuestionBox(message: [
+                        QuestionBox(message: [
                           'Hey ${injector.get<UserBloc>().appUser?.name}!',
                           'Of course, I\'m here to help. Before we proceed, may I ask if you have specific preferences in mind for your new therapist?',
                         ], isSender: false),
@@ -77,7 +78,10 @@ class _ChangeTherapistScreenState extends State<ChangeTherapistScreen> {
                               context.pushNamed(PageUrl.userPreferenceScreen,
                                   queryParameters: {
                                     PathParam.userPreferenceFlow:
-                                        UserPreferenceFlow.changeTherapist.name
+                                        UserPreferenceFlow.changeTherapist.name,
+                                    PathParam.chatIntent:
+                                        TherapyPreferenceIntent
+                                            .changeTherapist.name,
                                   });
                             },
                           ),

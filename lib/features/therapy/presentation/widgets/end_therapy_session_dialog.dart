@@ -10,9 +10,9 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 
 class EndTherapySessionDialog extends StatelessWidget {
-  const EndTherapySessionDialog({Key? key, required this.session})
+  const EndTherapySessionDialog({Key? key, required this.sessionId})
       : super(key: key);
-  final TherapySession session;
+  final dynamic sessionId;
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +44,15 @@ class EndTherapySessionDialog extends StatelessWidget {
                   fontSize: 24.sp, fontWeight: FontWeight.w600),
             ),
             22.verticalSpace,
-            Row(
-              children: [
-                TextView(
-                  text: 'Duration: ${session.duration}minutes',
-                  color: Pallets.ink,
-                )
-              ],
-            ),
-            8.verticalSpace,
+            // Row(
+            //   children: [
+            //     TextView(
+            //       text: 'Duration: ${20}minutes',
+            //       color: Pallets.ink,
+            //     )
+            //   ],
+            // ),
+            // 8.verticalSpace,
             const TextView(
               text: endTherapySessionMessage,
               align: TextAlign.start,

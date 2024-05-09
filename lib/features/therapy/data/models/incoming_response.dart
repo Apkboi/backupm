@@ -14,6 +14,7 @@ class IncomingCallResponse {
   final dynamic callerId;
   final SdpOffer? sdpOffer;
   final SdpAnswer? sdpAnswer;
+  final dynamic therapySessionId;
   final Caller therapist;
 
   IncomingCallResponse({
@@ -21,6 +22,7 @@ class IncomingCallResponse {
     required this.sdpOffer,
     required this.sdpAnswer,
     required this.therapist,
+    this.therapySessionId,
   });
 
   // factory IncomingCallResponse.fromJson(Map<String, dynamic> json) => IncomingCallResponse(
@@ -30,31 +32,31 @@ class IncomingCallResponse {
 
   factory IncomingCallResponse.fromJson(Map<String, dynamic> json) {
     return IncomingCallResponse(
-      callerId: json["callerId"],
-      sdpOffer: json["sdpOffer"] != null
-          ? SdpOffer.fromJson(
-              jsonDecode(
-                utf8.decode(
-                  base64.decode(
-                    json["sdpOffer"],
+        callerId: json["callerId"],
+        sdpOffer: json["sdpOffer"] != null
+            ? SdpOffer.fromJson(
+                jsonDecode(
+                  utf8.decode(
+                    base64.decode(
+                      json["sdpOffer"],
+                    ),
                   ),
                 ),
-              ),
-            )
-          : null,
-      sdpAnswer: json["sdpAnswer"] != null
-          ? SdpAnswer.fromJson(
-              jsonDecode(
-                utf8.decode(
-                  base64.decode(
-                    json["sdpAnswer"],
+              )
+            : null,
+        sdpAnswer: json["sdpAnswer"] != null
+            ? SdpAnswer.fromJson(
+                jsonDecode(
+                  utf8.decode(
+                    base64.decode(
+                      json["sdpAnswer"],
+                    ),
                   ),
                 ),
-              ),
-            )
-          : null,
-      therapist: Caller.fromJson(json["therapist"]),
-    );
+              )
+            : null,
+        therapist: Caller.fromJson(json["therapist"]),
+        therapySessionId: json['therapy_session_id']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -62,6 +64,7 @@ class IncomingCallResponse {
         "sdpOffer": sdpOffer?.toJson(),
         "sdpAnswer": sdpAnswer?.toJson(),
         "therapist": therapist.toJson(),
+        "therapy_session_id": therapySessionId
       };
 }
 
@@ -131,4 +134,7 @@ class Caller {
         "role": role,
         "email": email,
       };
+
+  factory Caller.dummy() =>
+      Caller(avatar: '', name: '...', role: '...', email: '...');
 }

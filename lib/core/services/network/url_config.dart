@@ -86,6 +86,7 @@ class UrlConfig {
   /// Therapy
   static const String upcomingSessions = '/user/session/schedule/upcoming';
   static const String sessionHistory = '/user/session/schedule/history';
+
   static const String sessionTimeSlots =
       '/user/session/schedule/fetch-timeslots';
   static const String createSession = '/user/session/schedule/create';

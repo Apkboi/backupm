@@ -12,6 +12,7 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/extensions/context_extension.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
+import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SelectDateSheet extends StatefulWidget {
@@ -70,72 +71,95 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                         fontWeight: FontWeight.w600),
                   ),
                   10.verticalSpace,
-                  if (state is GetAvailableDatesSuccessState)
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Theme(
-                              data: context.theme.copyWith(
-                                  textTheme: context.textTheme.copyWith(
-                                    headline6: TextStyle(
-                                        fontSize: 16.sp,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  colorScheme: context.colorScheme.copyWith(
-                                      primary: Pallets.lightSecondary,
-                                      onPrimary: Pallets.black),
-                                  primaryColor: Pallets.secondary),
-                              child: CalendarDatePicker(
-                                initialDate: state.response.data.first,
-                                currentDate: state.response.data.first,
+                  Builder(builder: (context) {
+                    if (state is GetAvailableDatesSuccessState) {
+                      if (state.response.data.isNotEmpty) {
+                        return Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Theme(
+                                  data: context.theme.copyWith(
+                                      textTheme: context.textTheme.copyWith(
+                                        headline6: TextStyle(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      colorScheme: context.colorScheme.copyWith(
+                                          primary: Pallets.lightSecondary,
+                                          onPrimary: Pallets.black),
+                                      primaryColor: Pallets.secondary),
+                                  child: CalendarDatePicker(
+                                    initialDate: state.response.data.first,
+                                    currentDate: state.response.data.first,
 
-                                selectableDayPredicate: (DateTime date) {
-                                  // Check if the date is in the list of available date slots
-                                  return (state).response.data.contains(date);
-                                },
-                                firstDate: DateTime.now()
-                                    .subtract(const Duration(days: 30)),
-                                // Set a past date as the first selectable date
-                                lastDate: DateTime.now()
-                                    .add(const Duration(days: 30)),
-                                // Set a future date as the last selectable date
-                                onDateChanged: (value) {
-                                  setState(() {
-                                    selectedDate = value;
-                                  });
-                                },
+                                    selectableDayPredicate: (DateTime date) {
+                                      // Check if the date is in the list of available date slots
+                                      return (state)
+                                          .response
+                                          .data
+                                          .contains(date);
+                                    },
+                                    firstDate: DateTime.now()
+                                        .subtract(const Duration(days: 30)),
+                                    // Set a past date as the first selectable date
+                                    lastDate: DateTime.now()
+                                        .add(const Duration(days: 30)),
+                                    // Set a future date as the last selectable date
+                                    onDateChanged: (value) {
+                                      setState(() {
+                                        selectedDate = value;
+                                      });
+                                    },
+                                  ),
+                                ),
                               ),
+                              Center(
+                                child: CustomNeumorphicButton(
+                                    text: 'Continue',
+                                    onTap: () {
+                                      widget.onSelected(selectedDate);
+                                    },
+                                    color: Pallets.primary),
+                              ),
+                              20.verticalSpace
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const Expanded(
+                          child: Center(
+                            child: AppEmptyState(
+                              tittle: "No available time slot",
+                              hasBg: false,
+                              subtittle:
+                                  'Looks like their are no time slots available for your therapist',
                             ),
                           ),
-                          Center(
-                            child: CustomNeumorphicButton(
-                                text: 'Continue',
-                                onTap: () {
-                                  widget.onSelected(selectedDate);
-                                },
-                                color: Pallets.primary),
-                          ),
-                          20.verticalSpace
-                        ],
-                      ),
-                    ),
-                  if (state is GetAvailableDatesLoadingState)
-                    Expanded(
-                        child: Center(
-                      child: CustomDialogs.getLoading(
-                          size: 50, color: Pallets.primary),
-                    )),
-                  if (state is GetAvailableDatesFailureState)
-                    AppPromptWidget(
-                      textColor: Pallets.primary,
-                      message: state.error,
-                      retryTextColor: Pallets.primary,
-                      onTap: () {
-                        _bloc.add(GetAvailableDatesEvent());
-                      },
-                    )
+                        );
+                      }
+                    }
+                    if (state is GetAvailableDatesLoadingState) {
+                      return Expanded(
+                          child: Center(
+                        child: CustomDialogs.getLoading(
+                            size: 50, color: Pallets.primary),
+                      ));
+                    }
+                    if (state is GetAvailableDatesFailureState) {
+                      return AppPromptWidget(
+                        textColor: Pallets.primary,
+                        message: state.error,
+                        retryTextColor: Pallets.primary,
+                        onTap: () {
+                          _bloc.add(GetAvailableDatesEvent());
+                        },
+                      );
+                    }
+
+                    return 0.verticalSpace;
+                  }),
                 ],
               ),
             ),

@@ -12,13 +12,17 @@ import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/widgets/call/controll_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
+import '../../../data/models/incoming_response.dart';
+
 class TherapistVideoWidget extends StatefulWidget {
   const TherapistVideoWidget({
     super.key,
     required this.remoteRenderer,
+    this.caller,
   });
 
   final RTCVideoRenderer remoteRenderer;
+  final Caller? caller;
 
   @override
   State<TherapistVideoWidget> createState() => _TherapistVideoWidgetState();
@@ -63,8 +67,8 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
               left: 16,
               child: Row(
                 children: [
-                  const TextView(
-                    text: 'Therapist',
+                  TextView(
+                    text: widget.caller?.name ?? '....',
                     fontWeight: FontWeight.w600,
                     color: Pallets.white,
                   ),
@@ -85,9 +89,11 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
 }
 
 class _RemoteControllWidget extends StatelessWidget {
-  const _RemoteControllWidget({super.key, required this.remoteRenderer});
+  const _RemoteControllWidget(
+      {super.key, required this.remoteRenderer, this.caller});
 
   final RTCVideoRenderer remoteRenderer;
+  final Caller? caller;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +108,7 @@ class _RemoteControllWidget extends StatelessWidget {
           if (!remoteRenderer.renderVideo)
             Center(
               child: ImageWidget(
-                imageUrl: Assets.images.pngs.avatar3.path,
+                imageUrl: caller?.avatar ?? Assets.images.pngs.avatar3.path,
                 size: 70,
               ),
             ),

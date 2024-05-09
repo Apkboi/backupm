@@ -14,7 +14,7 @@ class DeepLinkNavigator {
 
 
         CallKitService.instance.showIncomingCall(
-            incomingCallData.therapist.toString(),
+            incomingCallData.webrtcDescriptionId.toString(),
             incomingCallData.therapist.name,
             callerImage: incomingCallData.therapist.avatar,
             extra: incomingCallData.toJson());
@@ -38,7 +38,7 @@ class DeepLinkNavigator {
 
 
         CallKitService.instance.showIncomingCall(
-            incomingCallData.therapist.toString(),
+            incomingCallData.webrtcDescriptionId,
             incomingCallData.therapist.name,
             callerImage: incomingCallData.therapist.avatar,
             extra: incomingCallData.toJson());

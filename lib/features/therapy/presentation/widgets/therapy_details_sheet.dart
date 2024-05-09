@@ -239,59 +239,58 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
 
   void launchMessage() async {}
 
-  void _endSession(BuildContext context) async {
-    final bool? sessionEnded = await CustomDialogs.showBottomSheet(
-        context,
-        EndTherapySessionDialog(
-          session: widget.session,
-        ),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        )),
-        constraints: BoxConstraints(maxHeight: 0.9.sh));
-
-    if (sessionEnded ?? false) {
-      final bool? writeReview = await CustomDialogs.showCustomDialog(
-          TherapySessionEndedDialog(sessionDetails: widget.session), context);
-
-      logger.i(writeReview);
-
-      if (writeReview ?? false) {
-        final bool? wroteFeedback = await CustomDialogs.showBottomSheet(
-            context,
-            TherapyReviewSheet(
-              session: widget.session,
-            ),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
-            )),
-            constraints: BoxConstraints(maxHeight: 0.9.sh));
-
-        if (wroteFeedback ?? false) {
-          await CustomDialogs.showBottomSheet(
-              context,
-              SuccessDialog(
-                tittle: feedbackSuccessMessage,
-                onClose: () {
-                  context.pop();
-                },
-              ),
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              )),
-              constraints: BoxConstraints(maxHeight: 0.9.sh));
-          // context.pop();
-        }
-        context.pop();
-      } else {
-        context.pop();
-      }
-    }
-  }
+  // void _endSession(BuildContext context) async {
+  //   final bool? sessionEnded = await CustomDialogs.showBottomSheet(
+  //       context,
+  //       EndTherapySessionDialog(
+  //         sessionId: widget.session,
+  //       ),
+  //       shape: const RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.only(
+  //         topLeft: Radius.circular(16),
+  //         topRight: Radius.circular(16),
+  //       )),
+  //       constraints: BoxConstraints(maxHeight: 0.9.sh));
+  //
+  //   if (sessionEnded ?? false) {
+  //     final bool? writeReview = await CustomDialogs.showCustomDialog(TherapySessionEndedDialog(therapist: widget.), context);
+  //
+  //     logger.i(writeReview);
+  //
+  //     // if (writeReview ?? false) {
+  //     //   final bool? wroteFeedback = await CustomDialogs.showBottomSheet(
+  //     //       context,
+  //     //       TherapyReviewSheet(
+  //     //         sessionId: widget.session,
+  //     //       ),
+  //     //       shape: const RoundedRectangleBorder(
+  //     //           borderRadius: BorderRadius.only(
+  //     //         topLeft: Radius.circular(16),
+  //     //         topRight: Radius.circular(16),
+  //     //       )),
+  //     //       constraints: BoxConstraints(maxHeight: 0.9.sh));
+  //     //
+  //     //   if (wroteFeedback ?? false) {
+  //     //     await CustomDialogs.showBottomSheet(
+  //     //         context,
+  //     //         SuccessDialog(
+  //     //           tittle: feedbackSuccessMessage,
+  //     //           onClose: () {
+  //     //             context.pop();
+  //     //           },
+  //     //         ),
+  //     //         shape: const RoundedRectangleBorder(
+  //     //             borderRadius: BorderRadius.only(
+  //     //           topLeft: Radius.circular(16),
+  //     //           topRight: Radius.circular(16),
+  //     //         )),
+  //     //         constraints: BoxConstraints(maxHeight: 0.9.sh));
+  //     //     // context.pop();
+  //     //   }
+  //     //   context.pop();
+  //     // } else {
+  //     //   context.pop();
+  //     // }
+  //   }
+  // }
 }

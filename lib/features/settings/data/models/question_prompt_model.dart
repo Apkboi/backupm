@@ -1,3 +1,4 @@
+import 'package:mentra/features/settings/data/models/change_therapist_stage.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 
 class TherapyPreferenceMessageModel {
@@ -5,9 +6,11 @@ class TherapyPreferenceMessageModel {
   String? answer;
   List options;
   String key;
-  int id;
+  dynamic id;
   bool isTyping;
   TherapyMessageType therapyMessageType;
+  ChangeTherapistStage changeTherapistStage;
+  ChangeTherapistStage? nextChangeTherapistStage;
   SuggestedTherapist? suggestedTherapist;
   DateTime? questionTime = DateTime.now();
   DateTime? answerTime = DateTime.now();
@@ -21,13 +24,18 @@ class TherapyPreferenceMessageModel {
       required this.key,
       this.suggestedTherapist,
       this.therapyMessageType = TherapyMessageType.updatePreferenceMessage,
+      this.changeTherapistStage = ChangeTherapistStage.initial,
+      this.nextChangeTherapistStage,
       required this.id});
 
   factory TherapyPreferenceMessageModel.typing() =>
       TherapyPreferenceMessageModel(
           question: [], options: [], key: '', id: 200, isTyping: true);
+
+
+
 }
 
-enum TherapyPreferenceIntent { updatePreference, changeTherapist }
+enum TherapyPreferenceIntent { updatePreference, changeTherapist,selectTherapist }
 
 enum TherapyMessageType { updatePreferenceMessage, changeTherapistMessage }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,17 +7,24 @@ import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/widgets/call/controll_sheet.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class UserVideoWidget extends StatefulWidget {
-  const UserVideoWidget(
-      {super.key, required this.localRenderer, required this.mirror});
+  const UserVideoWidget({super.key,
+    required this.localRenderer,
+    required this.mirror,
+    this.sessionId, required this.therapist});
 
   final RTCVideoRenderer localRenderer;
   final bool mirror;
+  final dynamic sessionId;
+  final Caller therapist;
 
   @override
   State<UserVideoWidget> createState() => _UserVideoWidgetState();
@@ -50,8 +58,12 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const TextView(
-                              text: 'User',
+                            TextView(
+                              text: injector
+                                  .get<UserBloc>()
+                                  .appUser
+                                  ?.name ??
+                                  '....',
                               fontWeight: FontWeight.w600,
                               color: Pallets.white,
                             ),
@@ -77,7 +89,18 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
                     ],
                   ),
                 ),
-              ))
+              )),
+          if (!context
+              .watch<CallCubit>()
+              .isVideoOn)
+            Center(
+                child: ImageWidget(
+                    size: 70,
+                    imageUrl: injector
+                        .get<UserBloc>()
+                        .appUser
+                        ?.avatar ??
+                        Assets.images.pngs.avatar3.path))
         ],
       ),
     );
@@ -88,6 +111,8 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
         context,
         BlocProvider.value(
             value: context.read<CallCubit>(),
-            child: const CallControllSheet()));
+            child: CallControllSheet(
+              sessionId: widget.sessionId, caller: widget.therapist,
+            )));
   }
 }

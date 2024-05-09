@@ -18,6 +18,7 @@ import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/settings/data/models/question_prompt_model.dart';
 import 'package:mentra/features/settings/presentation/blocs/user_preference/user_preference_cubit.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
@@ -139,8 +140,16 @@ class _TherapyScreenState extends State<TherapyScreen> {
                                   fontWeight: FontWeight.w600,
                                 ),
                                 onPressed: () {
-                                  context
-                                      .pushNamed(PageUrl.changeTherapistScreen);
+                                  context.pushNamed(
+                                      PageUrl.userPreferenceScreen,
+                                      queryParameters: {
+                                        PathParam.userPreferenceFlow:
+                                            UserPreferenceFlow
+                                                .changeTherapist.name,
+                                        PathParam.chatIntent:
+                                            TherapyPreferenceIntent
+                                                .changeTherapist.name,
+                                      });
                                 },
                               )
                             ],
@@ -155,7 +164,10 @@ class _TherapyScreenState extends State<TherapyScreen> {
                               context.pushNamed(PageUrl.userPreferenceScreen,
                                   queryParameters: {
                                     PathParam.userPreferenceFlow:
-                                        UserPreferenceFlow.selectTherapist.name
+                                        UserPreferenceFlow.changeTherapist.name,
+                                    PathParam.chatIntent:
+                                        TherapyPreferenceIntent
+                                            .changeTherapist.name,
                                   });
                             },
                             fgColor: Pallets.white,
@@ -248,31 +260,30 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
         if (injector.get<TherapyBloc>().upComingSessions?.isNotEmpty ?? false) {
           var sessions = injector.get<TherapyBloc>().upComingSessions;
           return RefreshIndicator(
-            onRefresh: () async {
-              injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
-            },
-            child: AnimationLimiter(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: sessions?.length ?? 0,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) =>
-                    AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 500),
-                  child: SlideAnimation(
-                    horizontalOffset: 60.0,
-                    child: FadeInAnimation(
-                      duration: const Duration(milliseconds: 600),
-                      child: TherapyItem(
-                        session: sessions![index],
+              onRefresh: () async {
+                injector.get<TherapyBloc>().add(GetUpcomingSessionsEvent());
+              },
+              child: AnimationLimiter(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: sessions?.length ?? 0,
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) =>
+                      AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 500),
+                    child: SlideAnimation(
+                      horizontalOffset: 60.0,
+                      child: FadeInAnimation(
+                        duration: const Duration(milliseconds: 600),
+                        child: TherapyItem(
+                          session: sessions[index],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          );
+              ));
         } else {
           return RefreshIndicator(
             onRefresh: () async {
@@ -365,7 +376,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
 
         // if (state is GetSessionsHistorySuccessState) {
         if (injector.get<TherapyBloc>().sessionsHistory?.isNotEmpty ?? false) {
-          var sessions = injector.get<TherapyBloc>().upComingSessions;
+          var sessions = injector.get<TherapyBloc>().sessionsHistory;
 
           return RefreshIndicator(
             onRefresh: () async {
@@ -379,6 +390,7 @@ class _TherapyHistoryState extends State<TherapyHistory>
               // padding: const EdgeInsets.only(top: 10),
               itemBuilder: (context, index) => TherapyItem(
                 session: sessions![index],
+                isUpcoming: false,
               ),
             ),
           );

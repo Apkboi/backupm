@@ -14,6 +14,11 @@ class CallStateUpdated extends CallState {
   List<Object> get props => [];
 }
 
+// class CallStateUpdated extends CallState {
+//   @override
+//   List<Object> get props => [];
+// }
+
 class CallConnectingState extends CallState {
   @override
   List<Object> get props => [];
@@ -39,6 +44,12 @@ class AcceptCallState extends CallState {
 
 class CallEndedState extends CallState {
   CallEndedState();
+
+  List<Object> get props => [];
+}
+
+class EndCallLoadingState extends CallState {
+  EndCallLoadingState();
 
   List<Object> get props => [];
 }

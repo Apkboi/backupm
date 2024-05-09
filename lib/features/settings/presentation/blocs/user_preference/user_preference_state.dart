@@ -45,3 +45,10 @@ class RemoveTypingState extends UserPreferenceState {
 // @override
 // List<Object> get props => [];
 }
+
+
+class SearchTherapistFailedState extends UserPreferenceState {
+  SearchTherapistFailedState();
+// @override
+// List<Object> get props => [];
+}

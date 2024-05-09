@@ -39,7 +39,7 @@ class IceCandidateResponse {
 class IceCandidate {
   final String candidate;
   final String sdpMid;
-  final int sdpMLineIndex;
+  final dynamic sdpMLineIndex;
   final String usernameFragment;
 
   IceCandidate({

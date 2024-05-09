@@ -6,15 +6,15 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/core/utils/time_util.dart';
-import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
-import 'package:mentra/gen/assets.gen.dart';
+import 'package:mentra/features/therapy/data/models/incoming_call_notification_data.dart';
+import 'package:mentra/features/therapy/data/models/incoming_response.dart';
+
 
 class TherapySessionEndedDialog extends StatelessWidget {
   const TherapySessionEndedDialog(
-      {super.key, required this.sessionDetails, this.tittle});
+      {super.key, required this.therapist, this.tittle});
 
-  final TherapySession sessionDetails;
+  final Caller therapist;
   final String? tittle;
 
   @override
@@ -32,7 +32,7 @@ class TherapySessionEndedDialog extends StatelessWidget {
             width: 49,
             height: 5,
             decoration: ShapeDecoration(
-              color:Pallets.bottomSheetColor,
+              color: Pallets.bottomSheetColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(42),
               ),
@@ -61,7 +61,7 @@ class TherapySessionEndedDialog extends StatelessWidget {
             child: Column(
               children: [
                 ImageWidget(
-                  imageUrl: sessionDetails.therapist.user.avatar,
+                  imageUrl: therapist.avatar,
                   size: 60,
                   borderRadius: BorderRadius.circular(50),
                 ),
@@ -74,40 +74,40 @@ class TherapySessionEndedDialog extends StatelessWidget {
                 ),
                 10.verticalSpace,
                 TextView(
-                  text: sessionDetails.therapist.user.name,
+                  text: therapist.name,
                   align: TextAlign.center,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: Pallets.primary,
                 ),
                 10.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageWidget(imageUrl: Assets.images.svgs.icCalender),
-                    10.horizontalSpace,
-                    TextView(
-                      text: TimeUtil.formatToFullDate(DateTime.parse(
-                          sessionDetails.startsAt.toIso8601String())),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
-                ),
-                10.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ImageWidget(imageUrl: Assets.images.svgs.icClock),
-                    10.horizontalSpace,
-                    TextView(
-                      text: "${TimeUtil.formatTime(
-                        DateTime.parse(
-                            sessionDetails.startsAt.toIso8601String()),
-                      )} - ${TimeUtil.formatTime(sessionDetails.endsAt ?? DateTime.now())}",
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     ImageWidget(imageUrl: Assets.images.svgs.icCalender),
+                //     10.horizontalSpace,
+                //     TextView(
+                //       text: TimeUtil.formatToFullDate(DateTime.parse(
+                //           therapist.startsAt.toIso8601String())),
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ],
+                // ),
+                // 10.verticalSpace,
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     ImageWidget(imageUrl: Assets.images.svgs.icClock),
+                //     10.horizontalSpace,
+                //     TextView(
+                //       text: "${TimeUtil.formatTime(
+                //         DateTime.parse(
+                //             therapist.startsAt.toIso8601String()),
+                //       )} - ${TimeUtil.formatTime(therapist.endsAt ?? DateTime.now())}",
+                //       fontWeight: FontWeight.w600,
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

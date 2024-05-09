@@ -46,8 +46,7 @@ class UpcomingSessionsResponse {
         code: json["code"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "message": message,
         "data": data.toJson(),
         "success": success,
@@ -73,15 +72,13 @@ class Data {
         data: data ?? this.data,
       );
 
-  factory Data.fromJson(Map<String, dynamic> json) =>
-      Data(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         paginationMeta: PaginationMeta.fromJson(json["pagination_meta"]),
         data: List<TherapySession>.from(
             json["data"].map((x) => TherapySession.fromJson(x))),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "pagination_meta": paginationMeta.toJson(),
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
@@ -149,8 +146,7 @@ class TherapySession {
         updatedAt: updatedAt ?? this.updatedAt,
       );
 
-  factory TherapySession.fromJson(Map<String, dynamic> json) =>
-      TherapySession(
+  factory TherapySession.fromJson(Map<String, dynamic> json) => TherapySession(
         id: json["id"],
         user: User.fromJson(json["user"]),
         therapist: DatumTherapist.fromJson(json["therapist"]),
@@ -158,7 +154,8 @@ class TherapySession {
         focus: json["focus"],
         duration: json["duration"],
         startsAt: DateTime.parse(json["starts_at"]),
-        endsAt: json["ends_at"],
+        endsAt:
+            json["ends_at"] == null ? null : DateTime.parse(json["ends_at"]),
         note: json["note"],
         status: json["status"],
         mesiboGroupId: json["mesibo_group_id"],
@@ -166,8 +163,7 @@ class TherapySession {
         updatedAt: DateTime.parse(json["updated_at"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "user": user.toJson(),
         "therapist": therapist.toJson(),
@@ -175,7 +171,7 @@ class TherapySession {
         "focus": focus,
         "duration": duration,
         "starts_at": startsAt.toIso8601String(),
-        "ends_at": endsAt,
+        "ends_at": endsAt.toIso8601String(),
         "note": note,
         "status": status,
         "mesibo_group_id": mesiboGroupId,
@@ -202,19 +198,16 @@ class DatumTherapist {
         therapist: therapist ?? this.therapist,
       );
 
-  factory DatumTherapist.fromJson(Map<String, dynamic> json) =>
-      DatumTherapist(
+  factory DatumTherapist.fromJson(Map<String, dynamic> json) => DatumTherapist(
         user: User.fromJson(json["user"]),
         therapist: Therapist.fromJson(json["therapist"]),
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "user": user.toJson(),
         "therapist": therapist.toJson(),
       };
 }
-
 
 class User {
   final int id;
@@ -267,8 +260,8 @@ class User {
         avatar: avatar ?? this.avatar,
         name: name ?? this.name,
         role: role ?? this.role,
-        avatarBackgroundColor: avatarBackgroundColor ??
-            this.avatarBackgroundColor,
+        avatarBackgroundColor:
+            avatarBackgroundColor ?? this.avatarBackgroundColor,
         username: username ?? this.username,
         email: email ?? this.email,
         stripeCustomerId: stripeCustomerId ?? this.stripeCustomerId,
@@ -279,8 +272,7 @@ class User {
         birthYear: birthYear ?? this.birthYear,
       );
 
-  factory User.fromJson(Map<String, dynamic> json) =>
-      User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         avatar: json["avatar"],
         name: json["name"],
@@ -296,8 +288,7 @@ class User {
         birthYear: json["birth_year"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "avatar": avatar,
         "name": name,
@@ -372,8 +363,7 @@ class PaginationMeta {
         canLoadMore: canLoadMore ?? this.canLoadMore,
       );
 
-  factory PaginationMeta.fromJson(Map<String, dynamic> json) =>
-      PaginationMeta(
+  factory PaginationMeta.fromJson(Map<String, dynamic> json) => PaginationMeta(
         currentPage: json["current_page"],
         firstPageUrl: json["first_page_url"],
         from: json["from"],
@@ -388,8 +378,7 @@ class PaginationMeta {
         canLoadMore: json["can_load_more"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "current_page": currentPage,
         "first_page_url": firstPageUrl,
         "from": from,

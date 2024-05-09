@@ -7,6 +7,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
+import 'package:mentra/features/therapy/data/models/get_offer_response.dart';
 import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
@@ -19,7 +20,9 @@ class CallCubit extends Cubit<CallState> {
 
   int _callerId = 0;
   int _calleeId = 0;
+  dynamic _sessionId;
   SdpOffer? _offer;
+  Caller? therapist;
 
   // videoRenderer for localPeer
   final localRTCVideoRenderer = RTCVideoRenderer();
@@ -54,11 +57,13 @@ class CallCubit extends Cubit<CallState> {
     int callerId,
     calleeId,
     SdpOffer? offer,
+    dynamic sessionId,
   ) async {
     emit(CallConnectingState());
     _calleeId = calleeId;
     _callerId = callerId;
     _offer = offer;
+    _sessionId = sessionId;
 
     await Future.delayed(const Duration(milliseconds: 1));
     // initializing renderers
@@ -102,6 +107,15 @@ class CallCubit extends Cubit<CallState> {
             'sdpMid': candidate.sdpMid.toString(),
             'sdpMlineIndex': candidate.sdpMLineIndex,
           });
+        }
+      };
+      _rtcPeerConnection!.onIceConnectionState = (state) {
+        if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
+            state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
+          endCall();
+        }
+        if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
+          emit(CallConnectedState());
         }
       };
       // _rtcPeerConnection!.onAddStream = (stream) {
@@ -287,6 +301,7 @@ class CallCubit extends Cubit<CallState> {
       var body = {
         "callerId": _calleeId,
         "calleeId": callerId,
+        "therapy_session_id": _sessionId,
         "sdpOffer": base64.encode(utf8.encode(jsonEncode(map))),
       };
 
@@ -310,6 +325,7 @@ class CallCubit extends Cubit<CallState> {
       var body = {
         "callerId": callerId,
         "calleeId": _calleeId,
+        "therapy_session_id": _sessionId,
         "sdpAnswer": base64.encode(utf8.encode(jsonEncode(map))),
       };
 
@@ -327,7 +343,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   endCall() async {
-    emit(CallEndedState());
+    emit(EndCallLoadingState());
     try {
       var networkService = injector.get<NetworkService>();
 
@@ -335,10 +351,12 @@ class CallCubit extends Cubit<CallState> {
         "callerId": _callerId,
         "calleeId": _calleeId,
         "sender": _calleeId,
+        "therapy_session_id": _sessionId,
       };
 
       logger.w('Pushing answer');
       logger.w(body);
+      CallKitService.instance.endCall();
       var respose = await networkService.call(
           'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
           RequestMethod.post,
@@ -356,6 +374,7 @@ class CallCubit extends Cubit<CallState> {
       var body = {
         "callerId": callerId,
         "calleeId": _calleeId,
+        "therapy_session_id": _sessionId,
         "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
         "sender": "user"
       };
@@ -377,22 +396,29 @@ class CallCubit extends Cubit<CallState> {
     emit(AcceptCallState(descriptionId));
   }
 
-  void _getOfferFromRemote() async {
+  Future _getOfferFromRemote() async {
     try {
       var networkService = injector.get<NetworkService>();
-      var body = {
-        "callerId": _callerId,
-        "calleeId": _calleeId,
-        // "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
-        "sender": "user"
-      };
+      // logger.w(body);
+      // var body = {
+      //   "callerId": _callerId,
+      //   "calleeId": _calleeId,
+      //   // "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
+      //   // "sender": "user"
+      // };
+
       logger.w('Pushing candidate');
-      logger.w(body);
+
       var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/ice-candidate',
-          RequestMethod.post,
-          data: body);
+        'https://staging.app.yourmentra.com/api/v1/webrtc/get-offer/:$_callerId',
+        RequestMethod.get,
+        // data: body
+      );
       logger.w(respose.data);
+      var offerResponse = GetOfferResponse.fromJson(respose.data);
+      _offer = offerResponse.data.payload.sdpOffer;
+      _callerId = offerResponse.data.payload.callerId;
+      // therapist = offerResponse.data.payload.
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }

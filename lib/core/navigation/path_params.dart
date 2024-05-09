@@ -13,6 +13,7 @@ class PathParam {
   static const libraryCategory = 'libraryCategory';
   static const libraryCourse = 'libraryCourse';
   static const userPreferenceFlow = 'userPreferenceFlow';
+  static const chatIntent = 'chatIntent';
   static const botChatFlow = 'botChatFlow';
   static const authMessages = 'authMessages';
   static const updatedPreference = 'updatedPreference';
@@ -25,7 +26,9 @@ class PathParam {
   static const authenticate = 'authenticate';
 
   static const offer = 'offer';
+  static const caller = 'caller';
   static const callerId = 'callerId';
+  static const sessionId = 'callerId';
   static const calleeId = 'calleeId';
 
 // static const chatId = 'chatId';

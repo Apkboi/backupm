@@ -176,9 +176,7 @@ class NotificationService {
   void _getToken() async {
     try {
       // final plainNotificationToken = PlainNotificationToken();
-
       token = await FirebaseMessaging.instance.getToken();
-
       notiToken = token ?? '';
       // logger.e(notiToken);
       logger.i('My Token: $token');
