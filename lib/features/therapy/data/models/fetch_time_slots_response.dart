@@ -73,9 +73,9 @@ class FetchTimeSlotsResponse {
 }
 
 class TimeSlot {
-  final String startTime;
-  final String stopTime;
-  final int duration;
+  final dynamic startTime;
+  final dynamic stopTime;
+  final dynamic duration;
 
   TimeSlot({
     required this.startTime,

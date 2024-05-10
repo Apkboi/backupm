@@ -354,7 +354,7 @@ class CallCubit extends Cubit<CallState> {
         "therapy_session_id": _sessionId,
       };
 
-      logger.w('Pushing answer');
+      // logger.w('Pushing answer');
       logger.w(body);
       CallKitService.instance.endCall();
       var respose = await networkService.call(
@@ -362,6 +362,16 @@ class CallCubit extends Cubit<CallState> {
           RequestMethod.post,
           data: body);
       logger.w(respose.data);
+      _rtcPeerConnection?.close();
+      _localStream?.getAudioTracks().forEach((track) {
+        track.enabled = false;
+        isVideoOn = false;
+      });
+      _localStream?.getVideoTracks().forEach((track) {
+        track.enabled = false;
+        isAudioOn = false;
+      });
+      remoteRTCVideoRenderer.dispose();
     } catch (e, stack) {
       // TODO: Emit Call Failed State
       logger.e(e.toString(), stackTrace: stack);
@@ -418,6 +428,7 @@ class CallCubit extends Cubit<CallState> {
       var offerResponse = GetOfferResponse.fromJson(respose.data);
       _offer = offerResponse.data.payload.sdpOffer;
       _callerId = offerResponse.data.payload.callerId;
+      // _sessionId = offerResponse.data.payload.
       // therapist = offerResponse.data.payload.
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);

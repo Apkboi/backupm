@@ -112,20 +112,20 @@ class _RemoteControllWidget extends StatelessWidget {
                 size: 70,
               ),
             ),
-          Positioned(
-              right: 16,
-              top: 70,
-              child: !remoteRenderer.muted
-                  ? const Icon(
-                      Icons.mic_rounded,
-                      color: Pallets.grey,
-                      size: 30,
-                    )
-                  : const Icon(
-                      Icons.mic_off_rounded,
-                      color: Pallets.grey,
-                      size: 35,
-                    ))
+          // Positioned(
+          //     right: 16,
+          //     top: 70,
+          //     child: !remoteRenderer.muted
+          //         ? const Icon(
+          //             Icons.mic_rounded,
+          //             color: Pallets.grey,
+          //             size: 30,
+          //           )
+          //         : const Icon(
+          //             Icons.mic_off_rounded,
+          //             color: Pallets.grey,
+          //             size: 35,
+          //           ))
         ],
       ),
     );

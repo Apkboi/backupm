@@ -2,6 +2,7 @@ import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/accept_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/create_session_response.dart';
 import 'package:mentra/features/therapy/data/models/create_sessions_payload.dart';
@@ -30,9 +31,12 @@ class TherapyRepositoryImpl extends TherapyRepository {
   Future<FetchTimeSlotsResponse> getAvailableTimeSlots(String date) async {
     try {
       final response = await _networkService.call(
-          UrlConfig.sessionTimeSlots, RequestMethod.post,
-          data: {"date": date});
-
+        UrlConfig.sessionTimeSlots,
+        RequestMethod.get,
+        queryParams: {
+          "date": date,
+        },
+      );
       return FetchTimeSlotsResponse.fromJson(response.data);
     } catch (e, stack) {
       logger.e(e.toString());

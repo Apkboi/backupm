@@ -13,8 +13,6 @@ import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 
-import 'package:uuid/uuid.dart';
-
 class CallKitService {
   static final CallKitService instance = CallKitService._internal();
 
@@ -117,7 +115,7 @@ class CallKitService {
           incomingCallNotificationChannelName: "Incoming Call",
           missedCallNotificationChannelName: "Missed Call",
           isShowCallID: false),
-      ios: IOSParams(
+      ios: const IOSParams(
         iconName: 'CallKitLogo',
         handleType: 'generic',
         supportsVideo: true,
@@ -177,7 +175,8 @@ class CallKitService {
           CustomRoutes.goRouter
               .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
             PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
-            PathParam.callerId: currentCall['id'],
+            PathParam.callerId: currentCall['extra']['webrtc_description_id'],
+
           });
           //Navigate to your call screen.
         }
