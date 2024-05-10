@@ -113,9 +113,9 @@ class SessionScheduledDialog extends StatelessWidget {
                 // ),
 
                 TextView(
-                    color: Pallets.grey60,
+                    // color: Pallets.grey60,
                     text:
-                        'Your session with Nour will begin on ${TimeUtil.formartToDayTime(DateTime.parse(sessionDetails.startsAt))}. To make the call seamless, here are a few tips:'),
+                        'Your session with ${sessionDetails.therapist.user.name} will begin on ${TimeUtil.formartToDayTime(DateTime.parse(sessionDetails.startsAt))}. To make the call seamless, here are a few tips:'),
                 16.verticalSpace,
                 ...List.generate(
                     tasks.length,
@@ -132,6 +132,7 @@ class SessionScheduledDialog extends StatelessWidget {
             onTap: () {
               context.pop();
             },
+            expanded: false,
             color: Pallets.primary,
             text: 'Got it',
           )
@@ -151,7 +152,7 @@ class _CallTipItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextView(
       text: '$index. $tip',
-      color: Pallets.grey60,
+      // color: Pallets.grey60,
     );
   }
 }

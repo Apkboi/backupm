@@ -8,7 +8,6 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
-import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_details_sheet.dart';
 import '../../../../core/services/pusher/pusher_channel_service.dart';
@@ -25,7 +24,7 @@ class TherapyItem extends StatefulWidget {
 
 class _TherapyItemState extends State<TherapyItem> {
   final String selfCallerID =
-  Random().nextInt(999999).toString().padLeft(6, '0');
+      Random().nextInt(999999).toString().padLeft(6, '0');
 
   @override
   void initState() {
@@ -43,7 +42,7 @@ class _TherapyItemState extends State<TherapyItem> {
 
   @override
   void dispose() {
-    _disconnect();
+    // _disconnect();
     super.dispose();
   }
 
@@ -84,26 +83,45 @@ class _TherapyItemState extends State<TherapyItem> {
                     8.verticalSpace,
                     TextView(
                       text:
-                      'Session with ${widget.session.therapist.user.name}.',
+                          'Session with ${widget.session.therapist.user.name}.',
                       color: Pallets.ink,
                     ),
-                    8.verticalSpace,
-                    TextView(
-                      text: widget.isUpcoming ? TimeUtil.formartToDayTime(
-                        widget.session.startsAt,) : TimeUtil
-                          .formatOperationsDate(
-                          widget.session.startsAt.toString(), 0),
+                    5.verticalSpace,
+
+                    !widget.isUpcoming? TextView(
+                      text: !widget.isUpcoming
+                          ? TimeUtil.formartToDayTime(
+                              widget.session.startsAt,
+                            )
+                          :'${TimeUtil.formatOpertionsDateWithoutTime(
+                          widget.session.startsAt.toString(),)}\n${TimeUtil.formartToDayTime(
+                          widget.session.startsAt)}',
                       color: Pallets.ink,
-                    ),
+                    ):
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                      TextView(
+                        text: TimeUtil.formatOpertionsDateWithoutTime(
+                          widget.session.startsAt.toString(),),
+                        color: Pallets.ink,
+                      ),
+                      5.verticalSpace,
+                      TextView(
+                        text:TimeUtil.formartToDayTime(
+                            widget.session.startsAt),
+                        color: Pallets.ink,
+                      ),
+                    ],),
                     8.verticalSpace,
-                    SessionButton(
-                      startDate: widget.session.startsAt.toLocal(),
-                      endDate: (widget.session.endsAt ??
-                          widget.session.startsAt
-                              .add(const Duration(hours: 1)))
-                          .toLocal(),
-                      session: widget.session,
-                    )
+                    // SessionButton(
+                    //   startDate: widget.session.startsAt.toLocal(),
+                    //   endDate: (widget.session.endsAt ??
+                    //           widget.session.startsAt
+                    //               .add(const Duration(hours: 1)))
+                    //       .toLocal(),
+                    //   session: widget.session,
+                    // )
                   ],
                 ),
               ),

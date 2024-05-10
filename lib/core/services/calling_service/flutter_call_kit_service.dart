@@ -117,7 +117,7 @@ class CallKitService {
           incomingCallNotificationChannelName: "Incoming Call",
           missedCallNotificationChannelName: "Missed Call",
           isShowCallID: false),
-      ios: IOSParams(
+      ios: const IOSParams(
         iconName: 'CallKitLogo',
         handleType: 'generic',
         supportsVideo: true,

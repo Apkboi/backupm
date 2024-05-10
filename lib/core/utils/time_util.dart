@@ -37,11 +37,23 @@ class TimeUtil {
       return formatted;
     }
 
-    final DateFormat formatter = DateFormat('MMMM, d  kk:mm a');
+    final DateFormat formatter = DateFormat('MMMM d,  kk:mm a');
     final String formatted = formatter.format(now);
 
     return formatted;
   }
+
+
+  static String formatOpertionsDateWithoutTime(String? date,) {
+    final now = DateTime.parse(date ?? DateTime.now().toString());
+
+
+    final DateFormat formatter = DateFormat('MMMM d, yyyy');
+    final String formatted = formatter.format(now);
+
+    return formatted;
+  }
+
 
   static String timeFormat(String? updatedAt) {
     if (updatedAt == null) return 'N/A';
@@ -103,7 +115,6 @@ class TimeUtil {
   }
 
   static String formatTime(DateTime dateTime) {
-
     return DateFormat.jm().format(dateTime);
   }
 

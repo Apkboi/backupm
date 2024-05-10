@@ -26,18 +26,19 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
     super.initState();
   }
 
-  List sessionFocuses = [
-    'Developing coping strategies for anxiety',
-    'Resolving interpersonal conflicts',
-    'Building self esteem and confidence',
-    'Managing depression and mood fluctuations'
-  ];
+  //
+  // List sessionFocuses = [
+  //   'Developing coping strategies for anxiety',
+  //   'Resolving interpersonal conflicts',
+  //   'Building self esteem and confidence',
+  //   'Managing depression and mood fluctuations'
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          color: Pallets.white,
+          color: Pallets.bottomSheetColor,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16), topRight: Radius.circular(16))),
       padding: const EdgeInsets.all(16),
@@ -48,9 +49,10 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
           16.verticalSpace,
           TextView(
             text: 'Select Session Focus',
-            style: GoogleFonts.sora(
-              fontSize: 16.sp,
-            ),
+            style: GoogleFonts.fraunces(
+                fontSize: 20.sp,
+                color: Pallets.navy,
+                fontWeight: FontWeight.w600),
           ),
           16.verticalSpace,
           SizedBox(
@@ -80,15 +82,23 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                 if (state is GetSessionFocusSuccessState) {
                   return ListView.builder(
                     itemCount: state.response.data.length,
-                    itemBuilder: (context, index) => HapticInkWell(
-                      onTap: () {
-                        context.pop(state.response.data[index].name);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: TextView(
-                          text: state.response.data[index].name,
-                          fontSize: 16,
+                    itemBuilder: (context, index) => Material(
+                      color: Colors.transparent,
+                      child: HapticInkWell(
+                        onTap: () {
+                          context.pop(state.response.data[index].name);
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            10.verticalSpace,
+                            TextView(
+                              text: state.response.data[index].name,
+                              fontSize: 16,
+                            ),
+                            10.verticalSpace,
+                            Divider()
+                          ],
                         ),
                       ),
                     ),

@@ -179,8 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ''),
                               69.verticalSpace,
                               Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 25.w),
+                                padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: CustomNeumorphicButton(
                                   onTap: () {
                                     // Navigator.push(
@@ -200,8 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   color: Pallets.secondary,
                                   fgColor: Pallets.navy,
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 19.h),
+                                  padding: EdgeInsets.symmetric(vertical: 19.h),
                                   text: "Talk to Mentra",
                                 ),
                               ),

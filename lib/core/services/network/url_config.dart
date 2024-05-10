@@ -89,6 +89,9 @@ class UrlConfig {
 
   static const String sessionTimeSlots =
       '/user/session/schedule/fetch-timeslots';
+
+  // static const String sessionTimeSlots =
+  //     '/user/session/schedule/fetch-timeslots';
   static const String createSession = '/user/session/schedule/create';
   static const String updatePreference = '/user/therapy/preferences';
   static const String fetchDates = '/user/session/schedule/fetch-dates';

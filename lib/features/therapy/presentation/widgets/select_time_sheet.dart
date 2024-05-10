@@ -69,7 +69,7 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                   child: Row(
                     children: [
                       const TextView(
-                        text: 'Date:',
+                        text: 'Date: ',
                         color: Pallets.ink,
                         fontWeight: FontWeight.w600,
                       ),
