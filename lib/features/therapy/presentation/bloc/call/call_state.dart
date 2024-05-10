@@ -53,3 +53,12 @@ class EndCallLoadingState extends CallState {
 
   List<Object> get props => [];
 }
+
+
+class CallActionState extends CallState {
+  final IncomingCallResponse response;
+
+  CallActionState(this.response);
+
+  List<Object> get props => [response];
+}

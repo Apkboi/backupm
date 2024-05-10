@@ -15,7 +15,9 @@ class IncomingCallResponse {
   final SdpOffer? sdpOffer;
   final SdpAnswer? sdpAnswer;
   final dynamic therapySessionId;
-  final Caller therapist;
+  final Caller? therapist;
+  final String? action;
+  final String? value;
 
   IncomingCallResponse({
     required this.callerId,
@@ -23,6 +25,8 @@ class IncomingCallResponse {
     required this.sdpAnswer,
     required this.therapist,
     this.therapySessionId,
+    this.action,
+    this.value,
   });
 
   // factory IncomingCallResponse.fromJson(Map<String, dynamic> json) => IncomingCallResponse(
@@ -33,6 +37,8 @@ class IncomingCallResponse {
   factory IncomingCallResponse.fromJson(Map<String, dynamic> json) {
     return IncomingCallResponse(
         callerId: json["callerId"],
+        action: json["action"],
+        value: json["value"],
         sdpOffer: json["sdpOffer"] != null
             ? SdpOffer.fromJson(
                 jsonDecode(
@@ -55,15 +61,17 @@ class IncomingCallResponse {
                 ),
               )
             : null,
-        therapist: Caller.fromJson(json["therapist"]),
+        therapist: json["therapist"] != null ? Caller.fromJson(json["therapist"]) : null,
         therapySessionId: json['therapy_session_id']);
   }
 
   Map<String, dynamic> toJson() => {
+        "action": action,
+        "value": value,
         "callerId": callerId,
         "sdpOffer": sdpOffer?.toJson(),
         "sdpAnswer": sdpAnswer?.toJson(),
-        "therapist": therapist.toJson(),
+        "therapist": therapist?.toJson(),
         "therapy_session_id": therapySessionId
       };
 }

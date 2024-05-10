@@ -127,7 +127,6 @@ class CallCubit extends Cubit<CallState> {
       // };
       // listen for remotePeer mediaTrack event
       _rtcPeerConnection!.onTrack = (event) {
-        logger.w(event.track.muted);
         remoteRTCVideoRenderer.srcObject = event.streams[0];
         setState(() {});
       };
@@ -160,11 +159,12 @@ class CallCubit extends Cubit<CallState> {
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
 
-      print("Anwer data");
-      print(jsonEncode(answer.toMap()));
-
       // send SDP answer to remote peer
       await _answerCall(_callerId, answer.toMap());
+
+      _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
+      _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
+
 
       _createOffer();
     } catch (e, stack) {
@@ -290,6 +290,12 @@ class CallCubit extends Cubit<CallState> {
       emit(CallConnectedState());
     }
 
+    if ((event).eventName == 'callAction') {
+      IncomingCallResponse response =
+          IncomingCallResponse.fromJson(jsonDecode(data));
+      emit(CallActionState(response));
+    }
+
     if ((event).eventName == 'callEnded') {
       CallKitService.instance.endCall();
       emit(CallEndedState());
@@ -325,8 +331,8 @@ class CallCubit extends Cubit<CallState> {
     try {
       var networkService = injector.get<NetworkService>();
       var body = {
-        "callerId": _callerId,
-        "calleeId": _calleeId,
+        "callerId": _calleeId,
+        "calleeId": _callerId,
         "therapy_session_id": _sessionId,
         "action": action,
         "value": value,

@@ -78,8 +78,6 @@ class _CallListenerState extends State<CallListener> {
           logger.i(event.data);
           var currentRoute = CustomRoutes
               .goRouter.routerDelegate.currentConfiguration.last.route.path;
-          logger.i(currentRoute);
-          logger.w(incomingCall.therapist.toJson());
 
           Debouncer(milliseconds: 500).run(() {
             if (currentRoute != '/${PageUrl.therapyCallScreen}') {

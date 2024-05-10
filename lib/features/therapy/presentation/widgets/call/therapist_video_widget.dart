@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
@@ -18,7 +17,7 @@ class TherapistVideoWidget extends StatefulWidget {
   const TherapistVideoWidget({
     super.key,
     required this.remoteRenderer,
-    this.caller,
+    required this.caller,
   });
 
   final RTCVideoRenderer remoteRenderer;
@@ -29,6 +28,9 @@ class TherapistVideoWidget extends StatefulWidget {
 }
 
 class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
+  bool remoteVideoEnabled = true;
+  bool remoteAudioEnabled = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,11 +57,19 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
                 );
               }
 
-              // if(state is CallConnectingStat){}
+              if (state is CallActionState) {
+                if (state.response.action == "videoStateChanged") {
+                  remoteVideoEnabled = state.response.value == "enabled";
+                }
+                if (state.response.action == "audioStateChanged") {
+                  remoteAudioEnabled = state.response.value == "enabled";
+                }
+              }
 
               return _RemoteControllWidget(
-                remoteRenderer: widget.remoteRenderer,
-              );
+                  caller: widget.caller,
+                  videoEnabled: remoteVideoEnabled,
+                  audioEnabled: remoteAudioEnabled);
             },
           ),
           Positioned(
@@ -84,48 +94,53 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
   void _listenToCallState(BuildContext context, CallState state) {}
 
   bool _buildWhen(CallState previous, CallState current) {
-    return current is CallConnectingState || current is CallConnectedState;
+    return current is CallConnectingState ||
+        current is CallConnectedState ||
+        current is CallActionState;
   }
 }
 
 class _RemoteControllWidget extends StatelessWidget {
   const _RemoteControllWidget(
-      {super.key, required this.remoteRenderer, this.caller});
+      {super.key,
+      required this.caller,
+      required this.videoEnabled,
+      required this.audioEnabled});
 
-  final RTCVideoRenderer remoteRenderer;
   final Caller? caller;
+  final bool videoEnabled;
+  final bool audioEnabled;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color:
-              remoteRenderer.renderVideo ? Colors.transparent : Pallets.black),
+          color: !videoEnabled ? Colors.transparent : Pallets.black),
       height: 1.sh,
       width: 1.sw,
       child: Stack(
         children: [
-          if (!remoteRenderer.renderVideo)
+          if (videoEnabled)
             Center(
               child: ImageWidget(
                 imageUrl: caller?.avatar ?? Assets.images.pngs.avatar3.path,
                 size: 70,
               ),
             ),
-          // Positioned(
-          //     right: 16,
-          //     top: 70,
-          //     child: !remoteRenderer.muted
-          //         ? const Icon(
-          //             Icons.mic_rounded,
-          //             color: Pallets.grey,
-          //             size: 30,
-          //           )
-          //         : const Icon(
-          //             Icons.mic_off_rounded,
-          //             color: Pallets.grey,
-          //             size: 35,
-          //           ))
+          Positioned(
+              right: 16,
+              top: 70,
+              child: !audioEnabled
+                  ? const Icon(
+                      Icons.mic_rounded,
+                      color: Pallets.grey,
+                      size: 30,
+                    )
+                  : const Icon(
+                      Icons.mic_off_rounded,
+                      color: Pallets.grey,
+                      size: 35,
+                    ))
         ],
       ),
     );
