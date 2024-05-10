@@ -39,41 +39,23 @@ class GetOfferResponse {
 }
 
 class Data {
-  final int id;
-  final Payload payload;
-  final DateTime createdAt;
-
-  Data({
-    required this.id,
-    required this.payload,
-    required this.createdAt,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    payload: Payload.fromJson(json["payload"]),
-    createdAt: DateTime.parse(json["created_at"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "payload": payload.toJson(),
-    "created_at": createdAt.toIso8601String(),
-  };
-}
-
-class Payload {
   final int calleeId;
   final int callerId;
   final SdpOffer sdpOffer;
+  final Caller therapist;
+  final int therapySessionId;
+  final int id;
 
-  Payload({
+  Data({
     required this.calleeId,
     required this.callerId,
     required this.sdpOffer,
+    required this.therapist,
+    required this.therapySessionId,
+    required this.id,
   });
 
-  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     calleeId: json["calleeId"],
     callerId: json["callerId"],
     sdpOffer: SdpOffer.fromJson(
@@ -85,11 +67,20 @@ class Payload {
         ),
       ),
     ),
+    therapist: Caller.fromJson(json["therapist"]),
+    therapySessionId: json["therapy_session_id"],
+    id: json["id"],
   );
 
   Map<String, dynamic> toJson() => {
     "calleeId": calleeId,
     "callerId": callerId,
     "sdpOffer": sdpOffer.toJson(),
+    "therapist": therapist.toJson(),
+    "therapy_session_id": therapySessionId,
+    "id": id,
   };
 }
+
+
+

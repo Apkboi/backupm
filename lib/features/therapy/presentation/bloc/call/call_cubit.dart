@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/core/_core.dart';
 
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
@@ -23,6 +24,7 @@ class CallCubit extends Cubit<CallState> {
   dynamic _sessionId;
   SdpOffer? _offer;
   Caller? therapist;
+  dynamic currentCall = '4';
 
   // videoRenderer for localPeer
   final localRTCVideoRenderer = RTCVideoRenderer();
@@ -71,7 +73,7 @@ class CallCubit extends Cubit<CallState> {
     remoteRTCVideoRenderer.initialize();
 
     if (_offer == null) {
-      _getOfferFromRemote();
+      await _getOfferFromRemote();
     }
     // setup Peer Connection
     _setupPeerConnection();
@@ -297,8 +299,15 @@ class CallCubit extends Cubit<CallState> {
     }
 
     if ((event).eventName == 'callEnded') {
-      CallKitService.instance.endCall();
-      emit(CallEndedState());
+      // var currentCall = await CallKitService.instance.getCurrentCall();
+
+
+        CallKitService.instance.endCall();
+        if (currentCall != null) {
+          emit(CallEndedState());
+          currentCall = null;
+
+      }
     }
   }
 
@@ -373,38 +382,41 @@ class CallCubit extends Cubit<CallState> {
   }
 
   endCall() async {
-    emit(EndCallLoadingState());
-    try {
-      var networkService = injector.get<NetworkService>();
+    if (currentCall != null) {
+      emit(EndCallLoadingState());
 
-      var body = {
-        "callerId": _callerId,
-        "calleeId": _calleeId,
-        "sender": _calleeId,
-        "therapy_session_id": _sessionId,
-      };
+      try {
+        var networkService = injector.get<NetworkService>();
 
-      // logger.w('Pushing answer');
-      logger.w(body);
-      CallKitService.instance.endCall();
-      var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
-          RequestMethod.post,
-          data: body);
-      logger.w(respose.data);
-      _rtcPeerConnection?.close();
-      _localStream?.getAudioTracks().forEach((track) {
-        track.enabled = false;
-        isVideoOn = false;
-      });
-      _localStream?.getVideoTracks().forEach((track) {
-        track.enabled = false;
-        isAudioOn = false;
-      });
-      remoteRTCVideoRenderer.dispose();
-    } catch (e, stack) {
-      // TODO: Emit Call Failed State
-      logger.e(e.toString(), stackTrace: stack);
+        var body = {
+          "callerId": _callerId,
+          "calleeId": _calleeId,
+          "sender": _calleeId,
+          "therapy_session_id": _sessionId,
+        };
+
+        // logger.w('Pushing answer');
+        logger.w(body);
+        CallKitService.instance.endCall();
+        var respose = await networkService.call(
+            'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
+            RequestMethod.post,
+            data: body);
+        logger.w(respose.data);
+        _rtcPeerConnection?.close();
+        _localStream?.getAudioTracks().forEach((track) {
+          track.enabled = false;
+          isVideoOn = false;
+        });
+        _localStream?.getVideoTracks().forEach((track) {
+          track.enabled = false;
+          isAudioOn = false;
+        });
+        remoteRTCVideoRenderer.dispose();
+      } catch (e, stack) {
+        // TODO: Emit Call Failed State
+        logger.e(e.toString(), stackTrace: stack);
+      }
     }
   }
 
@@ -437,6 +449,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   Future _getOfferFromRemote() async {
+    logger.w('getting offer from remote');
     try {
       var networkService = injector.get<NetworkService>();
       // logger.w(body);
@@ -450,16 +463,16 @@ class CallCubit extends Cubit<CallState> {
       logger.w('Pushing candidate');
 
       var respose = await networkService.call(
-        'https://staging.app.yourmentra.com/api/v1/webrtc/get-offer/:$_callerId',
+        'https://staging.app.yourmentra.com/api/v1/webrtc/get-offer/$_callerId',
         RequestMethod.get,
         // data: body
       );
       logger.w(respose.data);
       var offerResponse = GetOfferResponse.fromJson(respose.data);
-      _offer = offerResponse.data.payload.sdpOffer;
-      _callerId = offerResponse.data.payload.callerId;
-      // _sessionId = offerResponse.data.payload.
-      // therapist = offerResponse.data.payload.
+      _offer = offerResponse.data.sdpOffer;
+      _callerId = offerResponse.data.callerId;
+      _sessionId = offerResponse.data.therapySessionId;
+      therapist = offerResponse.data.therapist;
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }

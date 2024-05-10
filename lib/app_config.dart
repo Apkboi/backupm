@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
@@ -74,7 +75,10 @@ class AppConfig {
 
     SentryService.initializeApp(
         'https://b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920',
-        () => runApp(const MentraApp()));
+        () => runZonedGuarded(() => runApp(const MentraApp()), (error, stack) {
+          logger.e(error.toString());
+          logger.e(stack.toString());
+        }));
 
     // runApp(const MentraApp());
     // FlutterNativeSplash.remove();
