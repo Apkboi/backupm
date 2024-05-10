@@ -44,7 +44,7 @@
         <array>
             <string>voip</string>
             <string>remote-notification</string>
-            <string>processing</string> //you can add this if needed
+            <string>processing</string> 
         </array>
 		<key>NSAppleMusicUsageDescription</key>
         <string>This enables you to send media files using mentra</string>
