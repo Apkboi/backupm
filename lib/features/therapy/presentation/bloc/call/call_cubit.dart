@@ -24,6 +24,7 @@ class CallCubit extends Cubit<CallState> {
   dynamic _sessionId;
   SdpOffer? _offer;
   Caller? therapist;
+  dynamic currentCall = '4';
 
   // videoRenderer for localPeer
   final localRTCVideoRenderer = RTCVideoRenderer();
@@ -292,11 +293,14 @@ class CallCubit extends Cubit<CallState> {
     }
 
     if ((event).eventName == 'callEnded') {
-      var currentCall = await CallKitService.instance.getCurrentCall();
+      // var currentCall = await CallKitService.instance.getCurrentCall();
 
-      if (currentCall != null) {
+
         CallKitService.instance.endCall();
-        emit(CallEndedState());
+        if (currentCall != null) {
+          emit(CallEndedState());
+          currentCall = null;
+
       }
     }
   }
@@ -372,38 +376,41 @@ class CallCubit extends Cubit<CallState> {
   }
 
   endCall() async {
-    emit(EndCallLoadingState());
-    try {
-      var networkService = injector.get<NetworkService>();
+    if (currentCall != null) {
+      emit(EndCallLoadingState());
 
-      var body = {
-        "callerId": _callerId,
-        "calleeId": _calleeId,
-        "sender": _calleeId,
-        "therapy_session_id": _sessionId,
-      };
+      try {
+        var networkService = injector.get<NetworkService>();
 
-      // logger.w('Pushing answer');
-      logger.w(body);
-      CallKitService.instance.endCall();
-      var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
-          RequestMethod.post,
-          data: body);
-      logger.w(respose.data);
-      _rtcPeerConnection?.close();
-      _localStream?.getAudioTracks().forEach((track) {
-        track.enabled = false;
-        isVideoOn = false;
-      });
-      _localStream?.getVideoTracks().forEach((track) {
-        track.enabled = false;
-        isAudioOn = false;
-      });
-      remoteRTCVideoRenderer.dispose();
-    } catch (e, stack) {
-      // TODO: Emit Call Failed State
-      logger.e(e.toString(), stackTrace: stack);
+        var body = {
+          "callerId": _callerId,
+          "calleeId": _calleeId,
+          "sender": _calleeId,
+          "therapy_session_id": _sessionId,
+        };
+
+        // logger.w('Pushing answer');
+        logger.w(body);
+        CallKitService.instance.endCall();
+        var respose = await networkService.call(
+            'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
+            RequestMethod.post,
+            data: body);
+        logger.w(respose.data);
+        _rtcPeerConnection?.close();
+        _localStream?.getAudioTracks().forEach((track) {
+          track.enabled = false;
+          isVideoOn = false;
+        });
+        _localStream?.getVideoTracks().forEach((track) {
+          track.enabled = false;
+          isAudioOn = false;
+        });
+        remoteRTCVideoRenderer.dispose();
+      } catch (e, stack) {
+        // TODO: Emit Call Failed State
+        logger.e(e.toString(), stackTrace: stack);
+      }
     }
   }
 
