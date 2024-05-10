@@ -14,11 +14,13 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
 import 'package:mentra/core/services/pay/pay_service.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/dashboard/dormain/usecase/dashboard_usecase.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/widget/home_bot_image.dart';
@@ -161,10 +163,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 38.sp,
                                       fontWeight: FontWeight.w700),
                                   text: injector
-                                      .get<DashboardBloc>()
-                                      .conversationStarter
-                                      ?.data
-                                      .title ??
+                                          .get<DashboardBloc>()
+                                          .conversationStarter
+                                          ?.data
+                                          .title ??
                                       ''),
                               TextView(
                                   fontSize: 16,
@@ -172,21 +174,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                   align: TextAlign.center,
                                   color: Pallets.white,
                                   text: injector
-                                      .get<DashboardBloc>()
-                                      .conversationStarter
-                                      ?.data
-                                      .message ??
+                                          .get<DashboardBloc>()
+                                          .conversationStarter
+                                          ?.data
+                                          .message ??
                                       ''),
                               69.verticalSpace,
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: CustomNeumorphicButton(
                                   onTap: () async {
-                                    var me = await CallKitService.instance
-                                        .getCurrentCall();
+                                    // var currentCall = await getCurrentCall();
 
-                                    logger.w(me);
-
+                                    // CallKitService.instance.checkAndNavigationCallingPage();
                                     // Navigator.push(
                                     //     context,
                                     //     MaterialPageRoute(
@@ -195,7 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //     ));
                                     // context.pushNamed(
                                     //     PageUrl.talkToMentraScreen);
-
 
                                     // StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(

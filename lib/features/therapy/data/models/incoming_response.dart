@@ -136,5 +136,5 @@ class Caller {
       };
 
   factory Caller.dummy() =>
-      Caller(avatar: '', name: '...', role: '...', email: '...');
+      Caller(avatar: '', name: 'Confidence', role: '...', email: '...');
 }

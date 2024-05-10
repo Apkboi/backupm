@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/core/_core.dart';
 
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
@@ -71,7 +72,7 @@ class CallCubit extends Cubit<CallState> {
     remoteRTCVideoRenderer.initialize();
 
     if (_offer == null) {
-      _getOfferFromRemote();
+      await _getOfferFromRemote();
     }
     // setup Peer Connection
     _setupPeerConnection();
@@ -288,8 +289,12 @@ class CallCubit extends Cubit<CallState> {
     }
 
     if ((event).eventName == 'callEnded') {
-      CallKitService.instance.endCall();
-      emit(CallEndedState());
+      var currentCall = await CallKitService.instance.getCurrentCall();
+
+      if (currentCall != null) {
+        CallKitService.instance.endCall();
+        emit(CallEndedState());
+      }
     }
   }
 
@@ -407,6 +412,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   Future _getOfferFromRemote() async {
+    logger.w('getting offer from remote');
     try {
       var networkService = injector.get<NetworkService>();
       // logger.w(body);
@@ -420,16 +426,16 @@ class CallCubit extends Cubit<CallState> {
       logger.w('Pushing candidate');
 
       var respose = await networkService.call(
-        'https://staging.app.yourmentra.com/api/v1/webrtc/get-offer/:$_callerId',
+        'https://staging.app.yourmentra.com/api/v1/webrtc/get-offer/$_callerId',
         RequestMethod.get,
         // data: body
       );
       logger.w(respose.data);
       var offerResponse = GetOfferResponse.fromJson(respose.data);
-      _offer = offerResponse.data.payload.sdpOffer;
-      _callerId = offerResponse.data.payload.callerId;
-      // _sessionId = offerResponse.data.payload.
-      // therapist = offerResponse.data.payload.
+      _offer = offerResponse.data.sdpOffer;
+      _callerId = offerResponse.data.callerId;
+      _sessionId = offerResponse.data.therapySessionId;
+      therapist = offerResponse.data.therapist;
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }

@@ -136,7 +136,7 @@ class CallKitService {
   }
 
   void endCall() async {
-    await FlutterCallkitIncoming.endCall(_currentUuid);
+    await FlutterCallkitIncoming.endCall(_currentUuid ?? '');
     _currentUuid = null;
   }
 
@@ -170,13 +170,16 @@ class CallKitService {
       const Duration(seconds: 0),
       () async {
         var currentCall = await getCurrentCall();
+        logger.w(currentCall['extra']['webrtc_description_id']);
+
         if (currentCall != null &&
             (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
+          logger.w(currentCall['extra']['webrtc_description_id']);
+
           CustomRoutes.goRouter
               .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
             PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
             PathParam.callerId: currentCall['extra']['webrtc_description_id'],
-
           });
           //Navigate to your call screen.
         }

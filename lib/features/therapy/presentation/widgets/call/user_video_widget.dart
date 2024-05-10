@@ -96,6 +96,7 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
             Center(
                 child: ImageWidget(
                     size: 70,
+                    fit: BoxFit.fill,
                     imageUrl: injector
                         .get<UserBloc>()
                         .appUser

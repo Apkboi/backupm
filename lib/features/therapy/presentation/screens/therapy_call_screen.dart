@@ -115,7 +115,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
     CustomDialogs.hideLoading(context);
     final bool? writeReview = await CustomDialogs.showCustomDialog(
         TherapySessionEndedDialog(
-          therapist: widget.therapist!,
+          therapist: widget.therapist ?? Caller.dummy(),
         ),
         context);
 
@@ -123,7 +123,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
       await CustomDialogs.showBottomSheet(
           rootNavigatorKey.currentState!.context,
           TherapyReviewSheet(
-            therapist: widget.therapist!,
+            therapist: widget.therapist??Caller.dummy(),
             sessionId: widget.sessionId,
           ),
           shape: const RoundedRectangleBorder(
@@ -133,7 +133,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
           )),
           constraints: BoxConstraints(maxHeight: 0.9.sh));
     } else {
-      context.pop();
+      // context.pop();
       context.pop();
       context.pop();
     }
