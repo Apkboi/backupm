@@ -64,7 +64,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                 10.verticalSpace,
                 TextView(
                   text:
-                      "Hey ${injector.get<UserBloc>().appUser?.name}! 👋 How was your session with ${widget.therapist.name}?",
+                      "Please rate your session with ${widget.therapist.name}?",
                   align: TextAlign.center,
                   style: GoogleFonts.fraunces(
                       fontSize: 24.sp, fontWeight: FontWeight.w600),
@@ -79,7 +79,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                 ),
                 20.verticalSpace,
                 const TextView(
-                  text: 'Star Rating',
+                  text: 'Rating',
                   align: TextAlign.center,
                   fontWeight: FontWeight.w400,
                   color: Pallets.ink,
@@ -88,6 +88,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                 RatingBar.builder(
                   initialRating: 3,
                   minRating: 1,
+                  itemSize: 50,
                   direction: Axis.horizontal,
                   allowHalfRating: false,
                   glow: false,
@@ -95,6 +96,8 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
                   itemBuilder: (context, _) => Container(
                     decoration: ShapeDecoration(
+                        // color: Pallets.white,
+
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6),
                             side: BorderSide(
@@ -107,7 +110,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                       child: Icon(
                         Icons.star_rounded,
                         color: Pallets.yellowBase,
-                        size: 35,
+                        size: 50,
                         // size: 18,
                       ),
                     ),
@@ -139,12 +142,12 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextView(
-                          text: 'Review',
-                          style: GoogleFonts.inter(
-                              fontSize: 12, fontWeight: FontWeight.w500),
-                        ),
-                        5.verticalSpace,
+                        // TextView(
+                        //   text: 'Review',
+                        //   style: GoogleFonts.inter(
+                        //       fontSize: 12, fontWeight: FontWeight.w500),
+                        // ),
+                        // 5.verticalSpace,
                         FilledTextField(
                             // maxLine: 5,
                             minLine: 1,
@@ -155,7 +158,8 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                             // expands: true,
                             controller: _reviewController,
                             fillColor: Colors.transparent,
-                            hint: 'Share your thoughts!'),
+                            hint:
+                                'Write your review here. What did you like? What could be improved?'),
                       ],
                     ),
                   ),

@@ -161,10 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 38.sp,
                                       fontWeight: FontWeight.w700),
                                   text: injector
-                                          .get<DashboardBloc>()
-                                          .conversationStarter
-                                          ?.data
-                                          .title ??
+                                      .get<DashboardBloc>()
+                                      .conversationStarter
+                                      ?.data
+                                      .title ??
                                       ''),
                               TextView(
                                   fontSize: 16,
@@ -172,16 +172,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                   align: TextAlign.center,
                                   color: Pallets.white,
                                   text: injector
-                                          .get<DashboardBloc>()
-                                          .conversationStarter
-                                          ?.data
-                                          .message ??
+                                      .get<DashboardBloc>()
+                                      .conversationStarter
+                                      ?.data
+                                      .message ??
                                       ''),
                               69.verticalSpace,
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: CustomNeumorphicButton(
-                                  onTap: () {
+                                  onTap: () async {
+                                    var me = await CallKitService.instance
+                                        .getCurrentCall();
+
+                                    logger.w(me);
+
                                     // Navigator.push(
                                     //     context,
                                     //     MaterialPageRoute(
@@ -191,7 +196,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // context.pushNamed(
                                     //     PageUrl.talkToMentraScreen);
 
-                                    // CustomDialogs.showBottomSheet(context,  TherapyReviewSheet(session: '1'));
 
                                     // StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(

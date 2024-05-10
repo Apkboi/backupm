@@ -48,8 +48,8 @@ class _CallControllSheetState extends State<CallControllSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const TextView(
-                      text: 'Therapist',
+                    TextView(
+                      text: widget.caller.name,
                       fontSize: 20,
                       color: Pallets.white,
                       fontWeight: FontWeight.w700,
@@ -101,10 +101,12 @@ class _CallControllSheetState extends State<CallControllSheet> {
                 },
               ),
               ControlSwitchButton(
-                isActive: context
+                isActive: !context
                     .watch<CallCubit>()
                     .isVideoOn, // Adjust isActive based on your logic
-                icon: const Icon(Icons.cameraswitch_rounded),
+                icon: Icon(context.watch<CallCubit>().isVideoOn
+                    ? Icons.videocam_outlined
+                    : Icons.videocam_off_outlined),
                 tittle: 'Camera',
                 onTap: () {
                   context.read<CallCubit>().toggleCamera();
@@ -128,7 +130,7 @@ class _CallControllSheetState extends State<CallControllSheet> {
               ),
               ControlSwitchButton(
                 isActive: false, // Adjust isActive based on your logic
-                icon: ImageWidget(imageUrl: Assets.images.svgs.flip),
+                icon: const Icon(Icons.cameraswitch_rounded),
                 tittle: 'Flip',
                 onTap: () {
                   context.read<CallCubit>().switchCamera();
@@ -206,7 +208,6 @@ class _CallControllSheetState extends State<CallControllSheet> {
       //   context.pop();
       // }
     }
-
   }
 }
 
