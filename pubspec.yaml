@@ -145,6 +145,8 @@ dependencies:
   flutter_callkit_incoming: ^2.0.4
   vibration: ^1.8.4
   flutter_timezone: ^1.0.8
+  flutter_background_service: ^5.0.5
+  # flutter_background: ^1.2.0
 #  audio_manager: ^0.8.2
 
 dependency_overrides:

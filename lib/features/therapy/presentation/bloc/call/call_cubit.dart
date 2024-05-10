@@ -196,7 +196,7 @@ class CallCubit extends Cubit<CallState> {
       track.enabled = isAudioOn;
     });
 
-    logger.w(isAudioOn);
+    _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
     setState(() {});
   }
 
@@ -207,7 +207,9 @@ class CallCubit extends Cubit<CallState> {
 
     _localStream?.getVideoTracks().forEach((track) {
       track.enabled = isVideoOn;
+      _rtcPeerConnection!.addTrack(track, _localStream!);
     });
+    _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
     setState(() {});
   }
 
@@ -218,6 +220,7 @@ class CallCubit extends Cubit<CallState> {
     _localStream?.getVideoTracks().forEach((track) {
       // ignore: deprecated_member_use
       track.switchCamera();
+      _rtcPeerConnection!.addTrack(track, _localStream!);
     });
     setState(() {});
   }
@@ -315,6 +318,27 @@ class CallCubit extends Cubit<CallState> {
 
       var respose = await networkService.call(
           'https://staging.app.yourmentra.com/api/v1/webrtc/make-call',
+          RequestMethod.post,
+          data: body);
+      logger.w(respose.data);
+    } catch (e, stack) {
+      logger.e(e.toString(), stackTrace: stack);
+    }
+  }
+
+  _callAction(String action, String value) async {
+    try {
+      var networkService = injector.get<NetworkService>();
+      var body = {
+        "callerId": _callerId,
+        "calleeId": _calleeId,
+        "therapy_session_id": _sessionId,
+        "action": action,
+        "value": value,
+      };
+
+      var respose = await networkService.call(
+          'https://staging.app.yourmentra.com/api/v1/webrtc/call-action',
           RequestMethod.post,
           data: body);
       logger.w(respose.data);
