@@ -54,6 +54,22 @@ class EndCallLoadingState extends CallState {
   List<Object> get props => [];
 }
 
+class ReviewTherapistCallState extends CallState {
+  final Caller therapist;
+  final String sessionId;
+
+  ReviewTherapistCallState(this.therapist, this.sessionId);
+
+  List<Object> get props => [therapist, sessionId];
+}
+
+class EndCallFailedState extends CallState {
+  final String error;
+
+  EndCallFailedState(this.error);
+
+  List<Object> get props => [error];
+}
 
 class CallActionState extends CallState {
   final IncomingCallResponse response;
@@ -61,4 +77,11 @@ class CallActionState extends CallState {
   CallActionState(this.response);
 
   List<Object> get props => [response];
+}
+
+class LeaveCallState extends CallState {
+
+  LeaveCallState();
+
+  List<Object> get props => [];
 }

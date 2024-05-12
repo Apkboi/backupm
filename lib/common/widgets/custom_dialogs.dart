@@ -48,6 +48,7 @@ class CustomDialogs {
     Widget child, {
     Color? barrierColor,
     BoxConstraints? constraints,
+    bool? enableDrag = true,
     ShapeBorder? shape,
   AnimationController? transitionAnimationController
 
@@ -58,9 +59,11 @@ class CustomDialogs {
         barrierColor: barrierColor ?? Pallets.black80.withOpacity(0.3),
         useRootNavigator: true,
         isScrollControlled: true,
+
         shape: shape,
         constraints: constraints,
 
+        enableDrag: enableDrag!,
         transitionAnimationController: transitionAnimationController,
         builder: (context) {
           return ClipRRect(

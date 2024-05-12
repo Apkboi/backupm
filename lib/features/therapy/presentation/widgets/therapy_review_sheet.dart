@@ -148,7 +148,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                             controller: _reviewController,
                             fillColor: Colors.transparent,
                             hint:
-                                'Write your review here. What did you like? What could be improved?'),
+                                'What did you like? What could be improved?'),
                       ],
                     ),
                   ),
@@ -191,6 +191,7 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
     }
     if (state is CreateReviewFailureState) {
       CustomDialogs.hideLoading(context);
+      CustomDialogs.error(state.error);
     }
     if (state is CreateReviewSuccessState) {
       context.pop();

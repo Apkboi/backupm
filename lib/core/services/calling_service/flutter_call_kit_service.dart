@@ -132,7 +132,10 @@ class CallKitService {
         ringtonePath: 'system_ringtone_default',
       ),
     );
-    await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
+
+    if (!await theirIsAnActiveCall()) {
+      await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
+    }
   }
 
   void endCall() async {
@@ -200,5 +203,13 @@ class CallKitService {
         return null;
       }
     }
+  }
+
+  Future theirIsAnActiveCall() async {
+    var currentCall = await getCurrentCall();
+    var currentRoute = CustomRoutes
+        .goRouter.routerDelegate.currentConfiguration.last.route.path;
+
+    return currentCall != null;
   }
 }

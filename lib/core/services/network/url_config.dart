@@ -141,7 +141,8 @@ class UrlConfig {
   static String callAction = '/webrtc/call-action';
   static String iceCandidate = '/webrtc/ice-candidate';
   static String endCall = '/webrtc/end-call';
-  static String answerCall = 'webrtc/answer-call';
+  static String answerCall = '/webrtc/answer-call';
+  static String makeCall = '/webrtc/make-call';
   static String getOffer(callerId) => '/webrtc/get-offer/$callerId';
 
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/therapy/data/models/get_offer_response.dart';
@@ -21,8 +22,8 @@ class CallRepositoryImpl implements CallRepository {
   }
 
   @override
-  Future<void> answerCall(
-      int callerId, Map<String, dynamic> answer, String calleeId,String sessionId) async {
+  Future<void> answerCall(int callerId, Map<String, dynamic> answer,
+      String calleeId, String sessionId) async {
     final body = {
       "callerId": callerId,
       "calleeId": calleeId,
@@ -55,8 +56,8 @@ class CallRepositoryImpl implements CallRepository {
   }
 
   @override
-  Future<void> pushCandidate(
-      int callerId, Map<String, dynamic> candidate, String calleeId,String sessionId) async {
+  Future<void> pushCandidate(int callerId, Map<String, dynamic> candidate,
+      String calleeId, String sessionId) async {
     final body = {
       "callerId": callerId,
       "calleeId": calleeId,
@@ -88,5 +89,25 @@ class CallRepositoryImpl implements CallRepository {
       RequestMethod.post,
       data: body,
     );
+  }
+
+  @override
+  Future<void> offerCall(int callerId, int calleeId, int sessionId,
+      Map<String, dynamic> offer) async {
+    try {
+      var networkService = injector.get<NetworkService>();
+      var body = {
+        "callerId": calleeId,
+        "calleeId": callerId,
+        "therapy_session_id": sessionId,
+        "sdpOffer": base64.encode(utf8.encode(jsonEncode(offer))),
+      };
+
+      await networkService.call(UrlConfig.makeCall, RequestMethod.post,
+          data: body);
+    } catch (e, stack) {
+      logger.e(e.toString(), stackTrace: stack);
+      rethrow;
+    }
   }
 }

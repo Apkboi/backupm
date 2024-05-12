@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
-import 'package:mentra/common/widgets/success_dialog.dart';
-import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
@@ -56,7 +53,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
       create: (context) => callBloc,
       child: Scaffold(
         body: BlocConsumer<CallCubit, CallState>(
-          listener: _listentoCallEvents,
+          listener: _listenToCallEvents,
           builder: (context, state) {
             var bloc = context.watch<CallCubit>();
 
@@ -64,17 +61,19 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: TherapistVideoWidget(
-                  remoteRenderer:
-                      context.watch<CallCubit>().remoteRTCVideoRenderer,
-                  caller: widget.therapist,
+                    child: BlocProvider.value(
+                  value: context.read<CallCubit>(),
+                  child: TherapistVideoWidget(
+                    remoteRenderer:
+                        context.watch<CallCubit>().remoteRTCVideoRenderer,
+                    caller: widget.therapist,
+                  ),
                 )),
                 Expanded(
                     child: BlocProvider.value(
                   value: context.read<CallCubit>(),
                   child: UserVideoWidget(
-                    localRenderer:
-                        context.watch<CallCubit>().localRTCVideoRenderer,
+                    localRenderer: context.watch<CallCubit>().localRTCVideoRenderer,
                     mirror: context.watch<CallCubit>().isFrontCameraSelected,
                     sessionId: widget.sessionId,
                     therapist: widget.therapist ?? Caller.dummy(),
@@ -95,12 +94,20 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
     super.dispose();
   }
 
-  void _listentoCallEvents(BuildContext context, CallState state) {
+  void _listenToCallEvents(BuildContext context, CallState state) {
     if (state is CallEndedState) {
       _reviewCall(context);
     }
     if (state is EndCallLoadingState) {
       CustomDialogs.showLoading(context);
+    }
+
+    if (state is ReviewTherapistCallState) {
+      _showReviewSheet(context, state.therapist, state.sessionId);
+    }
+    if (state is LeaveCallState) {
+      context.pop();
+      // _showReviewSheet(context, state.therapist, state.sessionId);
     }
 
     if (state is CallConnectingFailedState) {
@@ -113,31 +120,38 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
 
   void _reviewCall(BuildContext context) async {
     CustomDialogs.hideLoading(context);
-    final bool? writeReview = await CustomDialogs.showCustomDialog(
+
+    final bool? didWriteReview = await CustomDialogs.showCustomDialog(
         TherapySessionEndedDialog(
           therapist: widget.therapist ?? Caller.dummy(),
         ),
         context);
 
-    if (writeReview ?? false) {
-      await CustomDialogs.showBottomSheet(
-          rootNavigatorKey.currentState!.context,
-          TherapyReviewSheet(
-            therapist: widget.therapist ?? Caller.dummy(),
-            sessionId: widget.sessionId,
-          ),
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          )),
-          constraints: BoxConstraints(maxHeight: 0.9.sh));
-      rootNavigatorKey.currentState?.context.pop();
-      rootNavigatorKey.currentState?.context.pop();
+    if (didWriteReview ?? false) {
+      callBloc.reviewTherapist(
+          widget.therapist ?? Caller.dummy(), widget.sessionId);
     } else {
-      rootNavigatorKey.currentState?.context.pop();
-      rootNavigatorKey.currentState?.context.pop();
-      rootNavigatorKey.currentState?.context.pop();
+      context.pop();
+      callBloc.leaveCallScreen();
     }
+  }
+
+  void _showReviewSheet(
+      BuildContext context, Caller therapist, String sessionId) async {
+
+    await CustomDialogs.showBottomSheet(
+        context,
+        TherapyReviewSheet(
+          therapist: therapist,
+          sessionId: sessionId,
+        ),
+        enableDrag: false,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        )),
+        constraints: BoxConstraints(maxHeight: 0.9.sh));
+    callBloc.leaveCallScreen();
   }
 }

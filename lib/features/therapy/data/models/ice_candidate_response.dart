@@ -40,7 +40,7 @@ class IceCandidate {
   final String candidate;
   final String sdpMid;
   final dynamic sdpMLineIndex;
-  final String usernameFragment;
+  final dynamic usernameFragment;
 
   IceCandidate({
     required this.candidate,

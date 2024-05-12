@@ -22,7 +22,7 @@ class CallCubit extends Cubit<CallState> {
   dynamic _sessionId;
   SdpOffer? _offer;
   Caller? therapist;
-  dynamic currentCall = '4';
+  dynamic isCallActive = true;
 
   // videoRenderer for localPeer
   final localRTCVideoRenderer = RTCVideoRenderer();
@@ -118,18 +118,12 @@ class CallCubit extends Cubit<CallState> {
           emit(CallConnectedState());
         }
       };
-      // _rtcPeerConnection!.onAddStream = (stream) {
-      //   print('addStream: ' + stream.id);
-      //   print(stream);
-      //   remoteRTCVideoRenderer.srcObject = stream;
-      //   logger.f('stream added');
-      //   setState(() {});
-      // };
-      // listen for remotePeer mediaTrack event
+
       _rtcPeerConnection!.onTrack = (event) {
         remoteRTCVideoRenderer.srcObject = event.streams[0];
         setState(() {});
       };
+
       // get localStream
       _localStream = await navigator.mediaDevices.getUserMedia({
         'audio': isAudioOn,
@@ -161,11 +155,6 @@ class CallCubit extends Cubit<CallState> {
 
       // send SDP answer to remote peer
       await _answerCall(_callerId, answer.toMap());
-
-      _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
-      _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
-
-      _createOffer();
     } catch (e, stack) {
       emit(CallConnectingFailedState());
       logger.e(e.toString());
@@ -182,14 +171,12 @@ class CallCubit extends Cubit<CallState> {
   }
 
   toggleMic() {
-    // remoteRTCVideoRenderer.audioOutput('deviceId')
     // change status
     isAudioOn = !isAudioOn;
     // enable or disable audio track
     _localStream?.getAudioTracks().forEach((track) {
       track.enabled = isAudioOn;
     });
-
     _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
     setState(() {});
   }
@@ -224,6 +211,7 @@ class CallCubit extends Cubit<CallState> {
     remoteRTCVideoRenderer.dispose();
     _localStream?.dispose();
     _rtcPeerConnection?.dispose();
+    CallKitService.instance.endAllCalls();
   }
 
   void _listenToPusher() async {
@@ -260,7 +248,8 @@ class CallCubit extends Cubit<CallState> {
 
     var data = (event as PusherEvent).data;
     if ((event).eventName == 'IceCandidate') {
-      IceCandidateResponse iceCandidateResponse = IceCandidateResponse.fromJson(jsonDecode(data));
+      IceCandidateResponse iceCandidateResponse =
+          IceCandidateResponse.fromJson(jsonDecode(data));
 
       // add iceCandidate
       _rtcPeerConnection!.addCandidate(RTCIceCandidate(
@@ -273,8 +262,11 @@ class CallCubit extends Cubit<CallState> {
     }
 
     if ((event).eventName == 'callAnswered') {
-      IncomingCallResponse answerResponse = IncomingCallResponse.fromJson(jsonDecode(data));
-      await _rtcPeerConnection!.setRemoteDescription(RTCSessionDescription(answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
+      IncomingCallResponse answerResponse =
+          IncomingCallResponse.fromJson(jsonDecode(data));
+      await _rtcPeerConnection!.setRemoteDescription(
+        RTCSessionDescription(
+            answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
       );
       emit(CallConnectedState());
     }
@@ -287,11 +279,10 @@ class CallCubit extends Cubit<CallState> {
 
     if ((event).eventName == 'callEnded') {
       // var currentCall = await CallKitService.instance.getCurrentCall();
-
       CallKitService.instance.endCall();
-      if (currentCall != null) {
+      if (isCallActive) {
         emit(CallEndedState());
-        currentCall = null;
+        isCallActive = false;
       }
     }
   }
@@ -300,22 +291,7 @@ class CallCubit extends Cubit<CallState> {
 
   _offerCall(int callerId, map) async {
     try {
-      var networkService = injector.get<NetworkService>();
-      var body = {
-        "callerId": _calleeId,
-        "calleeId": callerId,
-        "therapy_session_id": _sessionId,
-        "sdpOffer": base64.encode(utf8.encode(jsonEncode(map))),
-      };
-
-      logger.w('Pushing answer');
-      logger.w(body);
-
-      var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/make-call',
-          RequestMethod.post,
-          data: body);
-      logger.w(respose.data);
+      _callRepository.offerCall(callerId, _calleeId, _sessionId, map);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -323,7 +299,7 @@ class CallCubit extends Cubit<CallState> {
 
   _callAction(String action, String value) async {
     try {
-      var response = await _callRepository.callAction(
+      await _callRepository.callAction(
           _callerId, _calleeId, _sessionId, action, value);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
@@ -332,47 +308,32 @@ class CallCubit extends Cubit<CallState> {
 
   _answerCall(int callerId, map) async {
     try {
-      await _callRepository.answerCall(_callerId, map, _calleeId.toString());
+      await _callRepository.answerCall(
+          _callerId, map, _calleeId.toString(), _sessionId);
+      _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
+      _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
+      _createOffer();
     } catch (e, stack) {
       // TODO: Emit Call Failed State
+
+      emit(CallConnectingFailedState());
+
       logger.e(e.toString(), stackTrace: stack);
     }
   }
 
   endCall() async {
-    if (currentCall != null) {
+    if (isCallActive) {
       emit(EndCallLoadingState());
 
       try {
-        var networkService = injector.get<NetworkService>();
-
-        var body = {
-          "callerId": _callerId,
-          "calleeId": _calleeId,
-          "sender": _calleeId,
-          "therapy_session_id": _sessionId,
-        };
-
-        // logger.w('Pushing answer');
-        logger.w(body);
         CallKitService.instance.endCall();
-        var respose = await networkService.call(
-            'https://staging.app.yourmentra.com/api/v1/webrtc/end-call',
-            RequestMethod.post,
-            data: body);
-        logger.w(respose.data);
-        _rtcPeerConnection?.close();
-        _localStream?.getAudioTracks().forEach((track) {
-          track.enabled = false;
-          isVideoOn = false;
-        });
-        _localStream?.getVideoTracks().forEach((track) {
-          track.enabled = false;
-          isAudioOn = false;
-        });
-        remoteRTCVideoRenderer.dispose();
+        _callRepository.endCall(
+            _callerId, _calleeId, _sessionId, _calleeId.toString());
+
+        _closeAllCameras();
       } catch (e, stack) {
-        // TODO: Emit Call Failed State
+        emit(EndCallFailedState(e.toString()));
         logger.e(e.toString(), stackTrace: stack);
       }
     }
@@ -382,7 +343,8 @@ class CallCubit extends Cubit<CallState> {
     try {
       logger.w('Pushing candidate');
 
-      _callRepository.pushCandidate(callerId, candidate, _calleeId.toString());
+      _callRepository.pushCandidate(
+          callerId, candidate, _calleeId.toString(), _sessionId);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -405,5 +367,26 @@ class CallCubit extends Cubit<CallState> {
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
+  }
+
+  void _closeAllCameras() {
+    _rtcPeerConnection?.close();
+    _localStream?.getAudioTracks().forEach((track) {
+      track.enabled = false;
+      isVideoOn = false;
+    });
+    _localStream?.getVideoTracks().forEach((track) {
+      track.enabled = false;
+      isAudioOn = false;
+    });
+    remoteRTCVideoRenderer.dispose();
+  }
+
+  void reviewTherapist(Caller therapist, String sessionId) {
+    emit(ReviewTherapistCallState(therapist, sessionId));
+  }
+
+  void leaveCallScreen() {
+    emit(LeaveCallState());
   }
 }
