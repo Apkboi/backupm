@@ -136,4 +136,12 @@ class UrlConfig {
   static String getDailyTasks = '/daily-tasks/list';
   static String getStreaks = '/badges/list';
   static String updateDailyTasks = '/daily-tasks/save';
+
+//   CALL ENDPOINTS
+  static String callAction = '/webrtc/call-action';
+  static String iceCandidate = '/webrtc/ice-candidate';
+  static String endCall = '/webrtc/end-call';
+  static String answerCall = 'webrtc/answer-call';
+  static String getOffer(callerId) => '/webrtc/get-offer/$callerId';
+
 }

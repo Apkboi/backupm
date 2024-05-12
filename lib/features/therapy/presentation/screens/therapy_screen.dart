@@ -257,7 +257,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
         }
 
         // if (state is GetUpcomingSessionsSuccessState) {
-        if (injector.get<TherapyBloc>().upComingSessions?.isNotEmpty ?? false) {
+        if (injector.get<TherapyBloc>().upComingSessions.isNotEmpty ?? false) {
           var sessions = injector.get<TherapyBloc>().upComingSessions;
           return RefreshIndicator(
               onRefresh: () async {
@@ -266,7 +266,7 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
               child: AnimationLimiter(
                 child: ListView.builder(
                   shrinkWrap: true,
-                  itemCount: sessions?.length ?? 0,
+                  itemCount: sessions.length ?? 0,
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) =>
                       AnimationConfiguration.staggeredList(

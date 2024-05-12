@@ -100,12 +100,18 @@ class GetMatchedTherapistEvent extends TherapyEvent {
 }
 
 class CreateReviewEvent extends TherapyEvent {
-  const CreateReviewEvent(this.sessionId, this.comment, this.rating);
+  const CreateReviewEvent(
+      {required this.sessionId,
+      required this.comment,
+      required this.videoRating,
+      required this.audioRating,
+      required this.sessionRating});
 
   final String sessionId;
   final String comment;
-
-  final int rating;
+  final int sessionRating;
+  final int videoRating;
+  final int audioRating;
 
   @override
   List<Object?> get props => [];

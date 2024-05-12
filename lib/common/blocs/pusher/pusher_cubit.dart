@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
-
 part 'pusher_state.dart';
 
 class PusherCubit extends Cubit<PusherState> {
@@ -35,7 +33,7 @@ class PusherCubit extends Cubit<PusherState> {
       } else {
         logger.w('connected2');
 
-        pusher.getChannel('user_2')?.onEvent = onEventReceived;
+        pusher.getChannel(name)?.onEvent = onEventReceived;
       }
       await pusher.connect();
     }

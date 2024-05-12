@@ -49,7 +49,7 @@ void setup(GetIt getIt) {
   getIt.registerLazySingleton<DailyStreakBloc>(
       () => DailyStreakBloc(injector.get()));
   getIt.registerLazySingleton<PusherCubit>(() => PusherCubit());
-  getIt.registerLazySingleton<CallCubit>(() => CallCubit());
+  getIt.registerLazySingleton<CallCubit>(() => CallCubit(injector.get()));
 
   // getIt.registerLazySingleton<MentraChatBloc>(
   //     () => MentraChatBloc(injector.get()));

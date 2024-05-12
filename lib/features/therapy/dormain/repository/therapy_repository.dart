@@ -44,6 +44,8 @@ abstract class TherapyRepository {
   Future<SuccessResponse> createReview({
     required String sessionId,
     required String comment,
-    required int rating,
+    required int sessionRating,
+    required int audioRating,
+    required int videoRating,
   });
 }

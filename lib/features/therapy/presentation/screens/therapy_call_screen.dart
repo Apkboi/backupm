@@ -33,7 +33,7 @@ class TherapyCallScreen extends StatefulWidget {
 }
 
 class _TherapyCallScreenState extends State<TherapyCallScreen> {
-  final callBloc = CallCubit();
+  final callBloc = CallCubit(injector.get());
 
   @override
   void initState() {

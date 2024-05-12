@@ -40,14 +40,14 @@ class _CustomTabbarState extends State<CustomTabbar> {
               color: Pallets.white, borderRadius: BorderRadius.circular(25)),
           padding: EdgeInsets.zero,
           tabs: widget.tabs,
-          unselectedLabelStyle: GoogleFonts.plusJakartaSans(
+          unselectedLabelStyle: GoogleFonts.fraunces(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
-              color: Pallets.primary),
-          labelStyle: GoogleFonts.plusJakartaSans(
+              color: Pallets.primaryDark),
+          labelStyle: GoogleFonts.fraunces(
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
-              color: Pallets.primary)),
+              color: Pallets.primaryDark)),
     );
   }
 }

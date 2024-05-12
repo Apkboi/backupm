@@ -46,7 +46,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
     on<ReportEvent>(_mapReportEventToState);
   }
 
-  List<TherapySession> upComingSessions =[];
+  List<TherapySession> upComingSessions = [];
   List<TherapySession>? sessionsHistory;
   List sessionFocus = [];
 
@@ -294,7 +294,9 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
       final response = await _therapyRepository.createReview(
           sessionId: event.sessionId,
           comment: event.comment,
-          rating: event.rating);
+          videoRating: event.videoRating,
+          audioRating: event.audioRating,
+          sessionRating: event.sessionRating);
       clearPayload();
       emit(CreateReviewSuccessState(response: response));
     } catch (e) {

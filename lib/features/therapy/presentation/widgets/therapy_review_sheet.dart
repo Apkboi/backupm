@@ -33,10 +33,11 @@ class TherapyReviewSheet extends StatefulWidget {
 class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
   final _therapyBloc = TherapyBloc(injector.get());
 
-  double userRating = 3;
+  double sessionRating = 3;
+  double audioRating = 3;
+  double videoRating = 3;
 
   final _reviewController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -79,49 +80,37 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                 ),
                 20.verticalSpace,
                 const TextView(
-                  text: 'Rating',
+                  text: 'Rate Audio',
                   align: TextAlign.center,
                   fontWeight: FontWeight.w400,
                   color: Pallets.ink,
                 ),
                 10.verticalSpace,
-                RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
-                  itemSize: 50,
-                  direction: Axis.horizontal,
-                  allowHalfRating: false,
-                  glow: false,
-                  itemCount: 5,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Container(
-                    decoration: ShapeDecoration(
-                        // color: Pallets.white,
-
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                            side: BorderSide(
-                                color: Colors.grey.withOpacity(
-                                  0.5,
-                                ),
-                                width: 0.5))),
-                    child: const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Icon(
-                        Icons.star_rounded,
-                        color: Pallets.yellowBase,
-                        size: 50,
-                        // size: 18,
-                      ),
-                    ),
-                  ),
-                  onRatingUpdate: (rating) {
-                    userRating = rating;
-                    // if (kDebugMode) {
-                    //   print(rating);
-                    // }
-                  },
+                RatingWiget(onRatingUpdate: (rating) {
+                  audioRating = rating;
+                }),
+                20.verticalSpace,
+                const TextView(
+                  text: 'Rate Video',
+                  align: TextAlign.center,
+                  fontWeight: FontWeight.w400,
+                  color: Pallets.ink,
                 ),
+                10.verticalSpace,
+                RatingWiget(onRatingUpdate: (rating) {
+                  videoRating = rating;
+                }),
+                20.verticalSpace,
+                const TextView(
+                  text: 'Rate Session',
+                  align: TextAlign.center,
+                  fontWeight: FontWeight.w400,
+                  color: Pallets.ink,
+                ),
+                10.verticalSpace,
+                RatingWiget(onRatingUpdate: (rating) {
+                  sessionRating = rating;
+                }),
                 22.verticalSpace,
                 Form(
                   key: _formKey,
@@ -169,9 +158,11 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       _therapyBloc.add(CreateReviewEvent(
-                          widget.sessionId.toString(),
-                          _reviewController.text,
-                          userRating.round()));
+                          sessionId: widget.sessionId.toString(),
+                          comment: _reviewController.text,
+                          audioRating: audioRating.round(),
+                          videoRating: videoRating.round(),
+                          sessionRating: sessionRating.round()));
                     }
                     // CustomDialogs.showBottomSheet(
                     //     context, const EndSessionDialog(),
@@ -207,5 +198,50 @@ class _TherapyReviewSheetState extends State<TherapyReviewSheet> {
 
       // CustomDialogs.success('');
     }
+  }
+}
+
+class RatingWiget extends StatelessWidget {
+  const RatingWiget({
+    super.key,
+    required this.onRatingUpdate,
+  });
+
+  final Function(double) onRatingUpdate;
+
+  @override
+  Widget build(BuildContext context) {
+    return RatingBar.builder(
+      initialRating: 3,
+      minRating: 1,
+      itemSize: 50,
+      direction: Axis.horizontal,
+      allowHalfRating: false,
+      glow: false,
+      itemCount: 5,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => Container(
+        decoration: ShapeDecoration(
+            // color: Pallets.white,
+
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+                side: BorderSide(
+                    color: Colors.grey.withOpacity(
+                      0.5,
+                    ),
+                    width: 0.5))),
+        child: const Padding(
+          padding: EdgeInsets.all(5.0),
+          child: Icon(
+            Icons.star_rounded,
+            color: Pallets.yellowBase,
+            size: 50,
+            // size: 18,
+          ),
+        ),
+      ),
+      onRatingUpdate: onRatingUpdate,
+    );
   }
 }

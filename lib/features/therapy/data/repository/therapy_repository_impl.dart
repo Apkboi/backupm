@@ -159,14 +159,18 @@ class TherapyRepositoryImpl extends TherapyRepository {
   Future<SuccessResponse> createReview({
     required String sessionId,
     required String comment,
-    required int rating,
+    required int sessionRating,
+    required int videoRating,
+    required int audioRating,
   }) async {
     try {
-      final response = await _networkService.call(
-          UrlConfig.createReview, RequestMethod.post, data: {
+      final response = await _networkService
+          .call(UrlConfig.createReview, RequestMethod.post, data: {
         "therapy_session_id": sessionId,
         "comment": comment,
-        "rating": rating.toString()
+        "rating": sessionRating.toString(),
+        "video_rating": sessionRating.toString(),
+        "audio_rating": sessionRating.toString()
       });
       return SuccessResponse.fromJson(response.data);
     } catch (e, stack) {

@@ -1,23 +1,21 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:mentra/common/widgets/custom_dialogs.dart';
-import 'package:mentra/core/_core.dart';
-
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
-import 'package:mentra/features/therapy/data/models/get_offer_response.dart';
 import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
+import 'package:mentra/features/therapy/dormain/repository/call_repository.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../../../../account/presentation/user_bloc/user_bloc.dart';
 
 part 'call_state.dart';
 
 class CallCubit extends Cubit<CallState> {
-  CallCubit() : super(CallInitial());
+  CallCubit(this._callRepository) : super(CallInitial());
+  final CallRepository _callRepository;
 
   int _callerId = 0;
   int _calleeId = 0;
@@ -167,7 +165,6 @@ class CallCubit extends Cubit<CallState> {
       _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
       _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
 
-
       _createOffer();
     } catch (e, stack) {
       emit(CallConnectingFailedState());
@@ -182,10 +179,6 @@ class CallCubit extends Cubit<CallState> {
 
     _rtcPeerConnection!.setLocalDescription(offer);
     await _offerCall(_callerId, offer.toMap());
-  }
-
-  _leaveCall() {
-    // Navigator.pop(context);
   }
 
   toggleMic() {
@@ -234,7 +227,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   void _listenToPusher() async {
-    logger.w('listenening');
+    logger.w('listening');
 
     var pusherService = await PusherChannelService.getInstance;
     var pusher = await pusherService.getClient;
@@ -267,11 +260,8 @@ class CallCubit extends Cubit<CallState> {
 
     var data = (event as PusherEvent).data;
     if ((event).eventName == 'IceCandidate') {
-      IceCandidateResponse iceCandidateResponse =
-          IceCandidateResponse.fromJson(jsonDecode(data));
-      // String candidate = data["iceCandidate"]["candidate"];
-      // String sdpMid = data["iceCandidate"]["sdpMid"];
-      // int sdpMLineIndex = data["iceCandidate"]["sdpMLineIndex"];
+      IceCandidateResponse iceCandidateResponse = IceCandidateResponse.fromJson(jsonDecode(data));
+
       // add iceCandidate
       _rtcPeerConnection!.addCandidate(RTCIceCandidate(
         iceCandidateResponse.iceCandidate.candidate,
@@ -283,11 +273,8 @@ class CallCubit extends Cubit<CallState> {
     }
 
     if ((event).eventName == 'callAnswered') {
-      IncomingCallResponse answerResponse =
-          IncomingCallResponse.fromJson(jsonDecode(data));
-      await _rtcPeerConnection!.setRemoteDescription(
-        RTCSessionDescription(
-            answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
+      IncomingCallResponse answerResponse = IncomingCallResponse.fromJson(jsonDecode(data));
+      await _rtcPeerConnection!.setRemoteDescription(RTCSessionDescription(answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
       );
       emit(CallConnectedState());
     }
@@ -301,12 +288,10 @@ class CallCubit extends Cubit<CallState> {
     if ((event).eventName == 'callEnded') {
       // var currentCall = await CallKitService.instance.getCurrentCall();
 
-
-        CallKitService.instance.endCall();
-        if (currentCall != null) {
-          emit(CallEndedState());
-          currentCall = null;
-
+      CallKitService.instance.endCall();
+      if (currentCall != null) {
+        emit(CallEndedState());
+        currentCall = null;
       }
     }
   }
@@ -338,20 +323,8 @@ class CallCubit extends Cubit<CallState> {
 
   _callAction(String action, String value) async {
     try {
-      var networkService = injector.get<NetworkService>();
-      var body = {
-        "callerId": _calleeId,
-        "calleeId": _callerId,
-        "therapy_session_id": _sessionId,
-        "action": action,
-        "value": value,
-      };
-
-      var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/call-action',
-          RequestMethod.post,
-          data: body);
-      logger.w(respose.data);
+      var response = await _callRepository.callAction(
+          _callerId, _calleeId, _sessionId, action, value);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -359,22 +332,7 @@ class CallCubit extends Cubit<CallState> {
 
   _answerCall(int callerId, map) async {
     try {
-      var networkService = injector.get<NetworkService>();
-
-      var body = {
-        "callerId": callerId,
-        "calleeId": _calleeId,
-        "therapy_session_id": _sessionId,
-        "sdpAnswer": base64.encode(utf8.encode(jsonEncode(map))),
-      };
-
-      logger.w('Pushing answer');
-      logger.w(body);
-      var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/answer-call',
-          RequestMethod.post,
-          data: body);
-      logger.w(respose.data);
+      await _callRepository.answerCall(_callerId, map, _calleeId.toString());
     } catch (e, stack) {
       // TODO: Emit Call Failed State
       logger.e(e.toString(), stackTrace: stack);
@@ -422,21 +380,9 @@ class CallCubit extends Cubit<CallState> {
 
   void _pushCandidate(int callerId, candidate) async {
     try {
-      var networkService = injector.get<NetworkService>();
-      var body = {
-        "callerId": callerId,
-        "calleeId": _calleeId,
-        "therapy_session_id": _sessionId,
-        "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
-        "sender": "user"
-      };
       logger.w('Pushing candidate');
-      logger.w(body);
-      var respose = await networkService.call(
-          'https://staging.app.yourmentra.com/api/v1/webrtc/ice-candidate',
-          RequestMethod.post,
-          data: body);
-      logger.w(respose.data);
+
+      _callRepository.pushCandidate(callerId, candidate, _calleeId.toString());
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -451,24 +397,7 @@ class CallCubit extends Cubit<CallState> {
   Future _getOfferFromRemote() async {
     logger.w('getting offer from remote');
     try {
-      var networkService = injector.get<NetworkService>();
-      // logger.w(body);
-      // var body = {
-      //   "callerId": _callerId,
-      //   "calleeId": _calleeId,
-      //   // "iceCandidate": base64.encode(utf8.encode(jsonEncode(candidate))),
-      //   // "sender": "user"
-      // };
-
-      logger.w('Pushing candidate');
-
-      var respose = await networkService.call(
-        'https://staging.app.yourmentra.com/api/v1/webrtc/get-offer/$_callerId',
-        RequestMethod.get,
-        // data: body
-      );
-      logger.w(respose.data);
-      var offerResponse = GetOfferResponse.fromJson(respose.data);
+      var offerResponse = await _callRepository.getOffer(_calleeId);
       _offer = offerResponse.data.sdpOffer;
       _callerId = offerResponse.data.callerId;
       _sessionId = offerResponse.data.therapySessionId;
