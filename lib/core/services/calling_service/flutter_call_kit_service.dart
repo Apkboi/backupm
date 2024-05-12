@@ -116,7 +116,7 @@ class CallKitService {
           missedCallNotificationChannelName: "Missed Call",
           isShowCallID: false),
       ios: const IOSParams(
-        iconName: 'CallKitLogo',
+        iconName: 'LaunchImage',
         handleType: 'generic',
         supportsVideo: true,
         maximumCallGroups: 2,

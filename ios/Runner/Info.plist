@@ -50,15 +50,12 @@
         <string>This enables you to send media files using mentra</string>
         <key>NSCameraUsageDescription</key>
         <string>This allows Mentra to make video calls and send your pictures directly from your camera.</string>
-
 		<key>NSMicrophoneUsageDescription</key>
 		<string>This allows Mentra to use your microphone for voice and video calls</string>
 		<key>NSAppleMusicUsageDescription</key>
 		<string>This enables you to send media files using mentra</string>
 		<key>NSContactsUsageDescription</key>
 		<string>Syncs phone numbers from your contacts  to help you connect with other Mentra users and to provide a better experience</string>
-		<key>NSCameraUsageDescription</key>
-		<string>Mentra will use this feature to let you add your card, upload documents, scan QR codes or take a selfie.</string>
 		<key>NSFaceIDUsageDescription</key>
 		<string>Biometric authentication for accessing the application</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
