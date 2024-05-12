@@ -26,10 +26,11 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   logger.i('Handling a background message ${message.data}');
   logger.i('Handling a background message ${message.notification?.title}');
-  var body = message.notification?.body ?? message.data['body'];
+  // var body = message.notification?.body ?? message.data['body'];
   // await notificationService.initializeNotification();
   // await Firebase.initializeApp();
   DeepLinkNavigator.handleBackgroundMessages(message);
+
   if (message.notification?.title.toString() != 'Incoming Call') {
     notificationService.triggerHeadsUp(
       message.notification.hashCode,

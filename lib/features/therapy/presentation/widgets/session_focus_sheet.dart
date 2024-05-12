@@ -97,7 +97,9 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                               fontSize: 16,
                             ),
                             10.verticalSpace,
-                            Divider()
+                            Divider(
+                              height: 2,
+                            )
                           ],
                         ),
                       ),

@@ -9,9 +9,7 @@ class DeepLinkNavigator {
       try {
         logger.w('Incoming call');
         var incomingCallData =
-        IncomingCallNotificationData.fromJson(message.data);
-
-
+            IncomingCallNotificationData.fromJson(message.data);
 
         CallKitService.instance.showIncomingCall(
             incomingCallData.webrtcDescriptionId.toString(),
@@ -19,8 +17,8 @@ class DeepLinkNavigator {
             callerImage: incomingCallData.therapist.avatar,
             extra: incomingCallData.toJson());
 
-      } catch (e, stack) {
 
+      } catch (e, stack) {
         logger.e(e.toString());
         logger.e(stack.toString());
       }
@@ -28,23 +26,18 @@ class DeepLinkNavigator {
   }
 
   static void handleForegroundMessages(RemoteMessage message) {
-
     if (message.notification?.title.toString() == 'Incoming Call') {
       try {
         logger.w('Incoming call');
         var incomingCallData =
             IncomingCallNotificationData.fromJson(message.data);
 
-
-
         CallKitService.instance.showIncomingCall(
             incomingCallData.webrtcDescriptionId,
             incomingCallData.therapist.name,
             callerImage: incomingCallData.therapist.avatar,
             extra: incomingCallData.toJson());
-
       } catch (e, stack) {
-
         logger.e(e.toString());
         logger.e(stack.toString());
       }
