@@ -59,6 +59,7 @@ class CallCubit extends Cubit<CallState> {
     SdpOffer? offer,
     dynamic sessionId,
   ) async {
+    isCallActive = true;
     emit(CallConnectingState());
     _calleeId = calleeId;
     _callerId = callerId;
@@ -279,10 +280,11 @@ class CallCubit extends Cubit<CallState> {
 
     if ((event).eventName == 'callEnded') {
       // var currentCall = await CallKitService.instance.getCurrentCall();
-      CallKitService.instance.endCall();
+      CallKitService.instance.endAllCalls();
       if (isCallActive) {
         emit(CallEndedState());
         isCallActive = false;
+        _closeAllCameras();
       }
     }
   }
@@ -327,7 +329,7 @@ class CallCubit extends Cubit<CallState> {
       emit(EndCallLoadingState());
 
       try {
-        CallKitService.instance.endCall();
+        CallKitService.instance.endAllCalls();
         _callRepository.endCall(
             _callerId, _calleeId, _sessionId, _calleeId.toString());
 

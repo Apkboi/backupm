@@ -147,6 +147,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
       if (widget.offer != null)
         PathParam.offer: jsonEncode(widget.offer?.toJson()),
     });
+    // CallKitService.instance.an
   }
 
   void _listenToCallEvent(BuildContext context, CallState state) {
@@ -157,7 +158,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
 
     if (state is CallEndedState) {
       context.pop();
-      CallKitService.instance.endCall();
+      CallKitService.instance.endAllCalls();
     }
   }
 

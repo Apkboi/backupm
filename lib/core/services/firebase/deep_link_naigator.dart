@@ -16,8 +16,6 @@ class DeepLinkNavigator {
             incomingCallData.therapist.name,
             callerImage: incomingCallData.therapist.avatar,
             extra: incomingCallData.toJson());
-
-
       } catch (e, stack) {
         logger.e(e.toString());
         logger.e(stack.toString());

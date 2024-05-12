@@ -173,7 +173,7 @@ class CallKitService {
       const Duration(seconds: 0),
       () async {
         var currentCall = await getCurrentCall();
-        logger.w(currentCall['extra']['webrtc_description_id']);
+        // logger.w(currentCall['extra']['webrtc_description_id']);
 
         if (currentCall != null &&
             (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
@@ -211,5 +211,9 @@ class CallKitService {
         .goRouter.routerDelegate.currentConfiguration.last.route.path;
 
     return currentCall != null;
+  }
+
+  void answerCall() {
+    // FlutterCallkitIncoming.startCall(params)
   }
 }

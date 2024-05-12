@@ -3,7 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/widgets/call/therapist_video_widget.dart';
@@ -73,7 +76,8 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
                     child: BlocProvider.value(
                   value: context.read<CallCubit>(),
                   child: UserVideoWidget(
-                    localRenderer: context.watch<CallCubit>().localRTCVideoRenderer,
+                    localRenderer:
+                        context.watch<CallCubit>().localRTCVideoRenderer,
                     mirror: context.watch<CallCubit>().isFrontCameraSelected,
                     sessionId: widget.sessionId,
                     therapist: widget.therapist ?? Caller.dummy(),
@@ -90,7 +94,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
   @override
   void dispose() {
     callBloc.dispose();
-    CallKitService.instance.endCall();
+    CallKitService.instance.endAllCalls();
     super.dispose();
   }
 
@@ -98,6 +102,16 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
     if (state is CallEndedState) {
       _reviewCall(context);
     }
+
+    if (state is AcceptCallState) {
+      callBloc.endCall();
+      context.pop();
+      context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+        PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
+        PathParam.callerId: state.callerId,
+      });
+    }
+
     if (state is EndCallLoadingState) {
       CustomDialogs.showLoading(context);
     }
@@ -113,7 +127,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
     if (state is CallConnectingFailedState) {
       context.pop();
       CustomDialogs.error('Call connecting failed');
-      CallKitService.instance.endCall();
+      CallKitService.instance.endAllCalls();
       // callBloc.endCall();
     }
   }
@@ -138,7 +152,6 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
 
   void _showReviewSheet(
       BuildContext context, Caller therapist, String sessionId) async {
-
     await CustomDialogs.showBottomSheet(
         context,
         TherapyReviewSheet(
