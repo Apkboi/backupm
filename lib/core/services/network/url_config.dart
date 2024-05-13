@@ -145,4 +145,17 @@ class UrlConfig {
   static String makeCall = '/webrtc/make-call';
   static String getOffer(callerId) => '/webrtc/get-offer/$callerId';
 
+
+
+
+
+//   Chat Endpoint
+  static String sendMessage = "/messages/send-message";
+  static String getConversations = "/messages/get-conversations";
+  static String getMessage(int messageId) => "/messages/get-messages/$messageId";
+  static String deleteMessage(int messageId) => "/messages/delete-message/$messageId";
+  static String deleteConversation(int conversationId) => "/messages/delete-conversation/$conversationId";
+
+
+
 }

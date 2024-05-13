@@ -133,6 +133,7 @@ class CallCubit extends Cubit<CallState> {
             : false,
         "echoCancellation": true
       });
+
       // add mediaTrack to peerConnection
       _localStream!.getTracks().forEach((track) {
         _rtcPeerConnection!.addTrack(track, _localStream!);

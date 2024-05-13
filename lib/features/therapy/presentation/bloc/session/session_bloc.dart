@@ -5,14 +5,11 @@ import 'package:equatable/equatable.dart';
 import 'package:mentra/features/therapy/data/models/chat_message.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 
-
 part 'session_event.dart';
 
 part 'session_state.dart';
 
-class SessionBloc extends Bloc<SessionEvent, SessionState>
-{
-
+class SessionBloc extends Bloc<SessionEvent, SessionState> {
   // static final MesiboUI _mesiboUi = MesiboUI();
   // MesiboProfile? profile;
   List<TherapyChatMessage> messages = [];
@@ -27,13 +24,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState>
     on<MessageReceivedEvent>(_mapMessageReceivedEventToState);
   }
 
-
-
   FutureOr<void> _mapSendMessageEventToState(
-      SendMessageEvent event, Emitter<SessionState> emit) async {
-
-
-  }
+      SendMessageEvent event, Emitter<SessionState> emit) async {}
 
   FutureOr<void> _mapGetMessagesEventToState(
       GetMessagesEvent event, Emitter<SessionState> emit) async {
@@ -41,7 +33,6 @@ class SessionBloc extends Bloc<SessionEvent, SessionState>
   }
 
   Future<void> _listenForMessages() async {
-
     // Mesibo.getInstance().
 
     // sendMessage();

@@ -13,7 +13,9 @@ import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class SessionFocusSheet extends StatefulWidget {
-  SessionFocusSheet({super.key});
+  const SessionFocusSheet({super.key, required this.selectedSessionFocus});
+
+  final List<String> selectedSessionFocus;
 
   @override
   State<SessionFocusSheet> createState() => _SessionFocusSheetState();
@@ -97,7 +99,7 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                               fontSize: 16,
                             ),
                             10.verticalSpace,
-                            Divider(
+                            const Divider(
                               height: 2,
                             )
                           ],
@@ -117,4 +119,13 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
   }
 
   void _listenToTherapySessionBloc(BuildContext context, TherapyState state) {}
+}
+
+class _SessionFocusItem extends StatelessWidget {
+  const _SessionFocusItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }

@@ -6,6 +6,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
+import 'package:mentra/core/services/data/permission_manager.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
@@ -37,6 +38,9 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
 
   @override
   void initState() {
+    PermissionManager.requestPermission(
+      context,
+    );
     Future.delayed(
       const Duration(
         milliseconds: 300,
