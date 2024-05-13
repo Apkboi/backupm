@@ -131,16 +131,23 @@ class CallCubit extends Cubit<CallState> {
         'video': isVideoOn
             ? {'facingMode': isFrontCameraSelected ? 'user' : 'environment'}
             : false,
-        "echoCancellation": true
+        "echoCancellation": true,
       });
 
       // add mediaTrack to peerConnection
-      _localStream!.getTracks().forEach((track) {
-        _rtcPeerConnection!.addTrack(track, _localStream!);
+      _localStream!.getTracks().forEach((track) async {
+        await _rtcPeerConnection!.addTrack(track, _localStream!);
         setState(() {});
       });
+
       // set source for local video renderer
+
       localRTCVideoRenderer.srcObject = _localStream;
+
+      // localRTCVideoRenderer.;
+
+      // _localStream?.getMediaTracks()
+
       setState(() {});
       _listenToPusher();
 

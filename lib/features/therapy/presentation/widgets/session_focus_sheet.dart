@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/error_widget.dart';
@@ -10,7 +9,6 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
-import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class SessionFocusSheet extends StatefulWidget {
   const SessionFocusSheet({super.key, required this.selectedSessionFocus});
@@ -22,19 +20,13 @@ class SessionFocusSheet extends StatefulWidget {
 }
 
 class _SessionFocusSheetState extends State<SessionFocusSheet> {
+  List<String> selectedFocuses = [];
+
   @override
   void initState() {
     injector.get<TherapyBloc>().add(const GetSessionFocusEvent());
     super.initState();
   }
-
-  //
-  // List sessionFocuses = [
-  //   'Developing coping strategies for anxiety',
-  //   'Resolving interpersonal conflicts',
-  //   'Building self esteem and confidence',
-  //   'Managing depression and mood fluctuations'
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +42,7 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
         children: [
           16.verticalSpace,
           TextView(
-            text: 'Select Session Focus',
+            text: 'Select Session Focus (Multiple allowed)',
             style: GoogleFonts.fraunces(
                 fontSize: 20.sp,
                 color: Pallets.navy,
@@ -84,27 +76,18 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                 if (state is GetSessionFocusSuccessState) {
                   return ListView.builder(
                     itemCount: state.response.data.length,
-                    itemBuilder: (context, index) => Material(
-                      color: Colors.transparent,
-                      child: HapticInkWell(
-                        onTap: () {
-                          context.pop(state.response.data[index].name);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            10.verticalSpace,
-                            TextView(
-                              text: state.response.data[index].name,
-                              fontSize: 16,
-                            ),
-                            10.verticalSpace,
-                            const Divider(
-                              height: 2,
-                            )
-                          ],
-                        ),
-                      ),
+                    itemBuilder: (context, index) => CheckboxListTile(
+                      title: Text(state.response.data[index].name),
+                      value: selectedFocuses
+                          .contains(state.response.data[index].name),
+                      onChanged: (newValue) => setState(() {
+                        if (newValue!) {
+                          selectedFocuses.add(state.response.data[index].name);
+                        } else {
+                          selectedFocuses
+                              .remove(state.response.data[index].name);
+                        }
+                      }),
                     ),
                   );
                 }
@@ -112,20 +95,16 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                 return 0.verticalSpace;
               },
             ),
-          )
+          ),
+          const Spacer(),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, selectedFocuses),
+            child: const Text('Continue'),
+          ),
         ],
       ),
     );
   }
 
   void _listenToTherapySessionBloc(BuildContext context, TherapyState state) {}
-}
-
-class _SessionFocusItem extends StatelessWidget {
-  const _SessionFocusItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
 }

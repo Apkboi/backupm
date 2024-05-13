@@ -12,6 +12,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/app_styles.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
+import 'package:mentra/features/therapy/presentation/widgets/selected_session_focus_list.dart';
 import 'package:mentra/features/therapy/presentation/widgets/session_scheduled_dialog.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
@@ -21,7 +22,6 @@ import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class ConfirmSessionSheet extends StatefulWidget {
   const ConfirmSessionSheet({super.key});
 
@@ -30,7 +30,7 @@ class ConfirmSessionSheet extends StatefulWidget {
 }
 
 class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
-  String? focus;
+  dynamic focus;
 
   final _notesController = TextEditingController();
   final therapyBloc = TherapyBloc(injector.get());
@@ -149,8 +149,14 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                     fontWeight: FontWeight.w600,
                                   ),
                                   6.verticalSpace,
-                                  TextView(
-                                      text: focus ?? 'Select session focus'),
+                                  SelectedSessionFocusChipList(
+                                    selectedSessionFocuses: focus,
+                                    onSelectedFocusChange: (updatedFocuses) {
+                                      setState(() {
+                                        focus = updatedFocuses;
+                                      });
+                                    },
+                                  ),
                                 ],
                               ),
                             ),
@@ -250,7 +256,11 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
   }
 
   void _selectSessionFocus() async {
-    focus = await CustomDialogs.showBottomSheet(context, SessionFocusSheet());
+    focus = await CustomDialogs.showBottomSheet(
+        context,
+        const SessionFocusSheet(
+          selectedSessionFocus: [],
+        ));
 
     setState(() {});
   }
