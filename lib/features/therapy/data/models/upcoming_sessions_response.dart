@@ -151,7 +151,7 @@ class TherapySession {
         user: User.fromJson(json["user"]),
         therapist: DatumTherapist.fromJson(json["therapist"]),
         reference: json["reference"],
-        focus:  json["focus"]==null?[]:List<String>.from(json["focus"].map((x) => x)) ,
+        focus:  json["focus"] is List ? json["focus"]==null?[]:List<String>.from(json["focus"].map((x) => x)):[json["focus"]] ,
         duration: json["duration"],
         startsAt: DateTime.parse(json["starts_at"]),
         endsAt:
