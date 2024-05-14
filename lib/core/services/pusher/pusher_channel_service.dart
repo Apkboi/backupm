@@ -19,45 +19,52 @@ class PusherChannelService {
   }
 
   Future<void> initialize() async {
-    try {
-      pusher = PusherChannelsFlutter.getInstance();
-      await pusher?.init(
-        // apiKey: '86bddfa4606d2c40e7a5',
-        apiKey: '6e531aee4ab45d75d4ad',
-        cluster: "mt1",
+    pusher = PusherChannelsFlutter.getInstance();
 
-        maxReconnectGapInSeconds: 1,
-        onEvent: (event) {
-          injector.get<PusherCubit>().triggerPusherEvent(event);
 
-          // logger.w(event.data);
-          // AppUtils.showCustomToast(event.data.toString());
-        },
-        onSubscriptionError: (d, a) {
-          log("onSubscriptionError: $d Exception: $a");
-          // AppUtils.showCustomToast("onSubscriptionError: $d Exception: $a");
-        },
-        onAuthorizer: _authorize,
-        // authEndpoint: AuthorizationEndpoints.pusherAuth
-      );
+    if(pusher?.connectionState != "CONNECTED"){
+      try {
 
-      await pusher?.connect();
+        await pusher?.init(
+          // apiKey: '86bddfa4606d2c40e7a5',
+          apiKey: '6e531aee4ab45d75d4ad',
+          cluster: "mt1",
 
-      pusher?.onConnectionStateChange = (currentState, previousState) {
-        debugPrint(
-            "Pusher connection previousState: $previousState, currentState: $currentState");
-        if (currentState == "DISCONNECTED") {
-          pusher?.connect();
-        }
-      };
+          maxReconnectGapInSeconds: 1,
+          onEvent: (event) {
+            injector.get<PusherCubit>().triggerPusherEvent(event);
 
-      pusher?.onError = (message, code, error) {
-        debugPrint("Pusher Error: ${error?.message}");
-      };
-    } catch (e, stackTrace) {
-      logger.e(e, stackTrace: stackTrace);
-      SentryService.captureException(e, stackTrace: stackTrace);
+            // logger.w(event.data);
+            // AppUtils.showCustomToast(event.data.toString());
+          },
+          onSubscriptionError: (d, a) {
+            log("onSubscriptionError: $d Exception: $a");
+            // AppUtils.showCustomToast("onSubscriptionError: $d Exception: $a");
+          },
+          onAuthorizer: _authorize,
+          // authEndpoint: AuthorizationEndpoints.pusherAuth
+        );
+
+        await pusher?.connect();
+
+        pusher?.onConnectionStateChange = (currentState, previousState) {
+          debugPrint(
+              "Pusher connection previousState: $previousState, currentState: $currentState");
+          if (currentState == "DISCONNECTED") {
+            pusher?.connect();
+          }
+        };
+
+        pusher?.onError = (message, code, error) {
+          debugPrint("Pusher Error: ${error?.message}");
+        };
+      } catch (e, stackTrace) {
+        logger.e(e, stackTrace: stackTrace);
+        SentryService.captureException(e, stackTrace: stackTrace);
+      }
     }
+
+
   }
 
   Future<PusherChannelsFlutter?> get getClient async {
