@@ -55,7 +55,7 @@ class SessionDetails {
   final User user;
   final DataTherapist therapist;
   final String reference;
-  final String focus;
+  final List<String> focus;
   final int duration;
   final String startsAt;
   final dynamic endsAt;
@@ -84,7 +84,7 @@ class SessionDetails {
     User? user,
     DataTherapist? therapist,
     String? reference,
-    String? focus,
+    List<String>? focus,
     int? duration,
     String? startsAt,
     dynamic endsAt,
@@ -113,7 +113,8 @@ class SessionDetails {
     user: User.fromJson(json["user"]),
     therapist: DataTherapist.fromJson(json["therapist"]),
     reference: json["reference"],
-    focus: json["focus"],
+    focus:  json["focus"]==null?[]:List<String>.from(json["focus"].map((x) => x)) ,
+
     duration: json["duration"],
     startsAt: json["starts_at"],
     endsAt: json["ends_at"],

@@ -5,6 +5,7 @@ class SelectedSessionFocusChipList extends StatefulWidget {
   final List<String> selectedSessionFocuses;
   final Function(List<String>) onSelectedFocusChange;
 
+
   const SelectedSessionFocusChipList({
     super.key,
     required this.selectedSessionFocuses,
@@ -37,6 +38,44 @@ class _SelectedSessionFocusChipListState
                     }),
                   ))
               .toList(), // Adjust spacing between chips
+    );
+  }
+}
+
+
+class ViewSessionFocusChipList extends StatefulWidget {
+  final List<String> selectedSessionFocuses;
+
+
+
+  const ViewSessionFocusChipList({
+    super.key,
+    required this.selectedSessionFocuses,
+
+  });
+
+  @override
+  State<ViewSessionFocusChipList> createState() =>
+      _ViewSessionFocusChipListState();
+}
+
+class _ViewSessionFocusChipListState
+    extends State<ViewSessionFocusChipList> {
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 4.0,
+      children: widget.selectedSessionFocuses.isEmpty
+          ? [
+        const TextView(text: 'No'),
+      ]
+          : widget.selectedSessionFocuses
+          .map((focus) => Chip(
+        label: Text(focus),
+        backgroundColor: Colors.grey.shade200,
+
+      ))
+          .toList(), // Adjust spacing between chips
     );
   }
 }

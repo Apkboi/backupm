@@ -17,6 +17,7 @@ import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.d
 import 'package:mentra/features/therapy/presentation/widgets/cancel_session_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_date_sheet.dart';
 import 'package:mentra/features/therapy/presentation/widgets/select_time_sheet.dart';
+import 'package:mentra/features/therapy/presentation/widgets/selected_session_focus_list.dart';
 import 'package:mentra/features/therapy/presentation/widgets/session_ended_dialog.dart';
 import 'package:mentra/features/therapy/presentation/widgets/therapy_review_sheet.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -61,17 +62,18 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               ),
               6.verticalSpace,
               TextView(
-                text: widget.session.focus,
+                text:'Session with ${widget.session.therapist.user.name}',
+                maxLines: 3,
                 style: GoogleFonts.fraunces(
                     color: Pallets.navy,
                     fontSize: 32.sp,
                     fontWeight: FontWeight.w600),
               ),
-              8.verticalSpace,
-              TextView(
-                  text: 'Session with ${widget.session.therapist.user.name}',
-                  color: Pallets.brandColor,
-                  fontWeight: FontWeight.w600),
+              // 8.verticalSpace,
+              // TextView(
+              //     text: 'Session with ${widget.session.therapist.user.name}',
+              //     color: Pallets.brandColor,
+              //     fontWeight: FontWeight.w600),
               17.verticalSpace,
               Row(
                 children: [
@@ -103,7 +105,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                   ),
                 ],
               ),
-              48.verticalSpace,
+              18.verticalSpace,
               Container(
                 decoration: BoxDecoration(
                     color: Pallets.white,
@@ -161,7 +163,26 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                     ),
                   ],
                 ),
+              ),       16.verticalSpace,
+              Container(
+                width: 1.sw,
+                decoration: BoxDecoration(
+                    color: Pallets.white,
+                    borderRadius: BorderRadius.circular(18)),
+                padding: const EdgeInsets.all(18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const TextView(
+                      text: 'Session focus',
+                      color: Pallets.ink,
+                    ),
+                    8.verticalSpace,
+                  ViewSessionFocusChipList(selectedSessionFocuses: widget.session.focus)
+                  ],
+                ),
               ),
+              
               16.verticalSpace,
               Container(
                 width: 1.sw,
@@ -183,6 +204,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                   ],
                 ),
               ),
+       
+              
               77.verticalSpace,
               Center(
                 child: CustomNeumorphicButton(

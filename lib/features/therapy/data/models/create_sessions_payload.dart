@@ -13,7 +13,7 @@ String createSessionPayloadToJson(CreateSessionPayload data) =>
 class CreateSessionPayload {
   final DateTime date;
   final String time;
-  final String focus;
+  final List focus;
   final String note;
   final String? sessionId;
 
@@ -28,7 +28,7 @@ class CreateSessionPayload {
   CreateSessionPayload copyWith({
     DateTime? date,
     String? time,
-    String? focus,
+    List? focus,
     String? note,
     String? sessionId,
   }) =>
@@ -53,7 +53,7 @@ class CreateSessionPayload {
         "date":
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "time": time,
-        "focus": focus,
+        "focus": List<dynamic>.from(focus.map((x) => x)),
         "note": note,
         "session_id": sessionId,
       };
@@ -63,7 +63,7 @@ class CreateSessionPayload {
     return CreateSessionPayload(
       date: DateTime.now(),
       time: '',
-      focus: '',
+      focus: [],
       note: '',
       sessionId: '',
     );

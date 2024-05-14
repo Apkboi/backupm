@@ -74,7 +74,7 @@ class _TherapyItemState extends State<TherapyItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextView(
-                      text: widget.session.focus,
+                      text: widget.session.focus.firstOrNull??'',
                       fontSize: 16,
                       maxLines: 1,
                       textOverflow: TextOverflow.ellipsis,

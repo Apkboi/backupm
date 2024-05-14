@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/error_widget.dart';
+import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -25,6 +27,14 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
   @override
   void initState() {
     injector.get<TherapyBloc>().add(const GetSessionFocusEvent());
+    Future.delayed(
+      Duration(milliseconds: 100),
+      () {
+        setState(() {
+          selectedFocuses = widget.selectedSessionFocus;
+        });
+      },
+    );
     super.initState();
   }
 
@@ -38,9 +48,9 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
         children: [
-          16.verticalSpace,
+          50.verticalSpace,
           TextView(
             text: 'Select Session Focus (Multiple allowed)',
             style: GoogleFonts.fraunces(
@@ -49,8 +59,7 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                 fontWeight: FontWeight.w600),
           ),
           16.verticalSpace,
-          SizedBox(
-            height: 400,
+          Expanded(
             child: BlocConsumer<TherapyBloc, TherapyState>(
               listener: _listenToTherapySessionBloc,
               bloc: injector.get(),
@@ -76,18 +85,26 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
                 if (state is GetSessionFocusSuccessState) {
                   return ListView.builder(
                     itemCount: state.response.data.length,
-                    itemBuilder: (context, index) => CheckboxListTile(
-                      title: Text(state.response.data[index].name),
-                      value: selectedFocuses
-                          .contains(state.response.data[index].name),
-                      onChanged: (newValue) => setState(() {
-                        if (newValue!) {
-                          selectedFocuses.add(state.response.data[index].name);
-                        } else {
-                          selectedFocuses
-                              .remove(state.response.data[index].name);
-                        }
-                      }),
+                    itemBuilder: (context, index) => Column(
+                      children: [
+                        CheckboxListTile(
+                          contentPadding: EdgeInsets.zero,
+                          activeColor: Pallets.primary,
+                          title: Text(state.response.data[index].name),
+                          value: selectedFocuses
+                              .contains(state.response.data[index].name),
+                          onChanged: (newValue) => setState(() {
+                            if (newValue!) {
+                              selectedFocuses.add(state.response.data[index].name);
+                            } else {
+                              selectedFocuses
+                                  .remove(state.response.data[index].name);
+                            }
+                          }),
+                        ),
+                        8.verticalSpace,
+                        const Divider(height: 5,thickness: 1.3,)
+                      ],
                     ),
                   );
                 }
@@ -96,10 +113,14 @@ class _SessionFocusSheetState extends State<SessionFocusSheet> {
               },
             ),
           ),
-          const Spacer(),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, selectedFocuses),
-            child: const Text('Continue'),
+          // const Spacer(),
+          Center(
+            child: CustomNeumorphicButton(
+              fgColor: Pallets.white,
+              onTap: () => context.pop(selectedFocuses),
+              color: Pallets.primary,
+              child: const Text('Continue',style: TextStyle(color: Pallets.white),),
+            ),
           ),
         ],
       ),
