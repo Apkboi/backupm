@@ -244,7 +244,7 @@ class TherapyBloc extends Bloc<TherapyEvent, TherapyState> {
   void updatePayload({
     DateTime? date,
     String? time,
-    String? focus,
+    dynamic? focus,
     String? note,
     String? sessionId,
   }) {

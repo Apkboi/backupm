@@ -26,8 +26,10 @@ import 'package:mentra/features/subscription/dormain/repository/subscription_rep
 import 'package:mentra/features/tasks/data/repository/daily_task_repository_impl.dart';
 import 'package:mentra/features/tasks/domain/repository/daily_task_repository.dart';
 import 'package:mentra/features/therapy/data/repository/call_repository_impl.dart';
+import 'package:mentra/features/therapy/data/repository/session_chat_repository.dart';
 import 'package:mentra/features/therapy/data/repository/therapy_repository_impl.dart';
 import 'package:mentra/features/therapy/dormain/repository/call_repository.dart';
+import 'package:mentra/features/therapy/dormain/repository/session_chat_repository.dart';
 import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
 
 void setup(GetIt getIt) {
@@ -61,4 +63,6 @@ void setup(GetIt getIt) {
       () => StreaksRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<CallRepository>(
       () => CallRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<SessionChatRepository>(
+      () => SessionChatRepositoryImpl(getIt.get()));
 }

@@ -12,6 +12,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/app_styles.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
+import 'package:mentra/features/therapy/presentation/widgets/selected_session_focus_list.dart';
 import 'package:mentra/features/therapy/presentation/widgets/session_scheduled_dialog.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.dart';
@@ -21,7 +22,6 @@ import 'package:mentra/gen/assets.gen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class ConfirmSessionSheet extends StatefulWidget {
   const ConfirmSessionSheet({super.key});
 
@@ -30,7 +30,7 @@ class ConfirmSessionSheet extends StatefulWidget {
 }
 
 class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
-  String? focus;
+  List<String> focus = [];
 
   final _notesController = TextEditingController();
   final therapyBloc = TherapyBloc(injector.get());
@@ -45,171 +45,198 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
         builder: (context, state) {
           return CupertinoScaffold(
               transitionBackgroundColor: Pallets.bottomSheetColor,
-              body: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Pallets.black,
-                        ),
-                        onPressed: () {
-                          context.pop();
-                        },
-                      ),
-                    ),
-                    16.verticalSpace,
-                    TextView(
-                      text: 'Confirm Your Session',
-                      style: GoogleFonts.fraunces(
-                          color: Pallets.navy,
-                          fontSize: 32.sp,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    16.verticalSpace,
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          color: Pallets.white,
-                          borderRadius: BorderRadius.circular(17)),
-                      child: Row(
+              body: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.close,
+                                color: Pallets.black,
+                              ),
+                              onPressed: () {
+                                context.pop();
+                              },
+                            ),
+                          ),
+                          16.verticalSpace,
+                          TextView(
+                            text: 'Confirm Your Session',
+                            style: GoogleFonts.fraunces(
+                                color: Pallets.navy,
+                                fontSize: 32.sp,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          16.verticalSpace,
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Pallets.white,
+                                borderRadius: BorderRadius.circular(17)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          ImageWidget(
+                                              imageUrl:
+                                                  Assets.images.svgs.icCalender),
+                                          10.horizontalSpace,
+                                          TextView(
+                                            text: TimeUtil.formatFromDate(injector
+                                                .get<TherapyBloc>()
+                                                .createSessionsPayload
+                                                .date),
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
+                                      ),
+                                      10.verticalSpace,
+                                      Row(
+                                        children: [
+                                          ImageWidget(
+                                              imageUrl: Assets.images.svgs.icClock),
+                                          10.horizontalSpace,
+                                          TextView(
+                                            text: injector
+                                                .get<TherapyBloc>()
+                                                .createSessionsPayload
+                                                .time,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      context.pop();
+                                    },
+                                    child: const Text(
+                                      'Change',
+                                      style: TextStyle(
+                                          color: Pallets.primary,
+                                          fontWeight: FontWeight.w600),
+                                    )),
+                              ],
+                            ),
+                          ),
+                          16.verticalSpace,
+                          HapticInkWell(
+                            onTap: () {
+                              _selectSessionFocus();
+                            },
+                            child: Container(
+                              decoration:
+                                  AppStyles.customFilledTextFieldBoxDecoration,
+                              padding: const EdgeInsets.all(16),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TextView(
+                                              text: 'Session Focus',
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color: Pallets.black,
+                                            )
+
+                                          ],
+                                        ),
+                                        6.verticalSpace,
+                                        SelectedSessionFocusChipList(
+                                          selectedSessionFocuses: focus,
+                                          onSelectedFocusChange: (updatedFocuses) {
+                                            setState(() {
+                                              focus = updatedFocuses;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          16.verticalSpace,
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration:
+                                AppStyles.customBorderedTextFieldBoxDecoration,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
-                                    ImageWidget(
-                                        imageUrl:
-                                            Assets.images.svgs.icCalender),
-                                    10.horizontalSpace,
                                     TextView(
-                                      text: TimeUtil.formatFromDate(injector
-                                          .get<TherapyBloc>()
-                                          .createSessionsPayload
-                                          .date),
-                                      fontWeight: FontWeight.w600,
+                                      text: 'Note',
+                                      style: GoogleFonts.inter(
+                                          fontSize: 12, fontWeight: FontWeight.w500),
+                                    ),
+                                    TextView(
+                                      text: ' (Optional)',
+                                      style: GoogleFonts.inter(
+                                          fontSize: 12, color: Pallets.grey),
                                     ),
                                   ],
                                 ),
-                                10.verticalSpace,
-                                Row(
-                                  children: [
-                                    ImageWidget(
-                                        imageUrl: Assets.images.svgs.icClock),
-                                    10.horizontalSpace,
-                                    TextView(
-                                      text: injector
-                                          .get<TherapyBloc>()
-                                          .createSessionsPayload
-                                          .time,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ],
-                                ),
+                                7.verticalSpace,
+                                FilledTextField(
+                                    maxLine: 5,
+                                    hasElevation: false,
+                                    contentPadding: EdgeInsets.zero,
+                                    hasBorder: false,
+                                    minLine: 1,
+                                    controller: _notesController,
+                                    fillColor: Colors.transparent,
+                                    hint: 'Not Selected'),
                               ],
                             ),
                           ),
-                          TextButton(
-                              onPressed: () {
-                                context.pop();
-                              },
-                              child: const Text(
-                                'Change',
-                                style: TextStyle(
-                                    color: Pallets.primary,
-                                    fontWeight: FontWeight.w600),
-                              )),
+                          80.verticalSpace,
+                          // Spacer(),
+                          // Expanded(child: 16.verticalSpace),
+
                         ],
                       ),
                     ),
-                    16.verticalSpace,
-                    HapticInkWell(
-                      onTap: () {
-                        _selectSessionFocus();
-                      },
-                      child: Container(
-                        decoration:
-                            AppStyles.customFilledTextFieldBoxDecoration,
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const TextView(
-                                    text: 'Session Focus',
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  6.verticalSpace,
-                                  TextView(
-                                      text: focus ?? 'Select session focus'),
-                                ],
-                              ),
-                            ),
-                            const Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: Pallets.black,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    16.verticalSpace,
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration:
-                          AppStyles.customBorderedTextFieldBoxDecoration,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              TextView(
-                                text: 'Note',
-                                style: GoogleFonts.inter(
-                                    fontSize: 12, fontWeight: FontWeight.w500),
-                              ),
-                              TextView(
-                                text: ' (Optional)',
-                                style: GoogleFonts.inter(
-                                    fontSize: 12, color: Pallets.grey),
-                              ),
-                            ],
-                          ),
-                          7.verticalSpace,
-                          FilledTextField(
-                              maxLine: 5,
-                              hasElevation: false,
-                              contentPadding: EdgeInsets.zero,
-                              hasBorder: false,
-                              controller: _notesController,
-                              fillColor: Colors.transparent,
-                              hint: 'Not Selected'),
-                        ],
-                      ),
-                    ),
-                    Expanded(child: 16.verticalSpace),
-                    focus != null
-                        ? Center(
-                            child: CustomNeumorphicButton(
-                                text: 'Continue',
-                                onTap: () {
-                                  _scheduleSession(context);
-                                  // _closeAllSheets(context);
-                                },
-                                color: Pallets.primary),
-                          )
-                        : 0.horizontalSpace
-                  ],
-                ),
+                  ),
+                  Positioned(
+                      bottom: 10,
+                      right: 0,
+                      left: 0,
+                      child:             focus.isNotEmpty
+                      ? Center(
+                    child: CustomNeumorphicButton(
+                        text: 'Continue',
+                        onTap: () {
+                          _scheduleSession(context);
+                          // _closeAllSheets(context);
+                        },
+                        color: Pallets.primary),
+                  )
+                      : 0.horizontalSpace
+                    )
+                ],
               ));
         },
       ),
@@ -250,7 +277,11 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
   }
 
   void _selectSessionFocus() async {
-    focus = await CustomDialogs.showBottomSheet(context, SessionFocusSheet());
+    focus = await CustomDialogs.showBottomSheet(
+        context,
+         SessionFocusSheet(
+          selectedSessionFocus: focus,
+        ));
 
     setState(() {});
   }

@@ -145,26 +145,35 @@ class _TalkToMentraScreenState extends State<TalkToMentraScreen>
                                         },
                                       ),
                                     )
-                                  : ScrollablePositionedList.builder(
-                                      reverse: true,
-                                      padding: EdgeInsets.zero,
-                                      itemScrollController: context
-                                          .read<MentraChatBloc>()
-                                          .scrollController,
-                                      // reverse: true,
-                                      itemCount: context
+                                  : Builder(builder: (context) {
+                                      if (context
                                           .watch<MentraChatBloc>()
                                           .allMessages
-                                          .length,
-                                      itemBuilder: (context, index) =>
-                                          TalkToMentraMessageBox(
-                                        message: context
-                                            .watch<MentraChatBloc>()
-                                            .allMessages
-                                            .reversed
-                                            .toList()[index],
-                                      ),
-                                    )),
+                                          .isNotEmpty) {
+                                        return ScrollablePositionedList.builder(
+                                          reverse: true,
+                                          padding: EdgeInsets.zero,
+                                          itemScrollController: context
+                                              .read<MentraChatBloc>()
+                                              .scrollController,
+                                          // reverse: true,
+                                          itemCount: context
+                                              .watch<MentraChatBloc>()
+                                              .allMessages
+                                              .length,
+                                          itemBuilder: (context, index) =>
+                                              TalkToMentraMessageBox(
+                                            message: context
+                                                .watch<MentraChatBloc>()
+                                                .allMessages
+                                                .reversed
+                                                .toList()[index],
+                                          ),
+                                        );
+                                      }
+
+                                      return 0.verticalSpace;
+                                    })),
                           16.verticalSpace,
                           _InputBar()
                         ],

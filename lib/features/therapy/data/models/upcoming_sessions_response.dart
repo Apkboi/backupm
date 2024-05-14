@@ -87,9 +87,9 @@ class Data {
 class TherapySession {
   final int id;
   final User user;
-  final DatumTherapist therapist;
+  final SessionTherapist therapist;
   final String reference;
-  final String focus;
+  final List<String> focus;
   final int duration;
   final DateTime startsAt;
   final dynamic endsAt;
@@ -118,9 +118,9 @@ class TherapySession {
   TherapySession copyWith({
     int? id,
     User? user,
-    DatumTherapist? therapist,
+    SessionTherapist? therapist,
     String? reference,
-    String? focus,
+    List<String>? focus,
     int? duration,
     DateTime? startsAt,
     dynamic endsAt,
@@ -149,9 +149,9 @@ class TherapySession {
   factory TherapySession.fromJson(Map<String, dynamic> json) => TherapySession(
         id: json["id"],
         user: User.fromJson(json["user"]),
-        therapist: DatumTherapist.fromJson(json["therapist"]),
+        therapist: SessionTherapist.fromJson(json["therapist"]),
         reference: json["reference"],
-        focus: json["focus"],
+        focus:  json["focus"] is List ? json["focus"]==null?[]:List<String>.from(json["focus"].map((x) => x)):[json["focus"]??''] ,
         duration: json["duration"],
         startsAt: DateTime.parse(json["starts_at"]),
         endsAt:
@@ -180,25 +180,25 @@ class TherapySession {
       };
 }
 
-class DatumTherapist {
+class SessionTherapist {
   final User user;
   final Therapist therapist;
 
-  DatumTherapist({
+  SessionTherapist({
     required this.user,
     required this.therapist,
   });
 
-  DatumTherapist copyWith({
+  SessionTherapist copyWith({
     User? user,
     Therapist? therapist,
   }) =>
-      DatumTherapist(
+      SessionTherapist(
         user: user ?? this.user,
         therapist: therapist ?? this.therapist,
       );
 
-  factory DatumTherapist.fromJson(Map<String, dynamic> json) => DatumTherapist(
+  factory SessionTherapist.fromJson(Map<String, dynamic> json) => SessionTherapist(
         user: User.fromJson(json["user"]),
         therapist: Therapist.fromJson(json["therapist"]),
       );

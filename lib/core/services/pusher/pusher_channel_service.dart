@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/sentory/sentory_service.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:crypto/crypto.dart';
 
 class PusherChannelService {
   PusherChannelService._();
@@ -17,42 +19,44 @@ class PusherChannelService {
   }
 
   Future<void> initialize() async {
-    pusher = PusherChannelsFlutter.getInstance();
+    try {
+      pusher = PusherChannelsFlutter.getInstance();
+      await pusher?.init(
+        // apiKey: '86bddfa4606d2c40e7a5',
+        apiKey: '6e531aee4ab45d75d4ad',
+        cluster: "mt1",
 
-    await pusher?.init(
-      // apiKey: '86bddfa4606d2c40e7a5',
-      apiKey: '6e531aee4ab45d75d4ad',
-      cluster: "mt1",
+        maxReconnectGapInSeconds: 1,
+        onEvent: (event) {
+          injector.get<PusherCubit>().triggerPusherEvent(event);
 
-      maxReconnectGapInSeconds: 1,
-      onEvent: (event) {
+          // logger.w(event.data);
+          // AppUtils.showCustomToast(event.data.toString());
+        },
+        onSubscriptionError: (d, a) {
+          log("onSubscriptionError: $d Exception: $a");
+          // AppUtils.showCustomToast("onSubscriptionError: $d Exception: $a");
+        },
+        onAuthorizer: _authorize,
+        // authEndpoint: AuthorizationEndpoints.pusherAuth
+      );
 
-        injector.get<PusherCubit>().triggerPusherEvent(event);
+      await pusher?.connect();
 
-        // logger.w(event.data);
-        // AppUtils.showCustomToast(event.data.toString());
-      },
-      onSubscriptionError: (d, a) {
-        log("onSubscriptionError: $d Exception: $a");
-        // AppUtils.showCustomToast("onSubscriptionError: $d Exception: $a");
-      },
-      onAuthorizer: _authorize,
-      // authEndpoint: AuthorizationEndpoints.pusherAuth
-    );
+      pusher?.onConnectionStateChange = (currentState, previousState) {
+        debugPrint("Pusher connection previousState: $previousState, currentState: $currentState");
+        if (currentState == "DISCONNECTED") {
+          pusher?.connect();
+        }
+      };
 
-    await pusher?.connect();
-
-    pusher?.onConnectionStateChange = (currentState, previousState) {
-      debugPrint(
-          "Pusher connection previousState: $previousState, currentState: $currentState");
-      if (currentState == "DISCONNECTED") {
-        pusher?.connect();
-      }
-    };
-
-    pusher?.onError = (message, code, error) {
-      debugPrint("Pusher Error: ${error?.message}");
-    };
+      pusher?.onError = (message, code, error) {
+        debugPrint("Pusher Error: ${error?.message}");
+      };
+    } catch (e, stackTrace) {
+      logger.e(e, stackTrace: stackTrace);
+      SentryService.captureException(e, stackTrace: stackTrace);
+    }
   }
 
   Future<PusherChannelsFlutter?> get getClient async {
@@ -64,19 +68,27 @@ class PusherChannelService {
 
   /// Unsubscribe from a channel
   Future<void> unsubscribe(String channelName) async {
-    (await getClient)?.unsubscribe(channelName: channelName);
+    try{
+      (await getClient)?.unsubscribe(channelName: channelName);
+    }catch(exception, stackTrace) {
+      SentryService.captureException(exception, stackTrace: stackTrace);
+    }
   }
 
   _authorize(String channelName, String socketId, options) async {
-    dynamic result;
-    // var result = await injector.get<HttpHelper>().post(
-    //   AuthorizationEndpoints.pusherAuth,
-    //   body: {
-    //     'socket_id': socketId,
-    //     'channel_name': channelName,
-    //   },
-    // );
-    return jsonDecode(result.data['channel_data']);
+    return {
+      "auth": "ff760ca69618f83a6a9f:${getSignature("$socketId:private-conversation.1")}",
+    };
+  }
+
+  getSignature(String value) {
+    var key = utf8.encode('2eacbecdbb4ec913ad72');
+    var bytes = utf8.encode(value);
+
+    var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
+    var digest = hmacSha256.convert(bytes);
+    print("HMAC signature in string is: $digest");
+    return digest;
   }
 
 // _authorize(String channelName, String socketId, options) async {

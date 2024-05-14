@@ -16,10 +16,12 @@ import 'package:mentra/features/therapy/presentation/widgets/call/controll_sheet
 import 'package:mentra/gen/assets.gen.dart';
 
 class UserVideoWidget extends StatefulWidget {
-  const UserVideoWidget({super.key,
-    required this.localRenderer,
-    required this.mirror,
-    this.sessionId, required this.therapist});
+  const UserVideoWidget(
+      {super.key,
+      required this.localRenderer,
+      required this.mirror,
+      this.sessionId,
+      required this.therapist});
 
   final RTCVideoRenderer localRenderer;
   final bool mirror;
@@ -59,10 +61,7 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             TextView(
-                              text: injector
-                                  .get<UserBloc>()
-                                  .appUser
-                                  ?.name ??
+                              text: injector.get<UserBloc>().appUser?.name ??
                                   '....',
                               fontWeight: FontWeight.w600,
                               color: Pallets.white,
@@ -90,17 +89,12 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
                   ),
                 ),
               )),
-          if (!context
-              .watch<CallCubit>()
-              .isVideoOn)
+          if (!context.watch<CallCubit>().isVideoOn)
             Center(
                 child: ImageWidget(
                     size: 70,
                     fit: BoxFit.fill,
-                    imageUrl: injector
-                        .get<UserBloc>()
-                        .appUser
-                        ?.avatar ??
+                    imageUrl: injector.get<UserBloc>().appUser?.avatar ??
                         Assets.images.pngs.avatar3.path))
         ],
       ),
@@ -113,7 +107,8 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
         BlocProvider.value(
             value: context.read<CallCubit>(),
             child: CallControllSheet(
-              sessionId: widget.sessionId, caller: widget.therapist,
+              sessionId: widget.sessionId,
+              caller: widget.therapist,
             )));
   }
 }

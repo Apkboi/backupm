@@ -12,6 +12,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/navigation/routes.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
+import 'package:uuid/uuid.dart';
 
 class CallKitService {
   static final CallKitService instance = CallKitService._internal();
@@ -84,7 +85,7 @@ class CallKitService {
   Future<void> showIncomingCall(String callerId, String callerName,
       {Map<String, dynamic>? extra, required String callerImage}) async {
     // Configure CallKit with your desired settings
-    this._currentUuid = callerId;
+    this._currentUuid = Uuid().v4();
     CallKitParams callKitParams = CallKitParams(
       id: _currentUuid,
       nameCaller: callerName.toString(),
@@ -116,7 +117,7 @@ class CallKitService {
           missedCallNotificationChannelName: "Missed Call",
           isShowCallID: false),
       ios: const IOSParams(
-        iconName: 'CallKitLogo',
+        iconName: 'LaunchImage',
         handleType: 'generic',
         supportsVideo: true,
         maximumCallGroups: 2,
