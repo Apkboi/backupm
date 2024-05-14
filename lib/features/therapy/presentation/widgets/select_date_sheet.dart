@@ -82,7 +82,7 @@ class _SelectDateSheetState extends State<SelectDateSheet> {
                                 child: Theme(
                                   data: context.theme.copyWith(
                                       textTheme: context.textTheme.copyWith(
-                                        headline6: TextStyle(
+                                        titleLarge: TextStyle(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.bold),
                                       ),

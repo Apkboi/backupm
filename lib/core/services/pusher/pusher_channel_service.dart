@@ -19,40 +19,44 @@ class PusherChannelService {
   Future<void> initialize() async {
     pusher = PusherChannelsFlutter.getInstance();
 
-    await pusher?.init(
-      // apiKey: '86bddfa4606d2c40e7a5',
-      apiKey: '6e531aee4ab45d75d4ad',
-      cluster: "mt1",
+    try {
+      await pusher?.init(
+        // apiKey: '86bddfa4606d2c40e7a5',
+        apiKey: '6e531aee4ab45d75d4ad',
+        cluster: "mt1",
 
-      maxReconnectGapInSeconds: 1,
-      onEvent: (event) {
+        maxReconnectGapInSeconds: 1,
+        onEvent: (event) {
 
-        injector.get<PusherCubit>().triggerPusherEvent(event);
+          injector.get<PusherCubit>().triggerPusherEvent(event);
 
-        // logger.w(event.data);
-        // AppUtils.showCustomToast(event.data.toString());
-      },
-      onSubscriptionError: (d, a) {
-        log("onSubscriptionError: $d Exception: $a");
-        // AppUtils.showCustomToast("onSubscriptionError: $d Exception: $a");
-      },
-      onAuthorizer: _authorize,
-      // authEndpoint: AuthorizationEndpoints.pusherAuth
-    );
+          // logger.w(event.data);
+          // AppUtils.showCustomToast(event.data.toString());
+        },
+        onSubscriptionError: (d, a) {
+          log("onSubscriptionError: $d Exception: $a");
+          // AppUtils.showCustomToast("onSubscriptionError: $d Exception: $a");
+        },
+        onAuthorizer: _authorize,
+        // authEndpoint: AuthorizationEndpoints.pusherAuth
+      );
 
-    await pusher?.connect();
+      await pusher?.connect();
 
-    pusher?.onConnectionStateChange = (currentState, previousState) {
-      debugPrint(
-          "Pusher connection previousState: $previousState, currentState: $currentState");
-      if (currentState == "DISCONNECTED") {
-        pusher?.connect();
-      }
-    };
+      pusher?.onConnectionStateChange = (currentState, previousState) {
+        debugPrint(
+            "Pusher connection previousState: $previousState, currentState: $currentState");
+        if (currentState == "DISCONNECTED") {
+          pusher?.connect();
+        }
+      };
 
-    pusher?.onError = (message, code, error) {
-      debugPrint("Pusher Error: ${error?.message}");
-    };
+      pusher?.onError = (message, code, error) {
+        debugPrint("Pusher Error: ${error?.message}");
+      };
+    }  catch (e) {
+
+    }
   }
 
   Future<PusherChannelsFlutter?> get getClient async {

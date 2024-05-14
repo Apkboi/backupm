@@ -5,6 +5,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
+import 'package:mentra/core/services/sentory/sentory_service.dart';
 import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/dormain/repository/call_repository.dart';
@@ -226,28 +227,33 @@ class CallCubit extends Cubit<CallState> {
   void _listenToPusher() async {
     logger.w('listening');
 
-    var pusherService = await PusherChannelService.getInstance;
-    var pusher = await pusherService.getClient;
-    if (pusher != null) {
-      logger.w('connecting');
-      if (!pusher.channels.containsKey(injector.get<UserBloc>().userChannel)) {
-        PusherChannel channel = await pusher.subscribe(
-          channelName: injector.get<UserBloc>().userChannel,
-          onSubscriptionError: (message, d) => onSubscriptionError(message, d),
-          onSubscriptionSucceeded: (data) {
-            // log('subscribed');
-            // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
-            // return data;a
-          },
-          onEvent: (event) => onEventReceived(event),
-        );
-        logger.w('connected');
-      } else {
-        logger.w('connected2');
-        pusher.getChannel(injector.get<UserBloc>().userChannel)?.onEvent =
-            onEventReceived;
+    try {
+      var pusherService = await PusherChannelService.getInstance;
+      var pusher = await pusherService.getClient;
+      if (pusher != null) {
+        logger.w('connecting');
+        if (!pusher.channels.containsKey(injector.get<UserBloc>().userChannel)) {
+          PusherChannel channel = await pusher.subscribe(
+            channelName: injector.get<UserBloc>().userChannel,
+            onSubscriptionError: (message, d) => onSubscriptionError(message, d),
+            onSubscriptionSucceeded: (data) {
+              // log('subscribed');
+              // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
+              // return data;a
+            },
+            onEvent: (event) => onEventReceived(event),
+          );
+          logger.w('connected');
+        } else {
+          logger.w('connected2');
+          pusher.getChannel(injector.get<UserBloc>().userChannel)?.onEvent =
+              onEventReceived;
+        }
+        await pusher.connect();
       }
-      await pusher.connect();
+    }  catch (e,s) {
+      SentryService.captureException(e,stackTrace:s );
+
     }
   }
 
