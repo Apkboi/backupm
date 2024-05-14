@@ -52,22 +52,15 @@ class AppConfig {
 
   Future<void> _setup() async {
     WidgetsFlutterBinding.ensureInitialized();
-    // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-    // await Firebase.initializeApp();
-    // https: //b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920
-
     await CallKitService.instance.initialize();
     PayHelper.instance.initialize(
         defaultGooglePayConfiguration: defaultGooglePay,
         defaultApplePayConfiguration: defaultApplePay);
-    StripeService.initialize();
+   await StripeService.initialize();
     await TimezoneService().init();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    await DefaultCacheManager().emptyCache();
     await Hive.initFlutter();
-    // var remoteConfigsService = RemoteConfigsService.create();
-    // remoteConfigsService.retrieveSecrets();
     await di.init();
     await initializeDB();
     await initCore();
@@ -76,12 +69,11 @@ class AppConfig {
     SentryService.initializeApp(
         'https://b71cdbae8346f8596a315ccc07441a73@o915393.ingest.us.sentry.io/4507113240657920',
         () => runZonedGuarded(() => runApp(const MentraApp()), (error, stack) {
-          logger.e(error.toString());
-          logger.e(stack.toString());
-        }));
+              logger.e(error.toString());
+              logger.e(stack.toString());
+            }));
 
-    // runApp(const MentraApp());
-    // FlutterNativeSplash.remove();
+
   }
 
   Future setup() async {
@@ -93,15 +85,13 @@ class AppConfig {
   }
 
   Future<void> initCore() async {
-    final window = WidgetsFlutterBinding.ensureInitialized().window;
-    await _ensureScreenSize(window);
     final sessionManager = SessionManager();
-    // final objectBox = await BoxManager.create();
+
     await sessionManager.init();
     injector.registerLazySingleton<SessionManager>(() => sessionManager);
-    initFirebaseServices();
-    var pusherService = await PusherChannelService.getInstance;
-    await pusherService.initialize();
+    // initFirebaseServices();
+    // var pusherService = await PusherChannelService.getInstance;
+    // await pusherService.initialize();
   }
 
   Future<void> initFirebaseServices() async {
@@ -110,28 +100,12 @@ class AppConfig {
     );
     CrashlyticsService.onCrash();
     await notificationService.initializeNotification();
-    FirebaseDatabase.instance.setPersistenceEnabled(true);
+    // FirebaseDatabase.instance.setPersistenceEnabled(true);
     await FirebaseMessaging.instance.getInitialMessage();
     // StripeService.initialize();
     // signMessageUser();
   }
 
-  // void signMessageUser() async {
-  //   try {
-  //     final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-  //       email: UrlConfig.messageUserEmail,
-  //       password: UrlConfig.messageUserPassKey,
-  //     );
-  //
-  //     logger.wtf(credential.user?.email);
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
-  //       logger.e('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       logger.e('Wrong password provided for that user.');
-  //     }
-  //   }
-  // }
 
   Future<void> initializeDB() async {
     await Hive.initFlutter();
@@ -139,15 +113,8 @@ class AppConfig {
     await HiveBoxes.openAllBox();
   }
 
-  Future<void> initializeCountriesList() async {
-    // final util = CountryUtil();
-  }
+
 }
 
-// Add this function
-Future<void> _ensureScreenSize(FlutterView window) async {
-  // return window.physicalGeometry.isEmpty
-  //     ? Future.delayed(
-  //         const Duration(milliseconds: 10), () => _ensureScreenSize(window))
-  //     : Future.value();
-}
+
+

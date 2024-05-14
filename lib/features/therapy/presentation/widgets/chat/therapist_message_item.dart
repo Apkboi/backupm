@@ -70,7 +70,8 @@ class _TherapistMessageItemState extends State<TherapistMessageItem> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               TextView(
-                                  text: widget.message.message.toString().trim(),
+                                  text:
+                                      widget.message.message.toString().trim(),
                                   lineHeight: 1.5,
                                   color: Pallets.white,
                                   fontSize: 15.sp,
@@ -99,3 +100,31 @@ class _TherapistMessageItemState extends State<TherapistMessageItem> {
     );
   }
 }
+
+class _CircularBorder extends StatelessWidget {
+  const _CircularBorder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints(maxWidth: 0.7.sw),
+      padding: const EdgeInsets.only(right: 8, bottom: 0, left: 15, top: 5),
+
+      decoration: BoxDecoration(
+          color: Pallets.navy, borderRadius: BorderRadius.circular(10)),
+      // backGroundColor: Pallets.navy,
+    );
+  }
+}
+
+
+class _BubbleBorder extends StatelessWidget {
+  const _BubbleBorder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder(
+    );
+  }
+}
+

@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:crypto/crypto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -32,17 +34,18 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
 
   FutureOr<void> _mapSendMessageEventToState(
       SendMessageEvent event, Emitter<SessionChatState> emit) async {
-    messages.add(event.message);
+    messages.insert(0, event.message);
     emit(SendMessageLoadingState());
     final response = await _chatRepository.sendMessage(event.message);
 
+    if (messages.length < 2) {
+      _listenForMessages(response.data.conversationId.toString());
+    }
     emit(SendMessageSuccesState());
   }
 
   FutureOr<void> _mapGetMessagesEventToState(
       GetMessagesEvent event, Emitter<SessionChatState> emit) async {
-    // _listenForMessages();
-
     try {
       emit(GetMessagesLoadingState());
       var response = await _chatRepository.getMessages();
@@ -52,15 +55,18 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
           .toList();
 
       emit(MessagesUpdatedState());
-    } catch (e) {
 
+      if (response.data.isNotEmpty) {
+        _listenForMessages(response.data.first.conversationId.toString());
+      }
+    } catch (e) {
       emit(GetMessagesFailedState(e.toString()));
       rethrow;
       // TODO
     }
   }
 
-  void _listenForMessages() async {
+  void _listenForMessages(String conversationId) async {
     logger.w('listening');
 
     try {
@@ -69,9 +75,9 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
       if (pusher != null) {
         logger.w('connecting');
         if (!pusher.channels
-            .containsKey(injector.get<UserBloc>().userChannel)) {
+            .containsKey("private-conversation.$conversationId")) {
           PusherChannel channel = await pusher.subscribe(
-            channelName: injector.get<UserBloc>().userChannel,
+            channelName: "private-conversation.$conversationId",
             onSubscriptionError: (message, d) =>
                 onSubscriptionError(message, d),
             onSubscriptionSucceeded: (data) {
@@ -84,11 +90,15 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
           logger.w('connected');
         } else {
           logger.w('connected2');
-          pusher.getChannel(injector.get<UserBloc>().userChannel)?.onEvent =
+          pusher.getChannel("private-conversation.$conversationId")?.onEvent =
               onEventReceived;
         }
         await pusher.connect();
+
+        pusher.onAuthorizer = _authorize;
+
       }
+
     } catch (e, s) {
       SentryService.captureException(e, stackTrace: s);
     }
@@ -98,6 +108,23 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
   //
   // }
 
+
+  _authorize(String channelName, String socketId, options) async {
+    return {
+      "auth":
+      "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.23")}",
+    };
+  }
+
+  getSignature(String value) {
+    var key = utf8.encode('a7a8a166ad27ac7b03b3');
+    var bytes = utf8.encode(value);
+
+    var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
+    var digest = hmacSha256.convert(bytes);
+    print("HMAC signature in string is: $digest");
+    return digest;
+  }
   FutureOr<void> _mapMessageReceivedEventToState(
       MessageReceivedEvent event, Emitter<SessionChatState> emit) {
     if (messages.any((element) => element.id != event.message.toString())) {
@@ -113,7 +140,11 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
 
   onSubscriptionError(message, d) {}
 
+
   onEventReceived(event) {
+
+    logger.w('NEW EVENT :');
+
     injector.get<PusherCubit>().triggerPusherEvent(event);
 
     logger.i(event);

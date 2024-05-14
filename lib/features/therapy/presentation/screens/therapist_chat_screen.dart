@@ -104,7 +104,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                         reverse: true,
                         itemCount: allMessages.length,
                         itemBuilder: (context, index) => TherapyMessageBox(
-                          message: allMessages.reversed.toList()[index],
+                          message: allMessages.toList()[index],
                         ),
                       );
                     })),
@@ -143,8 +143,9 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
 
   void sendMessage(String message) async {
     if (message.isNotEmpty) {
-      bloc.add(SendMessageEvent(
-          TherapyChatMessage.newUserMessage(message: message, receiverId: '')));
+      bloc.add(SendMessageEvent(TherapyChatMessage.newUserMessage(
+          message: message, receiverId: widget.therapist.user.id.toString())));
+      controller.clear();
     }
   }
 }

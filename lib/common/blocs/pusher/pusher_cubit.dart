@@ -30,11 +30,13 @@ class PusherCubit extends Cubit<PusherState> {
               // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
               // return data;a
             },
+
             // onEvent: (event) => onEventReceived1(event),
           );
           logger.w('connected');
         } else {
           logger.w('connected2');
+
 
           pusher.getChannel(name)?.onEvent = onEventReceived;
         }

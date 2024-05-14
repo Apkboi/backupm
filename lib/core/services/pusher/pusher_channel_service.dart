@@ -77,16 +77,14 @@ class PusherChannelService {
   }
 
   _authorize(String channelName, String socketId, options) async {
-
-      var result;
-
-      return result.data;
-
-
+    return {
+      "auth":
+          "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.23")}",
+    };
   }
 
   getSignature(String value) {
-    var key = utf8.encode('2eacbecdbb4ec913ad72');
+    var key = utf8.encode('a7a8a166ad27ac7b03b3');
     var bytes = utf8.encode(value);
 
     var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256

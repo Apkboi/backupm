@@ -25,7 +25,7 @@ class TherapyChatMessage {
       message: message.message,
       time: message.createdAt,
       receiverId: message.receiverId.toString(),
-      isTherapist: true,
+      isTherapist: message.isTherapist,
       // Assuming therapist messages are mapped here
       id: message.id.toString(), // Assuming 'id' field exists in ChatMessage
     );

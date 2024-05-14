@@ -8,11 +8,9 @@ class TherapyMessageBox extends StatefulWidget {
   const TherapyMessageBox({
     Key? key,
     required this.message,
-
   }) : super(key: key);
 
   final TherapyChatMessage message;
-
 
   @override
   State<TherapyMessageBox> createState() => _TherapyMessageBoxState();
