@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -10,6 +12,7 @@ import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/onboarding_texts.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
@@ -62,7 +65,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
               ),
               6.verticalSpace,
               TextView(
-                text:'Session with ${widget.session.therapist.user.name}',
+                text: 'Session with ${widget.session.therapist.user.name}',
                 maxLines: 3,
                 style: GoogleFonts.fraunces(
                     color: Pallets.navy,
@@ -84,7 +87,11 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       onTap: () async {
                         // injector.get<MesiboCubit>().startGroupCall();
                         // _startMessaging();
-                        context.pushNamed(PageUrl.therapistChatScreen);
+                        context.pushNamed(PageUrl.therapistChatScreen,
+                            queryParameters: {
+                              PathParam.therapist:
+                                  jsonEncode(widget.session.therapist.toJson())
+                            });
                       },
                       text: "Message ${widget.session.therapist.user.name}",
                       color: Pallets.milkColor),
@@ -163,7 +170,8 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                     ),
                   ],
                 ),
-              ),       16.verticalSpace,
+              ),
+              16.verticalSpace,
               Container(
                 width: 1.sw,
                 decoration: BoxDecoration(
@@ -178,11 +186,12 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                       color: Pallets.ink,
                     ),
                     8.verticalSpace,
-                  ViewSessionFocusChipList(selectedSessionFocuses: widget.session.focus)
+                    ViewSessionFocusChipList(
+                        selectedSessionFocuses: widget.session.focus)
                   ],
                 ),
               ),
-              
+
               16.verticalSpace,
               Container(
                 width: 1.sw,
@@ -204,8 +213,7 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                   ],
                 ),
               ),
-       
-              
+
               77.verticalSpace,
               Center(
                 child: CustomNeumorphicButton(
@@ -262,58 +270,58 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
 
   void launchMessage() async {}
 
-  // void _endSession(BuildContext context) async {
-  //   final bool? sessionEnded = await CustomDialogs.showBottomSheet(
-  //       context,
-  //       EndTherapySessionDialog(
-  //         sessionId: widget.session,
-  //       ),
-  //       shape: const RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.only(
-  //         topLeft: Radius.circular(16),
-  //         topRight: Radius.circular(16),
-  //       )),
-  //       constraints: BoxConstraints(maxHeight: 0.9.sh));
-  //
-  //   if (sessionEnded ?? false) {
-  //     final bool? writeReview = await CustomDialogs.showCustomDialog(TherapySessionEndedDialog(therapist: widget.), context);
-  //
-  //     logger.i(writeReview);
-  //
-  //     // if (writeReview ?? false) {
-  //     //   final bool? wroteFeedback = await CustomDialogs.showBottomSheet(
-  //     //       context,
-  //     //       TherapyReviewSheet(
-  //     //         sessionId: widget.session,
-  //     //       ),
-  //     //       shape: const RoundedRectangleBorder(
-  //     //           borderRadius: BorderRadius.only(
-  //     //         topLeft: Radius.circular(16),
-  //     //         topRight: Radius.circular(16),
-  //     //       )),
-  //     //       constraints: BoxConstraints(maxHeight: 0.9.sh));
-  //     //
-  //     //   if (wroteFeedback ?? false) {
-  //     //     await CustomDialogs.showBottomSheet(
-  //     //         context,
-  //     //         SuccessDialog(
-  //     //           tittle: feedbackSuccessMessage,
-  //     //           onClose: () {
-  //     //             context.pop();
-  //     //           },
-  //     //         ),
-  //     //         shape: const RoundedRectangleBorder(
-  //     //             borderRadius: BorderRadius.only(
-  //     //           topLeft: Radius.circular(16),
-  //     //           topRight: Radius.circular(16),
-  //     //         )),
-  //     //         constraints: BoxConstraints(maxHeight: 0.9.sh));
-  //     //     // context.pop();
-  //     //   }
-  //     //   context.pop();
-  //     // } else {
-  //     //   context.pop();
-  //     // }
-  //   }
-  // }
+// void _endSession(BuildContext context) async {
+//   final bool? sessionEnded = await CustomDialogs.showBottomSheet(
+//       context,
+//       EndTherapySessionDialog(
+//         sessionId: widget.session,
+//       ),
+//       shape: const RoundedRectangleBorder(
+//           borderRadius: BorderRadius.only(
+//         topLeft: Radius.circular(16),
+//         topRight: Radius.circular(16),
+//       )),
+//       constraints: BoxConstraints(maxHeight: 0.9.sh));
+//
+//   if (sessionEnded ?? false) {
+//     final bool? writeReview = await CustomDialogs.showCustomDialog(TherapySessionEndedDialog(therapist: widget.), context);
+//
+//     logger.i(writeReview);
+//
+//     // if (writeReview ?? false) {
+//     //   final bool? wroteFeedback = await CustomDialogs.showBottomSheet(
+//     //       context,
+//     //       TherapyReviewSheet(
+//     //         sessionId: widget.session,
+//     //       ),
+//     //       shape: const RoundedRectangleBorder(
+//     //           borderRadius: BorderRadius.only(
+//     //         topLeft: Radius.circular(16),
+//     //         topRight: Radius.circular(16),
+//     //       )),
+//     //       constraints: BoxConstraints(maxHeight: 0.9.sh));
+//     //
+//     //   if (wroteFeedback ?? false) {
+//     //     await CustomDialogs.showBottomSheet(
+//     //         context,
+//     //         SuccessDialog(
+//     //           tittle: feedbackSuccessMessage,
+//     //           onClose: () {
+//     //             context.pop();
+//     //           },
+//     //         ),
+//     //         shape: const RoundedRectangleBorder(
+//     //             borderRadius: BorderRadius.only(
+//     //           topLeft: Radius.circular(16),
+//     //           topRight: Radius.circular(16),
+//     //         )),
+//     //         constraints: BoxConstraints(maxHeight: 0.9.sh));
+//     //     // context.pop();
+//     //   }
+//     //   context.pop();
+//     // } else {
+//     //   context.pop();
+//     // }
+//   }
+// }
 }

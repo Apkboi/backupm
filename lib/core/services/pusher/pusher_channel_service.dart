@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:crypto/crypto.dart';
 
 class PusherChannelService {
   PusherChannelService._();
@@ -27,7 +28,6 @@ class PusherChannelService {
 
         maxReconnectGapInSeconds: 1,
         onEvent: (event) {
-
           injector.get<PusherCubit>().triggerPusherEvent(event);
 
           // logger.w(event.data);
@@ -54,9 +54,7 @@ class PusherChannelService {
       pusher?.onError = (message, code, error) {
         debugPrint("Pusher Error: ${error?.message}");
       };
-    }  catch (e) {
-
-    }
+    } catch (e) {}
   }
 
   Future<PusherChannelsFlutter?> get getClient async {
@@ -72,15 +70,20 @@ class PusherChannelService {
   }
 
   _authorize(String channelName, String socketId, options) async {
-    dynamic result;
-    // var result = await injector.get<HttpHelper>().post(
-    //   AuthorizationEndpoints.pusherAuth,
-    //   body: {
-    //     'socket_id': socketId,
-    //     'channel_name': channelName,
-    //   },
-    // );
-    return jsonDecode(result.data['channel_data']);
+    return {
+      "auth":
+          "ff760ca69618f83a6a9f:${getSignature("$socketId:private-conversation.1")}",
+    };
+  }
+
+  getSignature(String value) {
+    var key = utf8.encode('2eacbecdbb4ec913ad72');
+    var bytes = utf8.encode(value);
+
+    var hmacSha256 = Hmac(sha256, key); // HMAC-SHA256
+    var digest = hmacSha256.convert(bytes);
+    print("HMAC signature in string is: $digest");
+    return digest;
   }
 
 // _authorize(String channelName, String socketId, options) async {

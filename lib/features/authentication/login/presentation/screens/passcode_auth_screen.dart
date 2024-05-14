@@ -224,7 +224,7 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
       CustomDialogs.showLoading(context);
     }
     if (state is UserCachedState) {
-      context.pop();
+      // context.pop();
       context.goNamed(PageUrl.welcomeScreen);
     }
 

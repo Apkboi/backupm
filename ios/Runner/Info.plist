@@ -102,5 +102,7 @@
 		<string>469691765994-mpvuctgp9epjihb9gs0bj138alged9jg.apps.googleusercontent.com</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>FLTEnableImpeller</key>
+        <false />
 	</dict>
 </plist>

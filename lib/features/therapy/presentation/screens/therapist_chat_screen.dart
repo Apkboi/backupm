@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
+import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/filled_textfield.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/therapy/data/models/chat_message.dart';
-import 'package:mentra/features/therapy/presentation/bloc/session/session_bloc.dart';
+import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
+import 'package:mentra/features/therapy/presentation/bloc/session/session_chat_bloc.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -19,7 +24,10 @@ DemoUser user2 = DemoUser(
 class TherapistChatScreen extends StatefulWidget {
   const TherapistChatScreen({
     super.key,
+    required this.therapist,
   });
+
+  final SessionTherapist therapist;
 
   @override
   State<TherapistChatScreen> createState() => _TherapistChatScreenState();
@@ -28,96 +36,116 @@ class TherapistChatScreen extends StatefulWidget {
 class _TherapistChatScreenState extends State<TherapistChatScreen> {
   final controller = TextEditingController();
 
-  final List<String> messages = [
-    'Hey Leila! I\'m Mentra, your friendly mental health buddy. ',
-    "How's your day going?",
-    "Hi, Mentra! It's been a bit rough lately. Can you lend an ear?",
-    "Absolutely! I'm here to listen and help. What's been bothering you?"
-  ];
-  List<TherapyChatMessage> Allmessages = [];
-
-  final SessionBloc bloc = SessionBloc();
+  final SessionChatBloc bloc = SessionChatBloc(injector.get());
 
   @override
   void initState() {
     // _listenForMessages();
-    // bloc.add(GetMessagesEvent());
+    bloc.add(GetMessagesEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: CustomAppBar(
-        // canGoBack: false,
-        // leading: 0.horizontalSpace,
-        tittleText: 'Nour Martin, Ph.D.',
-        actions: [
-          ImageWidget(
-            imageUrl: Assets.images.pngs.avatar2.path,
-            height: 50.h,
-            onTap: () {
-              // _endSession(context);
-            },
-            fit: BoxFit.cover,
-            shape: BoxShape.circle,
-            width: 50.w,
+    return BlocConsumer<SessionChatBloc, SessionChatState>(
+      bloc: bloc,
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        var allMessages = bloc.messages;
+        return Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: CustomAppBar(
+            // canGoBack: false,
+            // leading: 0.horizontalSpace,
+            tittleText: widget.therapist.user.name,
+            actions: [
+              ImageWidget(
+                imageUrl: widget.therapist.user.avatar,
+                height: 50.h,
+                onTap: () {
+                  // _endSession(context);
+                },
+                fit: BoxFit.cover,
+                shape: BoxShape.circle,
+                width: 50.w,
+              ),
+              20.horizontalSpace
+            ],
           ),
-          20.horizontalSpace
-        ],
-      ),
-      body: Stack(
-        children: [
-          AppBg(
-            image: Assets.images.pngs.homeBg.path,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Expanded(
-                    child: ListView.builder(
-                  reverse: true,
-                  itemCount: Allmessages.length,
-                  itemBuilder: (context, index) => TherapyMessageBox(
-                    message: Allmessages.reversed.toList()[index],
-                    isSender: !index.isEven,
-                  ),
-                )),
-                Row(
+          body: Stack(
+            children: [
+              AppBg(
+                image: Assets.images.pngs.homeBg.path,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
                   children: [
-                    Expanded(
-                        child: FilledTextField(
-                            hasBorder: false,
-                            hasElevation: false,
-                            controller: controller,
-                            suffix: HapticInkWell(
-                              onTap: () {
-                                sendMessage();
-                                // _answerQuestion(context);
-                              },
-                              child: const Icon(
-                                Icons.send_rounded,
-                                size: 30,
-                              ),
-                            ),
-                            fillColor: Pallets.white,
-                            contentPadding: const EdgeInsets.all(16),
-                            radius: 45,
-                            hint: 'Message')),
+                    Expanded(child: Builder(builder: (context) {
+                      if (state is GetMessagesLoadingState) {
+                        return Center(
+                          child: CustomDialogs.getLoading(),
+                        );
+                      }
+
+                      if (state is GetMessagesFailedState) {
+                        return Center(
+                          child: AppPromptWidget(
+                            message: state.error,
+                            onTap: () {
+                              bloc.add(GetMessagesEvent());
+                            },
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                        reverse: true,
+                        itemCount: allMessages.length,
+                        itemBuilder: (context, index) => TherapyMessageBox(
+                          message: allMessages.reversed.toList()[index],
+                        ),
+                      );
+                    })),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: FilledTextField(
+                                hasBorder: false,
+                                hasElevation: false,
+                                controller: controller,
+                                suffix: HapticInkWell(
+                                  onTap: () {
+                                    sendMessage(controller.text);
+                                    // _answerQuestion(context);
+                                  },
+                                  child: const Icon(
+                                    Icons.send_rounded,
+                                    size: 30,
+                                  ),
+                                ),
+                                fillColor: Pallets.white,
+                                contentPadding: const EdgeInsets.all(16),
+                                radius: 45,
+                                hint: 'Message')),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  Future<void> sendMessage() async {
-    controller.clear();
+  void sendMessage(String message) async {
+    if (message.isNotEmpty) {
+      bloc.add(SendMessageEvent(
+          TherapyChatMessage.newUserMessage(message: message, receiverId: '')));
+    }
   }
 }
 
