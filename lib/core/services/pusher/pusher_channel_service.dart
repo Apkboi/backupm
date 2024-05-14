@@ -44,7 +44,8 @@ class PusherChannelService {
       await pusher?.connect();
 
       pusher?.onConnectionStateChange = (currentState, previousState) {
-        debugPrint("Pusher connection previousState: $previousState, currentState: $currentState");
+        debugPrint(
+            "Pusher connection previousState: $previousState, currentState: $currentState");
         if (currentState == "DISCONNECTED") {
           pusher?.connect();
         }
@@ -68,17 +69,20 @@ class PusherChannelService {
 
   /// Unsubscribe from a channel
   Future<void> unsubscribe(String channelName) async {
-    try{
+    try {
       (await getClient)?.unsubscribe(channelName: channelName);
-    }catch(exception, stackTrace) {
+    } catch (exception, stackTrace) {
       SentryService.captureException(exception, stackTrace: stackTrace);
     }
   }
 
   _authorize(String channelName, String socketId, options) async {
-    return {
-      "auth": "ff760ca69618f83a6a9f:${getSignature("$socketId:private-conversation.1")}",
-    };
+
+      var result;
+
+      return result.data;
+
+
   }
 
   getSignature(String value) {
