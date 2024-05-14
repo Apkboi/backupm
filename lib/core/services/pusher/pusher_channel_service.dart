@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/sentory/sentory_service.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import 'package:crypto/crypto.dart';
 
@@ -18,9 +19,8 @@ class PusherChannelService {
   }
 
   Future<void> initialize() async {
-    pusher = PusherChannelsFlutter.getInstance();
-
     try {
+      pusher = PusherChannelsFlutter.getInstance();
       await pusher?.init(
         // apiKey: '86bddfa4606d2c40e7a5',
         apiKey: '6e531aee4ab45d75d4ad',
@@ -44,8 +44,7 @@ class PusherChannelService {
       await pusher?.connect();
 
       pusher?.onConnectionStateChange = (currentState, previousState) {
-        debugPrint(
-            "Pusher connection previousState: $previousState, currentState: $currentState");
+        debugPrint("Pusher connection previousState: $previousState, currentState: $currentState");
         if (currentState == "DISCONNECTED") {
           pusher?.connect();
         }
@@ -54,7 +53,10 @@ class PusherChannelService {
       pusher?.onError = (message, code, error) {
         debugPrint("Pusher Error: ${error?.message}");
       };
-    } catch (e) {}
+    } catch (e, stackTrace) {
+      logger.e(e, stackTrace: stackTrace);
+      SentryService.captureException(e, stackTrace: stackTrace);
+    }
   }
 
   Future<PusherChannelsFlutter?> get getClient async {
@@ -66,13 +68,16 @@ class PusherChannelService {
 
   /// Unsubscribe from a channel
   Future<void> unsubscribe(String channelName) async {
-    (await getClient)?.unsubscribe(channelName: channelName);
+    try{
+      (await getClient)?.unsubscribe(channelName: channelName);
+    }catch(exception, stackTrace) {
+      SentryService.captureException(exception, stackTrace: stackTrace);
+    }
   }
 
   _authorize(String channelName, String socketId, options) async {
     return {
-      "auth":
-          "ff760ca69618f83a6a9f:${getSignature("$socketId:private-conversation.1")}",
+      "auth": "ff760ca69618f83a6a9f:${getSignature("$socketId:private-conversation.1")}",
     };
   }
 
