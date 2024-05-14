@@ -32,6 +32,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
 
   FutureOr<void> _mapSendMessageEventToState(
       SendMessageEvent event, Emitter<SessionChatState> emit) async {
+    messages.add(event.message);
     emit(SendMessageLoadingState());
     final response = await _chatRepository.sendMessage(event.message);
 
@@ -40,7 +41,23 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
 
   FutureOr<void> _mapGetMessagesEventToState(
       GetMessagesEvent event, Emitter<SessionChatState> emit) async {
-    _listenForMessages();
+    // _listenForMessages();
+
+    try {
+      emit(GetMessagesLoadingState());
+      var response = await _chatRepository.getMessages();
+
+      messages = response.data
+          .map((e) => TherapyChatMessage.fromChatMessage(e))
+          .toList();
+
+      emit(MessagesUpdatedState());
+    } catch (e) {
+
+      emit(GetMessagesFailedState(e.toString()));
+      rethrow;
+      // TODO
+    }
   }
 
   void _listenForMessages() async {

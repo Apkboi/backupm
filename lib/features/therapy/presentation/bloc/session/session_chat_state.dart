@@ -51,3 +51,9 @@ class GetMessagesSuccesState extends SessionChatState {
   @override
   List<Object> get props => [];
 }
+
+
+class MessagesUpdatedState extends SessionChatState {
+  @override
+  List<Object> get props => [];
+}

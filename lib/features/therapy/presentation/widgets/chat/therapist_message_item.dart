@@ -70,9 +70,7 @@ class _TherapistMessageItemState extends State<TherapistMessageItem> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               TextView(
-                                  text: widget.message
-                                      .toString()
-                                      .trim(),
+                                  text: widget.message.message.toString().trim(),
                                   lineHeight: 1.5,
                                   color: Pallets.white,
                                   fontSize: 15.sp,

@@ -1,6 +1,7 @@
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/features/therapy/data/models/get_all_messages_response.dart';
+import 'package:mentra/features/therapy/data/models/get_messages_response.dart';
 import 'package:mentra/features/therapy/data/models/send_message_response.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
 import 'package:mentra/features/therapy/dormain/repository/session_chat_repository.dart';
@@ -38,12 +39,12 @@ class SessionChatRepositoryImpl extends SessionChatRepository {
   }
 
   @override
-  Future<GetAllMessagesResponse> getMessages() async {
+  Future<GetMessagesResponse> getMessages() async {
     try {
       final response =
           await _networkService.call(UrlConfig.getMessages, RequestMethod.get);
 
-      return GetAllMessagesResponse.fromJson(response.data);
+      return GetMessagesResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
