@@ -193,10 +193,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //       builder: (context) =>
                                     //           Intro(child: const DemoUsage()),
                                     //     ));
-                                    context
-                                        .pushNamed(PageUrl.talkToMentraScreen);
+                                    // context
+                                    //     .pushNamed(PageUrl.talkToMentraScreen);
 
-                                    // StripeService().initPaymentSheet();
+                                    StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(
                                     //     'callerId', 'callerName');
                                   },

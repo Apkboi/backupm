@@ -44,6 +44,12 @@ class StripeService {
           postalCode: '77063',
         ),
       );
+
+
+      var gpay = const PaymentSheetGooglePay(merchantCountryCode: 'AED',testEnv: true);
+
+
+
       // 2. initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
@@ -59,14 +65,10 @@ class StripeService {
 
           // Extra params
           primaryButtonLabel: 'Pay now',
-          applePay: PaymentSheetApplePay(
-              merchantCountryCode: 'AED',
-              buttonType: PlatformButtonType.subscribe),
-          googlePay: const PaymentSheetGooglePay(
-              merchantCountryCode: 'AED',
-              testEnv: true,
-              amount: '500',
-              buttonType: PlatformButtonType.subscribe),
+          // applePay: PaymentSheetApplePay(
+          //     merchantCountryCode: 'AED',
+          //     buttonType: PlatformButtonType.subscribe),
+          googlePay:gpay,
           style: ThemeMode.dark,
 
           appearance: const PaymentSheetAppearance(
@@ -115,15 +117,18 @@ class StripeService {
     try {
       // 3. display the payment sheet.
       // Stripe.instance.presentGooglePay(PresentGooglePayParams(clientSecret: clientSecret));
-      var res = await Stripe.instance.confirmPlatformPaySetupIntent(
-          clientSecret: clientSecret,
-          confirmParams: const PlatformPayConfirmParams.googlePay(
-              googlePay: GooglePayParams(
-                  allowCreditCards: true,
-                  merchantName: 'Mentra',
-                  testEnv: true,
-                  merchantCountryCode: 'AED',
-                  currencyCode: 'AED')));
+      var res = await Stripe.instance.presentPaymentSheet(
+
+        // options: PaymentSheetPresentOptions(timeout: )
+          // clientSecret: clientSecret,
+          // confirmParams: const PlatformPayConfirmParams.googlePay(
+          //     googlePay: GooglePayParams(
+          //         allowCreditCards: true,
+          //         merchantName: 'Mentra',
+          //         testEnv: true,
+          //         merchantCountryCode: 'AED',
+          //         currencyCode: 'AED'))
+      );
       // logger.w('presenting${res?.toJson()}');
 
       // setState(() {
@@ -191,7 +196,7 @@ class StripeService {
     Map<String, dynamic> payload = {
       "amount": '100000',
       "currency": 'AED',
-      "payment_method_types[]": ["card"],
+      "payment_method_types[]": ["card",'google'],
       "metadata": {
         "order_id": 'orderId',
         "email": 'email',

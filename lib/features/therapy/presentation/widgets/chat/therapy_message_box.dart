@@ -8,9 +8,11 @@ class TherapyMessageBox extends StatefulWidget {
   const TherapyMessageBox({
     Key? key,
     required this.message,
+    required this.showSenderImage,
   }) : super(key: key);
 
   final TherapyChatMessage message;
+  final bool showSenderImage;
 
   @override
   State<TherapyMessageBox> createState() => _TherapyMessageBoxState();
@@ -31,6 +33,7 @@ class _TherapyMessageBoxState extends State<TherapyMessageBox> {
               )
             : TherapistMessageItem(
                 message: widget.message,
+                showImage: widget.showSenderImage,
               ));
   }
 

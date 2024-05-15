@@ -16,6 +16,14 @@ class SendMessageEvent extends SessionChatEvent {
   List<Object?> get props => [];
 }
 
+class ResendMessageEvent extends SessionChatEvent {
+  final TherapyChatMessage message;
+
+  ResendMessageEvent(this.message);
+
+  List<Object?> get props => [];
+}
+
 class MessageReceivedEvent extends SessionChatEvent {
   final TherapyChatMessage message;
 

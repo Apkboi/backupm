@@ -83,10 +83,11 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
+                    75.verticalSpace,
                     Expanded(child: Builder(builder: (context) {
                       if (state is GetMessagesLoadingState) {
                         return Center(
-                          child: CustomDialogs.getLoading(),
+                          child: CustomDialogs.getLoading(size: 30),
                         );
                       }
 
@@ -103,8 +104,13 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                       return ListView.builder(
                         reverse: true,
                         itemCount: allMessages.length,
-                        itemBuilder: (context, index) => TherapyMessageBox(
-                          message: allMessages.toList()[index],
+                        itemBuilder: (context, index) => BlocProvider.value(
+                          value: bloc,
+                          child: TherapyMessageBox(
+                            message: allMessages.toList()[index],
+                            showSenderImage: _shouldShowImage(
+                                allMessages, allMessages[index]),
+                          ),
                         ),
                       );
                     })),
@@ -147,6 +153,24 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
           message: message, receiverId: widget.therapist.user.id.toString())));
       controller.clear();
     }
+  }
+
+  bool _shouldShowImage(
+      List<TherapyChatMessage> messages, TherapyChatMessage currentMessage) {
+    if (messages.first.id == currentMessage.id) {
+      return true;
+    }
+
+    // Check for empty list or first message
+    if (messages.isEmpty || messages.indexOf(currentMessage) == 0) {
+      return false;
+    }
+
+    final int currentIndex = messages.indexOf(currentMessage);
+    final TherapyChatMessage previousMessage = messages[currentIndex - 1];
+
+    return (currentMessage.id == messages.first.id) ||
+        (!(previousMessage.isTherapist && currentMessage.isTherapist));
   }
 }
 

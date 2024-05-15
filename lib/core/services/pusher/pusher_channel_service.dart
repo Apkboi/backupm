@@ -93,7 +93,8 @@ class PusherChannelService {
   _authorize(String channelName, String socketId, options) async {
     return {
       "auth":
-          "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.27")}",
+      "6e531aee4ab45d75d4ad:${getSignature(
+          "$socketId:private-conversation.27")}",
     };
   }
 

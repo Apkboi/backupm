@@ -8,6 +8,7 @@ import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
+import 'package:mentra/features/therapy/presentation/bloc/session/session_chat_bloc.dart';
 
 class TherapyChatUserMessageItem extends StatefulWidget {
   const TherapyChatUserMessageItem({
@@ -63,45 +64,44 @@ class _TherapyChatUserMessageItemState
           ),
         ),
         5.verticalSpace,
-        Padding(
-          padding: const EdgeInsets.only(left: 5.0),
-          child: Text(TimeUtil.formatTime(widget.message.time),
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 11.sp,
-                color: Pallets.black,
-                fontWeight: FontWeight.w600,
-              )),
-        ),
-        if (widget.message.sendingState == SendingState.failed)
-          Align(
-            alignment: Alignment.bottomRight,
-            child: TextButton(
-              onPressed: () {
-                // context
-                //     .read<MentraChatBloc>()
-                //     .add(RetryMessageEvent(widget.message));
-              },
-              style: TextButton.styleFrom(
-                  side: const BorderSide(
-                    width: 1,
-                    color: Pallets.red,
-                  ),
-                  padding: EdgeInsets.zero,
-                  elevation: 0,
-                  shape: const StadiumBorder(),
-                  foregroundColor: Pallets.red),
-              child: const TextView(
-                text: 'Retry',
-                fontSize: 12,
+        switch (widget.message.sendingState) {
+          SendingState.loading => const TextView(text: 'Sending..'),
+          SendingState.failed => Align(
+              alignment: Alignment.bottomRight,
+              child: TextButton(
+                onPressed: () {
+                  context
+                      .read<SessionChatBloc>()
+                      .add(ResendMessageEvent(widget.message));
+                },
+                style: TextButton.styleFrom(
+                    side: const BorderSide(
+                      width: 1,
+                      color: Pallets.red,
+                    ),
+                    padding: EdgeInsets.zero,
+                    elevation: 0,
+                    shape: const StadiumBorder(),
+                    foregroundColor: Pallets.red),
+                child: const TextView(
+                  text: 'Retry',
+                  fontSize: 12,
+                ),
               ),
             ),
-          ),
+          SendingState.success => Padding(
+              padding: const EdgeInsets.only(left: 5.0),
+              child: Text(TimeUtil.formatTime(widget.message.time),
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    color: Pallets.black,
+                    fontWeight: FontWeight.w600,
+                  )),
+            ),
+        },
         6.verticalSpace
       ],
     );
   }
 }
-
-
-

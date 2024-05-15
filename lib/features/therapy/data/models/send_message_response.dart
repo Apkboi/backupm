@@ -37,11 +37,11 @@ class SendMessageRsponse {
 }
 
 class ChatMessage {
-  final int id;
-  final int senderId;
-  final int receiverId;
+  final dynamic id;
+  final dynamic senderId;
+  final dynamic receiverId;
   final bool isTherapist;
-  final int conversationId;
+  final dynamic conversationId;
   final String message;
   final dynamic read;
   final DateTime createdAt;
@@ -83,3 +83,5 @@ class ChatMessage {
     "updated_at": updatedAt.toIso8601String(),
   };
 }
+
+

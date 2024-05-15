@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:crypto/crypto.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
 import 'package:mentra/core/services/sentory/sentory_service.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/mentra_bot/data/models/mentra_chat_model.dart';
 import 'package:mentra/features/therapy/data/models/get_all_messages_response.dart';
+import 'package:mentra/features/therapy/data/models/new_message_response.dart';
+import 'package:mentra/features/therapy/data/models/send_message_response.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
 import 'package:mentra/features/therapy/dormain/repository/session_chat_repository.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
@@ -30,6 +32,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
   SessionChatBloc(this._chatRepository) : super(SessionInitial()) {
     on<SessionChatEvent>((event, emit) {});
     on<SendMessageEvent>(_mapSendMessageEventToState);
+    on<ResendMessageEvent>(_mapRetryMessageEventToState);
     on<GetMessagesEvent>(_mapGetMessagesEventToState);
     on<MessageReceivedEvent>(_mapMessageReceivedEventToState);
   }
@@ -38,13 +41,27 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
       SendMessageEvent event, Emitter<SessionChatState> emit) async {
     messages.insert(0, event.message);
     emit(SendMessageLoadingState());
-    final response = await _chatRepository.sendMessage(event.message);
+    try {
+      final response = await _chatRepository.sendMessage(event.message);
 
-    if (messages.length < 2) {
-      conversationId = response.data.conversationId.toString();
-      _listenForMessages(response.data.conversationId.toString());
+      if (messages.length < 2) {
+        conversationId = response.data.conversationId.toString();
+        _listenForMessages(response.data.conversationId.toString());
+      }
+
+      messages
+          .where((element) => element.id == event.message.id)
+          .first
+          .sendingState = SendingState.success;
+
+      emit(SendMessageSuccesState());
+    } catch (e) {
+      messages
+          .where((element) => element.id == event.message.id)
+          .first
+          .sendingState = SendingState.failed;
+      emit(SendMessageFailedState());
     }
-    emit(SendMessageSuccesState());
   }
 
   FutureOr<void> _mapGetMessagesEventToState(
@@ -110,10 +127,6 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
     }
   }
 
-  // void _addMessage(MesiboMessage message) {
-  //
-  // }
-
   _authorize(String channelName, String socketId, options) async {
     return {
       "auth":
@@ -133,22 +146,75 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
 
   FutureOr<void> _mapMessageReceivedEventToState(
       MessageReceivedEvent event, Emitter<SessionChatState> emit) {
-    if (messages.any((element) => element.id != event.message.toString())) {
-      messages.add(TherapyChatMessage(
-          message: event.message.message.toString(),
-          time: DateTime.now(),
-          isTherapist: event.message.isTherapist,
-          id: event.message.id));
+    // if (messages.any((element) => element.id != event.message.toString())) {
+    //
+    // }
 
-      emit(MessagesFetchedEvent());
-    }
+    Debouncer(milliseconds: 300).run(() {
+      messages.insert(0, event.message);
+      emit(MessagesUpdatedState());
+    });
   }
 
   onSubscriptionError(message, d) {}
 
   onEventReceived(event) {
-    injector.get<PusherCubit>().triggerPusherEvent(event);
+    try {
+      injector.get<PusherCubit>().triggerPusherEvent(event);
 
-    logger.i(event);
+      var receivedEvent = (event as PusherEvent);
+
+      if (receivedEvent.eventName == 'new-message') {
+        logger.i('received chat message${receivedEvent.data}');
+        // var dataMap = jsonDecode(receivedEvent.data);
+
+        final newMessage =
+            NewMeessageResponse.fromJson(jsonDecode(receivedEvent.data));
+
+        if (newMessage.data.isTherapist) {
+          logger.i('adding chat message');
+
+          messages.insert(
+              0, TherapyChatMessage.fromChatMessage(newMessage.data));
+
+          emit(MessagesUpdatedState());
+        }
+
+        logger.i(receivedEvent.data.runtimeType);
+      }
+    } catch (e, stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
+    }
+  }
+
+  FutureOr<void> _mapRetryMessageEventToState(
+      ResendMessageEvent event, Emitter<SessionChatState> emit) async {
+    messages
+        .where((element) => element.id == event.message.id)
+        .first
+        .sendingState = SendingState.loading;
+    emit(SendMessageLoadingState());
+    try {
+      final response = await _chatRepository.sendMessage(event.message);
+
+      if (messages.length < 2) {
+        conversationId = response.data.conversationId.toString();
+        _listenForMessages(response.data.conversationId.toString());
+      }
+
+      messages
+          .where((element) => element.id == event.message.id)
+          .first
+          .sendingState = SendingState.success;
+
+      emit(SendMessageSuccesState());
+    } catch (e) {
+      messages
+          .where((element) => element.id == event.message.id)
+          .first
+          .sendingState = SendingState.failed;
+      emit(SendMessageFailedState());
+    }
   }
 }

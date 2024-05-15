@@ -38,6 +38,7 @@ class TherapyChatMessage {
       time: DateTime.now(),
       receiverId: receiverId,
       isTherapist: false,
+      sendingState: SendingState.loading,
       // Assuming therapist messages are mapped here
       id: const Uuid().v4(), // Assuming 'id' field exists in ChatMessage
     );
