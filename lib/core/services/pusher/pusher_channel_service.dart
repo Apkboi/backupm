@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -19,11 +20,11 @@ class PusherChannelService {
   }
 
   Future<void> initialize() async {
-    pusher = PusherChannelsFlutter.getInstance();
+    var connections = await Connectivity().checkConnectivity();
 
-
-    if(pusher?.connectionState != "CONNECTED"){
+    if (!connections.contains(ConnectivityResult.none)) {
       try {
+        pusher = PusherChannelsFlutter.getInstance();
 
         await pusher?.init(
           // apiKey: '86bddfa4606d2c40e7a5',
@@ -47,11 +48,18 @@ class PusherChannelService {
 
         await pusher?.connect();
 
-        pusher?.onConnectionStateChange = (currentState, previousState) {
+        pusher?.onConnectionStateChange = (currentState, previousState) async {
           debugPrint(
               "Pusher connection previousState: $previousState, currentState: $currentState");
           if (currentState == "DISCONNECTED") {
-            pusher?.connect();
+            var conneced = await Connectivity().checkConnectivity();
+            //
+
+            if (!conneced.contains(ConnectivityResult.none)) {
+              pusher?.connect();
+            }
+
+            // initialize();
           }
         };
 
@@ -63,8 +71,6 @@ class PusherChannelService {
         SentryService.captureException(e, stackTrace: stackTrace);
       }
     }
-
-
   }
 
   Future<PusherChannelsFlutter?> get getClient async {

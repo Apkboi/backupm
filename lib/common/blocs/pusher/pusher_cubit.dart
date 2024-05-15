@@ -37,7 +37,6 @@ class PusherCubit extends Cubit<PusherState> {
         } else {
           logger.w('connected2');
 
-
           pusher.getChannel(name)?.onEvent = onEventReceived;
         }
         await pusher.connect();
