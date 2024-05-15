@@ -25,6 +25,8 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
   // MesiboProfile? profile;
   List<TherapyChatMessage> messages = [];
 
+  String conversationId = '';
+
   SessionChatBloc(this._chatRepository) : super(SessionInitial()) {
     on<SessionChatEvent>((event, emit) {});
     on<SendMessageEvent>(_mapSendMessageEventToState);
@@ -39,6 +41,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
     final response = await _chatRepository.sendMessage(event.message);
 
     if (messages.length < 2) {
+      conversationId = response.data.conversationId.toString();
       _listenForMessages(response.data.conversationId.toString());
     }
     emit(SendMessageSuccesState());
@@ -57,6 +60,8 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
       emit(MessagesUpdatedState());
 
       if (response.data.isNotEmpty) {
+        conversationId = response.data.first.conversationId.toString();
+
         _listenForMessages(response.data.first.conversationId.toString());
       }
     } catch (e) {
@@ -74,8 +79,11 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
       var pusher = await pusherService.getClient;
       if (pusher != null) {
         logger.w('connecting');
+
         if (!pusher.channels
             .containsKey("private-conversation.$conversationId")) {
+          pusher.onAuthorizer = _authorize;
+
           PusherChannel channel = await pusher.subscribe(
             channelName: "private-conversation.$conversationId",
             onSubscriptionError: (message, d) =>
@@ -90,15 +98,13 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
           logger.w('connected');
         } else {
           logger.w('connected2');
+          pusher.onAuthorizer = _authorize;
+
           pusher.getChannel("private-conversation.$conversationId")?.onEvent =
               onEventReceived;
         }
         await pusher.connect();
-
-        pusher.onAuthorizer = _authorize;
-
       }
-
     } catch (e, s) {
       SentryService.captureException(e, stackTrace: s);
     }
@@ -108,11 +114,10 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
   //
   // }
 
-
   _authorize(String channelName, String socketId, options) async {
     return {
       "auth":
-      "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.23")}",
+          "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.$conversationId")}",
     };
   }
 
@@ -125,6 +130,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
     print("HMAC signature in string is: $digest");
     return digest;
   }
+
   FutureOr<void> _mapMessageReceivedEventToState(
       MessageReceivedEvent event, Emitter<SessionChatState> emit) {
     if (messages.any((element) => element.id != event.message.toString())) {
@@ -140,11 +146,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
 
   onSubscriptionError(message, d) {}
 
-
   onEventReceived(event) {
-
-    logger.w('NEW EVENT :');
-
     injector.get<PusherCubit>().triggerPusherEvent(event);
 
     logger.i(event);

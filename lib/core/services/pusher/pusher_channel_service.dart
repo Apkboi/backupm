@@ -31,7 +31,7 @@ class PusherChannelService {
           apiKey: '6e531aee4ab45d75d4ad',
           cluster: "mt1",
 
-          maxReconnectGapInSeconds: 1,
+          maxReconnectGapInSeconds: 5,
           onEvent: (event) {
             injector.get<PusherCubit>().triggerPusherEvent(event);
 
@@ -48,20 +48,21 @@ class PusherChannelService {
 
         await pusher?.connect();
 
-        pusher?.onConnectionStateChange = (currentState, previousState) async {
-          debugPrint(
-              "Pusher connection previousState: $previousState, currentState: $currentState");
-          if (currentState == "DISCONNECTED") {
-            var conneced = await Connectivity().checkConnectivity();
-            //
-
-            if (!conneced.contains(ConnectivityResult.none)) {
-              pusher?.connect();
-            }
-
-            // initialize();
-          }
-        };
+        // pusher?.onConnectionStateChange = (currentState, previousState) async {
+        //   var connections = await Connectivity().checkConnectivity();
+        //
+        //   debugPrint(
+        //       "Pusher connection previousState: $previousState, currentState: $currentState");
+        //   if (currentState == "DISCONNECTED") {
+        //     //
+        //
+        //     if (!connections.contains(ConnectivityResult.none)) {
+        //       pusher?.connect();
+        //     }
+        //
+        //     // initialize();
+        //   }
+        // };
 
         pusher?.onError = (message, code, error) {
           debugPrint("Pusher Error: ${error?.message}");
@@ -92,7 +93,7 @@ class PusherChannelService {
   _authorize(String channelName, String socketId, options) async {
     return {
       "auth":
-          "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.23")}",
+          "6e531aee4ab45d75d4ad:${getSignature("$socketId:private-conversation.27")}",
     };
   }
 
