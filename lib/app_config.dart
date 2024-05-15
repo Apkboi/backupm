@@ -90,8 +90,8 @@ class AppConfig {
     await sessionManager.init();
     injector.registerLazySingleton<SessionManager>(() => sessionManager);
     initFirebaseServices();
-    var pusherService = await PusherChannelService.getInstance;
-    await pusherService.initialize();
+    // var pusherService = await PusherChannelService.getInstance;
+    // await pusherService.initialize();
   }
 
   Future<void> initFirebaseServices() async {
