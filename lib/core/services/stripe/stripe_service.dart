@@ -5,10 +5,9 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:pay/pay.dart';
 
 class StripeService {
-  static const String _publishableKey = 'your_publishable_key';
+  // static const String _publishableKey = 'your_publishable_key';
 
   var clientSecret = ''; // Replace with your own publishable key
 
@@ -64,7 +63,10 @@ class StripeService {
           // Extra params
           primaryButtonLabel: 'Pay now',
           applePay: PaymentSheetApplePay(
-              merchantCountryCode: 'AED',
+              merchantCountryCode: 'AE',
+              cartItems: [
+                ApplePayCartSummaryItem.immediate(label: 'label', amount: '400')
+              ],
               buttonType: PlatformButtonType.subscribe),
           googlePay: gpay,
           style: ThemeMode.light,
@@ -85,6 +87,7 @@ class StripeService {
               colors: PaymentSheetPrimaryButtonTheme(
                 light: PaymentSheetPrimaryButtonThemeColors(
                   background: Color.fromARGB(255, 231, 235, 30),
+
                   text: Color.fromARGB(255, 235, 92, 30),
                   // border: Color.fromARGB(255, 235, 92, 30),
                 ),
@@ -194,7 +197,9 @@ class StripeService {
     Map<String, dynamic> payload = {
       "amount": '100000',
       "currency": 'AED',
-      "payment_method_types[]": ["card",],
+      "payment_method_types[]": [
+        "card",
+      ],
       "metadata": {
         "order_id": 'orderId',
         "email": 'email',
@@ -209,8 +214,7 @@ class StripeService {
         await networkService.call(url.toString(), RequestMethod.post,
             data: payload,
             options: Options(headers: {
-              "Authorization":
-                  'Bearer ${UrlConfig.stripeSecretKey}',
+              "Authorization": 'Bearer ${UrlConfig.stripeSecretKey}',
               "Content-Type": "application/x-www-form-urlencoded"
             }));
 
