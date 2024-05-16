@@ -318,6 +318,8 @@ class CallCubit extends Cubit<CallState> {
     try {
       _callRepository.offerCall(callerId, _calleeId, _sessionId, map);
     } catch (e, stack) {
+    
+      logger.e("Offer call error");
       logger.e(e.toString(), stackTrace: stack);
     }
   }
@@ -366,8 +368,6 @@ class CallCubit extends Cubit<CallState> {
 
   void _pushCandidate(int callerId, candidate) async {
     try {
-      logger.w('Pushing candidate');
-
       _callRepository.pushCandidate(
           callerId, candidate, _calleeId.toString(), _sessionId);
     } catch (e, stack) {

@@ -14,5 +14,5 @@ abstract class CallRepository {
   Future<void> callAction(int callerId, int calleeId, String sessionId,
       String action, String value);
 
-  Future<void> offerCall(int callerId, int calleeId, int sessionId, Map<String, dynamic> offer);
+  Future<void> offerCall(int callerId, int calleeId, String sessionId, Map<String, dynamic> offer);
 }

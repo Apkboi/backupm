@@ -92,7 +92,7 @@ class CallRepositoryImpl implements CallRepository {
   }
 
   @override
-  Future<void> offerCall(int callerId, int calleeId, int sessionId,
+  Future<void> offerCall(int callerId, int calleeId, String sessionId,
       Map<String, dynamic> offer) async {
     try {
       var networkService = injector.get<NetworkService>();
