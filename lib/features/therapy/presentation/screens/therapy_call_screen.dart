@@ -149,7 +149,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
       callBloc.reviewTherapist(
           widget.therapist ?? Caller.dummy(), widget.sessionId);
     } else {
-      context.pop();
+      // context.pop();
       callBloc.leaveCallScreen();
     }
   }

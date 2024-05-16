@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +43,7 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
             child: RTCVideoView(
               widget.localRenderer,
               mirror: widget.mirror,
-              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitContain,
+              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
             ),
           ),
           Positioned(

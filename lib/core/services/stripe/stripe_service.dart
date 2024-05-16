@@ -66,7 +66,9 @@ class StripeService {
           applePay: PaymentSheetApplePay(
               merchantCountryCode: 'AED',
               buttonType: PlatformButtonType.subscribe),
-          googlePay: gpay,
+          googlePay: const PaymentSheetGooglePay(
+              buttonType: PlatformButtonType.subscribe,
+              merchantCountryCode: 'AED', testEnv: true),
           style: ThemeMode.dark,
 
           appearance: const PaymentSheetAppearance(
@@ -194,7 +196,7 @@ class StripeService {
     Map<String, dynamic> payload = {
       "amount": '100000',
       "currency": 'AED',
-      "payment_method_types[]": ["card",'google'],
+      "payment_method_types[]": ["card",],
       "metadata": {
         "order_id": 'orderId',
         "email": 'email',

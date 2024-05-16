@@ -154,7 +154,7 @@ class _CallControllSheetState extends State<CallControllSheet> {
         context, EndTherapySessionDialog(sessionId: widget.sessionId));
 
     if (sessionEnded ?? false) {
-      CallKitService.instance.endCall();
+      CallKitService.instance.endAllCalls();
       context.read<CallCubit>().endCall();
       // final bool? writeReview = await CustomDialogs.showCustomDialog(
       //     TherapySessionEndedDialog(
