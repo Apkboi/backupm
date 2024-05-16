@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intro/flutter_intro.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/screens/intro_demo.dart';
+import 'package:mentra/common/screens/local_render_screen.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -187,15 +189,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // var currentCall = await getCurrentCall();
 
                                     // CallKitService.instance.checkAndNavigationCallingPage();
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           Intro(child: const DemoUsage()),
-                                    //     ));
+
                                     // context
                                     //     .pushNamed(PageUrl.talkToMentraScreen);
 
+                                    var isSupported = await Stripe.instance
+                                        .isPlatformPaySupported(
+                                            googlePay:
+                                                IsGooglePaySupportedParams(
+                                                    testEnv: true,existingPaymentMethodRequired: true, supportsTapToPay: true));
+
+                                    CustomDialogs.success(
+                                        isSupported.toString());
                                     StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(
                                     //     'callerId', 'callerName');

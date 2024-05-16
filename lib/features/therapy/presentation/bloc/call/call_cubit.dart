@@ -130,8 +130,16 @@ class CallCubit extends Cubit<CallState> {
       _localStream = await navigator.mediaDevices.getUserMedia({
         'audio': isAudioOn,
         'video': isVideoOn
-            ? {'facingMode': isFrontCameraSelected ? 'user' : 'environment'}
-            : false,
+            ? {
+                'facingMode': isFrontCameraSelected ? 'user' : 'environment',
+                'mandatory': {
+                  'minWidth': '640',
+                  'minHeight': '480',
+                  'minFrameRate': '30',
+                },
+                "echoCancellation": true,
+              }
+            : {},
         "echoCancellation": true,
       });
 
@@ -232,10 +240,12 @@ class CallCubit extends Cubit<CallState> {
       var pusher = await pusherService.getClient;
       if (pusher != null) {
         logger.w('connecting');
-        if (!pusher.channels.containsKey(injector.get<UserBloc>().userChannel)) {
+        if (!pusher.channels
+            .containsKey(injector.get<UserBloc>().userChannel)) {
           PusherChannel channel = await pusher.subscribe(
             channelName: injector.get<UserBloc>().userChannel,
-            onSubscriptionError: (message, d) => onSubscriptionError(message, d),
+            onSubscriptionError: (message, d) =>
+                onSubscriptionError(message, d),
             onSubscriptionSucceeded: (data) {
               // log('subscribed');
               // AppUtils.showCustomToast("onSubscriptionSucceeded:  data: $data");
@@ -251,9 +261,8 @@ class CallCubit extends Cubit<CallState> {
         }
         await pusher.connect();
       }
-    }  catch (e,s) {
-      SentryService.captureException(e,stackTrace:s );
-
+    } catch (e, s) {
+      SentryService.captureException(e, stackTrace: s);
     }
   }
 
