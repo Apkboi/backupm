@@ -44,7 +44,7 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
             child: RTCVideoView(
               widget.localRenderer,
               mirror: widget.mirror,
-              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+              objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitContain,
             ),
           ),
           Positioned(

@@ -45,10 +45,8 @@ class StripeService {
         ),
       );
 
-
-      var gpay = const PaymentSheetGooglePay(merchantCountryCode: 'AED',testEnv: true);
-
-
+      var gpay = const PaymentSheetGooglePay(
+          merchantCountryCode: 'AED', testEnv: true);
 
       // 2. initialize the payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -65,10 +63,11 @@ class StripeService {
 
           // Extra params
           primaryButtonLabel: 'Pay now',
-          // applePay: PaymentSheetApplePay(
-          //     merchantCountryCode: 'AED',
-          //     buttonType: PlatformButtonType.subscribe),
-          googlePay:gpay,
+          applePay: PaymentSheetApplePay(
+              merchantCountryCode: 'AED',
+
+              buttonType: PlatformButtonType.subscribe),
+          googlePay: gpay,
           style: ThemeMode.dark,
 
           appearance: const PaymentSheetAppearance(
@@ -119,7 +118,7 @@ class StripeService {
       // Stripe.instance.presentGooglePay(PresentGooglePayParams(clientSecret: clientSecret));
       var res = await Stripe.instance.presentPaymentSheet(
 
-        // options: PaymentSheetPresentOptions(timeout: )
+          // options: PaymentSheetPresentOptions(timeout: )
           // clientSecret: clientSecret,
           // confirmParams: const PlatformPayConfirmParams.googlePay(
           //     googlePay: GooglePayParams(
@@ -128,7 +127,7 @@ class StripeService {
           //         testEnv: true,
           //         merchantCountryCode: 'AED',
           //         currencyCode: 'AED'))
-      );
+          );
       // logger.w('presenting${res?.toJson()}');
 
       // setState(() {
@@ -196,7 +195,9 @@ class StripeService {
     Map<String, dynamic> payload = {
       "amount": '100000',
       "currency": 'AED',
-      "payment_method_types[]": ["card",'google'],
+      "payment_method_types[]": [
+        "card",
+      ],
       "metadata": {
         "order_id": 'orderId',
         "email": 'email',

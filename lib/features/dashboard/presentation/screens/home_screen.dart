@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/screens/intro_demo.dart';
+import 'package:mentra/common/screens/local_render_screen.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
@@ -187,14 +188,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // var currentCall = await getCurrentCall();
 
                                     // CallKitService.instance.checkAndNavigationCallingPage();
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           Intro(child: const DemoUsage()),
-                                    //     ));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              LocalRender(),
+                                        ));
                                     // context
                                     //     .pushNamed(PageUrl.talkToMentraScreen);
+
 
                                     StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(
