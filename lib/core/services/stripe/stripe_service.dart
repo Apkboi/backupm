@@ -14,7 +14,7 @@ class StripeService {
 
   static Future<void> initialize() async {
     Stripe.publishableKey = UrlConfig.stripeTestKey;
-    Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+    Stripe.merchantIdentifier = 'merchant.com.mentra.application';
     Stripe.urlScheme = 'flutterstripe';
     await Stripe.instance.applySettings();
     // await Stripe.instance.applySettings();
@@ -67,18 +67,18 @@ class StripeService {
               merchantCountryCode: 'AED',
               buttonType: PlatformButtonType.subscribe),
           googlePay: gpay,
-          style: ThemeMode.dark,
+          style: ThemeMode.light,
 
           appearance: const PaymentSheetAppearance(
             colors: PaymentSheetAppearanceColors(
-              background: Colors.lightBlue,
-              primary: Colors.blue,
-              componentBorder: Colors.red,
+              background: Pallets.bottomSheetColor,
+              primary: Pallets.primary,
+              componentBorder: Pallets.primary,
             ),
             shapes: PaymentSheetShape(
               // borderWidth: 4.0,
               // borderRadius: 4.0,
-              shadow: PaymentSheetShadowParams(color: Colors.red),
+              shadow: PaymentSheetShadowParams(color: Pallets.grey),
             ),
             primaryButton: PaymentSheetPrimaryButtonAppearance(
               shapes: PaymentSheetPrimaryButtonShape(),
@@ -210,7 +210,7 @@ class StripeService {
             data: payload,
             options: Options(headers: {
               "Authorization":
-                  'Bearer sk_test_51IIZDzIshQwWGM1okIkVHeXQ5Lb1gDto5pKaWsDCY1QHPMB3wqUWg9V3sWcesCliKP6CVKINoawRErr9XGclukKj00cp2S7Xr8',
+                  'Bearer ${UrlConfig.stripeSecretKey}',
               "Content-Type": "application/x-www-form-urlencoded"
             }));
 

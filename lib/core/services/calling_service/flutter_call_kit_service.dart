@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
@@ -137,6 +138,8 @@ class CallKitService {
     if (!await theirIsAnActiveCall()) {
       await FlutterCallkitIncoming.showCallkitIncoming(callKitParams);
     }
+
+    logger.w('Call ringing');
   }
 
   void endCall() async {
@@ -153,15 +156,24 @@ class CallKitService {
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        logger.w(isAppInForeground());
-        if (isAppInForeground()) {
-          injector
-              .get<CallCubit>()
-              .acceptCall(event.body['extra']['webrtc_description_id']);
-        }
+        // FlutterCallkitIncoming.startCall(
+        //     CallKitParams.fromJson(jsonDecode(event.body.toString())));
+        injector
+            .get<CallCubit>()
+            .acceptCall(event.body['extra']['webrtc_description_id']);
       },
     );
     logger.w(event.body['extra']);
+  }
+
+  Map<String, dynamic> toCalKitMap(dynamic map) {
+    Map<String, dynamic> newMap = {};
+    for (var entry in map.entries) {
+      if (entry.key is String && entry.value != null) {
+        newMap[entry.key as String] = entry.value;
+      }
+    }
+    return newMap;
   }
 
   bool isAppInForeground() {
@@ -208,9 +220,6 @@ class CallKitService {
 
   Future theirIsAnActiveCall() async {
     var currentCall = await getCurrentCall();
-    var currentRoute = CustomRoutes
-        .goRouter.routerDelegate.currentConfiguration.last.route.path;
-
     return currentCall != null;
   }
 

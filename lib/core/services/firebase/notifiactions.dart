@@ -29,6 +29,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // var body = message.notification?.body ?? message.data['body'];
   // await notificationService.initializeNotification();
   // await Firebase.initializeApp();
+
   DeepLinkNavigator.handleBackgroundMessages(message);
 
   if (message.notification?.title.toString() != 'Incoming Call') {
@@ -37,6 +38,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       message.notification?.title ?? message.data['title'],
       message.notification?.body ?? message.data['body'],
     );
+    return;
   }
 }
 
