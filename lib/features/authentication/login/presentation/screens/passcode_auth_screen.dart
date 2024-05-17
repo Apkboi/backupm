@@ -19,6 +19,7 @@ import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/authentication/local_auth/presentation/blocs/local_auth/local_auth_cubit.dart';
 import 'package:mentra/features/authentication/login/presentation/bloc/login_bloc.dart';
 import 'package:mentra/features/authentication/login/presentation/widgets/pin_view.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -39,7 +40,9 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
 
   @override
   void initState() {
-    injector.get<PusherCubit>().subscribeToChannel(injector.get<UserBloc>().userChannel);
+    injector
+        .get<PusherCubit>()
+        .subscribeToChannel(injector.get<UserBloc>().userChannel);
 
     CallKitService.instance.checkAndNavigationCallingPage();
 
@@ -189,7 +192,6 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
     }
     if (state is LoginSuccessState) {
       context.pop();
-
       context.goNamed(PageUrl.welcomeScreen);
     }
 

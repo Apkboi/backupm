@@ -31,7 +31,7 @@ class StripeService {
       final data = await createTestPaymentSheet();
 
       // create some billingdetails
-      final billingDetails = BillingDetails(
+      const billingDetails = BillingDetails(
         name: 'Flutter Stripe',
         email: 'email@stripe.com',
         phone: '+48888000888',
@@ -46,6 +46,7 @@ class StripeService {
       );
 
       var gpay = const PaymentSheetGooglePay(
+          amount:'400',
           merchantCountryCode: 'AED', testEnv: true);
 
       // 2. initialize the payment sheet
@@ -56,24 +57,28 @@ class StripeService {
           merchantDisplayName: 'Flutter Stripe Store Demo',
           // preferredNetworks: [CardBrand.Amex],
           // Customer params
-          customerId: data['customer'],
 
+          customerId: data['customer'],
           customerEphemeralKeySecret: data['ephemeralKey'],
           returnURL: 'flutterstripe://redirect',
-
           // Extra params
           primaryButtonLabel: 'Pay now',
-          applePay: PaymentSheetApplePay(
+          applePay: const PaymentSheetApplePay(
               merchantCountryCode: 'AED',
               buttonType: PlatformButtonType.subscribe),
           googlePay: gpay,
           style: ThemeMode.light,
-
           appearance: const PaymentSheetAppearance(
             colors: PaymentSheetAppearanceColors(
               background: Pallets.bottomSheetColor,
               primary: Pallets.primary,
               componentBorder: Pallets.primary,
+              componentText: Pallets.navy,
+              primaryText: Pallets.navy,
+              secondaryText: Pallets.black,
+              icon: Pallets.black
+
+              // placeholderText: Pallets.black
             ),
             shapes: PaymentSheetShape(
               // borderWidth: 4.0,
@@ -91,17 +96,13 @@ class StripeService {
               ),
             ),
           ),
-          billingDetails: billingDetails,
+
+          // billingDetails: billingDetails,
         ),
       );
 
-      // logger.w(rs?.toJson());
-
-      // await Stri
-      // setState(() {
-      //   step = 1;
-      // });
       await presentPaymentSheet();
+      await confirmPayment();
     } catch (e) {
       logger.e(e.toString());
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -115,47 +116,10 @@ class StripeService {
     try {
       // 3. display the payment sheet.
       // Stripe.instance.presentGooglePay(PresentGooglePayParams(clientSecret: clientSecret));
-      var res = await Stripe.instance.presentPaymentSheet(
-
-          // options: PaymentSheetPresentOptions(timeout: )
-          // clientSecret: clientSecret,
-          // confirmParams: const PlatformPayConfirmParams.googlePay(
-          //     googlePay: GooglePayParams(
-          //         allowCreditCards: true,
-          //         merchantName: 'Mentra',
-          //         testEnv: true,
-          //         merchantCountryCode: 'AED',
-          //         currencyCode: 'AED'))
-          );
-      // logger.w('presenting${res?.toJson()}');
-
-      // setState(() {
-      //   step = 2;
-      // });
-
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('Payment option selected'),
-      //   ),
-      // );
+      var res = await Stripe.instance.presentPaymentSheet();
     } catch (e) {
       logger.w('Error${e.toString()}');
-
-      if (e is StripeException) {
-        logger.w('Error${e.error.localizedMessage}');
-
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text('Error from Stripe: ${e.error.localizedMessage}'),
-        //   ),
-        // );
-      } else {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text('Unforeseen error: ${e}'),
-        //   ),
-        // );
-      }
+      rethrow;
     }
   }
 
@@ -163,30 +127,8 @@ class StripeService {
     try {
       // 4. Confirm the payment sheet.
       await Stripe.instance.confirmPaymentSheetPayment();
-
-      // setState(() {
-      //   step = 0;
-      // });
-
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('Payment succesfully completed'),
-      //   ),
-      // );
     } on Exception catch (e) {
-      if (e is StripeException) {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text('Error from Stripe: ${e.error.localizedMessage}'),
-        //   ),
-        // );
-      } else {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text('Unforeseen error: ${e}'),
-        //   ),
-        // );
-      }
+      rethrow;
     }
   }
 
@@ -194,7 +136,9 @@ class StripeService {
     Map<String, dynamic> payload = {
       "amount": '100000',
       "currency": 'AED',
-      "payment_method_types[]": ["card",],
+      "payment_method_types[]": [
+        "card",
+      ],
       "metadata": {
         "order_id": 'orderId',
         "email": 'email',
@@ -206,13 +150,12 @@ class StripeService {
     };
     final url = Uri.parse('https://api.stripe.com/v1/payment_intents');
     final response =
-        await networkService.call(url.toString(), RequestMethod.post,
-            data: payload,
-            options: Options(headers: {
-              "Authorization":
-                  'Bearer ${UrlConfig.stripeSecretKey}',
-              "Content-Type": "application/x-www-form-urlencoded"
-            }));
+    await networkService.call(url.toString(), RequestMethod.post,
+        data: payload,
+        options: Options(headers: {
+          "Authorization": 'Bearer ${UrlConfig.stripeSecretKey}',
+          "Content-Type": "application/x-www-form-urlencoded"
+        }));
 
     final body = response.data;
 

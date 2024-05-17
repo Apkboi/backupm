@@ -193,14 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     // context
                                     //     .pushNamed(PageUrl.talkToMentraScreen);
 
-                                    var isSupported = await Stripe.instance
-                                        .isPlatformPaySupported(
-                                            googlePay:
-                                                IsGooglePaySupportedParams(
-                                                    testEnv: true,existingPaymentMethodRequired: true, supportsTapToPay: true));
-
-                                    CustomDialogs.success(
-                                        isSupported.toString());
                                     StripeService().initPaymentSheet();
                                     // CallKitService.instance.showIncomingCall(
                                     //     'callerId', 'callerName');
@@ -227,64 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //
-  // void _showCardDialog(BuildContext context) {
-  //   CustomDialogs.showBottomSheet(
-  //     context,
-  //     const CardDetailsSheet(),
-  //     shape: const RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.only(
-  //       topLeft: Radius.circular(16),
-  //       topRight: Radius.circular(16),
-  //     )),
-  //   );
-  // }
-
   void _welcome() async {
     DailyStreakChecker.checkForStreak();
   }
 }
-
-// Future<void> _handlePayPress() async {
-//   double price = 100.5;
-//   int constPrice = (price * 100).toInt();
-//   try {
-//     final paymentMethod = await Stripe.instance.createPlatformPayPaymentMethod(
-//         params: const PlatformPayPaymentMethodParamsGooglePay(
-//             googlePayParams: GooglePayParams(
-//                 testEnv: true, merchantCountryCode: 'CA', currencyCode: "CAD"),
-//             googlePayPaymentMethodParams: GooglePayPaymentMethodParams(
-//                 amount: 50,
-//                 billingAddressConfig:
-//                     GooglePayBillingAddressConfig(isRequired: true),
-//                 shippingAddressConfig:
-//                     GooglePayShippingAddressConfig(isRequired: true)))
-//
-//         // GooglePayParams(
-//         //   merchantCountryCode: "CA",
-//         //   currencyCode: "CAD",
-//         //   merchantName: "Tingsapp",
-//         //   isEmailRequired: true,
-//         //   testEnv: true,
-//         // ),
-//         // GooglePayPaymentMethodParams(
-//         //   amount: constPrice,
-//         //   billingAddressConfig: GooglePayBillingAddressConfig(isRequired: true),
-//         //   shippingAddressConfig: GooglePayShippingAddressConfig(isRequired: true),
-//         // ),
-//         );
-//     // handlePaymentMethod(paymentMethod);
-//   } catch (e) {
-//     if (e is StripeException) {
-//       debugPrint('Stripe exception google pay,,,,,,,,,,,,,,,, ${e.error}');
-//     } else {
-//       debugPrint('General pay error >>>>>>>>>>>>>>> $e');
-//     }
-//     // setState(() {});
-//   }
-// }
-//
-// Future<void> _handlePaymentRequest() async {
-//   StripeService().initPaymentSheet();
-//   // await Stripe.instance.presentPaymentSheet();
-// }

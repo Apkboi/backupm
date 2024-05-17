@@ -8,6 +8,7 @@ import 'package:mentra/core/services/theme_service/app_theme.dart';
 import 'core/constants/package_exports.dart';
 import 'core/navigation/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'features/dashboard/presentation/screens/deep_link_listener.dart';
 import 'generated/l10n.dart';
 
 void main() {
@@ -52,27 +53,29 @@ class _MentraAppState extends State<MentraApp> {
         return OverlaySupport.global(
           child: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-            child: CallListener(
-              child: MaterialApp.router(
-                debugShowCheckedModeBanner: false,
-                title: "Mentra",
-                //TODO: SET LOCALE HERE
-                // locale: ref.watch(localeProvider).locale,
-                localizationsDelegates: const [
-                  S.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                supportedLocales: S.delegate.supportedLocales,
+            child: DeepLinkListener(
+              child: CallListener(
+                child: MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  title: "Mentra",
+                  //TODO: SET LOCALE HERE
+                  // locale: ref.watch(localeProvider).locale,
+                  localizationsDelegates: const [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: S.delegate.supportedLocales,
 
-                // theme: ThemeData(
-                //   primarySwatch: Colors.blueGrey,
-                // ),
-                //
-                theme: AppTheme.lightTheme,
-                // darkTheme: AppTheme.darkTheme,
-                routerConfig: CustomRoutes.goRouter,
+                  // theme: ThemeData(
+                  //   primarySwatch: Colors.blueGrey,
+                  // ),
+                  //
+                  theme: AppTheme.lightTheme,
+                  // darkTheme: AppTheme.darkTheme,
+                  routerConfig: CustomRoutes.goRouter,
+                ),
               ),
             ),
           ),

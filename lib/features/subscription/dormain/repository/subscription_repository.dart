@@ -6,4 +6,5 @@ abstract class SubscriptionRepository {
   Future<SubscribeResponse> subscribe(SubscriptionPayload payload);
 
   Future<GetPlansResponse> getPlans();
+  Future<dynamic> createPaymentIntent();
 }

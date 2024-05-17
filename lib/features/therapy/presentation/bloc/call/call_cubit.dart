@@ -43,7 +43,7 @@ class CallCubit extends Cubit<CallState> {
   // media status
   bool isAudioOn = true, isVideoOn = true, isFrontCameraSelected = true;
 
-  void setState(fn) {
+  void setState(dynamic fn) {
     Future.delayed(
       const Duration(
         milliseconds: 100,
@@ -58,6 +58,7 @@ class CallCubit extends Cubit<CallState> {
     int callerId,
     calleeId,
     SdpOffer? offer,
+    Caller? caller,
     dynamic sessionId,
   ) async {
     isCallActive = true;
@@ -66,14 +67,17 @@ class CallCubit extends Cubit<CallState> {
     _callerId = callerId;
     _offer = offer;
     _sessionId = sessionId;
+    therapist = caller;
 
     await Future.delayed(const Duration(milliseconds: 1));
     // initializing renderers
     localRTCVideoRenderer.initialize();
     remoteRTCVideoRenderer.initialize();
+    setState(null);
 
     if (_offer == null) {
       await _getOfferFromRemote();
+      setState(null);
     }
     // setup Peer Connection
     _setupPeerConnection();
@@ -111,6 +115,7 @@ class CallCubit extends Cubit<CallState> {
           });
         }
       };
+
       _rtcPeerConnection!.onIceConnectionState = (state) {
         if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
             state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
@@ -153,10 +158,6 @@ class CallCubit extends Cubit<CallState> {
 
       localRTCVideoRenderer.srcObject = _localStream;
 
-      // localRTCVideoRenderer.;
-
-      // _localStream?.getMediaTracks()
-
       setState(() {});
       _listenToPusher();
 
@@ -165,8 +166,7 @@ class CallCubit extends Cubit<CallState> {
       );
 
       // create SDP answer
-      RTCSessionDescription answer =
-          await _rtcPeerConnection!.createAnswer({'offerToReceiveVideo': 1});
+      RTCSessionDescription answer = await _rtcPeerConnection!.createAnswer({'offerToReceiveVideo': 1});
 
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
@@ -181,9 +181,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   void _createOffer() async {
-    RTCSessionDescription offer =
-        await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
-
+    RTCSessionDescription offer = await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
     _rtcPeerConnection!.setLocalDescription(offer);
     await _offerCall(_callerId, offer.toMap());
   }
@@ -325,7 +323,7 @@ class CallCubit extends Cubit<CallState> {
   _callAction(String action, String value) async {
     try {
       await _callRepository.callAction(
-          _callerId, _calleeId, _sessionId, action, value);
+          _callerId, _calleeId, _sessionId.toString(), action, value);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -334,10 +332,11 @@ class CallCubit extends Cubit<CallState> {
   _answerCall(int callerId, map) async {
     try {
       await _callRepository.answerCall(
-          _callerId, map, _calleeId.toString(), _sessionId);
+          _callerId, map, _calleeId.toString(), _sessionId.toString());
+      _createOffer();
+
       _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
       _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
-      _createOffer();
     } catch (e, stack) {
       // TODO: Emit Call Failed State
 
@@ -354,7 +353,7 @@ class CallCubit extends Cubit<CallState> {
       try {
         CallKitService.instance.endAllCalls();
         _callRepository.endCall(
-            _callerId, _calleeId, _sessionId, _calleeId.toString());
+            _callerId, _calleeId, _sessionId.toString(), _calleeId.toString());
 
         _closeAllCameras();
       } catch (e, stack) {
@@ -366,10 +365,8 @@ class CallCubit extends Cubit<CallState> {
 
   void _pushCandidate(int callerId, candidate) async {
     try {
-      logger.w('Pushing candidate');
-
-      _callRepository.pushCandidate(
-          callerId, candidate, _calleeId.toString(), _sessionId);
+      await _callRepository.pushCandidate(
+          callerId, candidate, _calleeId.toString(), _sessionId.toString());
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -384,11 +381,13 @@ class CallCubit extends Cubit<CallState> {
   Future _getOfferFromRemote() async {
     logger.w('getting offer from remote');
     try {
-      var offerResponse = await _callRepository.getOffer(_calleeId);
+      var offerResponse = await _callRepository.getOffer(_callerId);
       _offer = offerResponse.data.sdpOffer;
       _callerId = offerResponse.data.callerId;
       _sessionId = offerResponse.data.therapySessionId;
       therapist = offerResponse.data.therapist;
+
+      return;
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }

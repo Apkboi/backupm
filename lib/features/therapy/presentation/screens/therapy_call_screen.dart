@@ -48,7 +48,12 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
       () {
         logger.w(widget.offer?.toJson());
         callBloc.startCall(
-            widget.callerId, widget.calleeId, widget.offer, widget.sessionId);
+          widget.callerId,
+          widget.calleeId,
+          widget.offer,
+          widget.therapist,
+          widget.sessionId,
+        );
       },
     );
     super.initState();
@@ -73,7 +78,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
                   child: TherapistVideoWidget(
                     remoteRenderer:
                         context.watch<CallCubit>().remoteRTCVideoRenderer,
-                    caller: widget.therapist,
+                    caller: context.watch<CallCubit>().therapist,
                   ),
                 )),
                 Expanded(
@@ -148,8 +153,9 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
     if (didWriteReview ?? false) {
       callBloc.reviewTherapist(
           widget.therapist ?? Caller.dummy(), widget.sessionId);
+      context.pop();
     } else {
-      // context.pop();
+      context.pop();
       callBloc.leaveCallScreen();
     }
   }

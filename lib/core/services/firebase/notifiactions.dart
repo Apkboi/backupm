@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +9,8 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/firebase/deep_link_naigator.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
 
 // import 'package:plain_notification_token/plain_notification_token.dart';
 
@@ -60,6 +63,17 @@ class NotificationService {
         android: AndroidInitializationSettings('@drawable/launcher'),
         iOS: DarwinInitializationSettings(),
       ),
+      onDidReceiveNotificationResponse: (details) {
+        // logger.w(details.payload);
+
+        injector.get<DeepLinkBloc>().add(DeepLinkReceived(
+            details.payload == null
+                ? null
+                : jsonDecode(details.payload ?? '{}')));
+        //
+        // DeepLinkNavigator.handlePushNotificationClick(
+        //     jsonDecode(details.payload ?? '{}'));
+      },
     );
 
     if (!kIsWeb) {
@@ -158,10 +172,11 @@ class NotificationService {
       DeepLinkNavigator.handleForegroundMessages(message);
       if (message.notification?.title.toString() != 'Incoming Call') {
         notificationService.triggerHeadsUp(
-          message.notification.hashCode,
-          message.notification?.title ?? message.data['title'],
-          message.notification?.body ?? message.data['body'],
-        );
+            message.notification.hashCode,
+            message.notification?.title ?? message.data['title'],
+            message.notification?.body ?? message.data['body'],
+            payload: jsonEncode(message.data));
+        return;
       }
 
       //
@@ -172,6 +187,8 @@ class NotificationService {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       logger.i(
           'A new onMessageOpenedApp event was published! ${message.data['test']}');
+      injector.get<DeepLinkBloc>().add(DeepLinkReceived(message.data));
+      // DeepLinkNavigator.handlePushNotificationClick(message.data);
     });
   }
 
@@ -195,28 +212,28 @@ class NotificationService {
     });
   }
 
-  void triggerHeadsUp(int hashCode, data, data2) {
+  void triggerHeadsUp(int hashCode, data, data2, {dynamic payload}) {
     flutterLocalNotificationsPlugin.show(
-      hashCode,
-      data,
-      data2,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          icon: "launcher",
-          importance: Importance.defaultImportance,
-          priority: Priority.high,
-          enableLights: true,
-          color: Pallets.primary,
+        hashCode,
+        data,
+        data2,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            icon: "launcher",
+            importance: Importance.defaultImportance,
+            priority: Priority.high,
+            enableLights: true,
+            color: Pallets.primary,
+          ),
+          iOS: const DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+          ),
         ),
-        iOS: const DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
-      ),
-    );
+        payload: payload);
   }
 }
 // duTCCKu0Y0j_mH6x2C-VP_:APA91bHuWI3pwOcr5oY35xMV7_84DICprR3_kC9-WvcvAzV31pjAow5Nx7xxeSqsJc5AcigQK5aHywbquONqG4sAof72w_Q5uemO1LmUHaV3cBiYrNT1Z6CYSbsQzdazbn3m9K3FBwGm

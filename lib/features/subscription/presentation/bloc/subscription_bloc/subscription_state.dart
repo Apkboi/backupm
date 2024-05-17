@@ -47,7 +47,8 @@ class GetPlansFailureState extends SubscriptionState {
 }
 
 class SubscribeSuccessState extends SubscriptionState {
-  final SubscribeResponse response;
+  final dynamic response;
+  // final SubscribeResponse response;
 
   const SubscribeSuccessState(this.response);
 

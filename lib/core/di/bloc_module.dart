@@ -7,6 +7,7 @@ import 'package:mentra/features/authentication/login/presentation/bloc/login_blo
 import 'package:mentra/features/authentication/password_reset/presentation/bloc/password_reset_bloc.dart';
 import 'package:mentra/features/authentication/registration/presentation/bloc/registration_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
 import 'package:mentra/features/journal/presentation/bloc/journal_bloc.dart';
 import 'package:mentra/features/library/presentation/blocs/wellness_library/wellness_library_bloc.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/mentra_chat/mentra_chat_bloc.dart';
@@ -50,6 +51,7 @@ void setup(GetIt getIt) {
       () => DailyStreakBloc(injector.get()));
   getIt.registerLazySingleton<PusherCubit>(() => PusherCubit());
   getIt.registerLazySingleton<CallCubit>(() => CallCubit(injector.get()));
+  getIt.registerLazySingleton<DeepLinkBloc>(() => DeepLinkBloc());
 
   // getIt.registerLazySingleton<MentraChatBloc>(
   //     () => MentraChatBloc(injector.get()));

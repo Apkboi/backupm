@@ -8,6 +8,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -27,12 +28,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   void initState() {
     super.initState();
 
+    injector.get<DeepLinkBloc>().add(CheckForDeepLink());
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.7, end:1 ).animate(_controller)
+    _scaleAnimation = Tween<double>(begin: 0.7, end: 1).animate(_controller)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
           _updateTimer();

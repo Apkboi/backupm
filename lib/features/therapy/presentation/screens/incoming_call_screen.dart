@@ -6,7 +6,6 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/incoming_call_wave.dart';
 import 'package:mentra/common/widgets/text_view.dart';
-import 'package:mentra/common/widgets/user_image_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
@@ -16,7 +15,6 @@ import 'package:mentra/core/services/calling_service/flutter_call_kit_service.da
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
-import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:vibration/vibration.dart';
@@ -122,7 +120,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
                           ),
                           onTap: () {
                             // Vibrate.vibrate();
-                            _answerCall(context);
+                            _answerCall(context, '1');
                           },
                         ),
                       ),
@@ -137,28 +135,35 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
     );
   }
 
-  _answerCall(BuildContext context) {
-    // log
+  _answerCall(BuildContext context, String descriptionId) {
     Navigator.pop(rootNavigatorKey.currentState!.context);
+
     context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
       PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
-      PathParam.callerId: widget.callerId.toString(),
-      PathParam.caller: jsonEncode(widget.caller?.toJson()),
-      if (widget.offer != null)
-        PathParam.offer: jsonEncode(widget.offer?.toJson()),
+      PathParam.callerId: descriptionId,
     });
+
+    // log
+    // Navigator.pop(rootNavigatorKey.currentState!.context);
+    // context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+    //   PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
+    //   PathParam.callerId: widget.callerId.toString(),
+    //   PathParam.caller: jsonEncode(widget.caller?.toJson()),
+    //   if (widget.offer != null)
+    //     PathParam.offer: jsonEncode(widget.offer?.toJson()),
+    // });
     // CallKitService.instance.an
   }
 
   void _listenToCallEvent(BuildContext context, CallState state) {
     if (state is AcceptCallState) {
       // CustomDialogs.success('Event received');
-      _answerCall(context);
+      _answerCall(context, state.callerId);
     }
 
     if (state is CallEndedState) {
-      context.pop();
-      CallKitService.instance.endAllCalls();
+      // context.pop();
+      // CallKitService.instance.endAllCalls();
     }
   }
 

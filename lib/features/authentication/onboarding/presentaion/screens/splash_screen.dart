@@ -8,6 +8,7 @@ import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class SplashPage extends StatefulWidget {
@@ -28,6 +29,7 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     super.initState();
+
     animationCtrl = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
@@ -82,6 +84,7 @@ class _SplashPageState extends State<SplashPage>
 
   void _goToNextScreen() {
     if (SessionManager.instance.isLoggedIn) {
+      // injector.get<DeepLinkBloc>().add(CheckForDeepLink());
       context.pushReplacementNamed(PageUrl.passcodeAuthScreen);
     } else {
       context.pushReplacementNamed(PageUrl.onBoardingPage);

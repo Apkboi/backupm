@@ -30,24 +30,24 @@ class _TherapistMessageItemState extends State<TherapistMessageItem> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            widget.showImage
-                ? Padding(
-                    padding: EdgeInsets.only(
-                      bottom: 12.h,
-                    ),
-                    child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 13,
-                        child: ImageWidget(
-                          imageUrl: Assets.images.pngs.launcherIcon.path,
-                          fit: BoxFit.cover,
-
-                          width: 35,
-                          height: 60,
-                          // size: 40,
-                        )),
-                  )
-                : 35.horizontalSpace,
+            // widget.showImage
+            //     ? Padding(
+            //         padding: EdgeInsets.only(
+            //           bottom: 12.h,
+            //         ),
+            //         child: CircleAvatar(
+            //             backgroundColor: Colors.transparent,
+            //             radius: 13,
+            //             child: ImageWidget(
+            //               imageUrl: Assets.images.pngs.launcherIcon.path,
+            //               fit: BoxFit.cover,
+            //
+            //               width: 35,
+            //               height: 60,
+            //               // size: 40,
+            //             )),
+            //       )
+            //     : 35.horizontalSpace,
             Container(
               constraints: BoxConstraints(
                 maxWidth: 0.75.sw,

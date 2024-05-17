@@ -54,7 +54,9 @@ class _BotChatScreenState extends State<BotChatScreen> {
           return WillPopScope(
             onWillPop: () async {
               if (SessionManager.instance.isLoggedIn &&
-                  context.read<BotChatCubit>().currentChatFlow !=
+                  context
+                      .read<BotChatCubit>()
+                      .currentChatFlow !=
                       BotChatFlow.passwordReset) {
                 context.pushNamed(PageUrl.homeScreen);
               } else {
@@ -69,12 +71,14 @@ class _BotChatScreenState extends State<BotChatScreen> {
                 appBar: CustomAppBar(
                   tittleText: '',
                   leading: CustomBackButton(
-                    icon: context.watch<BotChatCubit>().canNotRevertMessages
+                    icon: context
+                        .watch<BotChatCubit>()
+                        .canNotRevertMessages
                         ? null
                         : const Icon(
-                            Icons.undo,
-                            color: Pallets.black,
-                          ),
+                      Icons.undo,
+                      color: Pallets.black,
+                    ),
                     onTap: () {
                       // context.pop(context);
                       _goBack(context);
@@ -91,7 +95,9 @@ class _BotChatScreenState extends State<BotChatScreen> {
                         switch (value) {
                           case "end":
                             if (SessionManager.instance.isLoggedIn &&
-                                context.read<BotChatCubit>().currentChatFlow !=
+                                context
+                                    .read<BotChatCubit>()
+                                    .currentChatFlow !=
                                     BotChatFlow.passwordReset) {
                               injector
                                   .get<RegistrationBloc>()
@@ -135,32 +141,43 @@ class _BotChatScreenState extends State<BotChatScreen> {
                         child: Column(
                           children: [
                             Expanded(
-                                child: ScrollablePositionedList.builder(
-                                    reverse: true,
+                                child: Builder(
+                                    builder: (context) {
+                                      if (context
+                                          .watch<BotChatCubit>()
+                                          .stagedMessages
+                                          .isNotEmpty) {
+                                        return ScrollablePositionedList.builder(
+                                            reverse: true,
 
-                                    // shrinkWrap: true,
+                                            // shrinkWrap: true,
 
-                                    // addAutomaticKeepAlives: true,
-                                    padding: EdgeInsets.zero,
-                                    // physics:
-                                    //     const AlwaysScrollableScrollPhysics(),
-                                    itemScrollController: context
-                                        .read<BotChatCubit>()
-                                        .scrollController,
-                                    itemCount: context
-                                        .watch<BotChatCubit>()
-                                        .stagedMessages
-                                        .reversed
-                                        .toList()
-                                        .length,
-                                    itemBuilder: (context, index) =>
-                                        BCMessageBox(
-                                          message: context
-                                              .watch<BotChatCubit>()
-                                              .stagedMessages
-                                              .reversed
-                                              .toList()[index],
-                                        ))),
+                                            // addAutomaticKeepAlives: true,
+                                            padding: EdgeInsets.zero,
+                                            // physics:
+                                            //     const AlwaysScrollableScrollPhysics(),
+                                            itemScrollController: context
+                                                .read<BotChatCubit>()
+                                                .scrollController,
+                                            itemCount: context
+                                                .watch<BotChatCubit>()
+                                                .stagedMessages
+                                                .reversed
+                                                .toList()
+                                                .length,
+                                            itemBuilder: (context, index) =>
+                                                BCMessageBox(
+                                                  message: context
+                                                      .watch<BotChatCubit>()
+                                                      .stagedMessages
+                                                      .reversed
+                                                      .toList()[index],
+                                                ));
+                                      }
+                                      return 0.verticalSpace;
+                                    }
+
+                                )),
                             16.verticalSpace,
                             TalkToMentraInputFields(
                                 currentMessage: context
@@ -183,9 +200,13 @@ class _BotChatScreenState extends State<BotChatScreen> {
   }
 
   void _goBack(BuildContext context) {
-    if (context.read<BotChatCubit>().canNotRevertMessages) {
+    if (context
+        .read<BotChatCubit>()
+        .canNotRevertMessages) {
       if (SessionManager.instance.isLoggedIn &&
-          context.read<BotChatCubit>().currentChatFlow !=
+          context
+              .read<BotChatCubit>()
+              .currentChatFlow !=
               BotChatFlow.passwordReset) {
         context.pushNamed(PageUrl.homeScreen);
       } else {
@@ -201,9 +222,9 @@ class _BotChatScreenState extends State<BotChatScreen> {
         context, const EndMentraSessionDialog(),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        )),
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            )),
         constraints: BoxConstraints(maxHeight: 0.9.sh));
 
     if (sessionEnded ?? false) {
@@ -211,20 +232,20 @@ class _BotChatScreenState extends State<BotChatScreen> {
           context, const MentraSessionEndedSheet(),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          )),
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              )),
           constraints: BoxConstraints(maxHeight: 0.9.sh));
 
       if (writeReview ?? false) {
         final bool? wroteFeedback =
-            await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
+        await CustomDialogs.showBottomSheet(context, const ReviewSheet(),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 )),
-                constraints: BoxConstraints(maxHeight: 0.9.sh));
+            constraints: BoxConstraints(maxHeight: 0.9.sh));
 
         context.pop();
       } else {

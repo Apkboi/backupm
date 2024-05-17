@@ -28,7 +28,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     on<SubscribeEvent>(_mapSubscribeEventToState);
   }
 
-  FutureOr<void> _mapGetPlansEventToState(GetPlansEvent event, Emitter<SubscriptionState> emit) async {
+  FutureOr<void> _mapGetPlansEventToState(
+      GetPlansEvent event, Emitter<SubscriptionState> emit) async {
     emit(GetPlansLoadingState());
     try {
       final response = await subscriptionRepository.getPlans();
@@ -40,14 +41,17 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     }
   }
 
-  FutureOr<void> _mapSubscribeEventToState(SubscribeEvent event, Emitter<SubscriptionState> emit) async {
+  FutureOr<void> _mapSubscribeEventToState(
+      SubscribeEvent event, Emitter<SubscriptionState> emit) async {
     emit(SubscriptionLoadingState());
     try {
-      var paymentInfo = await _makePayment(event.payload);
-      var response = await onPayResult(paymentInfo, event.payload);
-      injector.get<UserBloc>().add(GetRemoteUser());
+      // final paymentIntent = await subscriptionRepository.createPaymentIntent();
+      var paymentInfo = await makeStripePayment(event.payload);
 
-      emit(SubscribeSuccessState(response));
+      // var paymentInfo = await _makePayment(event.payload);
+      // var response = await onPayResult(paymentInfo, event.payload);
+      injector.get<UserBloc>().add(GetRemoteUser());
+      emit(SubscribeSuccessState(paymentInfo));
     } on PlatformException catch (e, stack) {
       logger.e(e.message);
       logger.e(stack.toString());
@@ -80,7 +84,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     }
   }
 
-  Future<dynamic> onPayResult(paymentResult, SubscriptionPayload payload) async {
+  Future<dynamic> onPayResult(
+      paymentResult, SubscriptionPayload payload) async {
     // final response = await StripeService().createTestPaymentSheet();
     // final clientSecret = response['client_secret'];
     // final token =
@@ -99,5 +104,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     // logger.w(paymentIntent.toJson());
   }
 
-
+ Future makeStripePayment(SubscriptionPayload payload) async{
+    var response = await StripeService().initPaymentSheet();
+    return 'Successful';
+  }
 }

@@ -34,4 +34,17 @@ class SubscriptionRepositoryImpl extends SubscriptionRepository {
       rethrow;
     }
   }
+
+  @override
+  Future createPaymentIntent() async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.getPaymentIntent,
+        RequestMethod.get,
+      );
+      return response.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
