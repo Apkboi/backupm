@@ -91,7 +91,7 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
               Column(
                 children: [
                   ImageWidget(
-                    imageUrl: widget.session.user.avatar,
+                    imageUrl: widget.session.therapist.user.avatar,
                     shape: BoxShape.circle,
                     size: 50,
                   ),

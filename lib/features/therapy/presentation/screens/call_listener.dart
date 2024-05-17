@@ -80,7 +80,7 @@ class _CallListenerState extends State<CallListener> {
           var currentRoute = CustomRoutes
               .goRouter.routerDelegate.currentConfiguration.last.route.path;
 
-          if (!await CallKitService.instance.theirIsAnActiveCall()) {
+          // if (!await CallKitService.instance.theirIsAnActiveCall()) {
             Debouncer(milliseconds: 500).run(() {
               if (currentRoute != '/${PageUrl.therapyCallScreen}') {
                 showGeneralDialog(
@@ -97,7 +97,7 @@ class _CallListenerState extends State<CallListener> {
                 );
               }
             });
-          }
+          // }
         } catch (e, stack) {
           logger.e(e.toString(), stackTrace: stack);
           logger.e(stack);

@@ -74,7 +74,7 @@ class _MenuScreenState extends State<MenuScreen> {
           },
           actions: [
             Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.all(2.0),
               child: CustomNeumorphicButton(
                 expanded: false,
                 onTap: () {

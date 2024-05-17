@@ -84,6 +84,7 @@ class NotificationService {
         enableLights: true,
         showBadge: true,
         playSound: true,
+
       );
 
       /// Create an Android Notification Channel.

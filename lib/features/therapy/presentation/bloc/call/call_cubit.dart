@@ -350,7 +350,7 @@ class CallCubit extends Cubit<CallState> {
   _callAction(String action, String value) async {
     try {
       await _callRepository.callAction(
-          _callerId, _calleeId, _sessionId.toString(), action, value);
+          _calleeId, _callerId, _sessionId.toString(), action, value);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -364,6 +364,7 @@ class CallCubit extends Cubit<CallState> {
 
       _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
       _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
+
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
 

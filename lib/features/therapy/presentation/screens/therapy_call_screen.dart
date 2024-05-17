@@ -38,9 +38,9 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
 
   @override
   void initState() {
-    PermissionManager.requestPermission(
-      context,
-    );
+    // PermissionManager.requestPermission(
+    //   context,
+    // );
     Future.delayed(
       const Duration(
         milliseconds: 300,

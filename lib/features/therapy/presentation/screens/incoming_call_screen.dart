@@ -144,7 +144,8 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
     // });
 
     // log
-    Navigator.pop(rootNavigatorKey.currentState!.context);
+    // Navigator.pop(c);
+    context.pop();
     context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
       PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
       PathParam.callerId: widget.callerId.toString(),
