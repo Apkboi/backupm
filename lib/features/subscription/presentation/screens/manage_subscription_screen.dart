@@ -3,11 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
+import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
+import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 import 'package:mentra/features/subscription/presentation/widget/plan_features_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -28,45 +31,66 @@ class _ManageSubscriptionScreenState extends State<ManageSubscriptionScreen> {
         tittleText: '',
         actions: [],
       ),
-      body: BlocConsumer<UserBloc, UserState>(
-        bloc: injector.get(),
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Stack(
-            children: [
-              AppBg(
-                image: Assets.images.pngs.homeBg.path,
-              ),
-              SafeArea(
-                  child: Padding(
-                padding: const EdgeInsets.all(17),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextView(
-                      text: 'Current Plan',
-                      style: GoogleFonts.fraunces(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600,
-                          color: Pallets.primaryDark),
-                    ),
-                    16.verticalSpace,
-                    Expanded(
-                      child: PlanDetailsItem(
-                          isPreview: true,
-                          plan: injector
-                              .get<UserBloc>()
-                              .appUser!
-                              .activeSubscription!
-                              .plan),
-                    ),
-                    10.verticalSpace,
-                  ],
-                ),
-              ))
-            ],
-          );
+      body: BlocListener<SubscriptionBloc, SubscriptionState>(
+        bloc: injector.get<SubscriptionBloc>(),
+        listener: (context, state) {
+          // logger.i(state.runtimeType.toString());
+          //
+          // if (state is SubscriptionLoadingState) {
+          //   CustomDialogs.showLoading(context);
+          // }
+          //
+          // if (state is SubscriptionFailureState) {
+          //   context.pop();
+          //   CustomDialogs.error(state.error);
+          // }
+          //
+          // if (state is SubscribeSuccessState) {
+          //   context.pop();
+          //   context.pop();
+          //   CustomDialogs.success('Payment successful.');
+          // }
         },
+        child: BlocConsumer<UserBloc, UserState>(
+          bloc: injector.get(),
+          listener: (context, state) {},
+          builder: (context, state) {
+            return Stack(
+              children: [
+                AppBg(
+                  image: Assets.images.pngs.homeBg.path,
+                ),
+                SafeArea(
+                    child: Padding(
+                  padding: const EdgeInsets.all(17),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextView(
+                        text: 'Current Plan',
+                        style: GoogleFonts.fraunces(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            color: Pallets.primaryDark),
+                      ),
+                      16.verticalSpace,
+                      Expanded(
+                        child: PlanDetailsItem(
+                            isPreview: true,
+                            plan: injector
+                                .get<UserBloc>()
+                                .appUser!
+                                .activeSubscription!
+                                .plan),
+                      ),
+                      10.verticalSpace,
+                    ],
+                  ),
+                ))
+              ],
+            );
+          },
+        ),
       ),
     );
   }

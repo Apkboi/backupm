@@ -10,7 +10,7 @@ import 'package:mentra/core/services/pay/pay_service.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
-import 'package:mentra/features/subscription/data/models/subscribe_response.dart';
+import 'package:mentra/features/subscription/data/models/stripe_subscription_payload.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/dormain/repository/subscription_repository.dart';
 import 'package:pay/pay.dart';
@@ -45,9 +45,14 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
       SubscribeEvent event, Emitter<SubscriptionState> emit) async {
     emit(SubscriptionLoadingState());
     try {
-      // final paymentIntent = await subscriptionRepository.createPaymentIntent();
-      var paymentInfo = await makeStripePayment(event.payload);
+      final paymentIntent =
+          await subscriptionRepository.createPaymentIntent(event.payload);
 
+      var paymentInfo = await makeStripePayment(StripeSubscriptionPayload(
+          intent: paymentIntent,
+          paymentType: PaymentType.reOcurring,
+          plan: event.payload.planName,
+          enablePlatformPay: true));
       // var paymentInfo = await _makePayment(event.payload);
       // var response = await onPayResult(paymentInfo, event.payload);
       injector.get<UserBloc>().add(GetRemoteUser());
@@ -92,7 +97,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     //     paymentResult['paymentMethodData']['tokenizationData']['token'];
     // final tokenJson = Map.castFrom(json.decode(token));
     final params = PaymentMethodParams.cardFromToken(
-      paymentMethodData: PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
+      paymentMethodData:
+          PaymentMethodDataCardFromToken.fromJson({"token": 'tok_visa'}),
     );
     return await subscriptionRepository.subscribe(payload);
 
@@ -104,8 +110,8 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     // logger.w(paymentIntent.toJson());
   }
 
- Future makeStripePayment(SubscriptionPayload payload) async{
-    var response = await StripeService().initPaymentSheet();
+  Future makeStripePayment(StripeSubscriptionPayload payload) async {
+    var response = await StripeService().initPaymentSheet(payload);
     return 'Successful';
   }
 }

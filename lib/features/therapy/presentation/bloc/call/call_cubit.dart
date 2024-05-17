@@ -42,6 +42,17 @@ class CallCubit extends Cubit<CallState> {
 
   // media status
   bool isAudioOn = true, isVideoOn = true, isFrontCameraSelected = true;
+  var retriedTimes = 0;
+
+  bool shouldEndCall() {
+    if (retriedTimes < 4) {
+      retriedTimes += 1;
+
+      return false;
+    }
+
+    return true;
+  }
 
   void setState(dynamic fn) {
     Future.delayed(
@@ -119,7 +130,12 @@ class CallCubit extends Cubit<CallState> {
       _rtcPeerConnection!.onIceConnectionState = (state) {
         if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
             state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
-          endCall();
+          if (shouldEndCall()) {
+            endCall();
+          } else {
+            retriedTimes = 0;
+            emit(CallReConnectingState());
+          }
         }
         if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
           emit(CallConnectedState());
@@ -166,7 +182,8 @@ class CallCubit extends Cubit<CallState> {
       );
 
       // create SDP answer
-      RTCSessionDescription answer = await _rtcPeerConnection!.createAnswer({'offerToReceiveVideo': 1});
+      RTCSessionDescription answer =
+          await _rtcPeerConnection!.createAnswer({'offerToReceiveVideo': 1});
 
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
@@ -181,7 +198,8 @@ class CallCubit extends Cubit<CallState> {
   }
 
   void _createOffer() async {
-    RTCSessionDescription offer = await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
+    RTCSessionDescription offer =
+        await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
     _rtcPeerConnection!.setLocalDescription(offer);
     await _offerCall(_callerId, offer.toMap());
   }

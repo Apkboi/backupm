@@ -85,3 +85,8 @@ class LeaveCallState extends CallState {
 
   List<Object> get props => [];
 }
+
+class CallReConnectingState extends CallState {
+  @override
+  List<Object> get props => [];
+}

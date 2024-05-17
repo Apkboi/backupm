@@ -136,22 +136,22 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
   }
 
   _answerCall(BuildContext context, String descriptionId) {
-    Navigator.pop(rootNavigatorKey.currentState!.context);
-
-    context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
-      PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
-      PathParam.callerId: descriptionId,
-    });
-
-    // log
     // Navigator.pop(rootNavigatorKey.currentState!.context);
+
     // context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
     //   PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
-    //   PathParam.callerId: widget.callerId.toString(),
-    //   PathParam.caller: jsonEncode(widget.caller?.toJson()),
-    //   if (widget.offer != null)
-    //     PathParam.offer: jsonEncode(widget.offer?.toJson()),
+    //   PathParam.callerId: descriptionId,
     // });
+
+    // log
+    Navigator.pop(rootNavigatorKey.currentState!.context);
+    context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+      PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
+      PathParam.callerId: widget.callerId.toString(),
+      PathParam.caller: jsonEncode(widget.caller?.toJson()),
+      if (widget.offer != null)
+        PathParam.offer: jsonEncode(widget.offer?.toJson()),
+    });
     // CallKitService.instance.an
   }
 

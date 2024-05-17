@@ -123,6 +123,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
         await pusher.connect();
       }
     } catch (e, s) {
+      logger.w(e.toString());
       SentryService.captureException(e, stackTrace: s);
     }
   }
@@ -156,7 +157,9 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
     });
   }
 
-  onSubscriptionError(message, d) {}
+  onSubscriptionError(message, d) {
+    logger.e(message);
+  }
 
   onEventReceived(event) {
     try {

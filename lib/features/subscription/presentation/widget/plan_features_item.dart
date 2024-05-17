@@ -39,7 +39,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
-        bloc: injector.get(),
+        bloc: injector.get<SubscriptionBloc>(),
         listener: _listenToSubscriptionBloc,
         builder: (context, state) {
           return Column(
@@ -226,7 +226,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
       amount: widget.plan.price.toString(),
       planName: widget.plan.name,
     );
-    _bloc.add(SubscribeEvent(payload));
+    injector.get<SubscriptionBloc>().add(SubscribeEvent(payload));
     // }
   }
 

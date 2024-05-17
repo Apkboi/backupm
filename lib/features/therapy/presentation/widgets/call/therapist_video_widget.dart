@@ -56,6 +56,15 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
                   ),
                 );
               }
+              if (state is CallReConnectingState) {
+                return const Center(
+                  child: TextView(
+                    text: 'Reconnecting...',
+                    color: Pallets.white,
+                    fontSize: 18,
+                  ),
+                );
+              }
 
               if (state is CallActionState) {
                 if (state.response.action == "videoStateChanged") {

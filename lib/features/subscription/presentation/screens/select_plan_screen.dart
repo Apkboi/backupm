@@ -8,6 +8,7 @@ import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 import 'package:mentra/features/subscription/presentation/widget/plan_features_item.dart';
 import 'package:mentra/gen/assets.gen.dart';
@@ -20,11 +21,11 @@ class SelectPlanScreen extends StatefulWidget {
 }
 
 class _SelectPlanScreenState extends State<SelectPlanScreen> {
-  final _bloc = injector.get<SubscriptionBloc>();
+  // final _bloc = injector.get<SubscriptionBloc>();
 
   @override
   void initState() {
-    _bloc.add(GetPlansEvent());
+    injector.get<SubscriptionBloc>().add(GetPlansEvent());
     super.initState();
   }
 
@@ -44,9 +45,10 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
             children: [
               Expanded(
                 child: BlocConsumer<SubscriptionBloc, SubscriptionState>(
-                  bloc: _bloc,
+                  bloc: injector.get<SubscriptionBloc>(),
                   listener: (context, state) {
                     logger.i(state.runtimeType.toString());
+
                     if (state is SubscriptionLoadingState) {
                       CustomDialogs.showLoading(context);
                     }
@@ -57,6 +59,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                     }
 
                     if (state is SubscribeSuccessState) {
+                      injector.get<UserBloc>().add(GetRemoteUser());
                       context.pop();
                       context.pop();
                       CustomDialogs.success('Payment successful.');
@@ -64,6 +67,7 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                   },
                   builder: (context, state) {
                     if (state is GetPlansLoadingState) {
+
                       return Center(
                         child: CustomDialogs.getLoading(size: 30),
                       );
@@ -72,7 +76,9 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       return Center(
                         child: AppPromptWidget(
                           onTap: () {
-                            _bloc.add(GetPlansEvent());
+                            injector
+                                .get<SubscriptionBloc>()
+                                .add(GetPlansEvent());
                           },
                         ),
                       );

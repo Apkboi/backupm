@@ -190,11 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                     // CallKitService.instance.checkAndNavigationCallingPage();
 
-                                    // context
-                                    //     .pushNamed(PageUrl.talkToMentraScreen);
+                                    context
+                                        .pushNamed(PageUrl.talkToMentraScreen);
 
-                                    StripeService().initPaymentSheet();
-                                    // CallKitService.instance.showIncomingCall(
+                                    // StripeService().initPaymentSheet(P);
+                                    // CallKitService.instancei.showIncomingCall(
                                     //     'callerId', 'callerName');
                                   },
                                   color: Pallets.secondary,

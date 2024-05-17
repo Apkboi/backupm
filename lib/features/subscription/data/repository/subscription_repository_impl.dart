@@ -1,5 +1,6 @@
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
+import 'package:mentra/features/subscription/data/models/create_payment_intent_response.dart';
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
 import 'package:mentra/features/subscription/data/models/subscribe_response.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
@@ -36,13 +37,14 @@ class SubscriptionRepositoryImpl extends SubscriptionRepository {
   }
 
   @override
-  Future createPaymentIntent() async {
+  Future<CreateIntentResponse> createPaymentIntent(SubscriptionPayload payload) async {
     try {
       final response = await _networkService.call(
         UrlConfig.getPaymentIntent,
-        RequestMethod.get,
+        RequestMethod.post,
+        data: {"plan_duration_id": payload.planDurationId}
       );
-      return response.data;
+      return CreateIntentResponse.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
