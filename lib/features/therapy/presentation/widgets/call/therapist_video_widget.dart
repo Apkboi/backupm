@@ -105,6 +105,7 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
   bool _buildWhen(CallState previous, CallState current) {
     return current is CallConnectingState ||
         current is CallConnectedState ||
+        current is CallReConnectingState ||
         current is CallActionState;
   }
 }

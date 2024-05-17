@@ -9,6 +9,15 @@ class GetPlansEvent extends SubscriptionEvent {
   List<Object?> get props => [];
 }
 
+class CancelSubscriptionEvent extends SubscriptionEvent {
+  String id;
+
+  CancelSubscriptionEvent(this.id);
+
+  @override
+  List<Object?> get props => [];
+}
+
 class SubscribeEvent extends SubscriptionEvent {
   final SubscriptionPayload payload;
 

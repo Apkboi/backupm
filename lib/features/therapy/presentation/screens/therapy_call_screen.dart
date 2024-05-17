@@ -109,6 +109,7 @@ class _TherapyCallScreenState extends State<TherapyCallScreen> {
 
   void _listenToCallEvents(BuildContext context, CallState state) {
     if (state is CallEndedState) {
+      CallKitService.instance.endAllCalls();
       _reviewCall(context);
     }
 

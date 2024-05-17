@@ -47,12 +47,15 @@ class CallKitService {
           break;
         case Event.actionCallDecline:
           // TODO: declined an incoming call
+
+          endCall();
           break;
         case Event.actionCallEnded:
           // TODO: ended an incoming/outgoing call
           break;
         case Event.actionCallTimeout:
           // TODO: missed an incoming call
+
           endAllCalls();
           break;
         case Event.actionCallCallback:
@@ -161,6 +164,7 @@ class CallKitService {
         injector
             .get<CallCubit>()
             .acceptCall(event.body['extra']['webrtc_description_id']);
+        endAllCalls();
       },
     );
     logger.w(event.body['extra']);
@@ -220,7 +224,8 @@ class CallKitService {
 
   Future theirIsAnActiveCall() async {
     var currentCall = await getCurrentCall();
-    return currentCall != null;
+    return currentCall != null &&
+        (currentCall['accepted'] || currentCall['accepted'] == 'true');
   }
 
   void answerCall() {

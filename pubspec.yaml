@@ -49,7 +49,7 @@ dependencies:
   intl: any
   flutter_image_compress: ^2.0.4
   another_flushbar: ^1.10.29
-  pinput: ^4.0.0
+#  pinput: ^4.0.0
   overlay_support: ^2.0.1
   fluttertoast: ^8.1.1
   flutter_spinkit: ^5.1.0
@@ -71,10 +71,10 @@ dependencies:
   uuid: ^4.2.1
   firebase_core: ^2.27.0
   dropdown_button2: ^2.0.1
-  number_text_input_formatter: ^1.0.0+4
+#  number_text_input_formatter: ^1.0.0+4
   #  carousel_slider: ^4.2.1
   #  ticket_widget: ^0.0.1
-  flutter_masked_text2: ^0.9.1
+#  flutter_masked_text2: ^0.9.1
   flutter_localizations:
     sdk: flutter
   flutter_timer_countdown: ^1.0.5
@@ -108,10 +108,10 @@ dependencies:
   either_dart: ^1.0.0
   flutter_asset_generator: ^1.0.2
   iconsax: ^0.0.8
-  fluentui_system_icons:
+#  fluentui_system_icons:
   form_field_validator: ^1.1.0
-  easy_stepper: ^0.8.3
-  im_stepper: ^1.0.1+1
+#  easy_stepper: ^0.8.3
+#  im_stepper: ^1.0.1+1
   #  syncfusion_flutter_pdfviewer: ^23.2.7
   carousel_slider: ^4.2.1
   #  neumorphic_ui: ^1.0.1
@@ -125,7 +125,7 @@ dependencies:
   chewie: ^1.7.5
   video_thumbnail: ^0.5.3
   #  mesibo_flutter_sdk: ^2.2.7
-  change_app_package_name: ^1.1.0
+#  change_app_package_name: ^1.1.0
   flutter_gen: ^5.4.0
   flutter_staggered_animations: ^1.1.1
   flutter_chat_bubble: ^2.0.2
@@ -138,14 +138,14 @@ dependencies:
   flutter_stripe: ^10.1.1
   pay: ^2.0.0
   pusher_channels_flutter: ^2.2.1
-  socket_io_client: ^2.0.3+1
+#  socket_io_client: ^2.0.3+1
   flutter_webrtc: ^0.9.48+hotfix.1
   sdp_transform: ^0.3.2
   sentry_flutter: ^8.1.0
   flutter_callkit_incoming: ^2.0.4
   vibration: ^1.8.4
   flutter_timezone: ^1.0.8
-  flutter_background_service: ^5.0.5
+#  flutter_background_service: ^5.0.5
   crypto: ^3.0.3
   connectivity_plus: ^6.0.3
   # flutter_background: ^1.2.0

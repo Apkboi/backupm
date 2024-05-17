@@ -81,120 +81,127 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: BlocBuilder<UserBloc, UserState>(
-                  bloc: injector.get(),
-                  builder: (context, state) {
-                    return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: ProfileImageWidget(
-                              size: 80,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  RefreshUserUsecase().execute();
+                },
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: BlocBuilder<UserBloc, UserState>(
+                    bloc: injector.get(),
+                    builder: (context, state) {
+                      return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: ProfileImageWidget(
+                                size: 80,
 
-                              // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
+                                // imageUrl: "${injector.get<LoginBloc>().userPreview?.avatar}"
+                              ),
                             ),
-                          ),
-                          10.verticalSpace,
-                          Center(
-                            child: TextView(
-                              text:
-                                  injector.get<UserBloc>().appUser?.name ?? '',
-                              style: GoogleFonts.fraunces(
-                                  fontSize: 32.sp, color: Pallets.primaryDark),
+                            10.verticalSpace,
+                            Center(
+                              child: TextView(
+                                text: injector.get<UserBloc>().appUser?.name ??
+                                    '',
+                                style: GoogleFonts.fraunces(
+                                    fontSize: 32.sp,
+                                    color: Pallets.primaryDark),
+                              ),
                             ),
-                          ),
-                          18.verticalSpace,
-                          Center(
-                            child: CustomNeumorphicButton(
-                                expanded: false,
-                                onTap: () {
-                                  context.pushNamed(PageUrl.editProfileScreen);
-                                },
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 13),
-                                color: Pallets.primary,
-                                child: const TextView(
-                                  text: "Edit Profile",
-                                  color: Pallets.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                          ),
-                          22.verticalSpace,
-                          BlocBuilder<UserBloc, UserState>(
-                            bloc: injector.get(),
-                            builder: (context, state) {
-                              return GlassContainer(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(17),
-                                child: SettingListTile(
-                                  leadingIconUrl: Assets.images.svgs.sub,
+                            18.verticalSpace,
+                            Center(
+                              child: CustomNeumorphicButton(
+                                  expanded: false,
                                   onTap: () {
-                                    if (injector
-                                            .get<UserBloc>()
-                                            .appUser
-                                            ?.activeSubscription ==
-                                        null) {
-                                      context
-                                          .pushNamed(PageUrl.selectPlanScreen);
-                                    } else {
-                                      context.pushNamed(
-                                          PageUrl.manageSubscriptionScreen);
-                                    }
+                                    context
+                                        .pushNamed(PageUrl.editProfileScreen);
                                   },
-                                  tittle: 'Subscription',
-                                  trailingWidget: Row(
-                                    children: [
-                                      TextView(
-                                        text: injector
-                                                .get<UserBloc>()
-                                                .appUser
-                                                ?.activeSubscription
-                                                ?.plan
-                                                .name ??
-                                            'FREE',
-                                        color: Pallets.ink,
-                                      ),
-                                      8.horizontalSpace,
-                                      const Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 20,
-                                      )
-                                    ],
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 13),
+                                  color: Pallets.primary,
+                                  child: const TextView(
+                                    text: "Edit Profile",
+                                    color: Pallets.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                            ),
+                            22.verticalSpace,
+                            BlocBuilder<UserBloc, UserState>(
+                              bloc: injector.get(),
+                              builder: (context, state) {
+                                return GlassContainer(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(17),
+                                  child: SettingListTile(
+                                    leadingIconUrl: Assets.images.svgs.sub,
+                                    onTap: () {
+                                      if (injector
+                                              .get<UserBloc>()
+                                              .appUser
+                                              ?.activeSubscription ==
+                                          null) {
+                                        context.pushNamed(
+                                            PageUrl.selectPlanScreen);
+                                      } else {
+                                        context.pushNamed(
+                                            PageUrl.manageSubscriptionScreen);
+                                      }
+                                    },
+                                    tittle: 'Subscription',
+                                    trailingWidget: Row(
+                                      children: [
+                                        TextView(
+                                          text: injector
+                                                  .get<UserBloc>()
+                                                  .appUser
+                                                  ?.activeSubscription
+                                                  ?.plan
+                                                  .name ??
+                                              'FREE',
+                                          color: Pallets.ink,
+                                        ),
+                                        8.horizontalSpace,
+                                        const Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 20,
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ));
-                            },
-                          ),
-                          16.verticalSpace,
-                          const SettingsGroup1(),
-                          16.verticalSpace,
-                          const SettingsGroup2(),
-                          16.verticalSpace,
-                          const SettingsGroup3(),
-                          16.verticalSpace,
-                          GlassContainer(
-                              child: Padding(
-                            padding: const EdgeInsets.all(17),
-                            child: SettingListTile(
-                              leadingIconUrl: Assets.images.svgs.logout,
-                              tittle: 'Logout',
-                              onTap: () {
-                                CustomDialogs.showConfirmDialog(
-                                  context,
-                                  onYes: () {
-                                    SessionManager.instance.logOut();
-                                    context.goNamed(PageUrl.onBoardingPage);
-                                  },
-                                  tittle: 'Logout',
-                                );
+                                ));
                               },
                             ),
-                          )),
-                        ]);
-                  },
+                            16.verticalSpace,
+                            const SettingsGroup1(),
+                            16.verticalSpace,
+                            const SettingsGroup2(),
+                            16.verticalSpace,
+                            const SettingsGroup3(),
+                            16.verticalSpace,
+                            GlassContainer(
+                                child: Padding(
+                              padding: const EdgeInsets.all(17),
+                              child: SettingListTile(
+                                leadingIconUrl: Assets.images.svgs.logout,
+                                tittle: 'Logout',
+                                onTap: () {
+                                  CustomDialogs.showConfirmDialog(
+                                    context,
+                                    onYes: () {
+                                      SessionManager.instance.logOut();
+                                      context.goNamed(PageUrl.onBoardingPage);
+                                    },
+                                    tittle: 'Logout',
+                                  );
+                                },
+                              ),
+                            )),
+                          ]);
+                    },
+                  ),
                 ),
               ),
             ),

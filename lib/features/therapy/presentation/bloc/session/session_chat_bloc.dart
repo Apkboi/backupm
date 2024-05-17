@@ -68,7 +68,7 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
       GetMessagesEvent event, Emitter<SessionChatState> emit) async {
     try {
       emit(GetMessagesLoadingState());
-      var response = await _chatRepository.getMessages();
+      var response = await _chatRepository.getMessages(event.therapistId);
 
       messages = response.data
           .map((e) => TherapyChatMessage.fromChatMessage(e))

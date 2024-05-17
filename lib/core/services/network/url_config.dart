@@ -112,6 +112,7 @@ class UrlConfig {
   static const String getPlans = '/finance/plans';
   static const String subscribe = '/finance/subscriptions/initiate';
   static const String getPaymentIntent = '/finance/subscriptions/initiate';
+  static  String   cancelSubscription(String id) => '/finance/subscriptions/$id/cancel';
 
   //  Journals
   static String getPrompts(String id) => '/guided-prompts-categories/$id/show';

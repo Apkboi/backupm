@@ -37,14 +37,26 @@ class SubscriptionRepositoryImpl extends SubscriptionRepository {
   }
 
   @override
-  Future<CreateIntentResponse> createPaymentIntent(SubscriptionPayload payload) async {
+  Future<CreateIntentResponse> createPaymentIntent(
+      SubscriptionPayload payload) async {
     try {
       final response = await _networkService.call(
-        UrlConfig.getPaymentIntent,
-        RequestMethod.post,
-        data: {"plan_duration_id": payload.planDurationId}
-      );
+          UrlConfig.getPaymentIntent, RequestMethod.post,
+          data: {"plan_duration_id": payload.planDurationId});
       return CreateIntentResponse.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future cancelSubscription(String id) async {
+    try {
+      final response = await _networkService.call(
+        UrlConfig.cancelSubscription(id),
+        RequestMethod.post,
+      );
+      return response.data;
     } catch (e) {
       rethrow;
     }

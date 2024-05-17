@@ -39,10 +39,11 @@ class SessionChatRepositoryImpl extends SessionChatRepository {
   }
 
   @override
-  Future<GetMessagesResponse> getMessages() async {
+  Future<GetMessagesResponse> getMessages(String id) async {
     try {
-      final response =
-          await _networkService.call(UrlConfig.getMessages, RequestMethod.get);
+      final response = await _networkService.call(
+          UrlConfig.getMessages, RequestMethod.get,
+          queryParams: {"therapist_id": id});
 
       return GetMessagesResponse.fromJson(response.data);
     } catch (e) {

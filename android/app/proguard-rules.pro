@@ -5,6 +5,7 @@
 -keep class io.flutter.** { *; }
 -keep class io.flutter.plugins.** { *; }
 -keep class com.google.firebase.** { *; }
+-keep class com.hiennv.flutter_callkit_incoming.** { *; }
 -dontwarn io.flutter.embedding.**
 -ignorewarnings
 -dontwarn com.stripe.android.pushProvisioning.PushProvisioningActivity$g

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
-import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
 import 'package:mentra/core/services/sentory/sentory_service.dart';
 import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart';
@@ -49,9 +49,9 @@ class CallCubit extends Cubit<CallState> {
       retriedTimes += 1;
 
       return false;
+    } else {
+      return true;
     }
-
-    return true;
   }
 
   void setState(dynamic fn) {
@@ -130,14 +130,17 @@ class CallCubit extends Cubit<CallState> {
       _rtcPeerConnection!.onIceConnectionState = (state) {
         if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
             state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
-          if (shouldEndCall()) {
-            endCall();
-          } else {
-            retriedTimes = 0;
-            emit(CallReConnectingState());
-          }
+          Debouncer(milliseconds: 5000).run(() {
+            if (shouldEndCall()) {
+              endCall();
+            } else {
+              retriedTimes = 0;
+              emit(CallReConnectingState());
+            }
+          });
         }
         if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
+          isVideoOn = true;
           emit(CallConnectedState());
         }
       };
@@ -191,7 +194,12 @@ class CallCubit extends Cubit<CallState> {
       // send SDP answer to remote peer
       await _answerCall(_callerId, answer.toMap());
     } catch (e, stack) {
-      emit(CallConnectingFailedState());
+      if (shouldEndCall()) {
+        emit(CallConnectingFailedState());
+      } else {
+        _setupPeerConnection();
+        emit(CallReConnectingState());
+      }
       logger.e(e.toString());
       logger.e(stack.toString());
     }
@@ -275,6 +283,7 @@ class CallCubit extends Cubit<CallState> {
           pusher.getChannel(injector.get<UserBloc>().userChannel)?.onEvent =
               onEventReceived;
         }
+
         await pusher.connect();
       }
     } catch (e, s) {
@@ -356,11 +365,9 @@ class CallCubit extends Cubit<CallState> {
       _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
       _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
     } catch (e, stack) {
-      // TODO: Emit Call Failed State
-
-      emit(CallConnectingFailedState());
-
       logger.e(e.toString(), stackTrace: stack);
+
+      rethrow;
     }
   }
 

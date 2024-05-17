@@ -163,7 +163,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
 
     if (state is CallEndedState) {
       // context.pop();
-      // CallKitService.instance.endAllCalls();
+      CallKitService.instance.endAllCalls();
     }
   }
 

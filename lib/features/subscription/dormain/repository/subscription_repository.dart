@@ -8,4 +8,5 @@ abstract class SubscriptionRepository {
 
   Future<GetPlansResponse> getPlans();
   Future<CreateIntentResponse> createPaymentIntent(SubscriptionPayload payload);
+  Future<dynamic> cancelSubscription(String id);
 }

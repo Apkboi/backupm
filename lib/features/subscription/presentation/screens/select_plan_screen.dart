@@ -8,6 +8,7 @@ import 'package:mentra/common/widgets/error_widget.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
 import 'package:mentra/features/subscription/presentation/widget/plan_features_item.dart';
@@ -57,17 +58,30 @@ class _SelectPlanScreenState extends State<SelectPlanScreen> {
                       context.pop();
                       CustomDialogs.error(state.error);
                     }
-
                     if (state is SubscribeSuccessState) {
                       injector.get<UserBloc>().add(GetRemoteUser());
-                      context.pop();
-                      context.pop();
+                      context.goNamed(PageUrl.settingsScreen);
+
                       CustomDialogs.success('Payment successful.');
+                    }
+
+                    if (state is CancelSubscriptionSuccessState) {
+                      injector.get<UserBloc>().add(GetRemoteUser());
+                      context.goNamed(PageUrl.settingsScreen);
+                      CustomDialogs.success('Subscription canceled');
+                    }
+
+                    if (state is CancelSubscriptionLoadingState) {
+                      CustomDialogs.showLoading(context);
+                    }
+
+                    if (state is CancelSubscriptionFailureState) {
+                      context.pop();
+                      CustomDialogs.error(state.error);
                     }
                   },
                   builder: (context, state) {
                     if (state is GetPlansLoadingState) {
-
                       return Center(
                         child: CustomDialogs.getLoading(size: 30),
                       );

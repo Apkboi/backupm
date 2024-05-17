@@ -13,6 +13,7 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/subscription/data/models/get_plans_response.dart';
 import 'package:mentra/features/subscription/data/models/subscription_payload.dart';
 import 'package:mentra/features/subscription/presentation/bloc/subscription_bloc/subscription_bloc.dart';
@@ -179,7 +180,14 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
                       TextButton(
                           onPressed: () {
                             // _makePayment();
-                            _cancelSubscription(context);
+                            _cancelSubscription(
+                                context,
+                                injector
+                                    .get<UserBloc>()
+                                    .appUser!
+                                    .activeSubscription!
+                                    .id
+                                    .toString());
                             // _subscribe(
                             //     context, widget.plan.durations[0]);
                           },
@@ -233,7 +241,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
   void _listenToSubscriptionBloc(
       BuildContext context, SubscriptionState state) {}
 
-  void _cancelSubscription(BuildContext context) {
+  void _cancelSubscription(BuildContext context, String id) {
     CustomDialogs.showBottomSheet(
         context,
         ConfirmSheet(
@@ -244,6 +252,7 @@ class _PlanDetailsItemState extends State<PlanDetailsItem> {
               "You'll lose access to premium features and your subscription benefits will end on [Subscription End Date]. Your account will revert to the free plan.",
           onConfirm: () {
             context.pop();
+            injector.get<SubscriptionBloc>().add(CancelSubscriptionEvent(id));
           },
           onCancel: () {
             context.pop();

@@ -5,6 +5,10 @@ abstract class SessionChatEvent {
 }
 
 class GetMessagesEvent extends SessionChatEvent {
+  String therapistId;
+
+  GetMessagesEvent(this.therapistId);
+
   List<Object?> get props => [];
 }
 

@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/navigation/path_params.dart';
+import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
@@ -95,7 +100,13 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
                       padding: const EdgeInsets.all(6),
                       expanded: false,
                       fgColor: Pallets.black,
-                      onTap: () {},
+                      onTap: () {
+                        context.pushNamed(PageUrl.therapistChatScreen,
+                            queryParameters: {
+                              PathParam.therapist:
+                              jsonEncode(widget.session.therapist.toJson())
+                            });
+                      },
                       text: 'Chat',
                       color: Pallets.secondary),
                 ],

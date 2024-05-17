@@ -55,3 +55,30 @@ class SubscribeSuccessState extends SubscriptionState {
   @override
   List<Object> get props => [response];
 }
+
+
+
+
+class CancelSubscriptionLoadingState extends SubscriptionState {
+  @override
+  List<Object> get props => [];
+}
+
+class CancelSubscriptionFailureState extends SubscriptionState {
+  final String error;
+
+  const CancelSubscriptionFailureState(this.error);
+
+  @override
+  List<Object> get props => [error];
+}
+class CancelSubscriptionSuccessState extends SubscriptionState {
+  final dynamic response;
+  // final SubscribeResponse response;
+
+  const CancelSubscriptionSuccessState(this.response);
+
+  @override
+  List<Object> get props => [response];
+}
+

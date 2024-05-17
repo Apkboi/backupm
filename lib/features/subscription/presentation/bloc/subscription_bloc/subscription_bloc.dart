@@ -26,6 +26,7 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
     on<SubscriptionEvent>((event, emit) {});
     on<GetPlansEvent>(_mapGetPlansEventToState);
     on<SubscribeEvent>(_mapSubscribeEventToState);
+    on<CancelSubscriptionEvent>(_mapCancelSubscriptionToState);
   }
 
   FutureOr<void> _mapGetPlansEventToState(
@@ -113,5 +114,19 @@ class SubscriptionBloc extends Bloc<SubscriptionEvent, SubscriptionState> {
   Future makeStripePayment(StripeSubscriptionPayload payload) async {
     var response = await StripeService().initPaymentSheet(payload);
     return 'Successful';
+  }
+
+  FutureOr<void> _mapCancelSubscriptionToState(
+      CancelSubscriptionEvent event, Emitter<SubscriptionState> emit) async {
+    emit(CancelSubscriptionLoadingState());
+    try {
+      final response =
+          await subscriptionRepository.cancelSubscription(event.id);
+      emit(CancelSubscriptionSuccessState(response));
+    } catch (e, stack) {
+      logger.e(e.toString());
+      logger.e(stack.toString());
+      emit(CancelSubscriptionFailureState(e.toString()));
+    }
   }
 }

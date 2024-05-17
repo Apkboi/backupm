@@ -7,7 +7,7 @@ abstract class SessionChatRepository {
 
   Future<dynamic> getConversations();
 
-  Future<GetMessagesResponse> getMessages();
+  Future<GetMessagesResponse> getMessages(String id);
 
   Future<dynamic> deleteMessage(int messageId);
 

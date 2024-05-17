@@ -41,7 +41,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
   @override
   void initState() {
     // _listenForMessages();
-    bloc.add(GetMessagesEvent());
+    bloc.add(GetMessagesEvent(widget.therapist.user.id.toString()));
     super.initState();
   }
 
@@ -96,7 +96,8 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                           child: AppPromptWidget(
                             message: state.error,
                             onTap: () {
-                              bloc.add(GetMessagesEvent());
+                              bloc.add(GetMessagesEvent(widget.therapist.user.id.toString()));
+
                             },
                           ),
                         );
