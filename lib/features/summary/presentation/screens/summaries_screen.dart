@@ -10,11 +10,10 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/summary/presentation/screens/summary_tab.dart';
-import 'package:mentra/features/summary/presentation/screens/work_sheet_tab.dart';
+import 'package:mentra/features/work_sheet/presentation/screens/work_sheet_tab.dart';
 import 'package:mentra/features/tasks/presentation/screens/daily_task_tab.dart';
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
-
 
 class MyActivitiesScreen extends StatefulWidget {
   const MyActivitiesScreen({Key? key}) : super(key: key);

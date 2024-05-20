@@ -3,6 +3,13 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class TimeUtil {
   /// format date
+  static String worSheetFormat(String date) {
+    if (date.isEmpty) return 'N/A';
+    DateTime dt = DateTime.parse(date);
+    return DateFormat("yyyy-MM-dd HH:mm").format(dt);
+  }
+
+  /// format date
   static String formatDate(String date) {
     if (date.isEmpty) return 'N/A';
     DateTime dt = DateTime.parse(date);

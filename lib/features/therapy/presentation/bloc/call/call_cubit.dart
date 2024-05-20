@@ -364,7 +364,6 @@ class CallCubit extends Cubit<CallState> {
 
       _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
       _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
-
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
 

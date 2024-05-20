@@ -84,7 +84,6 @@ class NotificationService {
         enableLights: true,
         showBadge: true,
         playSound: true,
-
       );
 
       /// Create an Android Notification Channel.
@@ -115,7 +114,7 @@ class NotificationService {
       );
     }
 
-    // await FirebaseMessaging.instance
+    // await FirebaseMessaging.instnce
     //     .subscribeToTopic("all"); //subscribe firebase message on topic
 
     // await FirebaseMessaging.instance.subscribeToTopic('kusnap');

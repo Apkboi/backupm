@@ -76,6 +76,8 @@ import 'package:mentra/features/therapy/presentation/screens/therapist_chat_scre
 import 'package:mentra/features/therapy/presentation/screens/therapist_profile_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_call_screen.dart';
 import 'package:mentra/features/therapy/presentation/screens/therapy_screen.dart';
+import 'package:mentra/features/work_sheet/presentation/widgets/questionaire_screen.dart';
+import 'package:mentra/features/work_sheet/presentation/widgets/work_sheet_detail_screen.dart';
 
 import '../../features/subscription/presentation/screens/manage_subscription_screen.dart';
 
@@ -495,6 +497,21 @@ class CustomRoutes {
                     : null,
                 sessionId: state.uri.queryParameters[PathParam.sessionId] ?? 0,
               )),
+      GoRoute(
+          path: '/questionaireScreen',
+          name: PageUrl.questionaireScreen,
+          builder: (context, state) => QuestionaireScreen(
+
+            id: state.uri.queryParameters[PathParam.id] ?? '0',
+          )),
+      GoRoute(
+          path: '/worksheetDetails',
+          name: PageUrl.worksheetDetails,
+          builder: (context, state) => WorksheetDetailScreen(
+
+            id: state.uri.queryParameters[PathParam.id] ?? '0',
+          )),
+
     ],
   );
 

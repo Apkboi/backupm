@@ -158,4 +158,10 @@ class UrlConfig {
 
   static String deleteConversation(int conversationId) =>
       "/messages/delete-conversation/$conversationId";
+
+//   WorkSheet
+  static String getWorkSheets= "/work-sheet";
+  static String getQuestionaires= "/getQuestionaires";
+  static String submitQuestionaires = "/submitQuestionaires";
+  static String markTask= "/markTask ";
 }

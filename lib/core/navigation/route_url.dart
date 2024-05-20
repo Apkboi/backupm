@@ -85,4 +85,10 @@ class PageUrl {
 
 //   Call
   static const therapyCallScreen = 'therapyCallScreen';
+
+//   WorkSheet
+  static const worksheetDetails = 'worksheetDetails';
+  static const questionaireScreen = 'questionaireScreen';
+
+
 }

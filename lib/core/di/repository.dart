@@ -31,6 +31,8 @@ import 'package:mentra/features/therapy/data/repository/therapy_repository_impl.
 import 'package:mentra/features/therapy/dormain/repository/call_repository.dart';
 import 'package:mentra/features/therapy/dormain/repository/session_chat_repository.dart';
 import 'package:mentra/features/therapy/dormain/repository/therapy_repository.dart';
+import 'package:mentra/features/work_sheet/data/repositories/work_sheet_repository.dart';
+import 'package:mentra/features/work_sheet/dormain/repositories/work_sheey_repository.dart';
 
 void setup(GetIt getIt) {
   getIt.registerLazySingleton<AuthRepository>(
@@ -65,4 +67,6 @@ void setup(GetIt getIt) {
       () => CallRepositoryImpl(getIt.get()));
   getIt.registerLazySingleton<SessionChatRepository>(
       () => SessionChatRepositoryImpl(getIt.get()));
+  getIt.registerLazySingleton<WorkSheetRepository>(
+      () => WorkSheetRepositoryImpl(getIt.get()));
 }
