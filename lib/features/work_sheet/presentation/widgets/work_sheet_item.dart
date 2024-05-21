@@ -3,6 +3,7 @@ import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/constants/package_exports.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/work_sheet/data/models/get_all_work_sheet_response.dart';
@@ -42,7 +43,9 @@ class WorkSheetItem extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   fontSize: 12,
                 ),
-                _WorkSheetStatus(status: workSheet.status,),
+                _WorkSheetStatus(
+                  status: workSheet.status,
+                ),
               ],
             ),
             16.verticalSpace,
@@ -54,8 +57,17 @@ class WorkSheetItem extends StatelessWidget {
   }
 
   void _goToWorkSheetScreen(BuildContext context) {
-    // context.pushNamed(PageUrl.worksheetDetails);
-    context.pushNamed(PageUrl.questionaireScreen);
+    if (workSheet.type == "weekly-task") {
+      context.pushNamed(PageUrl.worksheetDetails, queryParameters: {
+        PathParam.id: workSheet.id.toString(),
+        PathParam.name: workSheet.title,
+      });
+    } else {
+      context.pushNamed(PageUrl.questionaireScreen, queryParameters: {
+        PathParam.id: workSheet.id.toString(),
+        PathParam.name: workSheet.title,
+      });
+    }
   }
 }
 
@@ -69,11 +81,11 @@ class _WorkSheetStatus extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          color: getColorByStatus(status).withOpacity(0.5),
+          color: getColorByStatus(status).withOpacity(0.3),
           borderRadius: BorderRadius.circular(100)),
       child: TextView(
-          text: "Pending",
-          color: getColorByStatus(status).withOpacity(0.5),
+        text: "Pending",
+        color: getColorByStatus(status),
       ),
     );
   }
@@ -81,7 +93,7 @@ class _WorkSheetStatus extends StatelessWidget {
   Color getColorByStatus(String status) {
     switch (status.toLowerCase()) {
       case "pending":
-        return Pallets.promptDarkMilkColor;
+        return Colors.orangeAccent;
       case "submitted":
         return Colors.green;
       case "completed":
@@ -89,7 +101,7 @@ class _WorkSheetStatus extends StatelessWidget {
       case "rejected":
         return Colors.red;
       default:
-      // Handle unknown statuses gracefully
+        // Handle unknown statuses gracefully
         print("WARNING: Unknown status: $status. Returning default color.");
         return Colors.grey; // Or another appropriate default color
     }

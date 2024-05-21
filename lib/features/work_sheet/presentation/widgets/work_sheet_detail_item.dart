@@ -3,9 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/work_sheet/data/models/get_all_work_sheet_response.dart';
 
 class WorkSheetDetailItem extends StatefulWidget {
-  const WorkSheetDetailItem({super.key});
+  const WorkSheetDetailItem(
+      {super.key, required this.weeklyTask, required this.period});
+
+  final List<WeeklyTodoTask> weeklyTask;
+  final String period;
 
   @override
   State<WorkSheetDetailItem> createState() => _WorkSheetDetailItemState();
@@ -33,14 +38,14 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
                   color: Pallets.grey,
                 ),
                 6.horizontalSpace,
-                const TextView(
-                  text: "Morning",
+                TextView(
+                  text: widget.period,
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),
                 6.horizontalSpace,
-                const TextView(
-                  text: "(2)",
+                TextView(
+                  text: "(${widget.weeklyTask.length})",
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                   color: Pallets.grey,
@@ -58,7 +63,11 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: Column(
-                children: List.generate(3, (index) => const _TaskItem()),
+                children: List.generate(
+                    widget.weeklyTask.length,
+                    (index) => _TaskItem(
+                          task: widget.weeklyTask[index],
+                        )),
               ),
             ),
             secondChild: 0.verticalSpace,
@@ -71,9 +80,12 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
 }
 
 class _TaskItem extends StatefulWidget {
-  const _TaskItem({
+  _TaskItem({
     super.key,
+    required this.task,
   });
+
+  WeeklyTodoTask task;
 
   @override
   State<_TaskItem> createState() => _TaskItemState();
@@ -92,7 +104,7 @@ class _TaskItemState extends State<_TaskItem> {
           onChanged: (value) {
             if (value != null) {
               setState(() {
-                isChecked = value;
+                widget.task.completed = value;
               });
             }
           },
@@ -100,10 +112,10 @@ class _TaskItemState extends State<_TaskItem> {
         ),
         // 3.horizontalSpace,
         TextView(
-          text: "Hello",
-          color: isChecked ? Pallets.primary : Pallets.grey,
+          text: widget.task.task,
+          color: widget.task.completed ? Pallets.primary : Pallets.grey,
           fontWeight: FontWeight.w600,
-          decoration: isChecked ? TextDecoration.lineThrough : null,
+          decoration: widget.task.completed ? TextDecoration.lineThrough : null,
         )
       ],
     );

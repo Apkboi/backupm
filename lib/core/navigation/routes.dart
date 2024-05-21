@@ -501,17 +501,17 @@ class CustomRoutes {
           path: '/questionaireScreen',
           name: PageUrl.questionaireScreen,
           builder: (context, state) => QuestionaireScreen(
-
-            id: state.uri.queryParameters[PathParam.id] ?? '0',
-          )),
+                id: state.uri.queryParameters[PathParam.id] ?? '0',
+                name: state.uri.queryParameters[PathParam.name] ?? ' ',
+              )),
       GoRoute(
           path: '/worksheetDetails',
           name: PageUrl.worksheetDetails,
           builder: (context, state) => WorksheetDetailScreen(
+                id: state.uri.queryParameters[PathParam.id] ?? '0',
+            name: state.uri.queryParameters[PathParam.name] ?? ' ',
 
-            id: state.uri.queryParameters[PathParam.id] ?? '0',
-          )),
-
+              )),
     ],
   );
 

@@ -18,6 +18,7 @@ abstract class Pallets {
   static const lightSecondary = Color(0xFFC7D69F);
   static const turquoise1 = Color(0xFF99BEB7);
   static const subtleLight = Color(0xFFA6C9AE);
+  static const subtleLighter = Color(0xFFF2F2EF);
   static const userChatBg = Color(0xFFC7D69F);
   static const navy = Color(0xFF002C3C);
   static const neutral = Color(0xFFF2F2EF);

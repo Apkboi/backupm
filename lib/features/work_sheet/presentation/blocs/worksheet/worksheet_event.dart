@@ -1,7 +1,5 @@
 part of 'worksheet_bloc.dart';
 
-
-
 // Base Event Class
 abstract class WorkSheetEvent extends Equatable {
   const WorkSheetEvent();
@@ -16,14 +14,16 @@ class GetWorkSheetsEvent extends WorkSheetEvent {
 }
 
 class GetQuestionairesEvent extends WorkSheetEvent {
-  const GetQuestionairesEvent();
+  final String worksheetId;
+
+  const GetQuestionairesEvent(this.worksheetId);
 
   @override
   List<Object?> get props => [];
 }
 
 class SubmitQuestionairesEvent extends WorkSheetEvent {
-  final dynamic payload;
+  final SubmitQuestionairePayload payload;
 
   const SubmitQuestionairesEvent(this.payload);
 
@@ -38,4 +38,22 @@ class MarkTaskEvent extends WorkSheetEvent {
 
   @override
   List<Object?> get props => [taskId];
+}
+
+class GetWorkSheetDetailsEvent extends WorkSheetEvent {
+  final String workSheetId;
+
+  const GetWorkSheetDetailsEvent(this.workSheetId);
+
+  @override
+  List<Object?> get props => [workSheetId];
+}
+
+class SortWorkSheetByDay extends WorkSheetEvent {
+  final DayOfWeek day;
+
+  const SortWorkSheetByDay(this.day);
+
+  @override
+  List<Object?> get props => [day];
 }

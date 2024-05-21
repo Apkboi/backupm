@@ -160,7 +160,7 @@ class WeeklyTask {
   final int id;
   final int workSheetId;
   final String day;
-  final List<Task> tasks;
+  final List<WeeklyTodoTask> tasks;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -177,7 +177,7 @@ class WeeklyTask {
     id: json["id"],
     workSheetId: json["work_sheet_id"],
     day: json["day"],
-    tasks: List<Task>.from(json["tasks"].map((x) => Task.fromJson(x))),
+    tasks: List<WeeklyTodoTask>.from(json["tasks"].map((x) => WeeklyTodoTask.fromJson(x))),
     createdAt: DateTime.parse(json["created_at"]),
     updatedAt: DateTime.parse(json["updated_at"]),
   );
@@ -192,16 +192,16 @@ class WeeklyTask {
   };
 }
 
-class Task {
+class WeeklyTodoTask {
   final int id;
   final int workSheetWeekDayId;
   final String time;
   final String task;
-  final bool completed;
+   bool completed;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Task({
+  WeeklyTodoTask({
     required this.id,
     required this.workSheetWeekDayId,
     required this.time,
@@ -211,7 +211,7 @@ class Task {
     required this.updatedAt,
   });
 
-  factory Task.fromJson(Map<String, dynamic> json) => Task(
+  factory WeeklyTodoTask.fromJson(Map<String, dynamic> json) => WeeklyTodoTask(
     id: json["id"],
     workSheetWeekDayId: json["work_sheet_week_day_id"],
     time: json["time"],

@@ -31,5 +31,8 @@ class PathParam {
   static const sessionId = 'callerId';
   static const calleeId = 'calleeId';
 
+  static const name = 'name';
+  // static const calleeId = 'calleeId';
+
 // static const chatId = 'chatId';
 }
