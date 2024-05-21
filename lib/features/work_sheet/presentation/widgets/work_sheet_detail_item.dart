@@ -103,7 +103,7 @@ class _TaskItemState extends State<_TaskItem> {
     return Row(
       children: [
         Checkbox(
-          value: isChecked,
+          value:  widget.task.completed ,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
           onChanged: (value) {
             if (value != null) {
