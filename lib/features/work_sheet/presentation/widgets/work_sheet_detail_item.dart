@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/work_sheet/data/models/get_all_work_sheet_response.dart';
+import 'package:mentra/features/work_sheet/presentation/blocs/worksheet/worksheet_bloc.dart';
 
 class WorkSheetDetailItem extends StatefulWidget {
   const WorkSheetDetailItem(
@@ -55,12 +60,11 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
           ),
         ),
         10.verticalSpace,
-
         Padding(
           padding: const EdgeInsets.all(10),
           child: AnimatedCrossFade(
               firstChild: Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Pallets.white,
                   borderRadius: BorderRadius.circular(20.r),
@@ -74,8 +78,9 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
                 ),
               ),
               secondChild: 0.verticalSpace,
-              crossFadeState:
-                  isOpen && widget.weeklyTask.isNotEmpty ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              crossFadeState: isOpen && widget.weeklyTask.isNotEmpty
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
               duration: const Duration(milliseconds: 300)),
         ),
       ],
@@ -97,31 +102,53 @@ class _TaskItem extends StatefulWidget {
 
 class _TaskItemState extends State<_TaskItem> {
   bool isChecked = true;
+  final bloc = WorkSheetBloc(injector.get());
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Checkbox(
-          value:  widget.task.completed ,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                widget.task.completed = value;
-              });
-            }
-          },
-          activeColor: Pallets.primary,
-        ),
-        // 3.horizontalSpace,
-        TextView(
-          text: widget.task.task,
-          color: widget.task.completed ? Pallets.primary : Pallets.grey,
-          fontWeight: FontWeight.w600,
-          decoration: widget.task.completed ? TextDecoration.lineThrough : null,
-        )
-      ],
+    return BlocListener<WorkSheetBloc, WorkSheetState>(
+      bloc: bloc,
+      listener: _listenToWorkSheetBloc,
+      child: Row(
+        children: [
+          Checkbox(
+            value: widget.task.completed,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            onChanged: (value) {
+              // if (value != null) {}
+              bloc.add(MarkTaskEvent(widget.task.id.toString()));
+            },
+            activeColor: Pallets.primary,
+          ),
+          // 3.horizontalSpace,
+          TextView(
+            text: widget.task.task,
+            color: widget.task.completed ? Pallets.primary : Pallets.grey,
+            fontWeight: FontWeight.w600,
+            decoration:
+                widget.task.completed ? TextDecoration.lineThrough : null,
+          )
+        ],
+      ),
     );
+  }
+
+  void _listenToWorkSheetBloc(BuildContext context, WorkSheetState state) {
+    if (state is WorkSheetLoadingState) {
+      CustomDialogs.showLoading(context);
+    }
+    if (state is MarkTaskSuccessState) {
+      setState(() {
+        widget.task.completed = !widget.task.completed;
+      });
+      context.pop();
+      CustomDialogs.showLoading(context);
+    }
+    if (state is WorkSheetFailureState) {
+      context.pop();
+
+      CustomDialogs.error(state.error);
+    }
   }
 }
