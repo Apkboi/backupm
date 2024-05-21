@@ -55,25 +55,29 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
           ),
         ),
         10.verticalSpace,
-        AnimatedCrossFade(
-            firstChild: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Pallets.white,
-                borderRadius: BorderRadius.circular(20.r),
+
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: AnimatedCrossFade(
+              firstChild: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Pallets.white,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: Column(
+                  children: List.generate(
+                      widget.weeklyTask.length,
+                      (index) => _TaskItem(
+                            task: widget.weeklyTask[index],
+                          )),
+                ),
               ),
-              child: Column(
-                children: List.generate(
-                    widget.weeklyTask.length,
-                    (index) => _TaskItem(
-                          task: widget.weeklyTask[index],
-                        )),
-              ),
-            ),
-            secondChild: 0.verticalSpace,
-            crossFadeState:
-                isOpen ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-            duration: const Duration(milliseconds: 300)),
+              secondChild: 0.verticalSpace,
+              crossFadeState:
+                  isOpen && widget.weeklyTask.isNotEmpty ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+              duration: const Duration(milliseconds: 300)),
+        ),
       ],
     );
   }
