@@ -81,10 +81,11 @@ class _WorkSheetStatus extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          color: getColorByStatus(status).withOpacity(0.3),
+          color: getbColorByStatus(status),
           borderRadius: BorderRadius.circular(100)),
       child: TextView(
-        text: "Pending",
+        text: status,
+        fontWeight: FontWeight.w600,
         color: getColorByStatus(status),
       ),
     );
@@ -93,11 +94,11 @@ class _WorkSheetStatus extends StatelessWidget {
   Color getColorByStatus(String status) {
     switch (status.toLowerCase()) {
       case "pending":
-        return Colors.orangeAccent;
+        return Pallets.yelloDarker ;
       case "submitted":
         return Colors.green;
       case "completed":
-        return Colors.blue;
+        return Pallets.greenDarker;
       case "rejected":
         return Colors.red;
       default:
@@ -106,4 +107,22 @@ class _WorkSheetStatus extends StatelessWidget {
         return Colors.grey; // Or another appropriate default color
     }
   }
+  Color getbColorByStatus(String status) {
+    switch (status.toLowerCase()) {
+      case "pending":
+        return Color(0xFFFBDFB1);
+      case "submitted":
+        return Colors.green;
+      case "completed":
+        return const Color(0xFFCBF5E5);
+
+      case "rejected":
+        return Colors.red;
+      default:
+      // Handle unknown statuses gracefully
+        print("WARNING: Unknown status: $status. Returning default color.");
+        return Colors.grey; // Or another appropriate default color
+    }
+  }
+
 }

@@ -104,7 +104,7 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
                         context.pushNamed(PageUrl.therapistChatScreen,
                             queryParameters: {
                               PathParam.therapist:
-                              jsonEncode(widget.session.therapist.toJson())
+                              jsonEncode( mapToChatTherapist(widget.session.therapist).toJson())
                             });
                       },
                       text: 'Chat',

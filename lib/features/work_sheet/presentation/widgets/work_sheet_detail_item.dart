@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mentra/common/models/day_of_week.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/text_view.dart';
@@ -74,6 +75,9 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
                       widget.weeklyTask.length,
                       (index) => _TaskItem(
                             task: widget.weeklyTask[index],
+                            currentDay: context
+                                .watch<WorkSheetBloc>()
+                                .selectedDay,
                           )),
                 ),
               ),
@@ -92,9 +96,11 @@ class _TaskItem extends StatefulWidget {
   _TaskItem({
     super.key,
     required this.task,
+    required this.currentDay,
   });
 
   WeeklyTodoTask task;
+  final DayOfWeek currentDay;
 
   @override
   State<_TaskItem> createState() => _TaskItemState();
@@ -109,27 +115,36 @@ class _TaskItemState extends State<_TaskItem> {
     return BlocListener<WorkSheetBloc, WorkSheetState>(
       bloc: bloc,
       listener: _listenToWorkSheetBloc,
-      child: Row(
-        children: [
-          Checkbox(
-            value: widget.task.completed,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            onChanged: (value) {
-              // if (value != null) {}
-              bloc.add(MarkTaskEvent(widget.task.id.toString()));
-            },
-            activeColor: Pallets.primary,
-          ),
-          // 3.horizontalSpace,
-          TextView(
-            text: widget.task.task,
-            color: widget.task.completed ? Pallets.primary : Pallets.grey,
-            fontWeight: FontWeight.w600,
-            decoration:
-                widget.task.completed ? TextDecoration.lineThrough : null,
-          )
-        ],
+      child: InkWell(
+        onTap: () {
+
+          // if(){}
+
+          bloc.add(MarkTaskEvent(widget.task.id.toString()));
+        },
+        child: Row(
+          children: [
+            Checkbox(
+              value: widget.task.completed,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              onChanged: (value) {
+                bloc.add(MarkTaskEvent(widget.task.id.toString()));
+
+                // if (value != null) {}
+              },
+              activeColor: Pallets.primary,
+            ),
+            // 3.horizontalSpace,
+            TextView(
+              text: widget.task.task,
+              color: widget.task.completed ? Pallets.primary : Pallets.grey,
+              fontWeight: FontWeight.w600,
+              decoration:
+                  widget.task.completed ? TextDecoration.lineThrough : null,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -139,11 +154,12 @@ class _TaskItemState extends State<_TaskItem> {
       CustomDialogs.showLoading(context);
     }
     if (state is MarkTaskSuccessState) {
+      context.pop();
+
       setState(() {
         widget.task.completed = !widget.task.completed;
       });
-      context.pop();
-      CustomDialogs.showLoading(context);
+      CustomDialogs.success("Task updated");
     }
     if (state is WorkSheetFailureState) {
       context.pop();

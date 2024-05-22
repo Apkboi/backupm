@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/notification/data/models/get_notifications_response.dart';
 import 'package:mentra/features/notification/data/models/read_notification_response.dart';
 import 'package:mentra/features/notification/presentation/dormain/repository/notifications_repository.dart';
@@ -33,7 +34,9 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
 
       allNotification = notifications.data;
       emit(GetNotificationsSuccessState(response: notifications));
-    } catch (e) {
+    } catch (e,stack) {
+      logger.e(stack);
+      logger.e(e);
       emit(GetNotificationsFailureState(error: e.toString()));
     }
   }

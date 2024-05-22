@@ -65,6 +65,7 @@ import 'package:mentra/features/streaks/presentation/screens/badges_screen.dart'
 import 'package:mentra/features/streaks/presentation/screens/streak_details_screen.dart';
 import 'package:mentra/features/subscription/presentation/screens/select_plan_screen.dart';
 import 'package:mentra/features/summary/presentation/screens/summaries_screen.dart';
+import 'package:mentra/features/therapy/data/models/chat_therapist.dart';
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
@@ -256,7 +257,10 @@ class CustomRoutes {
       GoRoute(
         path: '/summariesScreen',
         name: PageUrl.summariesScreen,
-        builder: (context, state) => const MyActivitiesScreen(),
+        builder: (context, state) => MyActivitiesScreen(
+          tabIndex:
+              int.parse(state.uri.queryParameters[PathParam.tabIndex] ?? "0"),
+        ),
       ),
       GoRoute(
         path: '/therapistChatScreen',
@@ -265,7 +269,7 @@ class CustomRoutes {
             context: context,
             state: state,
             child: TherapistChatScreen(
-              therapist: SessionTherapist.fromJson(jsonDecode(
+              therapist: ChatTherapist.fromJson(jsonDecode(
                   state.uri.queryParameters[PathParam.therapist] ?? '')),
             )),
         // builder: (context, state) => const TherapistChatScreen(),
@@ -509,8 +513,7 @@ class CustomRoutes {
           name: PageUrl.worksheetDetails,
           builder: (context, state) => WorksheetDetailScreen(
                 id: state.uri.queryParameters[PathParam.id] ?? '0',
-            name: state.uri.queryParameters[PathParam.name] ?? ' ',
-
+                name: state.uri.queryParameters[PathParam.name] ?? ' ',
               )),
     ],
   );

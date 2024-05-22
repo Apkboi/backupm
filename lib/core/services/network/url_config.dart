@@ -164,5 +164,5 @@ class UrlConfig {
   static String getQuestionaires= "/work-sheet/fetch-questions";
   static String getWorkSheetDetails(String id)=> "/work-sheet/$id/show";
   static String submitQuestionaires = "/work-sheet/submit-answers";
-  static String markTask= "/work-sheet/markTask ";
+  static String markTask= "/work-sheet/mark-task";
 }

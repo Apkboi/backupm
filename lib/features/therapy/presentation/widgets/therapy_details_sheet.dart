@@ -89,8 +89,9 @@ class _TherapyDetailsSheetState extends State<TherapyDetailsSheet> {
                         // _startMessaging();
                         context.pushNamed(PageUrl.therapistChatScreen,
                             queryParameters: {
-                              PathParam.therapist:
-                                  jsonEncode(widget.session.therapist.toJson())
+                              PathParam.therapist: jsonEncode(
+                                  mapToChatTherapist(widget.session.therapist)
+                                      .toJson())
                             });
                       },
                       text: "Message ${widget.session.therapist.user.name}",

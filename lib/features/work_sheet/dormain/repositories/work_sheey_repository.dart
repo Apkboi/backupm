@@ -57,7 +57,7 @@ class WorkSheetRepositoryImpl extends WorkSheetRepository {
   @override
   Future<dynamic> markTask(String task) async {
     final response = await _networkService
-        .call(UrlConfig.markTask, RequestMethod.post, data: task);
+        .call(UrlConfig.markTask, RequestMethod.post, data: {"task_id": task});
 
     return response.data;
   }

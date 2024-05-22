@@ -16,13 +16,33 @@ import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
 class MyActivitiesScreen extends StatefulWidget {
-  const MyActivitiesScreen({Key? key}) : super(key: key);
+  const MyActivitiesScreen({Key? key, required this.tabIndex})
+      : super(key: key);
+  final int? tabIndex;
 
   @override
   State<MyActivitiesScreen> createState() => _MyActivitiesScreenState();
 }
 
-class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
+class _MyActivitiesScreenState extends State<MyActivitiesScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(length: 3, vsync: this);
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        if (widget.tabIndex != null) {
+          tabController.animateTo(widget.tabIndex ?? 0);
+        }
+      },
+    );
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,34 +77,32 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen> {
         children: [
           AppBg(image: Assets.images.pngs.homeBg.path),
           SafeArea(
-            child: DefaultTabController(
-              length: 3,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 17.w),
-                child: Column(
-                  children: [
-                    // 120.verticalSpace,
-                    const CustomTabbar(tabs: [
-                      Tab(
-                        text: "Daily Tasks",
-                      ),
-                      Tab(
-                        text: "Summaries",
-                      ),
-                      Tab(text: "Worksheet"),
-                    ]),
-                    20.verticalSpace,
-                    const Expanded(
-                        child: TabBarView(
-                            physics: NeverScrollableScrollPhysics(),
-                            children: [
-                          DailyTaskTab(),
-                          SummaryTab(),
-                          WorkSheetTab()
-                        ])),
-                    8.verticalSpace,
-                  ],
-                ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 17.w),
+              child: Column(
+                children: [
+                  // 120.verticalSpace,
+                  CustomTabbar(controller: tabController, tabs: const [
+                    Tab(
+                      text: "Daily Tasks",
+                    ),
+                    Tab(
+                      text: "Summaries",
+                    ),
+                    Tab(text: "Worksheet"),
+                  ]),
+                  20.verticalSpace,
+                  Expanded(
+                      child: TabBarView(
+                          controller: tabController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: const [
+                        DailyTaskTab(),
+                        SummaryTab(),
+                        WorkSheetTab(),
+                      ])),
+                  8.verticalSpace,
+                ],
               ),
             ),
           ),

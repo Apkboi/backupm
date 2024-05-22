@@ -3,6 +3,8 @@
 //     final getNotificationsResponse = getNotificationsResponseFromJson(jsonString);
 import 'dart:convert';
 
+import 'package:mentra/features/therapy/data/models/chat_therapist.dart';
+
 GetNotificationsResponse getNotificationsResponseFromJson(String str) =>
     GetNotificationsResponse.fromJson(json.decode(str));
 
@@ -52,12 +54,19 @@ class GetNotificationsResponse {
       };
 }
 
+MentraNotification mentraNotificationFromJson(String str) =>
+    MentraNotification.fromJson(json.decode(str));
+
+String mentraNotificationToJson(MentraNotification data) =>
+    json.encode(data.toJson());
+
 class MentraNotification {
   final String id;
-  final String title;
-  final String message;
-  final String type;
+  final dynamic title;
+  final dynamic message;
+  final dynamic type;
   final dynamic dataId;
+  final Extra? extra;
   dynamic readAt;
   final DateTime createdAt;
 
@@ -67,28 +76,10 @@ class MentraNotification {
     required this.message,
     required this.type,
     required this.dataId,
+    required this.extra,
     required this.readAt,
     required this.createdAt,
   });
-
-  MentraNotification copyWith({
-    String? id,
-    String? title,
-    String? message,
-    String? type,
-    dynamic dataId,
-    dynamic readAt,
-    DateTime? createdAt,
-  }) =>
-      MentraNotification(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        message: message ?? this.message,
-        type: type ?? this.type,
-        dataId: dataId ?? this.dataId,
-        readAt: readAt ?? this.readAt,
-        createdAt: createdAt ?? this.createdAt,
-      );
 
   factory MentraNotification.fromJson(Map<String, dynamic> json) =>
       MentraNotification(
@@ -97,6 +88,11 @@ class MentraNotification {
         message: json["message"],
         type: json["type"],
         dataId: json["data_id"],
+        extra: json["extra"] is List
+            ? null
+            : json["extra"] == null
+                ? null
+                : Extra.fromJson(json["extra"]),
         readAt: json["read_at"],
         createdAt: DateTime.parse(json["created_at"]),
       );
@@ -107,7 +103,26 @@ class MentraNotification {
         "message": message,
         "type": type,
         "data_id": dataId,
+        "extra": extra?.toJson(),
         "read_at": readAt,
         "created_at": createdAt.toIso8601String(),
+      };
+}
+
+class Extra {
+  final ChatTherapist? therapist;
+
+  Extra({
+    required this.therapist,
+  });
+
+  factory Extra.fromJson(Map<String, dynamic> json) => Extra(
+        therapist: json["therapist"] == null
+            ? null
+            : ChatTherapist.fromJson(json["therapist"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "therapist": therapist?.toJson(),
       };
 }

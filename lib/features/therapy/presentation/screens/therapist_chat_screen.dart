@@ -9,6 +9,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/data/models/chat_therapist.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
 import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/session/session_chat_bloc.dart';
@@ -27,7 +28,7 @@ class TherapistChatScreen extends StatefulWidget {
     required this.therapist,
   });
 
-  final SessionTherapist therapist;
+  final ChatTherapist therapist;
 
   @override
   State<TherapistChatScreen> createState() => _TherapistChatScreenState();
@@ -41,7 +42,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
   @override
   void initState() {
     // _listenForMessages();
-    bloc.add(GetMessagesEvent(widget.therapist.user.id.toString()));
+    bloc.add(GetMessagesEvent(widget.therapist.userId.toString()));
     super.initState();
   }
 
@@ -59,10 +60,10 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
           appBar: CustomAppBar(
             // canGoBack: false,
             // leading: 0.horizontalSpace,
-            tittleText: widget.therapist.user.name,
+            tittleText: widget.therapist.fullName,
             actions: [
               ImageWidget(
-                imageUrl: widget.therapist.user.avatar,
+                imageUrl: widget.therapist.avatarId,
                 height: 50.h,
                 onTap: () {
                   // _endSession(context);
@@ -96,8 +97,8 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                           child: AppPromptWidget(
                             message: state.error,
                             onTap: () {
-                              bloc.add(GetMessagesEvent(widget.therapist.user.id.toString()));
-
+                              bloc.add(GetMessagesEvent(
+                                  widget.therapist.id.toString()));
                             },
                           ),
                         );
@@ -151,7 +152,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
   void sendMessage(String message) async {
     if (message.isNotEmpty) {
       bloc.add(SendMessageEvent(TherapyChatMessage.newUserMessage(
-          message: message, receiverId: widget.therapist.user.id.toString())));
+          message: message, receiverId: widget.therapist.id.toString())));
       controller.clear();
     }
   }
@@ -173,44 +174,4 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
     return (currentMessage.id == messages.first.id) ||
         (!(previousMessage.isTherapist && currentMessage.isTherapist));
   }
-}
-
-class _InputBar extends StatefulWidget {
-  const _InputBar({Key? key}) : super(key: key);
-
-  @override
-  State<_InputBar> createState() => _InputBarState();
-}
-
-class _InputBarState extends State<_InputBar> {
-  final controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-            child: FilledTextField(
-                hasBorder: false,
-                hasElevation: false,
-                controller: controller,
-                suffix: HapticInkWell(
-                  onTap: () {
-                    sendMessage();
-                    // _answerQuestion(context);
-                  },
-                  child: const Icon(
-                    Icons.send_rounded,
-                    size: 30,
-                  ),
-                ),
-                fillColor: Pallets.white,
-                contentPadding: const EdgeInsets.all(16),
-                radius: 45,
-                hint: 'Message')),
-      ],
-    );
-  }
-
-  Future<void> sendMessage() async {}
 }

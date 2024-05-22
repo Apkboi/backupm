@@ -4,6 +4,8 @@ abstract class Pallets {
   // App Colors
 
   static const primary = Color(0xFF1A6A73);
+  static const greenDarker = Color(0xFF176448);
+  static const yelloDarker = Color(0xFF693D11);
   static const brandColor = Color(0xFF07271A);
   static const secondary = Color(0xFFFADE93);
   static const splash = Color(0xFF002C3C);

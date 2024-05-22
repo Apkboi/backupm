@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -6,8 +8,10 @@ import 'package:mentra/common/widgets/custom_back_button.dart';
 import 'package:mentra/common/widgets/custom_outlined_button.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 
 import 'package:mentra/gen/assets.gen.dart';
 
@@ -117,8 +121,11 @@ class _TherapistProfileScreenState extends State<TherapistProfileScreen> {
                                         fgColor: Pallets.black,
                                         padding: const EdgeInsets.all(10),
                                         onTap: () {
-                                          context.pushNamed(
-                                              PageUrl.therapistChatScreen);
+                                          // context.pushNamed(PageUrl.therapistChatScreen,
+                                          //     queryParameters: {
+                                          //       PathParam.therapist:
+                                          //       jsonEncode( mapToChatTherapist().toJson())
+                                          //     });
                                         },
                                         text: "Message Nour",
                                         color: Pallets.milkColor),

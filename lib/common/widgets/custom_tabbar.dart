@@ -5,8 +5,10 @@ import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
 class CustomTabbar extends StatefulWidget {
-  const CustomTabbar({Key? key, required this.tabs}) : super(key: key);
+  const CustomTabbar({Key? key, required this.tabs, this.controller})
+      : super(key: key);
   final List<Widget> tabs;
+  final TabController? controller;
 
   @override
   State<CustomTabbar> createState() => _CustomTabbarState();
@@ -34,6 +36,7 @@ class _CustomTabbarState extends State<CustomTabbar> {
         // ],
       ),
       child: TabBar(
+          controller: widget.controller,
           unselectedLabelColor: Pallets.primaryDark,
           labelColor: Pallets.primaryDark,
           indicator: BoxDecoration(

@@ -4,7 +4,10 @@
 
 import 'dart:convert';
 
+import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/features/therapy/data/models/match_therapist_response.dart';
+
+import 'chat_therapist.dart';
 
 UpcomingSessionsResponse upcomingSessionsResponseFromJson(String str) =>
     UpcomingSessionsResponse.fromJson(json.decode(str));
@@ -151,7 +154,11 @@ class TherapySession {
         user: User.fromJson(json["user"]),
         therapist: SessionTherapist.fromJson(json["therapist"]),
         reference: json["reference"],
-        focus:  json["focus"] is List ? json["focus"]==null?[]:List<String>.from(json["focus"].map((x) => x)):[json["focus"]??''] ,
+        focus: json["focus"] is List
+            ? json["focus"] == null
+                ? []
+                : List<String>.from(json["focus"].map((x) => x))
+            : [json["focus"] ?? ''],
         duration: json["duration"],
         startsAt: DateTime.parse(json["starts_at"]),
         endsAt:
@@ -198,7 +205,8 @@ class SessionTherapist {
         therapist: therapist ?? this.therapist,
       );
 
-  factory SessionTherapist.fromJson(Map<String, dynamic> json) => SessionTherapist(
+  factory SessionTherapist.fromJson(Map<String, dynamic> json) =>
+      SessionTherapist(
         user: User.fromJson(json["user"]),
         therapist: Therapist.fromJson(json["therapist"]),
       );
@@ -392,4 +400,23 @@ class PaginationMeta {
         "total": total,
         "can_load_more": canLoadMore,
       };
+}
+
+ChatTherapist mapToChatTherapist(SessionTherapist sessionTherapist) {
+  logger.w(sessionTherapist.user.id);
+  return ChatTherapist(
+    avatarId: sessionTherapist.user.avatar,
+    // Assuming therapist avatar maps to avatarId
+    fullName: sessionTherapist.user.name,
+    // Assuming therapist name maps to fullName
+    createdAt: sessionTherapist.user.createdAt,
+    // Both classes have the same field
+    phoneNumber: "",
+    // Therapist phone number might not be available in SessionTherapist, provide a default value
+    id: sessionTherapist.user.id,
+    // Assuming therapist id maps to id
+    title: sessionTherapist.therapist.field
+        .toString(),
+    userId: sessionTherapist.user.id,// Assuming therapist title maps to title
+  );
 }

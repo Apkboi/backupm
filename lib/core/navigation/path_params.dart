@@ -18,6 +18,7 @@ class PathParam {
   static const authMessages = 'authMessages';
   static const updatedPreference = 'updatedPreference';
   static const therapist = 'therapist';
+  static const tabIndex = 'tabIndex';
   static const sessionDetails = 'sessionDetails';
   static const prompt = 'prompt';
   static const journal = 'journal';

@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/custom_dialogs.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/features/library/presentation/widgets/article_notification_detail.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/ai_review_sheet.dart';
@@ -26,7 +29,7 @@ class _NotificationItemState extends State<NotificationItem> {
   Widget build(BuildContext context) {
     return HapticInkWell(
       onTap: () {
-        // logger.w(widget.notification.type);
+        logger.w(widget.notification.toJson());
         _handleNotificationClick(context);
       },
       child: Container(
@@ -51,9 +54,7 @@ class _NotificationItemState extends State<NotificationItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-
                           crossAxisAlignment: CrossAxisAlignment.start,
-
                           children: [
                             Expanded(
                               child: TextView(
@@ -111,6 +112,10 @@ class _NotificationItemState extends State<NotificationItem> {
         markAsRead();
         context.pushNamed(PageUrl.badgesScreen);
         break;
+      case 'subscription':
+        markAsRead();
+        context.pushNamed(PageUrl.selectPlanScreen);
+        break;
       case "welness_course":
         // context.pop();
         markAsRead();
@@ -120,6 +125,12 @@ class _NotificationItemState extends State<NotificationItem> {
             ArticleNotificationDetailsSheet(
               notification: widget.notification,
             ));
+      case "worksheet":
+        // context.pop();
+        markAsRead();
+
+        context.pushNamed(PageUrl.summariesScreen,
+            queryParameters: {PathParam.tabIndex: '2'});
       case 'ai_session':
         if (widget.notification.readAt == null) {
           var reviewed = await CustomDialogs.showCustomDialog(
@@ -132,6 +143,17 @@ class _NotificationItemState extends State<NotificationItem> {
           }
         }
 
+        break;
+      case 'conversation':
+        // if (isAuthenticated) {
+        // logger.w();
+        markAsRead();
+
+        context.pushNamed(PageUrl.therapistChatScreen, queryParameters: {
+          PathParam.therapist:
+              jsonEncode(widget.notification.extra?.therapist?.toJson())
+        });
+        // }
         break;
     }
   }

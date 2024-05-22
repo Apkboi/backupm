@@ -46,7 +46,7 @@ class QuestionaireField extends StatelessWidget {
           5.verticalSpace,
           FilledTextField(
               // maxLine: 5,
-              minLine: 5,
+              minLine: 1,
               maxLine: 20,
               enabled: !submitted,
               hasElevation: false,
