@@ -37,7 +37,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       const Duration(milliseconds: 300),
       () => _prefillJournal(),
     );
-    _prefillJournal();
+    // _prefillJournal();
     super.initState();
   }
 

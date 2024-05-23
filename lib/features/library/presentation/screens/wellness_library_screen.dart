@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mentra/common/widgets/app_bg.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';

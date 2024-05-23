@@ -133,8 +133,6 @@ PODS:
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.24.0)
   - Flutter (1.0.0)
-  - flutter_background_service_ios (0.0.3):
-    - Flutter
   - flutter_callkit_incoming (0.0.1):
     - CryptoSwift
     - Flutter
@@ -283,8 +281,6 @@ PODS:
     - FlutterMacOS
   - sign_in_with_apple (0.0.1):
     - Flutter
-  - smart_auth (0.0.1):
-    - Flutter
   - sound_mode (0.0.1):
     - Flutter
     - Mute (~> 0.6.0)
@@ -356,7 +352,6 @@ DEPENDENCIES:
   - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
-  - flutter_background_service_ios (from `.symlinks/plugins/flutter_background_service_ios/ios`)
   - flutter_callkit_incoming (from `.symlinks/plugins/flutter_callkit_incoming/ios`)
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
@@ -383,7 +378,6 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
-  - smart_auth (from `.symlinks/plugins/smart_auth/ios`)
   - sound_mode (from `.symlinks/plugins/sound_mode/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
   - stripe_ios (from `.symlinks/plugins/stripe_ios/ios`)
@@ -465,8 +459,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_messaging/ios"
   Flutter:
     :path: Flutter
-  flutter_background_service_ios:
-    :path: ".symlinks/plugins/flutter_background_service_ios/ios"
   flutter_callkit_incoming:
     :path: ".symlinks/plugins/flutter_callkit_incoming/ios"
   flutter_image_compress_common:
@@ -519,8 +511,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   sign_in_with_apple:
     :path: ".symlinks/plugins/sign_in_with_apple/ios"
-  smart_auth:
-    :path: ".symlinks/plugins/smart_auth/ios"
   sound_mode:
     :path: ".symlinks/plugins/sound_mode/ios"
   sqflite:
@@ -565,7 +555,6 @@ SPEC CHECKSUMS:
   FirebaseSessions: 2651b464e241c93fd44112f995d5ab663c970487
   FirebaseSharedSwift: 76e1529c32101d80e4f1ca2fba7c39d59f0a390a
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_background_service_ios: e30e0d3ee69e4cee66272d0c78eacd48c2e94aac
   flutter_callkit_incoming: 417dd1b46541cdd5d855ad795ccbe97d1c18155e
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
@@ -611,7 +600,6 @@ SPEC CHECKSUMS:
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
-  smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
   sound_mode: ef0072f20e7306c1c371984a443156e39be092d5
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   Stripe: b65e9f748f8f51b51e015b0d72f5474dc0708788
