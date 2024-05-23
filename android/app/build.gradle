@@ -28,7 +28,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.yourmentra.mentra"
+    namespace "com.mentra.app.mentra"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 

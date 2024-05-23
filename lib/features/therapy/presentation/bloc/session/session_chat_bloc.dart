@@ -150,11 +150,11 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
     // if (messages.any((element) => element.id != event.message.toString())) {
     //
     // }
-
-    Debouncer(milliseconds: 300).run(() {
-      messages.insert(0, event.message);
-      emit(MessagesUpdatedState());
-    });
+    messages.insert(0, event.message);
+    emit(MessagesUpdatedState());
+    // Debouncer(milliseconds: 300).run(() {
+    //
+    // });
   }
 
   onSubscriptionError(message, d) {
@@ -177,10 +177,11 @@ class SessionChatBloc extends Bloc<SessionChatEvent, SessionChatState> {
         if (newMessage.data.isTherapist) {
           logger.i('adding chat message');
 
-          messages.insert(
-              0, TherapyChatMessage.fromChatMessage(newMessage.data));
+          // messages.insert(
+          //     0, TherapyChatMessage.fromChatMessage(newMessage.data));
 
-          emit(MessagesUpdatedState());
+          add(MessageReceivedEvent(
+              TherapyChatMessage.fromChatMessage(newMessage.data)));
         }
 
         logger.i(receivedEvent.data.runtimeType);

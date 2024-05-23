@@ -15,6 +15,8 @@ import '../../../../account/presentation/user_bloc/user_bloc.dart';
 part 'call_state.dart';
 
 class CallCubit extends Cubit<CallState> {
+  RTCIceConnectionState? connectionState;
+
   CallCubit(this._callRepository) : super(CallInitial());
   final CallRepository _callRepository;
 
@@ -127,22 +129,42 @@ class CallCubit extends Cubit<CallState> {
         }
       };
 
-      _rtcPeerConnection!.onIceConnectionState = (state) {
+      _rtcPeerConnection!.onIceConnectionState = (state) async {
         if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
             state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
-          Debouncer(milliseconds: 5000).run(() {
-            if (shouldEndCall()) {
-              endCall();
-            } else {
-              retriedTimes = 0;
-              emit(CallReConnectingState());
-            }
-          });
+          connectionState = state;
+          emit(CallReConnectingState());
+
+          logger.w(connectionState);
+
+          await retryWithDelay(
+              () => Future.value(
+                  [_rtcPeerConnection?.close(), _setupPeerConnection()]),
+              retries: 6,
+              condition: connectionState ==
+                  RTCIceConnectionState.RTCIceConnectionStateConnected);
+
+          if (connectionState !=
+              RTCIceConnectionState.RTCIceConnectionStateConnected) {
+            endCall();
+          } else {
+            isVideoOn = true;
+            emit(CallConnectedState());
+          }
+
+          // Debouncer(milliseconds: 5000).run(() {
+          //   if (shouldEndCall()) {
+          //     endCall();
+          //   } else {
+          //     retriedTimes = 0;
+          //     emit(CallReConnectingState());
+          //   }
+          // });
         }
-        if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
-          isVideoOn = true;
-          emit(CallConnectedState());
-        }
+        // if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
+        //   isVideoOn = true;
+        //   emit(CallConnectedState());
+        // }
       };
 
       _rtcPeerConnection!.onTrack = (event) {
@@ -205,7 +227,7 @@ class CallCubit extends Cubit<CallState> {
     }
   }
 
-  void _createOffer() async {
+  Future _createOffer() async {
     RTCSessionDescription offer =
         await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
     _rtcPeerConnection!.setLocalDescription(offer);
@@ -437,5 +459,22 @@ class CallCubit extends Cubit<CallState> {
 
   void leaveCallScreen() {
     emit(LeaveCallState());
+  }
+
+  Future<void> retryWithDelay(
+    Future<void>? Function() action, {
+    int retries = 5,
+    Duration delay = const Duration(seconds: 5),
+    required bool condition,
+  }) async {
+    try {
+      for (int i = 0; i < retries; i++) {
+        await action();
+        await Future.delayed(delay);
+        if (condition) {
+          return;
+        }
+      }
+    } catch (e) {}
   }
 }
