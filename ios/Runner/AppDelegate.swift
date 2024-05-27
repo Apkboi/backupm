@@ -8,7 +8,7 @@ import flutter_callkit_incoming
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
   override func application(
-    _application: UIApplication,
+    _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
