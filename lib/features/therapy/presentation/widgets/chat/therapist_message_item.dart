@@ -54,7 +54,7 @@ class _TherapistMessageItemState extends State<TherapistMessageItem> {
               ),
               child: IntrinsicWidth(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ...List.generate(
                       1,
@@ -97,7 +97,7 @@ class _CircularBorder extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: 0.7.sw),
       padding: const EdgeInsets.only(right: 8, bottom: 0, left: 8, top: 5),
       decoration: BoxDecoration(
-          color: Pallets.navy, borderRadius: BorderRadius.circular(10)),
+          color: Pallets.navy, borderRadius: BorderRadius.circular(10.r)),
       child: child,
       // backGroundColor: Pallets.navy,
     );
@@ -116,7 +116,7 @@ class _BubbleBorder extends StatelessWidget {
       padding: const EdgeInsets.only(right: 8, bottom: 0, left: 15, top: 5),
       backGroundColor: Pallets.navy,
       clipper: ChatBubbleClipper3(
-          type: BubbleType.receiverBubble, nipSize: 5, radius: 15),
+          type: BubbleType.receiverBubble, nipSize: 5, radius: 15.r),
       child: child,
     );
   }
@@ -142,7 +142,7 @@ class _MessageBodyState extends State<MessageBody> {
             text: widget.message.message.toString().trim(),
             lineHeight: 1.5,
             color: Pallets.white,
-            fontSize: 15.sp,
+            fontSize: 15,
             wordSpacing: 1,
             fontWeight: FontWeight.w500),
         8.verticalSpace,

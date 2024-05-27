@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/theme/app_styles.dart';
 import 'package:mentra/core/theme/pallets.dart';
 
@@ -102,7 +103,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color:
                 widget.textColor ?? Theme.of(context).colorScheme.onBackground,
-            fontSize: widget.fontSize ?? 16,
+            fontSize: widget.fontSize ?? 16.sp,
             fontWeight: FontWeight.w500),
         decoration: AppStyles.filledTextFieldDecoration.copyWith(
 
@@ -154,7 +155,7 @@ class _FilledTextFieldState extends State<FilledTextField> {
 
             // labelText: widget.labelText,
             // labelStyle: widget.labelTextStyle,
-            hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13)),
+            hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 13.sp)),
       ),
     );
   }

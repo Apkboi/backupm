@@ -5,7 +5,6 @@ import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class SosDialerItem extends StatelessWidget {
   const SosDialerItem(
       {super.key,
@@ -55,10 +54,10 @@ class SosDialerItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                const CircleAvatar(
-                  radius: 24,
+                CircleAvatar(
+                  radius: 24.r,
                   backgroundColor: Pallets.red,
-                  child: Center(
+                  child: const Center(
                       child: Icon(
                     Icons.phone_rounded,
                     color: Pallets.white,

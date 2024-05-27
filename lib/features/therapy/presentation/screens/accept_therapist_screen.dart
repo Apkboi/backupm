@@ -52,7 +52,7 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
       builder: (context, state) {
         return Scaffold(
           bottomNavigationBar: Container(
-            height: 100,
+            height: 100.h,
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
@@ -73,7 +73,10 @@ class _AcceptTherapistScreenState extends State<AcceptTherapistScreen> {
                     radius: 100,
                     outlinedColr: Pallets.grey1,
                     padding: const EdgeInsets.all(20),
-                    child: const Text('Match again'),
+                    child: Text(
+                      'Match again',
+                      style: TextStyle(fontSize: 15.sp),
+                    ),
                     onPressed: () {
                       context.pop(false);
                     },

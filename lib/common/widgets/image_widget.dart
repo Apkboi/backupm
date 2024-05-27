@@ -25,7 +25,7 @@ class ImageWidget extends StatefulWidget {
   final ImageWidgetType imageType;
 
   const ImageWidget({
-    Key? key,
+    super.key,
     this.width = 24,
     this.height = 24,
     this.fit,
@@ -38,7 +38,7 @@ class ImageWidget extends StatefulWidget {
     this.imageType = ImageWidgetType.asset,
     this.canPreview = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   State<ImageWidget> createState() => _ImageWidgetState();

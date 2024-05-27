@@ -310,14 +310,14 @@ class _InputBar extends StatelessWidget {
                         context.read<MentraChatBloc>().sessionId,
                         controller.text));
                   },
-                  child: const Icon(
+                  child:  Icon(
                     Icons.send_rounded,
-                    size: 25,
+                    size: 25.w,
                   ),
                 ),
                 fillColor: Pallets.white,
-                contentPadding: const EdgeInsets.all(16),
-                radius: 45,
+                contentPadding:  EdgeInsets.symmetric(vertical: 16.h,horizontal: 16.w),
+                radius: 45.r,
                 hint: 'Message');
           },
         ))

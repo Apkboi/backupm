@@ -48,17 +48,17 @@ class _MentraMessageItemState extends State<MentraMessageItem>
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                  bottom: 12.h,
+                  bottom: 15.h,
                 ),
                 child: CircleAvatar(
                     backgroundColor: Colors.transparent,
-                    radius: 13,
+                    radius: 13.r,
                     child: ImageWidget(
                       imageUrl: Assets.images.pngs.launcherIcon.path,
                       fit: BoxFit.cover,
 
-                      width: 35,
-                      height: 60,
+                      width: 35.w,
+                      height: 60.h,
                       // size: 40,
                     )),
               ),
@@ -74,13 +74,13 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                         widget.message.length,
                         (index) => ChatBubble(
                           // margin: EdgeInsets.zero,
-                          padding: const EdgeInsets.only(
-                              right: 8, bottom: 0, left: 15, top: 5),
+                          padding:  EdgeInsets.only(
+                              right: 8.w, bottom: 0, left: 15.w, top: 5),
                           backGroundColor: Pallets.navy,
                           clipper: ChatBubbleClipper3(
                               type: BubbleType.receiverBubble,
-                              nipSize: 5,
-                              radius: 15),
+                              nipSize: 5.w,
+                              radius: 15.r),
                           child: Container(
                             padding: widget.isTyping
                                 ? const EdgeInsets.all(10)
@@ -94,9 +94,9 @@ class _MentraMessageItemState extends State<MentraMessageItem>
                                         .toList()[index]
                                         .toString()
                                         .trim(),
-                                    lineHeight: 1.5,
+                                    // lineHeight: 1.5,
                                     color: Pallets.white,
-                                    fontSize: 15.sp,
+                                    // fontSize: 15.sp,
                                     wordSpacing: 1,
                                     fontWeight: FontWeight.w500),
                                 8.verticalSpace,
@@ -160,7 +160,7 @@ class _OptionsWidgetState extends State<_OptionsWidget> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Container(
                     // width: 100,
-                    height: 40,
+                    height: 40.h,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),

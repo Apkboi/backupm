@@ -104,9 +104,9 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
                       //   obscureText: true,
                       // ),
                       16.verticalSpace,
-                      TextView(
+                      const TextView(
                         text: "Forgot password ?",
-                        fontSize: 16.sp,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
 
@@ -118,9 +118,9 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
                                       BotChatFlow.passwordReset.name
                                 });
                           },
-                          child: TextView(
+                          child: const TextView(
                             text: 'Tap to reset',
-                            fontSize: 16.sp,
+                            fontSize: 16,
                             fontWeight: FontWeight.w600,
                           )),
                       PinView(

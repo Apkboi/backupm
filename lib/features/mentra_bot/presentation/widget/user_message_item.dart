@@ -40,7 +40,7 @@ class _UserMessageItemState extends State<UserMessageItem> {
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 7),
             backGroundColor: Pallets.secondary,
             clipper: ChatBubbleClipper3(
-                type: BubbleType.sendBubble, nipSize: 4, radius: 15),
+                type: BubbleType.sendBubble, nipSize: 4, radius: 15.r),
             alignment: Alignment.centerRight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,7 +52,6 @@ class _UserMessageItemState extends State<UserMessageItem> {
                   child: widget.child ??
                       TextView(
                           text: widget.message.content,
-                          fontSize: 15.sp,
                           color: Pallets.black,
                           lineHeight: 1.5,
                           fontWeight: FontWeight.w500),

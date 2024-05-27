@@ -18,7 +18,7 @@ class _CustomTabbarState extends State<CustomTabbar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: 60.h,
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       decoration: BoxDecoration(
         color: Pallets.Grey1,
@@ -39,8 +39,9 @@ class _CustomTabbarState extends State<CustomTabbar> {
           controller: widget.controller,
           unselectedLabelColor: Pallets.primaryDark,
           labelColor: Pallets.primaryDark,
+
           indicator: BoxDecoration(
-              color: Pallets.white, borderRadius: BorderRadius.circular(25)),
+              color: Pallets.white, borderRadius: BorderRadius.circular(100.r)),
           padding: EdgeInsets.zero,
           tabs: widget.tabs,
           unselectedLabelStyle: GoogleFonts.fraunces(

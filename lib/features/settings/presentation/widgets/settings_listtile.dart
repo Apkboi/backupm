@@ -30,17 +30,18 @@ class SettingListTile extends StatelessWidget {
         children: [
           leadingWidget != null
               ? SizedBox(
-                  width: 30,
+                  width: 30.w,
                   child: Center(
                     child: leadingWidget,
                   ),
                 )
               : leadingIconUrl != null
                   ? SizedBox(
-                      width: 30,
+                      width: 30.w,
                       child: Center(
                         child: ImageWidget(
                           imageUrl: leadingIconUrl ?? '',
+                          size: 18.w,
                           fit: BoxFit.fill,
                         ),
                       ),

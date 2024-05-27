@@ -30,7 +30,7 @@ class _DailyStreakWidgetState extends State<DailyStreakWidget> {
           decoration: BoxDecoration(
               color: Pallets.streakBg.withOpacity(0.5),
               borderRadius: BorderRadius.circular(15.r)),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 11),
+          padding:  EdgeInsets.symmetric(horizontal: 10.w, vertical: 11.h),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -151,7 +151,7 @@ class StreakWidget extends StatelessWidget {
           (index) => Padding(
                 padding: const EdgeInsets.all(3.0),
                 child: CircleAvatar(
-                  radius: 13,
+                  radius: 13.r,
                   foregroundColor: Pallets.black,
                   backgroundColor: daysOfWeek[index].isInStreak
                       // backgroundColor: index == 0

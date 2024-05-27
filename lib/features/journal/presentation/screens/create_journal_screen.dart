@@ -47,18 +47,21 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         tittleText: '',
-        height: 60,
+        height: 68,
         actions: [
-          CustomNeumorphicButton(
-            onTap: () {
-              // _delete();
-              // // if (selectedImageId == null) {
-              _validateAndCreateJournal();
-            },
-            color: Pallets.primary,
-            expanded: false,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            text: 'Save',
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomNeumorphicButton(
+              onTap: () {
+                // _delete();
+                // // if (selectedImageId == null) {
+                _validateAndCreateJournal();
+              },
+              color: Pallets.primary,
+              expanded: false,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              text: 'Save',
+            ),
           )
         ],
       ),

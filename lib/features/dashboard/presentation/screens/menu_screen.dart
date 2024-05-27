@@ -74,7 +74,7 @@ class _MenuScreenState extends State<MenuScreen> {
           },
           actions: [
             Padding(
-              padding: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(8.0),
               child: CustomNeumorphicButton(
                 expanded: false,
                 onTap: () {
@@ -94,6 +94,7 @@ class _MenuScreenState extends State<MenuScreen> {
               },
               child: CircleAvatar(
                 backgroundColor: Pallets.white,
+                radius: 20.r,
                 child: ImageWidget(imageUrl: Assets.images.svgs.settings),
               ),
             ),
@@ -269,34 +270,41 @@ class NotificationBell extends StatelessWidget {
           onTap: () {
             context.pushNamed(PageUrl.notificationsPage);
           },
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              HapticInkWell(
-                onTap: () {
-                  context.pushNamed(PageUrl.notificationsScreen);
-                },
-                child: CircleAvatar(
-                  backgroundColor: Pallets.white,
-                  child: ImageWidget(
+          child: SizedBox(
+            height: 20.h,
+            child: Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                HapticInkWell(
+                  onTap: () {
+                    context.pushNamed(PageUrl.notificationsScreen);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Pallets.white,
+                    radius: 20.r,
+                    child: ImageWidget(
                       onTap: () {
                         context.pushNamed(PageUrl.notificationsScreen);
                       },
-                      imageUrl: Assets.images.svgs.bell),
+                      imageUrl: Assets.images.svgs.bell,
+                      size: 18.w,
+                    ),
+                  ),
                 ),
-              ),
-              if (injector
-                  .get<NotificationsBloc>()
-                  .allNotification
-                  .where((element) => element.readAt == null)
-                  .isNotEmpty)
-                const Positioned(
-                    right: -1,
-                    top: -0,
-                    child: Badge(
-                      smallSize: 13,
-                    ))
-            ],
+                if (injector
+                    .get<NotificationsBloc>()
+                    .allNotification
+                    .where((element) => element.readAt == null)
+                    .isNotEmpty)
+                  const Positioned(
+                      right: -1,
+                      top: -0,
+                      child: Badge(
+                        smallSize: 13,
+                      ))
+              ],
+            ),
           ),
         );
       },

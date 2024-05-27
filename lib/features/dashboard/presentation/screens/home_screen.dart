@@ -66,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 24.h,
           color: Pallets.primary,
         ),
-        height: 80,
-        leadingWidth: 80,
+        height: 70,
+        leadingWidth: 80.w,
         actions: [
           HapticInkWell(
             onTap: () {
@@ -80,14 +80,14 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
-              radius: 25,
-              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon),
+              radius: 25.r,
+              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon,size: 18.w,),
             ),
           ),
           16.horizontalSpace,
         ],
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(10.0),
           child: CustomNeumorphicButton(
             onTap: () {
               context.pushNamed(PageUrl.emergencySosScreen);

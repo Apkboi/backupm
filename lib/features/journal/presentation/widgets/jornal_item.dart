@@ -42,7 +42,8 @@ class _JournalItemState extends State<JournalItem> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 6, right: 10, left: 16, bottom: 12.h),
+            padding: EdgeInsets.only(
+                top: 6.h, right: 10.w, left: 16.w, bottom: 12.h),
             decoration: BoxDecoration(
                 color: Pallets.white.withOpacity(0.85),
                 borderRadius: const BorderRadius.only(
@@ -54,15 +55,17 @@ class _JournalItemState extends State<JournalItem> {
                     child: TextView(
                   text: TimeUtil.formDateTimeForJournal(
                       (widget.journal.createdAt as DateTime).toLocal()),
-                  fontSize: 13.sp,
+                  fontSize: 13,
                 )),
                 PopupMenuButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(minWidth: 160),
+
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16.r)),
                   itemBuilder: (context) => [
                     PopupMenuItem(
+
                         onTap: () {
                           context.pushNamed(PageUrl.createJournalScreen,
                               queryParameters: {
@@ -75,7 +78,8 @@ class _JournalItemState extends State<JournalItem> {
                             ImageWidget(
                               imageUrl: Assets.images.svgs.editFilled,
                               color: Pallets.black,
-                              size: 20,
+                              size: 20.w,
+
                             ),
                             8.horizontalSpace,
                             const TextView(
@@ -93,7 +97,7 @@ class _JournalItemState extends State<JournalItem> {
                             ImageWidget(
                               imageUrl: Assets.images.svgs.delete,
                               color: Pallets.black,
-                              size: 20,
+                              size: 20.w,
                             ),
                             8.horizontalSpace,
                             const TextView(
@@ -103,13 +107,16 @@ class _JournalItemState extends State<JournalItem> {
                           ],
                         )),
                   ],
-                  child: const Icon(Icons.more_vert),
+                  child: Icon(
+                    Icons.more_vert,
+                    size: 16.w,
+                  ),
                 )
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
+            padding: EdgeInsets.only(right: 16.w, left: 16.w, bottom: 16),
             width: 1.sw,
             decoration: const BoxDecoration(
                 color: Pallets.white,

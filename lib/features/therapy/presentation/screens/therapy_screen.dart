@@ -46,10 +46,11 @@ class _TherapyScreenState extends State<TherapyScreen> {
         // canGoBack: false,
         leading: 0.horizontalSpace,
         leadingWidth: 0,
+        height: 80,
         tittle: TextView(
           text: 'Therapy',
           style: GoogleFonts.fraunces(
-              fontSize: 32,
+              fontSize: 30.sp,
               fontWeight: FontWeight.w600,
               color: Pallets.primaryDark),
         ),
@@ -60,8 +61,11 @@ class _TherapyScreenState extends State<TherapyScreen> {
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
-              radius: 25,
-              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon),
+              radius: 25.r,
+              child: ImageWidget(
+                imageUrl: Assets.images.svgs.menuIcon,
+                size: 18.w,
+              ),
             ),
           ),
           16.horizontalSpace,
@@ -80,11 +84,15 @@ class _TherapyScreenState extends State<TherapyScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        const CustomTabbar(tabs: [
+                         CustomTabbar(tabs: [
                           Tab(
+                            height: 60.h,
+
                             text: "Upcoming",
                           ),
                           Tab(
+                            height: 60.h,
+
                             text: "History",
                           ),
                         ]),
@@ -111,15 +119,15 @@ class _TherapyScreenState extends State<TherapyScreen> {
                                 fgColor: Pallets.white,
                                 color: Pallets.primary,
                                 text: "Schedule Session",
-                                child: const Row(
+                                child:  Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(
                                       Icons.add,
                                       color: Pallets.white,
-                                      size: 18,
+                                      size: 18.w,
                                     ),
-                                    TextView(
+                                    const TextView(
                                       text: 'Schedule Session',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
@@ -276,8 +284,11 @@ class _UpcomingTherapyState extends State<UpcomingTherapy>
                       horizontalOffset: 60.0,
                       child: FadeInAnimation(
                         duration: const Duration(milliseconds: 600),
-                        child: TherapyItem(
-                          session: sessions[index],
+                        child: Padding(
+                          padding:  EdgeInsets.only(bottom: 10.0.h),
+                          child: TherapyItem(
+                            session: sessions[index],
+                          ),
                         ),
                       ),
                     ),

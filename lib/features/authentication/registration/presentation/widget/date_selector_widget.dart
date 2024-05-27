@@ -70,10 +70,10 @@ class _SelectableYearsListState extends State<DateSelectorWidget> {
               widget.onYearSelected(selectedYear);
             },
             child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding:  EdgeInsets.only(top: 8.0.h),
               child: Container(
-                width: 80,
-                height: 40,
+                width: 80.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   border: Border.all(width: 1),

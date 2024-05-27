@@ -61,7 +61,7 @@ class _PromptsCategoryScreenState extends State<PromptsCategoryScreen> {
                       color: Pallets.primary,
                       child: Row(
                         children: [
-                          ImageWidget(imageUrl: Assets.images.svgs.editFilled),
+                          ImageWidget(imageUrl: Assets.images.svgs.editFilled,size: 18.w,),
                           5.horizontalSpace,
                           const TextView(
                             text: 'Blank Entry',

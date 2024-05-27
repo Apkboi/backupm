@@ -83,19 +83,22 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
+
                                           ImageWidget(
-                                              imageUrl:
-                                                  Assets.images.svgs.icCalender),
+                                              imageUrl: Assets
+                                                  .images.svgs.icCalender,size: 18.w),
                                           10.horizontalSpace,
                                           TextView(
-                                            text: TimeUtil.formatFromDate(injector
-                                                .get<TherapyBloc>()
-                                                .createSessionsPayload
-                                                .date),
+                                            text: TimeUtil.formatFromDate(
+                                                injector
+                                                    .get<TherapyBloc>()
+                                                    .createSessionsPayload
+                                                    .date),
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ],
@@ -104,7 +107,8 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                       Row(
                                         children: [
                                           ImageWidget(
-                                              imageUrl: Assets.images.svgs.icClock),
+                                              imageUrl:
+                                                  Assets.images.svgs.icClock,size: 18.w,),
                                           10.horizontalSpace,
                                           TextView(
                                             text: injector
@@ -122,9 +126,10 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                     onPressed: () {
                                       context.pop();
                                     },
-                                    child: const Text(
+                                    child: Text(
                                       'Change',
                                       style: TextStyle(
+                                          fontSize: 12.sp,
                                           color: Pallets.primary,
                                           fontWeight: FontWeight.w600),
                                     )),
@@ -144,10 +149,12 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                 children: [
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             TextView(
                                               text: 'Session Focus',
@@ -158,13 +165,13 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                               Icons.keyboard_arrow_down_rounded,
                                               color: Pallets.black,
                                             )
-
                                           ],
                                         ),
                                         6.verticalSpace,
                                         SelectedSessionFocusChipList(
                                           selectedSessionFocuses: focus,
-                                          onSelectedFocusChange: (updatedFocuses) {
+                                          onSelectedFocusChange:
+                                              (updatedFocuses) {
                                             setState(() {
                                               focus = updatedFocuses;
                                             });
@@ -190,12 +197,13 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                                     TextView(
                                       text: 'Note',
                                       style: GoogleFonts.inter(
-                                          fontSize: 12, fontWeight: FontWeight.w500),
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     TextView(
                                       text: ' (Optional)',
                                       style: GoogleFonts.inter(
-                                          fontSize: 12, color: Pallets.grey),
+                                          fontSize: 12.sp, color: Pallets.grey),
                                     ),
                                   ],
                                 ),
@@ -215,7 +223,6 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                           80.verticalSpace,
                           // Spacer(),
                           // Expanded(child: 16.verticalSpace),
-
                         ],
                       ),
                     ),
@@ -224,18 +231,17 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
                       bottom: 10,
                       right: 0,
                       left: 0,
-                      child:             focus.isNotEmpty
-                      ? Center(
-                    child: CustomNeumorphicButton(
-                        text: 'Continue',
-                        onTap: () {
-                          _scheduleSession(context);
-                          // _closeAllSheets(context);
-                        },
-                        color: Pallets.primary),
-                  )
-                      : 0.horizontalSpace
-                    )
+                      child: focus.isNotEmpty
+                          ? Center(
+                              child: CustomNeumorphicButton(
+                                  text: 'Continue',
+                                  onTap: () {
+                                    _scheduleSession(context);
+                                    // _closeAllSheets(context);
+                                  },
+                                  color: Pallets.primary),
+                            )
+                          : 0.horizontalSpace)
                 ],
               ));
         },
@@ -279,7 +285,7 @@ class _ConfirmSessionSheetState extends State<ConfirmSessionSheet> {
   void _selectSessionFocus() async {
     focus = await CustomDialogs.showBottomSheet(
         context,
-         SessionFocusSheet(
+        SessionFocusSheet(
           selectedSessionFocus: focus,
         ));
 

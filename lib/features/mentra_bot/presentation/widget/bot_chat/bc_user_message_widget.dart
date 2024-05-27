@@ -47,7 +47,7 @@ class _BCUserMessageWidgetState extends State<BCUserMessageWidget> {
                   widget.child ??
                       TextView(
                           text: widget.message[0],
-                          fontSize: 15.sp,
+                          // fontSize: 15.sp,
                           color: Pallets.black,
                           lineHeight: 1.5,
                           fontWeight: FontWeight.w500),

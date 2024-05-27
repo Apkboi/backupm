@@ -46,7 +46,7 @@ class AppFilledTextField extends StatelessWidget {
                 text: label ?? '',
                 style: GoogleFonts.inter(
                     color: enabled ? null : Pallets.grey,
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     fontWeight: enabled ? FontWeight.w500 : FontWeight.normal),
               ),
           5.verticalSpace,

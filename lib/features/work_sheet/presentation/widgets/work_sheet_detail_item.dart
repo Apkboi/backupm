@@ -39,9 +39,10 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                const Icon(
+                 Icon(
                   Icons.keyboard_arrow_down,
                   color: Pallets.grey,
+                  size: 18.w,
                 ),
                 6.horizontalSpace,
                 TextView(
@@ -73,12 +74,15 @@ class _WorkSheetDetailItemState extends State<WorkSheetDetailItem> {
                 child: Column(
                   children: List.generate(
                       widget.weeklyTask.length,
-                      (index) => _TaskItem(
-                            task: widget.weeklyTask[index],
-                            currentDay: context
-                                .watch<WorkSheetBloc>()
-                                .selectedDay,
-                          )),
+                      (index) => Padding(
+                        padding:  EdgeInsets.symmetric(vertical: 8.0.h),
+                        child: _TaskItem(
+                              task: widget.weeklyTask[index],
+                              currentDay: context
+                                  .watch<WorkSheetBloc>()
+                                  .selectedDay,
+                            ),
+                      )),
                 ),
               ),
               secondChild: 0.verticalSpace,
@@ -124,16 +128,21 @@ class _TaskItemState extends State<_TaskItem> {
         },
         child: Row(
           children: [
-            Checkbox(
-              value: widget.task.completed,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)),
-              onChanged: (value) {
-                bloc.add(MarkTaskEvent(widget.task.id.toString()));
+            SizedBox(
+              height: 20.h,
+              width: 20.w,
+              child: Checkbox(
 
-                // if (value != null) {}
-              },
-              activeColor: Pallets.primary,
+                value: widget.task.completed,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4.r)),
+                onChanged: (value) {
+                  bloc.add(MarkTaskEvent(widget.task.id.toString()));
+
+                  // if (value != null) {}
+                },
+                activeColor: Pallets.primary,
+              ),
             ),
             // 3.horizontalSpace,
             TextView(

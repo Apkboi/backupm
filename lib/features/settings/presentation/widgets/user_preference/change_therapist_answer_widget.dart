@@ -19,71 +19,75 @@ class ChangeTherapistAnswerWidget extends StatefulWidget {
   final TherapyPreferenceMessageModel question;
 
   @override
-  State<ChangeTherapistAnswerWidget> createState() => _ChangeTherapistAnswerWidgetState();
+  State<ChangeTherapistAnswerWidget> createState() =>
+      _ChangeTherapistAnswerWidgetState();
 }
 
-class _ChangeTherapistAnswerWidgetState extends State<ChangeTherapistAnswerWidget> {
+class _ChangeTherapistAnswerWidgetState
+    extends State<ChangeTherapistAnswerWidget> {
   @override
   Widget build(BuildContext context) {
-    return (widget.question.answer != null && context.read<UserPreferenceCubit>().currentQuestion?.id != widget.question.id)
+    return (widget.question.answer != null &&
+            context.read<UserPreferenceCubit>().currentQuestion?.id !=
+                widget.question.id)
         ? HapticInkWell(
-      onTap: () {
-        context
-            .read<UserPreferenceCubit>()
-            .updateCurrentQuestion(widget.question);
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            constraints: BoxConstraints(maxWidth: 0.7.sw),
-            child: ChatBubble(
-              padding:
-              EdgeInsets.symmetric(horizontal: 12.w, vertical: 7),
-              backGroundColor: Pallets.secondary,
-              clipper: ChatBubbleClipper3(
-                  type: BubbleType.sendBubble, nipSize: 4, radius: 15),
-              alignment: Alignment.centerRight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextView(
-                      text: widget.question.answer ?? '',
-                      fontSize: 15.sp,
-                      color: Pallets.black,
-                      lineHeight: 1.5,
-                      fontWeight: FontWeight.w500),
-                  // 8.verticalSpace,
-                  // Text(TimeUtil.formatTime(widget.question.answerTime!),
-                  //     style: TextStyle(
-                  //       fontSize: 11.sp,
-                  //       fontWeight: FontWeight.w600,
-                  //     ))
-                ],
-              ),
+            onTap: () {
+              context
+                  .read<UserPreferenceCubit>()
+                  .updateCurrentQuestion(widget.question);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  constraints: BoxConstraints(maxWidth: 0.7.sw),
+                  child: ChatBubble(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 7),
+                    backGroundColor: Pallets.secondary,
+                    clipper: ChatBubbleClipper3(
+                        type: BubbleType.sendBubble, nipSize: 4, radius: 15.r),
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextView(
+                            text: widget.question.answer ?? '',
+                            fontSize: 15,
+                            color: Pallets.black,
+                            lineHeight: 1.5,
+                            fontWeight: FontWeight.w500),
+                        // 8.verticalSpace,
+                        // Text(TimeUtil.formatTime(widget.question.answerTime!),
+                        //     style: TextStyle(
+                        //       fontSize: 11.sp,
+                        //       fontWeight: FontWeight.w600,
+                        //     ))
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                      TimeUtil.formatTime(
+                          widget.question.answerTime ?? DateTime.now()),
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        fontSize: 11.sp,
+                        color: Pallets.black,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: Text(
-                TimeUtil.formatTime(
-                    widget.question.answerTime ?? DateTime.now()),
-                textAlign: TextAlign.end,
-                style: TextStyle(
-                  fontSize: 11.sp,
-                  color: Pallets.black,
-                  fontWeight: FontWeight.w600,
-                )),
-          ),
-        ],
-      ),
-    )
+          )
         : (widget.question.options.isNotEmpty)
-        ? ChangeTherapistOptionsWidget(question: widget.question)
-        : 0.horizontalSpace;
+            ? ChangeTherapistOptionsWidget(question: widget.question)
+            : 0.horizontalSpace;
   }
 }
 

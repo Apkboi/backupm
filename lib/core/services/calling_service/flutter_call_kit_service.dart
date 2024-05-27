@@ -89,7 +89,7 @@ class CallKitService {
   Future<void> showIncomingCall(String callerId, String callerName,
       {Map<String, dynamic>? extra, required String callerImage}) async {
     // Configure CallKit with your desired settings
-    this._currentUuid = Uuid().v4();
+    _currentUuid = const Uuid().v4();
     CallKitParams callKitParams = CallKitParams(
       id: _currentUuid,
       nameCaller: callerName.toString(),
@@ -135,6 +135,7 @@ class CallKitService {
         supportsGrouping: false,
         supportsUngrouping: false,
         ringtonePath: 'system_ringtone_default',
+
       ),
     );
 

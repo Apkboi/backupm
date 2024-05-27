@@ -86,9 +86,10 @@ class _SelectTimeSheetState extends State<SelectTimeSheet> {
                           onPressed: () {
                             context.pop();
                           },
-                          child: const Text(
+                          child:  Text(
                             'Change',
                             style: TextStyle(
+                              fontSize: 12.sp,
                                 color: Pallets.primary,
                                 fontWeight: FontWeight.w600),
                           )),

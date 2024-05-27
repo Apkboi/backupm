@@ -80,10 +80,10 @@ class ChangeTherapistOptionsWidget extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
+                    padding:  EdgeInsets.only(top: 8.0.h),
                     child: Container(
                       // width: 100,
-                      height: 40,
+                      height: 45.h,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),

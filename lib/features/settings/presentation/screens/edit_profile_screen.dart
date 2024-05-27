@@ -106,7 +106,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   CustomDialogs.showBottomSheet(
                                       context,
                                       Container(
-                                        height: 240,
+                                        height: 240.h,
                                         decoration: const BoxDecoration(
                                             color: Pallets.white,
                                             borderRadius: BorderRadius.only(

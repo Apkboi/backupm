@@ -24,7 +24,7 @@ class PromptCategoryItem extends StatelessWidget {
         //     queryParameters: {PathParam.prompt: jsonEncode(prompt.toJson())});
       },
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding:  EdgeInsets.symmetric(vertical: 20.h,horizontal: 20.w),
         decoration: BoxDecoration(
             color: category.backgroundColor.toString().toColor(),
             borderRadius: BorderRadius.circular(10)),
@@ -45,10 +45,10 @@ class PromptCategoryItem extends StatelessWidget {
                 CircleAvatar(
                   foregroundColor: Pallets.primary,
                   backgroundColor: Pallets.white.withOpacity(0.5),
-                  radius: 13.r,
-                  child: const Icon(
+                  radius: 20.r,
+                  child:  Icon(
                     Icons.arrow_forward_ios,
-                    size: 13,
+                    size: 13.w,
                   ),
                 )
               ],

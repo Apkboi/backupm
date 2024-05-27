@@ -39,6 +39,7 @@ class QuestionaireField extends StatelessWidget {
           TextView(
             text: question,
             style: GoogleFonts.inter(
+
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: submitted ? Pallets.grey : Pallets.black),

@@ -55,7 +55,7 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen>
         tittle: TextView(
           text: 'My Activities',
           style: GoogleFonts.fraunces(
-              fontSize: 32,
+              fontSize: 30.sp,
               fontWeight: FontWeight.w600,
               color: Pallets.primaryDark),
         ),
@@ -66,8 +66,11 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen>
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
-              radius: 25,
-              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon),
+              radius: 25.r,
+              child: ImageWidget(
+                imageUrl: Assets.images.svgs.menuIcon,
+                size: 18.w,
+              ),
             ),
           ),
           16.horizontalSpace,
@@ -82,14 +85,19 @@ class _MyActivitiesScreenState extends State<MyActivitiesScreen>
               child: Column(
                 children: [
                   // 120.verticalSpace,
-                  CustomTabbar(controller: tabController, tabs: const [
+                  CustomTabbar(controller: tabController, tabs:  [
                     Tab(
+                      height: 60.h,
                       text: "Daily Tasks",
                     ),
                     Tab(
+                      height: 60.h,
+
                       text: "Summaries",
                     ),
-                    Tab(text: "Worksheet"),
+                    Tab(
+                        height: 60.h,
+                        text: "Worksheet"),
                   ]),
                   20.verticalSpace,
                   Expanded(

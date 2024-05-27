@@ -30,17 +30,19 @@ class _PreferenceQuestionBaseBoxState extends State<PreferenceQuestionBaseBox> {
             child: PreferenceQuestionBox(
               question: widget.question,
             )),
-        if(widget.question.therapyMessageType == TherapyMessageType.updatePreferenceMessage)
-        Container(
-            // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.only(top: 5),
-            child: PreferenceAnswerBox(
-              question: widget.question,
-            )),
-        if(widget.question.therapyMessageType == TherapyMessageType.changeTherapistMessage)
+        if (widget.question.therapyMessageType ==
+            TherapyMessageType.updatePreferenceMessage)
           Container(
-            // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
+              // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(top: 5),
+              child: PreferenceAnswerBox(
+                question: widget.question,
+              )),
+        if (widget.question.therapyMessageType ==
+            TherapyMessageType.changeTherapistMessage)
+          Container(
+              // constraints:  BoxConstraints(maxWidth: AppUtils.getDeviceSize(context).width*0.5 ),
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(top: 5),
               child: ChangeTherapistAnswerWidget(

@@ -29,9 +29,9 @@ class MenuItem extends StatelessWidget {
         Container(
           height: (0.40 / 2).sh,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(22),
+              borderRadius: BorderRadius.circular(22.r),
               color: bgColor ?? Pallets.white),
-          padding: const EdgeInsets.all(20),
+          padding:  EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

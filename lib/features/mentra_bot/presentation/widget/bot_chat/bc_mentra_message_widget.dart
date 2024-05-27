@@ -9,6 +9,7 @@ import 'package:mentra/core/utils/time_util.dart';
 import 'package:mentra/features/mentra_bot/presentation/blocs/signup_chat/bot_chat_cubit.dart';
 import 'package:mentra/features/mentra_bot/presentation/widget/bot_chat/bc_typing_widget.dart';
 import 'package:mentra/gen/assets.gen.dart';
+
 class BCMentraMessageWidget extends StatefulWidget {
   const BCMentraMessageWidget({
     Key? key,
@@ -102,17 +103,16 @@ class _BCMentraMessageWidgetState extends State<BCMentraMessageWidget>
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: 0.h, bottom: 10.h),
+                      padding: EdgeInsets.only(top: 0.h, bottom: 15.h),
                       child: CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        radius: 13,
+                        radius: 13.r,
                         child: widget.showBot
                             ? ImageWidget(
                                 imageUrl: Assets.images.pngs.launcherIcon.path,
                                 fit: BoxFit.cover,
-
-                                width: 35,
-                                height: 60,
+                                width: 35.w,
+                                height: 60.h,
                                 // size: 40,
                               )
                             : const SizedBox(
@@ -234,7 +234,7 @@ class _MessageContentState extends State<_MessageContent> {
 
             fontWeight: FontWeight.w500,
             color: Pallets.white,
-            fontSize: 15.sp,
+            // fontSize: 15,
             lineHeight: 1.5,
             wordSpacing: 1,
           ),

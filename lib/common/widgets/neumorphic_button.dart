@@ -64,7 +64,7 @@ class CustomNeumorphicButton extends StatelessWidget {
               ),
               shape: shape ??
                   RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(150),
+                      borderRadius: BorderRadius.circular(150.r),
                       side: BorderSide(color: color)),
             ),
             child: Padding(
@@ -93,11 +93,14 @@ class CustomNeumorphicButton extends StatelessWidget {
                                     TextView(
                                       text: text ?? 'Button',
                                       align: TextAlign.center,
-                                      style: TextStyle(
-                                        color: fgColor,
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                      color: fgColor,
+                                      fontWeight: FontWeight.w600,
+
+                                      // style: TextStyle(
+                                      //   color: fgColor,
+                                      //   fontSize: 15,
+                                      //   fontWeight: FontWeight.w600,
+                                      // ),
                                     ),
                               ),
                             ),
@@ -109,7 +112,7 @@ class CustomNeumorphicButton extends StatelessWidget {
                             align: TextAlign.center,
                             color: fgColor,
                             fontWeight: FontWeight.w600,
-                            fontSize: 15,
+                            // fontSize: 15.sp,
                             // style: TextStyle(
                             //
                             // ),

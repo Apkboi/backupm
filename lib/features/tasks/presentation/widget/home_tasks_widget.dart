@@ -26,7 +26,7 @@ class _HomeTasksWidgetState extends State<HomeTasksWidget> {
         var dailyTasks = injector.get<DailyTaskBloc>().dailyTasks;
         if (dailyTasks != null) {
           return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+            padding:  EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
             decoration: BoxDecoration(
                 color: Pallets.dailyTaskBg.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12.r)),

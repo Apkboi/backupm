@@ -22,7 +22,6 @@ import 'package:mentra/features/therapy/presentation/widgets/therapy_empty_state
 import 'package:mentra/gen/assets.gen.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
 
@@ -63,11 +62,12 @@ class _JournalScreenState extends State<JournalScreen> {
         centerTile: false,
         // canGoBack: false,
         leading: 0.horizontalSpace,
+
         leadingWidth: 0,
         tittle: TextView(
           text: 'Journal',
           style: GoogleFonts.fraunces(
-              fontSize: 32,
+              fontSize: 30.sp,
               fontWeight: FontWeight.w600,
               color: Pallets.primaryDark),
         ),
@@ -78,8 +78,8 @@ class _JournalScreenState extends State<JournalScreen> {
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
-              radius: 25,
-              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon),
+              radius: 25.r,
+              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon,size: 18.w,),
             ),
           ),
           16.horizontalSpace,

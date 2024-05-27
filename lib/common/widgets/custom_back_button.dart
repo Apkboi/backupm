@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
+import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/gen/assets.gen.dart';
 
 class CustomBackButton extends StatefulWidget {
@@ -28,10 +29,10 @@ class _CustomBackButtonState extends State<CustomBackButton> {
       child: CircleAvatar(
         backgroundColor: Colors.white,
         foregroundColor: Colors.transparent,
-        radius: widget.size ?? 23,
+        radius: widget.size?.r ?? 20.r,
         child: Center(
           child: widget.icon ??
-              ImageWidget(imageUrl: Assets.images.svgs.arrowLeft),
+              ImageWidget(imageUrl: Assets.images.svgs.arrowLeft,size: 18.r,),
         ),
       ),
     );

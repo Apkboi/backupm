@@ -54,12 +54,12 @@ class _QuestionaireScreenState extends State<QuestionaireScreen> {
             context.pop();
           },
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(13.0),
             child: ImageWidget(
               imageUrl: Assets.images.svgs.arrowLeft,
-              size: 16,
-              height: 25,
-              width: 25,
+              size: 20.w,
+              height: 25.h,
+              width: 25.w,
               onTap: () {
                 context.pop();
               },
@@ -147,7 +147,7 @@ class _QuestionaireScreenState extends State<QuestionaireScreen> {
       allControllers = List.generate(
           state.response.data.length, (index) => TextEditingController());
       allQuestionaires = state.response.data;
-      for (var i = 0; i <= allQuestionaires.length-1; i++) {
+      for (var i = 0; i <= allQuestionaires.length - 1; i++) {
         allControllers[i].text = allQuestionaires[i].answer;
         setState(() {});
       }

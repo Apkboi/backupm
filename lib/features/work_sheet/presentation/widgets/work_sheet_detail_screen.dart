@@ -79,8 +79,8 @@ class _WorksheetDetailScreenState extends State<WorksheetDetailScreen> {
                 children: [
                   Container(
                     color: Pallets.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
+                    padding:  EdgeInsets.symmetric(
+                        horizontal: 16.w, vertical: 16.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: List.generate(
@@ -96,12 +96,12 @@ class _WorksheetDetailScreenState extends State<WorksheetDetailScreen> {
                                   backgroundColor: isSelectedDay(context, index)
                                       ? Pallets.primary
                                       : Colors.transparent,
-                                  radius: 22,
+                                  radius: 24.r,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
+                                    padding: const EdgeInsets.all(.0),
                                     child: TextView(
                                       text: weekdays[index].abbreviation,
-                                      fontSize: 13,
+                                      fontSize: 11,
                                       color: isSelectedDay(context, index)
                                           ? Pallets.white
                                           : Pallets.grey,
@@ -136,7 +136,6 @@ class _WorksheetDetailScreenState extends State<WorksheetDetailScreen> {
 
                       return ListView(
                         children: [
-
                           WorkSheetDetailItem(
                             weeklyTask: stagedTasks.firstOrNull?.tasks
                                     .where(
@@ -147,8 +146,8 @@ class _WorksheetDetailScreenState extends State<WorksheetDetailScreen> {
                           ),
                           WorkSheetDetailItem(
                             weeklyTask: stagedTasks.firstOrNull?.tasks
-                                    .where(
-                                        (element) => element.time == "afternoon")
+                                    .where((element) =>
+                                        element.time == "afternoon")
                                     .toList() ??
                                 [],
                             period: 'Afternoon',
@@ -163,7 +162,6 @@ class _WorksheetDetailScreenState extends State<WorksheetDetailScreen> {
                           ),
                         ],
                       );
-
                     },
                   ))
                 ],

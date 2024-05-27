@@ -20,7 +20,7 @@ class WorkSheetItem extends StatelessWidget {
         _goToWorkSheetScreen(context);
       },
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding:  EdgeInsets.symmetric(horizontal: 16.w,vertical: 16.h),
         decoration: BoxDecoration(
           color: Pallets.white,
           borderRadius: BorderRadius.circular(20.r),

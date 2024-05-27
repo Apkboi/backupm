@@ -54,7 +54,7 @@ class _TherapyChatUserMessageItemState
                   ),
                   child: TextView(
                       text: widget.message.message,
-                      fontSize: 15.sp,
+                      fontSize: 15,
                       color: Pallets.black,
                       lineHeight: 1.5,
                       fontWeight: FontWeight.w500),

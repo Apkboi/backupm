@@ -61,7 +61,7 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
                     8.verticalSpace,
                     Row(
                       children: [
-                        ImageWidget(imageUrl: Assets.images.svgs.icCalender),
+                        ImageWidget(imageUrl: Assets.images.svgs.icCalender,size: 18.w,),
                         5.horizontalSpace,
                         TextView(
                           text: TimeUtil.formartToDayTime(
@@ -74,7 +74,7 @@ class _UpcomingSessionsWidgetState extends State<UpcomingSessionsWidget> {
                     6.verticalSpace,
                     Row(
                       children: [
-                        ImageWidget(imageUrl: Assets.images.svgs.icClock),
+                        ImageWidget(imageUrl: Assets.images.svgs.icClock,size: 18.w,),
                         5.horizontalSpace,
                         TextView(
                           text:

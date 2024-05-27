@@ -69,7 +69,8 @@ class _PinViewState extends State<PinView> {
           children: [
             widget.hasPinField!
                 ? SizedBox(
-                    height: 30, child: PinDots(activeCount: output.length - 1))
+                    height: 30.h,
+                    child: PinDots(activeCount: output.length - 1))
                 : 0.verticalSpace,
             widget.hasPinField! ? 40.verticalSpace : 0.verticalSpace,
             GridView.count(
@@ -145,7 +146,7 @@ class _PinViewState extends State<PinView> {
                                               ? ImageWidget(
                                                   imageUrl: Assets
                                                       .images.svgs.backspace,
-                                                  size: 20,
+                                                  size: 20.w,
                                                 )
                                               : Text(
                                                   index == 10
@@ -220,8 +221,8 @@ class _PinDotsState extends State<PinDots> {
           4,
           (index) => !(index <= widget.activeCount)
               ? Container(
-                  width: 50,
-                  height: 50,
+                  width: 50.w,
+                  height: 50.h,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     color: Pallets.white,
@@ -230,8 +231,8 @@ class _PinDotsState extends State<PinDots> {
                   ),
                 )
               : Container(
-                  width: 50,
-                  height: 50,
+                  width: 50.w,
+                  height: 50.h,
                   alignment: Alignment.center,
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(

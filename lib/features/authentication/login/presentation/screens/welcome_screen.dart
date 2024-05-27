@@ -79,14 +79,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               children: [
                 Column(
                   children: [
-                    0.15.sh.verticalSpace,
+                    0.08.sh.verticalSpace,
                     AnimatedBuilder(
                       animation: _controller,
                       builder: (context, child) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: SizedBox(
-                            height: 1.sw,
+                            height: 0.6.sh,
                             child: Stack(
                               children: [
                                 Transform.scale(
@@ -139,7 +139,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   children: [
                     TextView(
                       align: TextAlign.center,
-                      fontSize: 15.sp,
+                      fontSize: 15,
                       text:
                           'You\'re doing great, ${injector.get<UserBloc>().appUser?.name}.\n ${_isExhaling ? "Exhale stress" : " Inhale positivity"} ',
                       fontWeight: FontWeight.w500,
@@ -152,6 +152,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           context.goNamed(PageUrl.homeScreen);
                         },
                         color: Pallets.primary,
+                        fgColor: Pallets.white,
                         text: 'Skip',
                       ),
                     ),

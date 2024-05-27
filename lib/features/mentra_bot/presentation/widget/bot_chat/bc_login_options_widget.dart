@@ -80,7 +80,7 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
                         children: [
                           ImageWidget(
                             imageUrl: Assets.images.svgs.apple,
-                            size: 15,
+                            size: 15.w,
                           ),
                           5.horizontalSpace,
                           TextView(
@@ -113,7 +113,7 @@ class _BcLoginOptionsWidgetState extends State<BcLoginOptionsWidget> {
                   children: [
                     ImageWidget(
                       imageUrl: Assets.images.svgs.google,
-                      size: 15,
+                      size: 15.w,
                     ),
                     5.horizontalSpace,
                     TextView(

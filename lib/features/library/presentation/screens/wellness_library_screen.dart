@@ -49,7 +49,7 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
         tittle: TextView(
           text: 'Wellness Library',
           style: GoogleFonts.fraunces(
-              fontSize: 32,
+              fontSize: 30.sp,
               fontWeight: FontWeight.w600,
               color: Pallets.primaryDark),
         ),
@@ -60,8 +60,11 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
-              radius: 25,
-              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon),
+              radius: 25.r,
+              child: ImageWidget(
+                imageUrl: Assets.images.svgs.menuIcon,
+                size: 18.w,
+              ),
             ),
           ),
           16.horizontalSpace,
@@ -78,11 +81,12 @@ class _WellnessLibraryScreenState extends State<WellnessLibraryScreen> {
                 child: Column(
                   children: [
                     // 100.h.verticalSpace,
-                    const CustomTabbar(tabs: [
+                    CustomTabbar(tabs: [
                       Tab(
+                        height: 60.h,
                         text: "Discover",
                       ),
-                      Tab(text: "Favorites"),
+                      Tab(height: 60.h, text: "Favorites"),
                     ]),
                     20.verticalSpace,
                     const Expanded(
@@ -264,8 +268,9 @@ class _DiscoverContentsState extends State<DiscoverContents>
                         ?.length ??
                     0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 0.9,
-                    crossAxisSpacing: 20, crossAxisCount: 2),
+                    childAspectRatio: 0.9,
+                    crossAxisSpacing: 20,
+                    crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   return AnimationConfiguration.staggeredList(
                     position: index,

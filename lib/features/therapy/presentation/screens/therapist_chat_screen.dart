@@ -11,7 +11,6 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/therapy/data/models/chat_therapist.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
-import 'package:mentra/features/therapy/data/models/upcoming_sessions_response.dart';
 import 'package:mentra/features/therapy/presentation/bloc/session/session_chat_bloc.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapy_message_box.dart';
 import 'package:mentra/features/therapy/presentation/widgets/join_session_button.dart';

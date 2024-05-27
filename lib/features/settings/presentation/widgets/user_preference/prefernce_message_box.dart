@@ -41,12 +41,13 @@ class _PreferenceQuestionBoxState extends State<PreferenceQuestionBox> {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  radius: 13,
+                  radius: 13.r,
                   child: ImageWidget(
                     imageUrl: Assets.images.pngs.launcherIcon.path,
                     fit: BoxFit.cover,
-                    width: 35,
-                    height: 30,
+                    width: 45.w,
+                    height: 40.h,
+
                     // size: 40,
                   ),
                 ),
@@ -120,7 +121,7 @@ class _MessageContentState extends State<_MessageContent> {
         text: widget.question,
         lineHeight: 1.5,
         color: Pallets.white,
-        fontSize: 15.sp,
+        fontSize: 15,
         wordSpacing: 1,
         fontWeight: FontWeight.w500);
   }

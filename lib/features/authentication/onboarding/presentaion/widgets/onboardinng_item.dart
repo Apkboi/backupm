@@ -67,10 +67,11 @@ class _OnboardingItemState extends State<OnboardingItem> {
                       )),
                   10.h.verticalSpace,
                   TextView(
+
                       text: widget.text,
                       align: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 15,
+                      style:  TextStyle(
+                          fontSize: 15.sp,
                           color: Pallets.black80,
                           fontWeight: FontWeight.w500)),
                 ],

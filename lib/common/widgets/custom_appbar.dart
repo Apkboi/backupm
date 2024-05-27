@@ -36,44 +36,55 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: AppBar(
-        backgroundColor: bgColor ?? Colors.transparent,
-        foregroundColor: fgColor,
-        toolbarHeight: height,
-        elevation: elevation ?? 0,
-        centerTitle: centerTile,
+      padding:  EdgeInsets.symmetric(horizontal: 8.0.w),
+      child: Column(
+        children: [
+          1.verticalSpace,
+          AppBar(
+            backgroundColor: bgColor ?? Colors.transparent,
+            foregroundColor: fgColor,
+            toolbarHeight: height,
+            elevation: elevation ?? 0,
+            centerTitle: centerTile,
 
-        surfaceTintColor: bgColor ?? Colors.transparent,
-        titleTextStyle: GoogleFonts.sora(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: Theme.of(context).colorScheme.onBackground),
-        leadingWidth: leadingWidth,
-        leading: canGoBack!
-            ? leading ??
-            CustomBackButton(
-              onTap: () {
-                onBackPressed != null
-                    ? onBackPressed!()
-                    : context.pop(context);
-              },
-            )
-            : null,
-        title: tittle ??
-            TextView(
-              text: tittleText ?? '',
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              style: GoogleFonts.plusJakartaSans(
-                  // fontSize: 16,
-                  color: fgColor),
-            ),
-        actions: actions,
+            surfaceTintColor: bgColor ?? Colors.transparent,
+            titleTextStyle: GoogleFonts.sora(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: Theme.of(context).colorScheme.onBackground),
+            leadingWidth: leadingWidth,
+            leading: canGoBack!
+                ? Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: SizedBox(
+
+                    child: leading ??
+                    CustomBackButton(
+                      onTap: () {
+                        onBackPressed != null
+                            ? onBackPressed!()
+                            : context.pop(context);
+                      },
+                    ),
+                  ),
+                )
+                : null,
+            title: tittle ??
+                TextView(
+                  text: tittleText ?? '',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  style: GoogleFonts.plusJakartaSans(
+                      // fontSize: 16,
+                      color: fgColor),
+                ),
+            actions: actions,
+          ),
+        ],
       ),
     );
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(height ?? 60);
+  Size get preferredSize => Size.fromHeight(height?.h ?? 70.h);
 }
