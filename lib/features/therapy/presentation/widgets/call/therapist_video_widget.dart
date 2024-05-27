@@ -44,7 +44,8 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
               objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
             ),
           ),
-          BlocBuilder<CallCubit, CallState>(
+          BlocConsumer<CallCubit, CallState>(
+            listener: _listenToCallCubit,
             buildWhen: _buildWhen,
             builder: (context, state) {
               if (state is CallConnectingState) {
@@ -56,6 +57,7 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
                   ),
                 );
               }
+
               if (state is CallReConnectingState) {
                 return const Center(
                   child: TextView(
@@ -66,14 +68,6 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
                 );
               }
 
-              if (state is CallActionState) {
-                if (state.response.action == "videoStateChanged") {
-                  remoteVideoEnabled = state.response.value == "enabled";
-                }
-                if (state.response.action == "audioStateChanged") {
-                  remoteAudioEnabled = state.response.value == "enabled";
-                }
-              }
 
               return _RemoteControllWidget(
                   caller: widget.caller,
@@ -105,8 +99,20 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
   bool _buildWhen(CallState previous, CallState current) {
     return current is CallConnectingState ||
         current is CallConnectedState ||
-        current is CallReConnectingState ||
-        current is CallActionState;
+        current is CallReConnectingState;
+  }
+
+  void _listenToCallCubit(BuildContext context, CallState state) {
+
+    if (state is CallActionState) {
+      if (state.response.action == "videoStateChanged") {
+        remoteVideoEnabled = state.response.value == "enabled";
+      }
+      if (state.response.action == "audioStateChanged") {
+        remoteAudioEnabled = state.response.value == "enabled";
+      }
+    }
+
   }
 }
 
