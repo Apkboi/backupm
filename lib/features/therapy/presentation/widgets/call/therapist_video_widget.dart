@@ -28,7 +28,7 @@ class TherapistVideoWidget extends StatefulWidget {
 }
 
 class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
-  bool remoteVideoEnabled = true;
+  bool remoteVideoEnabled = false;
   bool remoteAudioEnabled = true;
 
   @override
@@ -68,7 +68,6 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
                 );
               }
 
-
               return _RemoteControllWidget(
                   caller: widget.caller,
                   videoEnabled: remoteVideoEnabled,
@@ -103,7 +102,6 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
   }
 
   void _listenToCallCubit(BuildContext context, CallState state) {
-
     if (state is CallActionState) {
       if (state.response.action == "videoStateChanged") {
         remoteVideoEnabled = state.response.value == "enabled";
@@ -112,7 +110,6 @@ class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
         remoteAudioEnabled = state.response.value == "enabled";
       }
     }
-
   }
 }
 

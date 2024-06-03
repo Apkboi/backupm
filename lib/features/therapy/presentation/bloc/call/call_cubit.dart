@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:mentra/core/_core.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/pusher/pusher_channel_service.dart';
@@ -67,13 +66,9 @@ class CallCubit extends Cubit<CallState> {
     );
   }
 
-  Future<void> startCall(
-    int callerId,
-    calleeId,
-    SdpOffer? offer,
-    Caller? caller,
-    dynamic sessionId,
-  ) async {
+  Future<void> startCall(int callerId, calleeId, SdpOffer? offer,
+      Caller? caller, dynamic sessionId,
+      {bool newConnection = true}) async {
     isCallActive = true;
     emit(CallConnectingState());
     _calleeId = calleeId;
@@ -93,114 +88,116 @@ class CallCubit extends Cubit<CallState> {
       setState(null);
     }
     // setup Peer Connection
-    _setupPeerConnection();
+    _setupPeerConnection(newConnection);
     // _listenToPusher();
   }
 
-  _setupPeerConnection() async {
+  Future reconnect() async {
+    await _rtcPeerConnection?.close();
+    await startCall(_callerId, _calleeId, _offer, therapist, _sessionId,
+        newConnection: true);
+  }
+
+  _setupPeerConnection(bool newConnection) async {
     // create peer connection
     try {
-      _rtcPeerConnection = await createPeerConnection({
-        'iceServers': [
-          {
-            'urls': [
-              'stun:stun1.l.google.com:19302',
-              // Public STUN server (consider private for production)
-              'stun:stun.rtc.yourmentra.com',
-              // Your TURN server's STUN endpoint (if available)
-            ]
-          },
-          {
-            'urls': [
-              'turn:turn.rtc.yourmentra.com', // Your TURN server URL
-            ],
-            'username': 'turn',
-            'credential': 'Turn09865', // Replace with your actual credentials
+      if (newConnection) {
+        _rtcPeerConnection = await createPeerConnection({
+          'iceServers': [
+            {
+              'urls': [
+                'stun:stun1.l.google.com:19302',
+                // Public STUN server (consider private for production)
+                'stun:stun.rtc.yourmentra.com',
+                // Your TURN server's STUN endpoint (if available)
+              ]
+            },
+            {
+              'urls': [
+                'turn:turn.rtc.yourmentra.com', // Your TURN server URL
+              ],
+              'username': 'turn',
+              'credential': 'Turn09865', // Replace with your actual credentials
+            }
+          ]
+        });
+        _rtcPeerConnection!.onIceCandidate = (candidate) {
+          if (candidate.candidate != null) {
+            _pushCandidate(_callerId, {
+              'candidate': candidate.candidate,
+              'sdpMid': candidate.sdpMid.toString(),
+              'sdpMlineIndex': candidate.sdpMLineIndex,
+            });
           }
-        ]
-      });
-      _rtcPeerConnection!.onIceCandidate = (candidate) {
-        if (candidate.candidate != null) {
-          _pushCandidate(_callerId, {
-            'candidate': candidate.candidate,
-            'sdpMid': candidate.sdpMid.toString(),
-            'sdpMlineIndex': candidate.sdpMLineIndex,
-          });
-        }
-      };
-
-      _rtcPeerConnection!.onIceConnectionState = (state) async {
-        if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
-            state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
+        };
+        _rtcPeerConnection!.onIceConnectionState = (state) async {
           connectionState = state;
-          emit(CallReConnectingState());
-
           logger.w(connectionState);
 
-          await retryWithDelay(
-              () => Future.value(
-                  [_rtcPeerConnection?.close(), _setupPeerConnection()]),
-              retries: 6,
-              condition: connectionState ==
-                  RTCIceConnectionState.RTCIceConnectionStateConnected);
+          if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
+              state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
+            emit(CallReConnectingState());
 
-          if (connectionState !=
-              RTCIceConnectionState.RTCIceConnectionStateConnected) {
-            endCall();
-          } else {
-            isVideoOn = true;
-            emit(CallConnectedState());
+            await retryWithDelay(reconnect,
+                retries: 7,
+                condition: connectionState == RTCIceConnectionState.RTCIceConnectionStateConnected);
+
+            if (connectionState != RTCIceConnectionState.RTCIceConnectionStateConnected) {
+              endCall();
+            } else {
+              isVideoOn = true;
+              emit(CallConnectedState());
+            }
+
+            // Debouncer(milliseconds: 5000).run(() {
+            //   if (shouldEndCall()) {
+            //     endCall();
+            //   } else {
+            //     retriedTimes = 0;
+            //     emit(CallReConnectingState());
+            //   }
+            // });
           }
+          // if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
+          //   isVideoOn = true;
+          //   emit(CallConnectedState());
+          // }
+        };
+        _rtcPeerConnection!.onTrack = (event) {
+          remoteRTCVideoRenderer.srcObject = event.streams[0];
+          setState(() {});
+        };
 
-          // Debouncer(milliseconds: 5000).run(() {
-          //   if (shouldEndCall()) {
-          //     endCall();
-          //   } else {
-          //     retriedTimes = 0;
-          //     emit(CallReConnectingState());
-          //   }
-          // });
-        }
-        // if (state == RTCIceConnectionState.RTCIceConnectionStateConnected) {
-        //   isVideoOn = true;
-        //   emit(CallConnectedState());
-        // }
-      };
+        // get localStream
+        _localStream = await navigator.mediaDevices.getUserMedia({
+          'audio': isAudioOn,
+          'video': isVideoOn
+              ? {
+                  'facingMode': isFrontCameraSelected ? 'user' : 'environment',
+                  'mandatory': {
+                    'minWidth': '640',
+                    'minHeight': '480',
+                    'minFrameRate': '30',
+                  },
+                  "echoCancellation": true,
+                }
+              : {},
+          "echoCancellation": true,
+        });
 
-      _rtcPeerConnection!.onTrack = (event) {
-        remoteRTCVideoRenderer.srcObject = event.streams[0];
+        // add mediaTrack to peerConnection
+        _localStream!.getTracks().forEach((track) async {
+          await _rtcPeerConnection!.addTrack(track, _localStream!);
+          setState(() {});
+        });
+
+        // set source for local video renderer
+
+        localRTCVideoRenderer.srcObject = _localStream;
+
         setState(() {});
-      };
-
-      // get localStream
-      _localStream = await navigator.mediaDevices.getUserMedia({
-        'audio': isAudioOn,
-        'video': isVideoOn
-            ? {
-                'facingMode': isFrontCameraSelected ? 'user' : 'environment',
-                'mandatory': {
-                  'minWidth': '640',
-                  'minHeight': '480',
-                  'minFrameRate': '30',
-                },
-                "echoCancellation": true,
-              }
-            : {},
-        "echoCancellation": true,
-      });
-
-      // add mediaTrack to peerConnection
-      _localStream!.getTracks().forEach((track) async {
-        await _rtcPeerConnection!.addTrack(track, _localStream!);
-        setState(() {});
-      });
-
-      // set source for local video renderer
-
-      localRTCVideoRenderer.srcObject = _localStream;
-
-      setState(() {});
-      _listenToPusher();
+        _listenToPusher();
+      }
 
       await _rtcPeerConnection!.setRemoteDescription(
         RTCSessionDescription(_offer?.sdp, _offer?.type),
@@ -213,13 +210,17 @@ class CallCubit extends Cubit<CallState> {
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
 
-      // send SDP answer to remote peer
-      await _answerCall(_callerId, answer.toMap());
+      if (newConnection) {
+        // send SDP answer to remote peer
+        await _answerCall(_callerId, answer.toMap());
+      } else {
+        _createOffer();
+      }
     } catch (e, stack) {
       if (shouldEndCall()) {
         emit(CallConnectingFailedState());
       } else {
-        _setupPeerConnection();
+        _setupPeerConnection(newConnection);
         emit(CallReConnectingState());
       }
       logger.e(e.toString());
@@ -228,10 +229,14 @@ class CallCubit extends Cubit<CallState> {
   }
 
   Future _createOffer() async {
-    RTCSessionDescription offer =
-        await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
-    _rtcPeerConnection!.setLocalDescription(offer);
-    await _offerCall(_callerId, offer.toMap());
+    try {
+      RTCSessionDescription offer =
+          await _rtcPeerConnection!.createOffer({'offerToReceiveVideo': 1});
+      _rtcPeerConnection!.setLocalDescription(offer);
+      await _offerCall(_callerId, offer.toMap());
+    } catch (e) {
+      logger.w("call OFFER Failed");
+    }
   }
 
   toggleMic() {
@@ -339,6 +344,9 @@ class CallCubit extends Cubit<CallState> {
         RTCSessionDescription(
             answerResponse.sdpAnswer!.sdp, answerResponse.sdpAnswer!.type),
       );
+      _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
+      _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
+      connectionState = RTCIceConnectionState.RTCIceConnectionStateConnected;
       emit(CallConnectedState());
     }
 
@@ -370,6 +378,8 @@ class CallCubit extends Cubit<CallState> {
   }
 
   _callAction(String action, String value) async {
+    logger.w("call ACTION SESSION ID$_sessionId");
+
     try {
       await _callRepository.callAction(
           _calleeId, _callerId, _sessionId.toString(), action, value);
@@ -382,7 +392,10 @@ class CallCubit extends Cubit<CallState> {
     try {
       await _callRepository.answerCall(
           _callerId, map, _calleeId.toString(), _sessionId.toString());
-      _createOffer();
+
+      logger.w("call OFFER started");
+      await _createOffer();
+      logger.w("call OFFER success");
 
       _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
       _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
@@ -464,7 +477,7 @@ class CallCubit extends Cubit<CallState> {
   Future<void> retryWithDelay(
     Future<void>? Function() action, {
     int retries = 5,
-    Duration delay = const Duration(seconds: 5),
+    Duration delay = const Duration(seconds: 40),
     required bool condition,
   }) async {
     try {

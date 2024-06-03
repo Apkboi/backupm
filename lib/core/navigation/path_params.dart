@@ -29,7 +29,7 @@ class PathParam {
   static const offer = 'offer';
   static const caller = 'caller';
   static const callerId = 'callerId';
-  static const sessionId = 'callerId';
+  static const sessionId = 'sessionId';
   static const calleeId = 'calleeId';
 
   static const name = 'name';

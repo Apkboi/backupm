@@ -135,7 +135,6 @@ class CallKitService {
         supportsGrouping: false,
         supportsUngrouping: false,
         ringtonePath: 'system_ringtone_default',
-
       ),
     );
 

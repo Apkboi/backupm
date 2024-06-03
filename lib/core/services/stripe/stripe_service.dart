@@ -151,39 +151,39 @@ class StripeService {
     }
   }
 
-  // Future<Map<String, dynamic>> createTestPaymentSheet() async {
-  //   Map<String, dynamic> payload = {
-  //     "amount": '100000',
-  //     "currency": 'AED',
-  //     "payment_method_types[]": [
-  //       "card",
-  //     ],
-  //     "metadata": {
-  //       "order_id": 'orderId',
-  //       "email": 'email',
-  //       "app_env": 'dev',
-  //       "amount": 100000,
-  //       "duration": 'duration',
-  //       "payment_for": 'paymentFor'
-  //     },
-  //   };
-  //   final url = Uri.parse('https://api.stripe.com/v1/payment_intents');
-  //   final response =
-  //       await networkService.call(url.toString(), RequestMethod.post,
-  //           data: payload,
-  //           options: Options(headers: {
-  //             "Authorization": 'Bearer ${UrlConfig.stripeSecretKey}',
-  //             "Content-Type": "application/x-www-form-urlencoded"
-  //           }));
-  //
-  //   final body = response.data;
-  //
-  //   clientSecret = body['client_secret'];
-  //
-  //   if (body['error'] != null) {
-  //     throw Exception('Error code: ${body['error']}');
-  //   }
-  //
-  //   return body;
-  // }
+  Future<Map<String, dynamic>> createTestPaymentSheet() async {
+    Map<String, dynamic> payload = {
+      "amount": '100000',
+      "currency": 'AED',
+      "payment_method_types[]": [
+        "card",
+      ],
+      "metadata": {
+        "order_id": 'orderId',
+        "email": 'email',
+        "app_env": 'dev',
+        "amount": 100000,
+        "duration": 'duration',
+        "payment_for": 'paymentFor'
+      },
+    };
+    final url = Uri.parse('https://api.stripe.com/v1/payment_intents');
+    final response =
+        await networkService.call(url.toString(), RequestMethod.post,
+            data: payload,
+            options: Options(headers: {
+              "Authorization": 'Bearer ${UrlConfig.stripeSecretKey}',
+              "Content-Type": "application/x-www-form-urlencoded"
+            }));
+
+    final body = response.data;
+
+    clientSecret = body['client_secret'];
+
+    if (body['error'] != null) {
+      throw Exception('Error code: ${body['error']}');
+    }
+
+    return body;
+  }
 }

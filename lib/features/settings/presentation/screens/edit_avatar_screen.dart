@@ -33,7 +33,7 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
-        height: 60,
+        // height: 60,
         // height: 70,
         tittleText: 'Edit Avatar',
         actions: [

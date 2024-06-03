@@ -40,14 +40,14 @@ class IncomingCallScreen extends StatefulWidget {
 class _IncomingCallScreenState extends State<IncomingCallScreen> {
   @override
   void initState() {
-    Future.delayed(
-      const Duration(seconds: 30),
-      () {
-        if (mounted) {
-          rootNavigatorKey.currentState!.context.pop();
-        }
-      },
-    );
+    // Future.delayed(
+    //   const Duration(seconds: 30),
+    //   () {
+    //     if (mounted) {
+    //       rootNavigatorKey.currentState!.context.pop();
+    //     }
+    //   },
+    // );
     Vibration.vibrate(duration: 3000, amplitude: 128);
     super.initState();
   }
@@ -149,6 +149,7 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
     context.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
       PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
       PathParam.callerId: widget.callerId.toString(),
+      PathParam.sessionId: widget.sessionId.toString(),
       PathParam.caller: jsonEncode(widget.caller?.toJson()),
       if (widget.offer != null)
         PathParam.offer: jsonEncode(widget.offer?.toJson()),

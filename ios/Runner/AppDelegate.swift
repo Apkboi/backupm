@@ -22,8 +22,8 @@ import flutter_callkit_incoming
         voipRegistry.desiredPushTypes = [PKPushType.voIP]
 
         //Use if using WebRTC
-        //RTCAudioSession.sharedInstance().useManualAudio = true
-        //RTCAudioSession.sharedInstance().isAudioEnabled = false
+        RTCAudioSession.sharedInstance().useManualAudio = true
+        RTCAudioSession.sharedInstance().isAudioEnabled = false
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

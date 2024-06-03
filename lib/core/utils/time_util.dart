@@ -9,6 +9,27 @@ class TimeUtil {
     return DateFormat("yyyy-MM-dd HH:mm").format(dt);
   }
 
+  static bool isSameDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  static String formatMessageDate(DateTime date) {
+    final today = DateTime.now();
+    final yesterday = today.subtract(const Duration(days: 1));
+
+    if (isSameDate(date, today)) {
+      return 'Today';
+    } else if (isSameDate(date, yesterday)) {
+      return 'Yesterday';
+    } else {
+      // Use a more comprehensive date formatting library likeintl for better formatting options
+      return DateFormat('MMMM d, y')
+          .format(date); // Example format: 'June 10, 2024'
+    }
+  }
+
   /// format date
   static String formatDate(String date) {
     if (date.isEmpty) return 'N/A';
@@ -50,17 +71,16 @@ class TimeUtil {
     return formatted;
   }
 
-
-  static String formatOpertionsDateWithoutTime(String? date,) {
+  static String formatOpertionsDateWithoutTime(
+    String? date,
+  ) {
     final now = DateTime.parse(date ?? DateTime.now().toString());
-
 
     final DateFormat formatter = DateFormat('MMMM d, yyyy');
     final String formatted = formatter.format(now);
 
     return formatted;
   }
-
 
   static String timeFormat(String? updatedAt) {
     if (updatedAt == null) return 'N/A';

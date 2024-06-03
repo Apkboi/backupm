@@ -10,6 +10,7 @@ class TherapyChatMessage {
   String id;
   String? receiverId;
   SendingState sendingState;
+  bool isDivider;
 
   TherapyChatMessage(
       {required this.message,
@@ -18,6 +19,7 @@ class TherapyChatMessage {
       this.sendingState = SendingState.success,
       this.media,
       this.receiverId,
+      this.isDivider= false,
       required this.id});
 
   factory TherapyChatMessage.fromChatMessage(ChatMessage message) {
@@ -40,6 +42,19 @@ class TherapyChatMessage {
       isTherapist: false,
       sendingState: SendingState.loading,
       // Assuming therapist messages are mapped here
+      id: const Uuid().v4(), // Assuming 'id' field exists in ChatMessage
+    );
+  }
+  factory TherapyChatMessage.divider(
+      {required String message,}) {
+    return TherapyChatMessage(
+      message: message,
+      time: DateTime.now(),
+      receiverId: "",
+      isTherapist: true,
+      isDivider: true,
+      sendingState: SendingState.success,
+
       id: const Uuid().v4(), // Assuming 'id' field exists in ChatMessage
     );
   }

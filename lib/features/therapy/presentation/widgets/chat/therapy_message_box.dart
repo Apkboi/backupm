@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
 import 'package:mentra/features/therapy/presentation/widgets/chat/therapist_message_item.dart';
@@ -23,18 +24,27 @@ class _TherapyMessageBoxState extends State<TherapyMessageBox> {
   Widget build(BuildContext context) {
     return Container(
         constraints: BoxConstraints(maxWidth: 1.sw * 0.5),
-        alignment: !widget.message.isTherapist
-            ? Alignment.centerRight
-            : Alignment.centerLeft,
+        alignment: widget.message.isDivider
+            ? null
+            : !widget.message.isTherapist
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
         // padding: const EdgeInsets.symmetric(vertical: 10),
-        child: !widget.message.isTherapist
-            ? TherapyChatUserMessageItem(
-                message: widget.message,
-              )
-            : TherapistMessageItem(
-                message: widget.message,
-                showImage: widget.showSenderImage,
-              ));
+        child: widget.message.isDivider
+            ? Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 18.0),
+                child: TextView(text: widget.message.message),
+              ),
+            )
+            : !widget.message.isTherapist
+                ? TherapyChatUserMessageItem(
+                    message: widget.message,
+                  )
+                : TherapistMessageItem(
+                    message: widget.message,
+                    showImage: widget.showSenderImage,
+                  ));
   }
 
 // bool get isSender => true;

@@ -9,6 +9,7 @@ import 'package:mentra/common/widgets/image_widget.dart';
 import 'package:mentra/core/constants/package_exports.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/theme/pallets.dart';
+import 'package:mentra/core/utils/extensions/therapy_message_extension.dart';
 import 'package:mentra/features/therapy/data/models/chat_therapist.dart';
 import 'package:mentra/features/therapy/data/models/therapy_chat_message.dart';
 import 'package:mentra/features/therapy/presentation/bloc/session/session_chat_bloc.dart';
@@ -53,7 +54,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
         // TODO: implement listener
       },
       builder: (context, state) {
-        var allMessages = bloc.messages;
+        var allMessages = bloc.messages.formatChatListWithDividers().toList();
         return Scaffold(
           extendBodyBehindAppBar: true,
           appBar: CustomAppBar(
@@ -83,7 +84,7 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    75.verticalSpace,
+                    // 75.verticalSpace,
                     Expanded(child: Builder(builder: (context) {
                       if (state is GetMessagesLoadingState) {
                         return Center(
@@ -104,11 +105,12 @@ class _TherapistChatScreenState extends State<TherapistChatScreen> {
                       }
                       return ListView.builder(
                         reverse: true,
+                        shrinkWrap: true,
                         itemCount: allMessages.length,
                         itemBuilder: (context, index) => BlocProvider.value(
                           value: bloc,
                           child: TherapyMessageBox(
-                            message: allMessages.toList()[index],
+                            message: allMessages[index],
                             showSenderImage: _shouldShowImage(
                                 allMessages, allMessages[index]),
                           ),

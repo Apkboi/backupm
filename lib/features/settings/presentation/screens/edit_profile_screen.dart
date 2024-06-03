@@ -18,7 +18,6 @@ import 'package:mentra/features/library/presentation/screens/wellness_library_sc
 import 'package:mentra/features/settings/presentation/blocs/settings/settings_bloc.dart';
 import 'package:mentra/common/widgets/haptic_inkwell.dart';
 
-
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
 
@@ -27,7 +26,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
 
@@ -87,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Center(
                                 child: CustomNeumorphicButton(
                                     expanded: false,
-                                    padding:  EdgeInsets.symmetric(
+                                    padding: EdgeInsets.symmetric(
                                         horizontal: 10.w, vertical: 10.h),
                                     onTap: () {
                                       context
