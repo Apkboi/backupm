@@ -134,15 +134,18 @@ class CallCubit extends Cubit<CallState> {
           connectionState = state;
           logger.w(connectionState);
 
-          if (state == RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
+          if (state ==
+                  RTCIceConnectionState.RTCIceConnectionStateDisconnected ||
               state == RTCIceConnectionState.RTCIceConnectionStateFailed) {
             emit(CallReConnectingState());
 
             await retryWithDelay(reconnect,
                 retries: 7,
-                condition: connectionState == RTCIceConnectionState.RTCIceConnectionStateConnected);
+                condition: connectionState ==
+                    RTCIceConnectionState.RTCIceConnectionStateConnected);
 
-            if (connectionState != RTCIceConnectionState.RTCIceConnectionStateConnected) {
+            if (connectionState !=
+                RTCIceConnectionState.RTCIceConnectionStateConnected) {
               endCall();
             } else {
               isVideoOn = true;

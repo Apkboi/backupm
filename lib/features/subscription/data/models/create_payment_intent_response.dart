@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-CreateIntentResponse createIntentResponseFromJson(String str) => CreateIntentResponse.fromJson(json.decode(str));
+CreateIntentResponse createIntentResponseFromJson(String str) =>
+    CreateIntentResponse.fromJson(json.decode(str));
 
-String createIntentResponseToJson(CreateIntentResponse data) => json.encode(data.toJson());
+String createIntentResponseToJson(CreateIntentResponse data) =>
+    json.encode(data.toJson());
 
 class CreateIntentResponse {
   final String message;
@@ -34,19 +36,20 @@ class CreateIntentResponse {
         code: code ?? this.code,
       );
 
-  factory CreateIntentResponse.fromJson(Map<String, dynamic> json) => CreateIntentResponse(
-    message: json["message"],
-    data: Data.fromJson(json["data"]),
-    success: json["success"],
-    code: json["code"],
-  );
+  factory CreateIntentResponse.fromJson(Map<String, dynamic> json) =>
+      CreateIntentResponse(
+        message: json["message"],
+        data: Data.fromJson(json["data"]),
+        success: json["success"],
+        code: json["code"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "message": message,
-    "data": data.toJson(),
-    "success": success,
-    "code": code,
-  };
+        "message": message,
+        "data": data.toJson(),
+        "success": success,
+        "code": code,
+      };
 }
 
 class Data {
@@ -72,14 +75,14 @@ class Data {
       );
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    paymentIntent: json["payment_intent"],
-    clientSecret: json["client_secret"],
-    amount: json["amount"],
-  );
+        paymentIntent: json["payment_intent"],
+        clientSecret: json["client_secret"],
+        amount: json["amount"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "payment_intent": paymentIntent,
-    "client_secret": clientSecret,
-    "amount": amount,
-  };
+        "payment_intent": paymentIntent,
+        "client_secret": clientSecret,
+        "amount": amount,
+      };
 }

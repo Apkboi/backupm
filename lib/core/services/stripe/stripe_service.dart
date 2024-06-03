@@ -123,6 +123,9 @@ class StripeService {
       await presentPaymentSheet();
       // await confirmPayment();
     } catch (e) {
+      if (e is StripeException) {
+        throw (e).error.localizedMessage.toString();
+      }
       logger.e(e.toString());
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(content: Text('Error: $e')),

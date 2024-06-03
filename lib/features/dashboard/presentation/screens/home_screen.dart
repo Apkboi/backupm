@@ -81,7 +81,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CircleAvatar(
               backgroundColor: Pallets.white,
               radius: 25.r,
-              child: ImageWidget(imageUrl: Assets.images.svgs.menuIcon,size: 18.w,),
+              child: ImageWidget(
+                imageUrl: Assets.images.svgs.menuIcon,
+                size: 18.w,
+              ),
             ),
           ),
           16.horizontalSpace,
@@ -134,7 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         bloc: injector.get(),
                         listener: (context, state) {},
                         builder: (context, state) {
-                          if (state is GetConversationStarterFailureState) {
+                          if (
+                              state is GetConversationStarterFailureState) {
                             return SizedBox(
                               height: 300,
                               child: AppPromptWidget(
@@ -148,7 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                           }
-                          if (state is GetConversationStarterLoadingState) {
+                          if (injector
+                              .get<DashboardBloc>()
+                              .conversationStarter ==
+                              null && state is GetConversationStarterLoadingState) {
                             return SizedBox(
                               height: 250,
                               child: CustomDialogs.getLoading(

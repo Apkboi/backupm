@@ -12,8 +12,10 @@ import 'package:mentra/features/therapy/presentation/bloc/therapy/therapy_event.
 
 class DashboardUsecase {
   Future<void> execute() async {
+    injector.get<DashboardBloc>().add(GetConversationStarterEvent());
+
     if (injector.get<DashboardBloc>().conversationStarter == null) {
-      injector.get<DashboardBloc>().add(GetConversationStarterEvent());
+
     }
     if (injector.get<DailyStreakBloc>().badges.isEmpty) {
       injector.get<DailyStreakBloc>().add(GetDailyStreakEvent());
