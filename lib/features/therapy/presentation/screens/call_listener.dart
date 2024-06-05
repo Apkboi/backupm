@@ -81,22 +81,22 @@ class _CallListenerState extends State<CallListener> {
               .goRouter.routerDelegate.currentConfiguration.last.route.path;
 
           // if (!await CallKitService.instance.theirIsAnActiveCall()) {
-            Debouncer(milliseconds: 500).run(() {
-              if (currentRoute != '/${PageUrl.therapyCallScreen}') {
-                showGeneralDialog(
-                  context: rootNavigatorKey.currentState!.context,
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return IncomingCallScreen(
-                      callerId: incomingCall.callerId ?? 0,
-                      calleeId: injector.get<UserBloc>().appUser!.id,
-                      offer: incomingCall.sdpOffer,
-                      caller: incomingCall.therapist,
-                      sessionId: incomingCall.therapySessionId,
-                    );
-                  },
-                );
-              }
-            });
+          Debouncer(milliseconds: 500).run(() {
+            if (currentRoute != '/${PageUrl.therapyCallScreen}') {
+              showGeneralDialog(
+                context: rootNavigatorKey.currentState!.context,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return IncomingCallScreen(
+                    callerId: incomingCall.callerId ?? 0,
+                    calleeId: injector.get<UserBloc>().appUser!.id,
+                    offer: incomingCall.sdpOffer,
+                    caller: incomingCall.therapist,
+                    sessionId: incomingCall.therapySessionId,
+                  );
+                },
+              );
+            }
+          });
           // }
         } catch (e, stack) {
           logger.e(e.toString(), stackTrace: stack);

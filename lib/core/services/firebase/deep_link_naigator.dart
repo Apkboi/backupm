@@ -20,16 +20,13 @@ class DeepLinkNavigator {
       try {
         SentryService.captureMessage('Received background call');
         logger.w('Incoming call');
-        var incomingCallData =
-            IncomingCallNotificationData.fromJson(message.data);
-
+        var incomingCallData = IncomingCallNotificationData.fromJson(message.data);
         CallKitService.instance.showIncomingCall(
             incomingCallData.webrtcDescriptionId.toString(),
             incomingCallData.therapist.name,
             callerImage: incomingCallData.therapist.avatar,
             extra: incomingCallData.toJson());
-        SentryService.captureException(
-            'This is a custom error for background calls');
+        SentryService.captureException('This is a custom error for background calls');
       } catch (e, stack) {
         logger.e(e.toString());
         logger.e(stack.toString());

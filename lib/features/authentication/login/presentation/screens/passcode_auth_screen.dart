@@ -40,10 +40,7 @@ class _PasscodeAuthScreenState extends State<PasscodeAuthScreen> {
 
   @override
   void initState() {
-    injector
-        .get<PusherCubit>()
-        .subscribeToChannel(injector.get<UserBloc>().userChannel);
-
+    injector.get<PusherCubit>().subscribeToChannel(injector.get<UserBloc>().userChannel);
     CallKitService.instance.checkAndNavigationCallingPage();
 
     super.initState();

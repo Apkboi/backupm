@@ -75,12 +75,12 @@ class _IncomingCallScreenState extends State<IncomingCallScreen> {
                 // 100.verticalSpace,
                 Center(
                     child: ImageWidget(
-                  imageUrl: Assets.images.pngs.avatar3.path,
+                  imageUrl: widget.caller?.avatar?? Assets.images.pngs.avatar3.path,
                   size: 120,
                 )),
                 10.verticalSpace,
-                const TextView(
-                  text: 'Therapist',
+                 TextView(
+                  text: widget.caller?.name??"Therapist",
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
                 ),

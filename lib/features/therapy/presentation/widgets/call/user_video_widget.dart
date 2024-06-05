@@ -35,6 +35,7 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // color: Pallets.black,
       child: Stack(
         children: [
           SizedBox(
@@ -47,52 +48,64 @@ class _UserVideoWidgetState extends State<UserVideoWidget> {
             ),
           ),
           Positioned(
-              bottom: 16,
+              bottom: 0,
               // left: 16,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox(
-                  width: 1.sw - 20,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextView(
-                              text: injector.get<UserBloc>().appUser?.name ??
-                                  '....',
-                              fontWeight: FontWeight.w600,
-                              color: Pallets.white,
-                            ),
-                            8.horizontalSpace,
-                            ImageWidget(
-                                imageUrl: Assets.images.pngs.speaking.path)
-                          ],
-                        ),
-                      ),
-                      HapticInkWell(
-                        onTap: () {
-                          _showControll(context);
-                        },
-                        child: CircleAvatar(
-                          radius: 25,
-                          backgroundColor: Pallets.white.withOpacity(0.2),
-                          child: const Icon(
-                            Icons.menu_rounded,
-                            color: Pallets.white,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+              child: SizedBox(
+                width: 1.sw ,
+                child:  BlocProvider.value(
+                    value: context.read<CallCubit>(),
+                    child: CallControllSheet(
+                      sessionId: widget.sessionId,
+                      caller: widget.therapist,
+                    )),
               )),
+          // Positioned(
+          //     bottom: 16,
+          //     // left: 16,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 16),
+          //       child: SizedBox(
+          //         width: 1.sw - 20,
+          //         child: Row(
+          //           children: [
+          //             Expanded(
+          //               child: Row(
+          //                 mainAxisSize: MainAxisSize.min,
+          //                 children: [
+          //                   TextView(
+          //                     text: injector.get<UserBloc>().appUser?.name ??
+          //                         '....',
+          //                     fontWeight: FontWeight.w600,
+          //                     color: Pallets.white,
+          //                   ),
+          //                   8.horizontalSpace,
+          //                   ImageWidget(
+          //                       imageUrl: Assets.images.pngs.speaking.path)
+          //                 ],
+          //               ),
+          //             ),
+          //             HapticInkWell(
+          //               onTap: () {
+          //                 _showControll(context);
+          //               },
+          //               child: CircleAvatar(
+          //                 radius: 25,
+          //                 backgroundColor: Pallets.white.withOpacity(0.2),
+          //                 child: const Icon(
+          //                   Icons.menu_rounded,
+          //                   color: Pallets.white,
+          //                 ),
+          //               ),
+          //             )
+          //           ],
+          //         ),
+          //       ),
+          //     )),
           if (!context.watch<CallCubit>().isVideoOn)
             Center(
                 child: ImageWidget(
-                    size: 70,
-                    fit: BoxFit.fill,
+                    size: 100,
+                    fit: BoxFit.contain,
                     imageUrl: injector.get<UserBloc>().appUser?.avatar ??
                         Assets.images.pngs.avatar3.path))
         ],

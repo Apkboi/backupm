@@ -30,57 +30,58 @@ class _CallControllSheetState extends State<CallControllSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(10),
       width: 1.sw,
       decoration: BoxDecoration(
-          color: Pallets.black.withOpacity(0.5),
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(16.r),
-            topLeft: Radius.circular(16.r),
-          )),
+        color: Pallets.black.withOpacity(0.5),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(16.r),
+          topLeft: Radius.circular(16.r),
+        )
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextView(
-                      text: widget.caller.name,
-                      fontSize: 20,
-                      color: Pallets.white,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    4.verticalSpace,
-                    const TextView(
-                      text: 'On call',
-                      fontSize: 15,
-                      color: Pallets.white,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ],
-                ),
-              ),
-              HapticInkWell(
-                onTap: () {
-                  context.pop();
-                },
-                child: CircleAvatar(
-                  radius: 18,
-                  backgroundColor: Pallets.white.withOpacity(0.5),
-                  child: const Icon(
-                    Icons.close_rounded,
-                    size: 16,
-                    color: Pallets.white,
-                  ),
-                ),
-              )
-            ],
-          ),
-          25.verticalSpace,
+          // Row(
+          //   children: [
+          //     Expanded(
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           TextView(
+          //             text: widget.caller.name,
+          //             fontSize: 20,
+          //             color: Pallets.white,
+          //             fontWeight: FontWeight.w700,
+          //           ),
+          //           4.verticalSpace,
+          //           const TextView(
+          //             text: 'On call',
+          //             fontSize: 15,
+          //             color: Pallets.white,
+          //             fontWeight: FontWeight.w400,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     HapticInkWell(
+          //       onTap: () {
+          //         context.pop();
+          //       },
+          //       child: CircleAvatar(
+          //         radius: 18,
+          //         backgroundColor: Pallets.white.withOpacity(0.5),
+          //         child: const Icon(
+          //           Icons.close_rounded,
+          //           size: 16,
+          //           color: Pallets.white,
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
+          5.verticalSpace,
           Wrap(
             alignment: WrapAlignment.start,
             // crossAxisAlignment: WrapCrossAlignment.start,
@@ -138,7 +139,7 @@ class _CallControllSheetState extends State<CallControllSheet> {
               ),
             ],
           ),
-          75.verticalSpace
+          // 75.verticalSpace
         ],
       ),
     );

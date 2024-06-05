@@ -48,7 +48,7 @@ class CallKitService {
         case Event.actionCallDecline:
           // TODO: declined an incoming call
 
-          endCall();
+          // endCall();
           break;
         case Event.actionCallEnded:
           // TODO: ended an incoming/outgoing call
@@ -196,8 +196,7 @@ class CallKitService {
             (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
           logger.w(currentCall['extra']['webrtc_description_id']);
 
-          CustomRoutes.goRouter
-              .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+          CustomRoutes.goRouter.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
             PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
             PathParam.callerId: currentCall['extra']['webrtc_description_id'],
           });

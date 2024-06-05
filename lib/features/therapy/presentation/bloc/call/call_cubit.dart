@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mentra/core/di/injector.dart';
@@ -9,6 +10,7 @@ import 'package:mentra/features/therapy/data/models/ice_candidate_response.dart'
 import 'package:mentra/features/therapy/data/models/incoming_response.dart';
 import 'package:mentra/features/therapy/dormain/repository/call_repository.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+
 import '../../../../account/presentation/user_bloc/user_bloc.dart';
 
 part 'call_state.dart';
@@ -46,7 +48,7 @@ class CallCubit extends Cubit<CallState> {
   var retriedTimes = 0;
 
   bool shouldEndCall() {
-    if (retriedTimes < 4) {
+    if (retriedTimes < 2) {
       retriedTimes += 1;
 
       return false;
@@ -93,9 +95,11 @@ class CallCubit extends Cubit<CallState> {
   }
 
   Future reconnect() async {
+    logger.i("CALL RECONNECTING");
     await _rtcPeerConnection?.close();
     await startCall(_callerId, _calleeId, _offer, therapist, _sessionId,
         newConnection: true);
+    logger.i("CALL RECONNECTING TRIGGERED");
   }
 
   _setupPeerConnection(bool newConnection) async {
@@ -140,7 +144,7 @@ class CallCubit extends Cubit<CallState> {
             emit(CallReConnectingState());
 
             await retryWithDelay(reconnect,
-                retries: 7,
+                retries: 1,
                 condition: connectionState ==
                     RTCIceConnectionState.RTCIceConnectionStateConnected);
 
@@ -166,41 +170,42 @@ class CallCubit extends Cubit<CallState> {
           //   emit(CallConnectedState());
           // }
         };
-        _rtcPeerConnection!.onTrack = (event) {
-          remoteRTCVideoRenderer.srcObject = event.streams[0];
-          setState(() {});
-        };
-
-        // get localStream
-        _localStream = await navigator.mediaDevices.getUserMedia({
-          'audio': isAudioOn,
-          'video': isVideoOn
-              ? {
-                  'facingMode': isFrontCameraSelected ? 'user' : 'environment',
-                  'mandatory': {
-                    'minWidth': '640',
-                    'minHeight': '480',
-                    'minFrameRate': '30',
-                  },
-                  "echoCancellation": true,
-                }
-              : {},
-          "echoCancellation": true,
-        });
-
-        // add mediaTrack to peerConnection
-        _localStream!.getTracks().forEach((track) async {
-          await _rtcPeerConnection!.addTrack(track, _localStream!);
-          setState(() {});
-        });
-
-        // set source for local video renderer
-
-        localRTCVideoRenderer.srcObject = _localStream;
-
-        setState(() {});
-        _listenToPusher();
       }
+
+      _rtcPeerConnection!.onTrack = (event) {
+        remoteRTCVideoRenderer.srcObject = event.streams[0];
+        setState(() {});
+      };
+
+      // get localStream
+      _localStream = await navigator.mediaDevices.getUserMedia({
+        'audio': true,
+        'video': true
+            ? {
+                'facingMode': isFrontCameraSelected ? 'user' : 'environment',
+                'mandatory': {
+                  'minWidth': '640',
+                  'minHeight': '480',
+                  'minFrameRate': '30',
+                },
+                "echoCancellation": true,
+              }
+            : {},
+        "echoCancellation": true,
+      });
+
+      // add mediaTrack to peerConnection
+      _localStream!.getTracks().forEach((track) async {
+        await _rtcPeerConnection!.addTrack(track, _localStream!);
+        setState(() {});
+      });
+
+      // set source for local video renderer
+
+      localRTCVideoRenderer.srcObject = _localStream;
+
+      setState(() {});
+      _listenToPusher();
 
       await _rtcPeerConnection!.setRemoteDescription(
         RTCSessionDescription(_offer?.sdp, _offer?.type),
@@ -212,13 +217,8 @@ class CallCubit extends Cubit<CallState> {
 
       // set SDP answer as localDescription for peerConnection
       _rtcPeerConnection!.setLocalDescription(answer);
-
-      if (newConnection) {
-        // send SDP answer to remote peer
-        await _answerCall(_callerId, answer.toMap());
-      } else {
-        _createOffer();
-      }
+      // send SDP answer to remote peer
+      await _answerCall(_callerId, answer.toMap());
     } catch (e, stack) {
       if (shouldEndCall()) {
         emit(CallConnectingFailedState());
@@ -360,6 +360,7 @@ class CallCubit extends Cubit<CallState> {
     }
 
     if ((event).eventName == 'callEnded') {
+      dispose();
       // var currentCall = await CallKitService.instance.getCurrentCall();
       CallKitService.instance.endAllCalls();
       if (isCallActive) {
@@ -374,7 +375,8 @@ class CallCubit extends Cubit<CallState> {
 
   _offerCall(int callerId, map) async {
     try {
-      _callRepository.offerCall(callerId, _calleeId, _sessionId, map);
+      _callRepository.offerCall(
+          callerId, _calleeId, _sessionId.toString(), map);
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
@@ -399,9 +401,9 @@ class CallCubit extends Cubit<CallState> {
       logger.w("call OFFER started");
       await _createOffer();
       logger.w("call OFFER success");
-
-      _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
-      _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
+      //
+      // _callAction("videoStateChanged", isVideoOn ? "enabled" : "disabled");
+      // _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
 
@@ -484,13 +486,24 @@ class CallCubit extends Cubit<CallState> {
     required bool condition,
   }) async {
     try {
-      for (int i = 0; i < retries; i++) {
-        await action();
-        await Future.delayed(delay);
-        if (condition) {
-          return;
-        }
+      await Future.delayed(const Duration(seconds: 20));
+
+      if (connectionState ==
+          RTCIceConnectionState.RTCIceConnectionStateConnected) {
+        return;
       }
-    } catch (e) {}
+      await action();
+      await Future.delayed(delay);
+
+      return;
+      // for (int i = 0; i < retries; i++) {
+
+      // if (condition) {
+      //   return;
+      // }
+      // }
+    } catch (e) {
+      return;
+    }
   }
 }

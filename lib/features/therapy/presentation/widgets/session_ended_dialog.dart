@@ -48,7 +48,7 @@ class TherapySessionEndedDialog extends StatelessWidget {
           10.verticalSpace,
           const TextView(
               text:
-                  'We hope this session with Nour brought you insights and comfort. Remember, every step is a part of your journey towards well-being.',
+                  'We hope this session brought you insights and comfort. Remember, every step is a part of your journey towards well-being.',
               align: TextAlign.center,
               color: Pallets.ink,
               fontWeight: FontWeight.w500),
