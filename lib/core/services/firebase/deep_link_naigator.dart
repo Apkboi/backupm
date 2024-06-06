@@ -28,8 +28,7 @@ class DeepLinkNavigator {
       try {
         SentryService.captureException('Received background call');
         logger.w('Incoming call');
-        var incomingCallData =
-            IncomingCallNotificationData.fromJson(message.data);
+        var incomingCallData = IncomingCallNotificationData.fromJson(message.data);
         CallKitService.instance.showIncomingCall(
             incomingCallData.webrtcDescriptionId.toString(),
             incomingCallData.therapist.name,
