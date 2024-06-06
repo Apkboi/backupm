@@ -32,5 +32,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:469691765994:ios:c923c7ed029a483044b393</string>
+	<key>DATABASE_URL</key>
+	<string>https://mentra-2323f-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

@@ -109,12 +109,12 @@ class CallKitService {
       duration: 30000,
       extra: extra,
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-      android: const AndroidParams(
+      android:  AndroidParams(
           isCustomNotification: false,
           isShowLogo: false,
           ringtonePath: 'system_ringtone_default',
           backgroundColor: '#0955fa',
-          backgroundUrl: 'https://i.pravatar.cc/500',
+          backgroundUrl: callerImage,
           actionColor: '#4CAF50',
           textColor: '#ffffff',
           incomingCallNotificationChannelName: "Incoming Call",
