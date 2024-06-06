@@ -30,6 +30,8 @@ class _CallListenerState extends State<CallListener> {
   final String selfCallerID =
       Random().nextInt(999999).toString().padLeft(6, '0');
 
+  var debouncer =  Debouncer(milliseconds: 500);
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +83,7 @@ class _CallListenerState extends State<CallListener> {
               .goRouter.routerDelegate.currentConfiguration.last.route.path;
 
           // if (!await CallKitService.instance.theirIsAnActiveCall()) {
-          Debouncer(milliseconds: 500).run(() {
+         debouncer.run(() {
             if (currentRoute != '/${PageUrl.therapyCallScreen}') {
               showGeneralDialog(
                 context: rootNavigatorKey.currentState!.context,

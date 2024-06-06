@@ -82,22 +82,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                               ),
                               18.verticalSpace,
-                              Center(
-                                child: CustomNeumorphicButton(
-                                    expanded: false,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10.w, vertical: 10.h),
-                                    onTap: () {
-                                      context
-                                          .pushNamed(PageUrl.editAvatarScreen);
-                                    },
-                                    color: Pallets.buttonBlack,
-                                    child: const TextView(
-                                      text: "Change Avatar",
-                                      color: Pallets.white,
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                              ),
+                              CustomNeumorphicButton(
+                                  // expanded: false,
+                                  // padding: EdgeInsets.symmetric(
+                                  //     horizontal: 10.w, vertical: 10.h),
+                                  onTap: () {
+                                    context
+                                        .pushNamed(PageUrl.editAvatarScreen);
+                                  },
+                                  color: Pallets.buttonBlack,
+                                  child: const TextView(
+                                    text: "Change Avatar",
+                                    color: Pallets.white,
+                                    fontWeight: FontWeight.w600,
+                                  )),
                               45.verticalSpace,
                               HapticInkWell(
                                 onTap: () {

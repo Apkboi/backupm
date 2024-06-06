@@ -109,7 +109,7 @@ class _JournalItemState extends State<JournalItem> {
                   ],
                   child: Icon(
                     Icons.more_vert,
-                    size: 16.w,
+                    // size: 16.w,
                   ),
                 )
               ],

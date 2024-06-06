@@ -37,20 +37,23 @@ class _EditAvatarScreenState extends State<EditAvatarScreen> {
         // height: 70,
         tittleText: 'Edit Avatar',
         actions: [
-          CustomNeumorphicButton(
-            onTap: () {
-              // if (selectedImageId == null) {
-              //   CustomDialogs.showToast('Select an avatar');
-              // } else {
-                injector.get<SettingsBloc>().add(
-                    UploadImageEvent(selectedImageId, selectedColor.toHex()));
-              // }
-            },
-            color: Pallets.black,
-            expanded: false,
-            padding:  const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+          Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: CustomNeumorphicButton(
+              onTap: () {
+                // if (selectedImageId == null) {
+                //   CustomDialogs.showToast('Select an avatar');
+                // } else {
+                  injector.get<SettingsBloc>().add(
+                      UploadImageEvent(selectedImageId, selectedColor.toHex()));
+                // }
+              },
+              color: Pallets.black,
+              expanded: false,
+              padding:  const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
 
-            text: 'Save',
+              text: 'Save',
+            ),
           )
         ],
       ),

@@ -19,6 +19,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
+import 'package:mentra/core/services/firebase/firebase_error_logger.dart';
 import 'package:mentra/core/services/pay/pay_service.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
 import 'package:mentra/core/theme/pallets.dart';
@@ -206,6 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   },
                                   color: Pallets.secondary,
                                   fgColor: Pallets.navy,
+
                                   padding: EdgeInsets.symmetric(vertical: 19.h),
                                   text: "Talk to Mentra",
                                 ),

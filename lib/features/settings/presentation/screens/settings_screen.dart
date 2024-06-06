@@ -114,6 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Center(
                               child: CustomNeumorphicButton(
                                   expanded: false,
+                                  text:"Edit Profile",
                                   onTap: () {
                                     context
                                         .pushNamed(PageUrl.editProfileScreen);
@@ -121,13 +122,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 13),
                                   color: Pallets.primary,
-                                  child: const TextView(
-                                    text: "Edit Profile",
-                                    color: Pallets.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  )),
+
+                                  // child: const TextView(
+                                  //   text: "Edit Profile",
+                                  //   color: Pallets.white,
+                                  //   fontSize: 16,
+                                  //   fontWeight: FontWeight.w600,
+                                  // )
+                              ),
                             ),
+
                             22.verticalSpace,
                             BlocBuilder<UserBloc, UserState>(
                               bloc: injector.get(),

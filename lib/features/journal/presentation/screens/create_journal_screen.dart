@@ -47,10 +47,10 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
       extendBodyBehindAppBar: true,
       appBar: CustomAppBar(
         tittleText: '',
-        height: 68,
+        // height: 68,
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(3.0),
             child: CustomNeumorphicButton(
               onTap: () {
                 // _delete();
@@ -59,6 +59,7 @@ class _CreateJournalScreenState extends State<CreateJournalScreen> {
               },
               color: Pallets.primary,
               expanded: false,
+              // padding: EdgeInsets.zero,
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               text: 'Save',
             ),

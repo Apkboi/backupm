@@ -12,6 +12,8 @@ import 'package:mentra/core/theme/pallets.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
 
+import 'firebase_error_logger.dart';
+
 // import 'package:plain_notification_token/plain_notification_token.dart';
 
 final NotificationService notificationService = NotificationService();
@@ -33,7 +35,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // await notificationService.initializeNotification();
   // await Firebase.initializeApp();
 
-  DeepLinkNavigator.handleBackgroundMessages(message);
+  await DeepLinkNavigator.handleBackgroundMessages(message);
 
   if (message.notification?.title.toString() != 'Incoming Call') {
     notificationService.triggerHeadsUp(

@@ -29,6 +29,8 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  var user = injector.get<UserBloc>().appUser;
+
   @override
   void initState() {
     Future.delayed(
@@ -149,35 +151,43 @@ class _MenuScreenState extends State<MenuScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Expanded(
-                                        child: MenuItem(
-                                      textColor: Pallets.orangePink,
-                                      bgColor: Pallets.lighterPink,
-                                      image: Assets.images.pngs.summary.path,
-                                      text: "My Activities",
-                                      onTap: () {
-                                        context
-                                            .pushNamed(PageUrl.summariesScreen);
-                                      },
-                                      // image: Assets.images.pngs.pTherapy.path,
-                                      // text: "Professional Therapy"
-                                    )),
+
+                                      Expanded(
+                                          child: MenuItem(
+                                            featureEnabled: user?.featureCards
+                                                .contains("my_activities") ??
+                                                false,
+                                        textColor: Pallets.orangePink,
+                                        bgColor: Pallets.lighterPink,
+                                        image: Assets.images.pngs.summary.path,
+                                        text: "My Activities",
+                                        onTap: () {
+                                          context.pushNamed(
+                                              PageUrl.summariesScreen);
+                                        },
+                                        // image: Assets.images.pngs.pTherapy.path,
+                                        // text: "Professional Therapy"
+                                      )),
                                     16.horizontalSpace,
-                                    Expanded(
-                                        child: MenuItem(
-                                      textColor: Pallets.brown,
-                                      bgColor: Pallets.lightOrange,
-                                      image: Assets.images.pngs.gJournal.path,
-                                      text: "Guided Journal",
 
-                                      onTap: () {
-                                        context.pushNamed(
-                                            PageUrl.guidedJournalScreen);
-                                      },
+                                      Expanded(
+                                          child: MenuItem(
+                                        textColor: Pallets.brown,
+                                        bgColor: Pallets.lightOrange,
+                                        image: Assets.images.pngs.gJournal.path,
+                                        text: "Guided Journal",
 
-                                      // image: Assets.images.pngs.summary.path,
-                                      // text: "Summaries"
-                                    )),
+                                        onTap: () {
+                                          context.pushNamed(
+                                              PageUrl.guidedJournalScreen);
+                                        },
+
+                                            featureEnabled: user?.featureCards
+                                                .contains("guided_journal") ??
+                                                false,
+                                        // image: Assets.images.pngs.summary.path,
+                                        // text: "Summaries"
+                                      )),
                                   ],
                                 ),
                                 7.verticalSpace,
@@ -185,30 +195,40 @@ class _MenuScreenState extends State<MenuScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Expanded(
-                                        child: MenuItem(
-                                            onTap: () {
-                                              context.pushNamed(PageUrl
-                                                  .wellnessLibraryScreen);
-                                            },
-                                            textColor: Pallets.mildGreen,
-                                            bgColor: Pallets.lightGreen,
-                                            image: Assets
-                                                .images.pngs.wLibrary.path,
-                                            text: "Wellness Library")),
+
+                                      Expanded(
+                                          flex: 1,
+                                          child: MenuItem(
+                                              onTap: () {
+                                                context.pushNamed(PageUrl
+                                                    .wellnessLibraryScreen);
+                                              },
+                                              textColor: Pallets.mildGreen,
+                                              bgColor: Pallets.lightGreen,
+                                              image: Assets
+                                                  .images.pngs.wLibrary.path,
+                                              text: "Wellness Library", featureEnabled: user?.featureCards
+                                              .contains("wellness_library") ??
+                                              false,)),
                                     16.horizontalSpace,
-                                    Expanded(
-                                        child: MenuItem(
-                                      textColor: Pallets.indigo,
-                                      bgColor: Pallets.lightBlue,
-                                      image: Assets.images.pngs.pTherapy.path,
-                                      text: "Professional Support",
-                                      onTap: () async {
-                                        _checkSubscription(context);
-                                      },
-                                      // image: Assets.images.pngs.gJournal.path,
-                                      // text: "Guided Journal"
-                                    )),
+
+
+                                      Expanded(
+                                          flex: 1,
+
+                                          child: MenuItem(
+                                        textColor: Pallets.indigo,
+                                        bgColor: Pallets.lightBlue,
+                                        image: Assets.images.pngs.pTherapy.path,
+                                        text: "Professional Support",
+                                        onTap: () async {
+                                          _checkSubscription(context);
+                                        }, featureEnabled: user?.featureCards
+                                              .contains("professional_support") ??
+                                              false,
+                                        // image: Assets.images.pngs.gJournal.path,
+                                        // text: "Guided Journal"
+                                      )),
                                   ],
                                 ),
                               ],

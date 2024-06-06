@@ -168,6 +168,7 @@ class MentraUser {
   final BadgeModel? badge;
   final ActiveSubscription? activeSubscription;
   final MatchedTherapist? matchedTherapist;
+  final List<String> featureCards;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -190,6 +191,7 @@ class MentraUser {
     required this.updatedAt,
     required this.streak,
     required this.badge,
+    required this.featureCards,
     this.badgeUpdated,
   });
 
@@ -213,6 +215,8 @@ class MentraUser {
     bool? badgeUpdated,
     DateTime? createdAt,
     DateTime? updatedAt,
+     List<String>? featureCards
+
   }) =>
       MentraUser(
         id: id ?? this.id,
@@ -235,6 +239,8 @@ class MentraUser {
         badgeUpdated: badgeUpdated ?? this.badgeUpdated,
         badge: badge ?? this.badge,
         streak: streak ?? this.streak,
+        featureCards:featureCards??this.featureCards,
+
       );
 
   factory MentraUser.fromJson(Map<String, dynamic> json) => MentraUser(
@@ -252,6 +258,8 @@ class MentraUser {
         mesiboUserToken: json["mesibo_user_token"],
         mood: json["mood"],
         streak: json["streaks"],
+    featureCards:json["feature_cards"] == null? []:
+    List<String>.from(json["feature_cards"].map((x) => x)),
         activeSubscription: json["active_subscription"] == null
             ? null
             : ActiveSubscription.fromJson(json["active_subscription"]),
@@ -279,6 +287,7 @@ class MentraUser {
         "mood": mood,
         "badge_updated": badgeUpdated,
         "active_subscription": activeSubscription?.toJson(),
+        "feature_cards": List<dynamic>.from(featureCards.map((x) => x)),
         "matched_therapist": matchedTherapist?.toJson(),
         "streaks": streak,
         "badge": badge?.toJson(),

@@ -14,17 +14,18 @@ class MenuItem extends StatelessWidget {
       required this.bgColor,
       required this.image,
       required this.text,
-      this.onTap});
+      this.onTap, required this.featureEnabled});
 
   final Color textColor;
   final Color? bgColor;
   final String image;
   final String text;
   final VoidCallback? onTap;
+  final bool featureEnabled;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return featureEnabled ? Stack(
       children: [
         Container(
           height: (0.40 / 2).sh,
@@ -76,6 +77,6 @@ class MenuItem extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ):0.verticalSpace;
   }
 }
