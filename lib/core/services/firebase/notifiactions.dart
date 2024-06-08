@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
@@ -197,10 +198,15 @@ class NotificationService {
   /// Get users token
   void _getToken() async {
     try {
-      // final plainNotificationToken = PlainNotificationToken();
-      token = await FirebaseMessaging.instance.getToken();
-      notiToken = token ?? '';
-      // logger.e(notiToken);
+      if (Platform.isIOS) {
+        token = await FlutterCallkitIncoming.getDevicePushTokenVoIP();
+        notiToken = token ?? '';
+      } else {
+        // final plainNotificationToken = PlainNotificationToken();
+        token = await FirebaseMessaging.instance.getToken();
+        notiToken = token ?? '';
+        // logger.e(notiToken);
+      }
       logger.i('My Token: $token');
     } catch (e) {
       logger.e(e);

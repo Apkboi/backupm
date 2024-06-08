@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mentra/common/blocs/pusher/pusher_cubit.dart';
 import 'package:mentra/common/widgets/image_widget.dart';
-import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/services/data/session_manager.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
-import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
+
 import 'package:mentra/gen/assets.gen.dart';
 
 class SplashPage extends StatefulWidget {
