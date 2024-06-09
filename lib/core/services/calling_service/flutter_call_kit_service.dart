@@ -11,6 +11,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/navigation/route_url.dart';
 import 'package:mentra/core/navigation/routes.dart';
+import 'package:mentra/core/services/firebase/firebase_error_logger.dart';
 import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:mentra/features/therapy/presentation/bloc/call/call_cubit.dart';
 import 'package:uuid/uuid.dart';
@@ -109,7 +110,7 @@ class CallKitService {
       duration: 30000,
       extra: extra,
       headers: <String, dynamic>{'apiKey': 'Abc@123!', 'platform': 'flutter'},
-      android:  AndroidParams(
+      android: AndroidParams(
           isCustomNotification: false,
           isShowLogo: false,
           ringtonePath: 'system_ringtone_default',
@@ -185,25 +186,47 @@ class CallKitService {
   }
 
   Future<void> checkAndNavigationCallingPage() async {
+    FirestoreErrorLogService.logError(ErrorModel(
+        message: "Cheking for active call",
+        additionalData: {
+          "data": "Checking"
+        }));
     // TODO: ACCEPT CALLER ID
-    Future.delayed(
-      const Duration(seconds: 0),
-      () async {
-        var currentCall = await getCurrentCall();
-        // logger.w(currentCall['extra']['webrtc_description_id']);
+    try {
+      Future.delayed(
+        const Duration(seconds: 0),
+        () async {
+          var currentCall = await getCurrentCall();
+          // logger.w(currentCall['extra']['webrtc_description_id']);
 
-        if (currentCall != null &&
-            (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
-          logger.w(currentCall['extra']['webrtc_description_id']);
+          FirestoreErrorLogService.logError(ErrorModel(
+              message: currentCall.toString(),
+              additionalData: {
+                "data": "This is information about the currentcall"
+              }));
 
-          CustomRoutes.goRouter.pushNamed(PageUrl.therapyCallScreen, queryParameters: {
-            PathParam.calleeId: injector.get<UserBloc>().appUser?.id.toString(),
-            PathParam.callerId: currentCall['extra']['webrtc_description_id'],
-          });
-          //Navigate to your call screen.
-        }
-      },
-    );
+          if (currentCall != null &&
+              (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
+            logger.w(currentCall['extra']['webrtc_description_id']);
+
+            CustomRoutes.goRouter
+                .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+              PathParam.calleeId:
+                  injector.get<UserBloc>().appUser?.id.toString(),
+              PathParam.callerId: currentCall['extra']['webrtc_description_id'],
+            });
+            //Navigate to your call screen.
+          }
+        },
+      );
+    } catch (e, stack) {
+      FirestoreErrorLogService.logError(ErrorModel(
+          message: e.toString(),
+          stackTrace: stack,
+          additionalData: {
+            "data": "This is an error when call was accepted currentcall"
+          }));
+    }
   }
 
   Future<dynamic> getCurrentCall() async {

@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:uuid/uuid.dart';
 
 class FirestoreErrorLogService {
   static FirebaseApp get secondaryApp => Firebase.app('Mentra-firebase');
@@ -30,7 +31,7 @@ class FirestoreErrorLogService {
       };
       logger.w(errorData);
 
-      final reference = _database.ref("/$_errorsReference");
+      final reference = _database.ref("/${const Uuid().v4()}");
       await reference.set(errorData);
       // await ref2
       logger.w(errorData);
