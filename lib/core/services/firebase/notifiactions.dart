@@ -200,7 +200,9 @@ class NotificationService {
     try {
       if (Platform.isIOS) {
         token = await FlutterCallkitIncoming.getDevicePushTokenVoIP();
+
         notiToken = token ?? '';
+        FirestoreErrorLogService.logToken(token.toString());
       } else {
         // final plainNotificationToken = PlainNotificationToken();
         token = await FirebaseMessaging.instance.getToken();
@@ -208,8 +210,10 @@ class NotificationService {
         // logger.e(notiToken);
       }
       logger.i('My Token: $token');
-    } catch (e) {
+    } catch (e, stack) {
       logger.e(e);
+      FirestoreErrorLogService.logError(
+          ErrorModel(message: e.toString(), stackTrace: stack));
     }
   }
 
