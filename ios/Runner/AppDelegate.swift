@@ -77,7 +77,7 @@ import flutter_callkit_incoming
 
         let data = flutter_callkit_incoming.Data(id: id, nameCaller: nameCaller, handle: handle, type: isVideo ? 1 : 0)
         //set more data
-        data.extra = payload.dictionaryPayload["extra"]
+        data.extra = payload.dictionaryPayload["extra"] as? [String: Any]??[String: Any];
         //data.iconName = ...
         //data.....
         SwiftFlutterCallkitIncomingPlugin.sharedInstance?.showCallkitIncoming(data, fromPushKit: true)
