@@ -40,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
       final response = await _networkService.call(
         UrlConfig.register, RequestMethod.post,
-        data: payload.copyWith(token: notiToken).toJson(),
+        data: payload.copyWith(token: notiToken, apnToken: voipToken).toJson(),
         // data: formData
       );
 
@@ -89,9 +89,13 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<AuthSuccessResponse> login(String email, String password) async {
-    final response = await _networkService.call(
-        UrlConfig.login, RequestMethod.post,
-        data: {"email": email, "password": password, 'fcm_token': notiToken});
+    final response =
+        await _networkService.call(UrlConfig.login, RequestMethod.post, data: {
+      "email": email,
+      "password": password,
+      'fcm_token': notiToken,
+      "apn_token": voipToken
+    });
 
     return AuthSuccessResponse.fromJson(response.data);
   }

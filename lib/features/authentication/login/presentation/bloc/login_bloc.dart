@@ -71,7 +71,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         throw 'Couldn\'t complete google authentication';
       }
       var res = await _authRepository.oauthSignIn(OauthReqDto(
-          token: response?.idToken, provider: 'google', fcmToken: notiToken));
+          token: response?.idToken, provider: 'google', fcmToken: notiToken,apnToken: voipToken));
       if (!res.data.newUser) {
         AuthSuccessUsecase().execute(
           res.toAuthSuccessResponse,
@@ -95,6 +95,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       var res = await _authRepository.oauthSignIn(OauthReqDto(
           token: response?.identityToken,
           provider: 'apple',
+          apnToken: voipToken,
           fcmToken: notiToken));
       if (!res.data.newUser) {
         AuthSuccessUsecase().execute(res.toAuthSuccessResponse);

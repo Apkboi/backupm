@@ -20,6 +20,7 @@ class RegistrationPayload {
   final String avatar;
   final String role;
   final String token;
+  final String apnToken;
 
   RegistrationPayload({
     required this.name,
@@ -29,6 +30,7 @@ class RegistrationPayload {
     required this.avatar,
     required this.role,
     required this.token,
+    required this.apnToken,
   });
 
   RegistrationPayload copyWith({
@@ -39,6 +41,7 @@ class RegistrationPayload {
     String? avatar,
     String? role,
     String? token,
+    String? apnToken,
   }) =>
       RegistrationPayload(
         name: name ?? this.name,
@@ -48,6 +51,7 @@ class RegistrationPayload {
         avatar: avatar ?? this.avatar,
         role: role ?? this.role,
         token: token ?? this.token,
+        apnToken: apnToken ?? this.apnToken,
       );
 
   factory RegistrationPayload.fromJson(Map<String, dynamic> json) =>
@@ -59,6 +63,7 @@ class RegistrationPayload {
         avatar: json["avatar_id"],
         role: json["role"],
         token: json["fcm_token"],
+        apnToken: json["apn_token"],
       );
 
   factory RegistrationPayload.empty() => RegistrationPayload(
@@ -68,6 +73,7 @@ class RegistrationPayload {
       password: '',
       avatar: '',
       role: '',
+      apnToken: voipToken,
       token: notiToken);
 
   Map<String, dynamic> toJson() => {
@@ -78,5 +84,6 @@ class RegistrationPayload {
         "avatar": avatar,
         "role": role,
         "fcm_token": token,
+        "apn_token": apnToken,
       };
 }

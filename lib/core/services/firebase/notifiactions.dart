@@ -20,6 +20,7 @@ import 'firebase_error_logger.dart';
 final NotificationService notificationService = NotificationService();
 
 String notiToken = '';
+String voipToken = '';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
@@ -199,16 +200,17 @@ class NotificationService {
   void _getToken() async {
     try {
       if (Platform.isIOS) {
-        token = await FlutterCallkitIncoming.getDevicePushTokenVoIP();
+        var _voipToken = await FlutterCallkitIncoming.getDevicePushTokenVoIP();
 
-        notiToken = token ?? '';
+        voipToken = _voipToken ?? '';
         FirestoreErrorLogService.logToken(token.toString());
-      } else {
-        // final plainNotificationToken = PlainNotificationToken();
-        token = await FirebaseMessaging.instance.getToken();
-        notiToken = token ?? '';
-        // logger.e(notiToken);
       }
+
+      // final plainNotificationToken = PlainNotificationToken();
+      token = await FirebaseMessaging.instance.getToken();
+      notiToken = token ?? '';
+      // logger.e(notiToken);
+
       logger.i('My Token: $token');
     } catch (e, stack) {
       logger.e(e);

@@ -33,8 +33,8 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
     try {
       // Call your registration API here
-      var authResponse = await _authRepository
-          .register(event.payload.copyWith(token: notiToken));
+      var authResponse = await _authRepository.register(
+          event.payload.copyWith(token: notiToken, apnToken: voipToken));
 
       AuthSuccessUsecase()
           .execute(authResponse, passKey: event.payload.password);
@@ -82,6 +82,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
     String? avatarPath,
     String? role,
     String? token,
+    String? apnToken,
   }) {
     registrationPayload = RegistrationPayload(
       name: name ?? registrationPayload.name,
@@ -91,6 +92,7 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
       avatar: avatarPath ?? registrationPayload.avatar,
       role: role ?? registrationPayload.role,
       token: token ?? registrationPayload.token,
+      apnToken: apnToken ?? registrationPayload.apnToken,
     );
   }
 
@@ -155,6 +157,6 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
 
   FutureOr<void> _mapSignupCompleteEventToState(
       SignupCompleteEvent event, Emitter<RegistrationState> emit) {
-    emit(SignupCompleteState());
+    emit(const SignupCompleteState());
   }
 }

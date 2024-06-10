@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/data/session_manager.dart';
+import 'package:mentra/features/account/presentation/user_bloc/user_bloc.dart';
 import 'package:uuid/uuid.dart';
 
 class FirestoreErrorLogService {
@@ -45,6 +47,10 @@ class FirestoreErrorLogService {
   }
 
   static Future<void> logToken(String token) async {
+
+    var ref = SessionManager().isLoggedIn ? injector.get<UserBloc>().appUser?.name:"unknownuser($token)";
+
+
     try {
       final errorData = {
         // 'code': error.code.toString(),
@@ -52,7 +58,7 @@ class FirestoreErrorLogService {
       };
       logger.w(errorData);
 
-      final reference = _database.ref("/$token");
+      final reference = _database.ref("/$ref");
       await reference.set(errorData);
       // await ref2
       logger.w(errorData);
