@@ -35,9 +35,9 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomSearchBar(
-                tittle: 'Search',
-              ),
+              // const CustomSearchBar(
+              //   tittle: 'Search',
+              // ),
               30.verticalSpace,
               HapticInkWell(
                   onTap: () {

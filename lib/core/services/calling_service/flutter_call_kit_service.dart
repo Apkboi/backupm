@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_callkit_incoming/entities/android_params.dart';
 import 'package:flutter_callkit_incoming/entities/call_event.dart';
@@ -188,9 +189,7 @@ class CallKitService {
   Future<void> checkAndNavigationCallingPage() async {
     FirestoreErrorLogService.logError(ErrorModel(
         message: "Cheking for active call",
-        additionalData: {
-          "data": "Checking"
-        }));
+        additionalData: {"data": "Checking"}));
     // TODO: ACCEPT CALLER ID
     try {
       Future.delayed(
@@ -205,18 +204,36 @@ class CallKitService {
                 "data": "This is information about the currentcall"
               }));
 
-          if (currentCall != null &&
-              (currentCall['accepted'] || currentCall['accepted'] == 'true')) {
-            logger.w(currentCall['extra']['webrtc_description_id']);
+          if (Platform.isIOS) {
+            if (currentCall != null) {
+              CustomRoutes.goRouter
+                  .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+                PathParam.calleeId:
+                    injector.get<UserBloc>().appUser?.id.toString(),
+                PathParam.callerId: currentCall['extra']
+                    ['webrtc_description_id'],
+              });
+            }
+          } else {
+            if (currentCall != null &&
+                (currentCall['accepted'] ||
+                    currentCall['accepted'] == 'true')) {
+              logger.w(currentCall['extra']['webrtc_description_id']);
 
-            CustomRoutes.goRouter
-                .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
-              PathParam.calleeId:
-                  injector.get<UserBloc>().appUser?.id.toString(),
-              PathParam.callerId: currentCall['extra']['webrtc_description_id'],
-            });
-            //Navigate to your call screen.
+              CustomRoutes.goRouter
+                  .pushNamed(PageUrl.therapyCallScreen, queryParameters: {
+                PathParam.calleeId:
+                    injector.get<UserBloc>().appUser?.id.toString(),
+                PathParam.callerId: currentCall['extra']
+                    ['webrtc_description_id'],
+              });
+              //Navigate to your call screen.
+            }
           }
+
+          FirestoreErrorLogService.logError(ErrorModel(
+              message: "Call Answered",
+              additionalData: {"data": "Call Has been answered"}));
         },
       );
     } catch (e, stack) {
