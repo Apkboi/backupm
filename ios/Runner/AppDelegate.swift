@@ -78,10 +78,10 @@ import flutter_callkit_incoming
         let data = flutter_callkit_incoming.Data(id: id, nameCaller: nameCaller, handle: handle, type: isVideo ? 1 : 0)
         //set more data
        // Extract the JSON object from the payload and assign it to data.extra
-       if let extraData = payload.dictionaryPayload["extra"] as? [String: Any] {
-        data.extra = extraData
+      if let extraData = payload.dictionaryPayload["extraData"] as? [String: Any] {
+          data.extra = extraData as NSDictionary
       } else {
-        data.extra = ["user": "abc@123", "platform": "ios"]
+          data.extra = ["user": "abc@123", "platform": "ios"]
       }
         //data.iconName = ...
         //data.....
