@@ -149,6 +149,7 @@ dependencies:
   crypto: ^3.0.3
   connectivity_plus: ^6.0.3
   cloud_firestore: ^4.15.8
+  firebase_analytics: ^10.8.9
   # flutter_background: ^1.2.0
 #  audio_manager: ^0.8.2
 

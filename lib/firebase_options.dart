@@ -44,46 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAH_2Kla7rGNrdTFhefYbYSxbpk0UPjO1w',
-    appId: '1:469691765994:web:8b34df2b0d01005244b393',
-    messagingSenderId: '469691765994',
-    projectId: 'mentra-2323f',
-    authDomain: 'mentra-2323f.firebaseapp.com',
-    databaseURL: 'https://mentra-2323f-default-rtdb.firebaseio.com',
-    storageBucket: 'mentra-2323f.appspot.com',
-    measurementId: 'G-C055LQ1M7G',
+    apiKey: 'AIzaSyBxoff1YB_Qw_xTVnkmqJ6QwC0aF5NWYzQ',
+    appId: '1:169551218022:web:d552f8195a5822bea634a7',
+    messagingSenderId: '169551218022',
+    projectId: 'mentra-firebase',
+    authDomain: 'mentra-firebase.firebaseapp.com',
+    databaseURL: 'https://mentra-firebase-default-rtdb.firebaseio.com',
+    storageBucket: 'mentra-firebase.appspot.com',
+    measurementId: 'G-GR9TW1HLCZ',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC2tnX54R2stFkTn6ogP95h4GW5BTET6Jk',
-    appId: '1:469691765994:android:dd8e101ab279bb3844b393',
-    messagingSenderId: '469691765994',
-    projectId: 'mentra-2323f',
-    databaseURL: 'https://mentra-2323f-default-rtdb.firebaseio.com',
-    storageBucket: 'mentra-2323f.appspot.com',
+    apiKey: 'AIzaSyD6jcLDGIt_1RMz6f07FV6We0C4KkgUqBU',
+    appId: '1:169551218022:android:9f799b6f445beb9ca634a7',
+    messagingSenderId: '169551218022',
+    projectId: 'mentra-firebase',
+    databaseURL: 'https://mentra-firebase-default-rtdb.firebaseio.com',
+    storageBucket: 'mentra-firebase.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBeJOQj5lGOFetYVHBULTIvVS2-HQJpa8A',
-    appId: '1:469691765994:ios:c923c7ed029a483044b393',
-    messagingSenderId: '469691765994',
-    projectId: 'mentra-2323f',
-    databaseURL: 'https://mentra-2323f-default-rtdb.firebaseio.com',
-    storageBucket: 'mentra-2323f.appspot.com',
-    androidClientId: '469691765994-c401a4e4pp5flijinapo28vaghb1o1as.apps.googleusercontent.com',
-    iosClientId: '469691765994-0108mj9mlbjd95g9pi3a0fuftk41bs6m.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAa1KBp0f_ro54lk-_x0vwDDjxFA1lEOss',
+    appId: '1:169551218022:ios:1aee780eb6a35b4da634a7',
+    messagingSenderId: '169551218022',
+    projectId: 'mentra-firebase',
+    databaseURL: 'https://mentra-firebase-default-rtdb.firebaseio.com',
+    storageBucket: 'mentra-firebase.appspot.com',
     iosBundleId: 'com.yourmentra.mentra',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBeJOQj5lGOFetYVHBULTIvVS2-HQJpa8A',
-    appId: '1:469691765994:ios:72db2af237bc1d6844b393',
-    messagingSenderId: '469691765994',
-    projectId: 'mentra-2323f',
-    databaseURL: 'https://mentra-2323f-default-rtdb.firebaseio.com',
-    storageBucket: 'mentra-2323f.appspot.com',
-    androidClientId: '469691765994-c401a4e4pp5flijinapo28vaghb1o1as.apps.googleusercontent.com',
-    iosClientId: '469691765994-ahpdo7k71o5d95ilcmk2bg01nsvfskol.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAa1KBp0f_ro54lk-_x0vwDDjxFA1lEOss',
+    appId: '1:169551218022:ios:f90535e650636af2a634a7',
+    messagingSenderId: '169551218022',
+    projectId: 'mentra-firebase',
+    databaseURL: 'https://mentra-firebase-default-rtdb.firebaseio.com',
+    storageBucket: 'mentra-firebase.appspot.com',
     iosBundleId: 'com.mentra.app.mentra.RunnerTests',
   );
 }

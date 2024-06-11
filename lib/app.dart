@@ -72,6 +72,7 @@ class _MentraAppState extends State<MentraApp> {
                   //   primarySwatch: Colors.blueGrey,
                   // ),
                   //
+
                   theme: AppTheme.lightTheme,
                   // darkTheme: AppTheme.darkTheme,
                   routerConfig: CustomRoutes.goRouter,

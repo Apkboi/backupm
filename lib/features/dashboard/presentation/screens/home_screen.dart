@@ -19,6 +19,7 @@ import 'package:mentra/core/di/injector.dart';
 import 'package:mentra/core/navigation/path_params.dart';
 import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/daily_streak/daily_streak_checker.dart';
+import 'package:mentra/core/services/firebase/analytics.dart';
 import 'package:mentra/core/services/firebase/firebase_error_logger.dart';
 import 'package:mentra/core/services/pay/pay_service.dart';
 import 'package:mentra/core/services/stripe/stripe_service.dart';
@@ -138,8 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bloc: injector.get(),
                         listener: (context, state) {},
                         builder: (context, state) {
-                          if (
-                              state is GetConversationStarterFailureState) {
+                          if (state is GetConversationStarterFailureState) {
                             return SizedBox(
                               height: 300,
                               child: AppPromptWidget(
@@ -154,9 +154,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           }
                           if (injector
-                              .get<DashboardBloc>()
-                              .conversationStarter ==
-                              null && state is GetConversationStarterLoadingState) {
+                                      .get<DashboardBloc>()
+                                      .conversationStarter ==
+                                  null &&
+                              state is GetConversationStarterLoadingState) {
                             return SizedBox(
                               height: 250,
                               child: CustomDialogs.getLoading(
@@ -194,20 +195,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 padding: EdgeInsets.symmetric(horizontal: 25.w),
                                 child: CustomNeumorphicButton(
                                   onTap: () async {
-                                    // var currentCall = await getCurrentCall();
-
-                                    // CallKitService.instance.checkAndNavigationCallingPage();
-
+                                    FirebaseAnalyticsService().logLogin();
                                     context
                                         .pushNamed(PageUrl.talkToMentraScreen);
-
-                                    // StripeService().initPaymentSheet(P);
-                                    // CallKitService.instancei.showIncomingCall(
-                                    //     'callerId', 'callerName');
                                   },
                                   color: Pallets.secondary,
                                   fgColor: Pallets.navy,
-
                                   padding: EdgeInsets.symmetric(vertical: 19.h),
                                   text: "Talk to Mentra",
                                 ),
@@ -230,5 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _welcome() async {
     DailyStreakChecker.checkForStreak();
+
   }
 }

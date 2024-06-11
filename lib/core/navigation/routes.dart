@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -90,6 +92,10 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNavigator');
 
 class CustomRoutes {
   static final goRouter = GoRouter(
+    observers: [
+      FirebaseAnalyticsObserver(
+          analytics: FirebaseAnalytics.instance)
+    ],
     initialLocation: '/splash',
     // initialLocation: '/profile/setupProfileIntroPage/setupProfilePage',
     navigatorKey: rootNavigatorKey,

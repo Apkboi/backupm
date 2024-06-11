@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image/image.dart';
 import 'package:mentra/common/models/success_response.dart';
 import 'package:mentra/core/di/injector.dart';
+import 'package:mentra/core/services/firebase/analytics.dart';
 import 'package:mentra/core/services/firebase/notifiactions.dart';
 import 'package:mentra/core/services/network/network_service.dart';
 import 'package:mentra/core/services/network/url_config.dart';
@@ -156,6 +157,7 @@ class AuthRepositoryImpl extends AuthRepository {
         RequestMethod.post,
         data: data.copyWith(fcmToken: notiToken).toJson(),
       );
+      FirebaseAnalyticsService().logLogin();
 
       return OauthResponse.fromJson(response.data);
     } catch (e) {
