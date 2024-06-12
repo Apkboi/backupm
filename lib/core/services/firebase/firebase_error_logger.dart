@@ -38,7 +38,7 @@ class FirestoreErrorLogService {
       // await ref2
       logger.w(errorData);
 
-      logger.e('Error logged to Realtime Database: ${error.message}');
+      logger.w('Error logged to Realtime Database: ${error.message}');
     } catch (error, stack) {
       logger.e(
           'Error logging error to Realtime Database: ${error.toString()} ${stack.toString()}');

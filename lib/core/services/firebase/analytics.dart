@@ -14,6 +14,7 @@ class FirebaseAnalyticsService {
 
   Future logLogin() async {
     await _analytics.logLogin(loginMethod: 'email and password');
+    logger.w("message");
   }
 
   Future logRemoveFromCart() async {

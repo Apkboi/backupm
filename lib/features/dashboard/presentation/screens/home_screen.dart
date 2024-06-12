@@ -221,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+
   void _welcome() async {
     DailyStreakChecker.checkForStreak();
 

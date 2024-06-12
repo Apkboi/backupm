@@ -112,7 +112,9 @@ class UrlConfig {
   static const String getPlans = '/finance/plans';
   static const String subscribe = '/finance/subscriptions/initiate';
   static const String getPaymentIntent = '/finance/subscriptions/initiate';
-  static  String   cancelSubscription(String id) => '/finance/subscriptions/$id/cancel';
+
+  static String cancelSubscription(String id) =>
+      '/finance/subscriptions/$id/cancel';
 
   //  Journals
   static String getPrompts(String id) => '/guided-prompts-categories/$id/show';
@@ -160,9 +162,10 @@ class UrlConfig {
       "/messages/delete-conversation/$conversationId";
 
 //   WorkSheet
-  static String getWorkSheets= "/work-sheet";
-  static String getQuestionaires= "/work-sheet/fetch-questions";
-  static String getWorkSheetDetails(String id)=> "/work-sheet/$id/show";
+  static String getWorkSheets = "/work-sheet";
+  static String getQuestionaires = "/work-sheet/fetch-questions";
+
+  static String getWorkSheetDetails(String id) => "/work-sheet/$id/show";
   static String submitQuestionaires = "/work-sheet/submit-answers";
-  static String markTask= "/work-sheet/mark-task";
+  static String markTask = "/work-sheet/mark-task";
 }

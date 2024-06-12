@@ -2,24 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>469691765994-0108mj9mlbjd95g9pi3a0fuftk41bs6m.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.469691765994-0108mj9mlbjd95g9pi3a0fuftk41bs6m</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>469691765994-c401a4e4pp5flijinapo28vaghb1o1as.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBeJOQj5lGOFetYVHBULTIvVS2-HQJpa8A</string>
+	<string>AIzaSyAa1KBp0f_ro54lk-_x0vwDDjxFA1lEOss</string>
 	<key>GCM_SENDER_ID</key>
-	<string>469691765994</string>
+	<string>169551218022</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.yourmentra.mentra</string>
 	<key>PROJECT_ID</key>
-	<string>mentra-2323f</string>
+	<string>mentra-firebase</string>
 	<key>STORAGE_BUCKET</key>
-	<string>mentra-2323f.appspot.com</string>
+	<string>mentra-firebase.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:469691765994:ios:c923c7ed029a483044b393</string>
+	<string>1:169551218022:ios:1aee780eb6a35b4da634a7</string>
 	<key>DATABASE_URL</key>
-	<string>https://mentra-2323f-default-rtdb.firebaseio.com</string>
+	<string>https://mentra-firebase-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
