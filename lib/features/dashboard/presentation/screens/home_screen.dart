@@ -73,12 +73,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           HapticInkWell(
             onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) =>
-              //     IncomingCallScreen(
-              //         callerId: 'callerId', calleeId: 'calleeId'),));
               context.pushNamed(PageUrl.menuScreen);
-              // _welcome();
-              // DashboardUsecase().execute();
+              // FirebaseAnalyticsService().logLogin();
             },
             child: CircleAvatar(
               backgroundColor: Pallets.white,
@@ -221,9 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   void _welcome() async {
     DailyStreakChecker.checkForStreak();
-
   }
 }
