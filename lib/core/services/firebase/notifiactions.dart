@@ -1,21 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_callkit_incoming/flutter_callkit_incoming.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mentra/core/di/injector.dart';
-import 'package:mentra/core/services/calling_service/flutter_call_kit_service.dart';
 import 'package:mentra/core/services/firebase/deep_link_naigator.dart';
 import 'package:mentra/core/theme/pallets.dart';
-import 'package:mentra/features/dashboard/presentation/bloc/dashboard/dashboard_bloc.dart';
 import 'package:mentra/features/dashboard/presentation/bloc/deep_link_bloc/deep_link_bloc.dart';
-
 import 'firebase_error_logger.dart';
-
-// import 'package:plain_notification_token/plain_notification_token.dart';
 
 final NotificationService notificationService = NotificationService();
 
@@ -172,6 +165,7 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       logger.i('Got a message whilst in the foreground!');
       logger.i('Message data: ${message.data}');
+      logger.i('Message type: ${message.data["therapist"].runtimeType.toString()}');
 
       DeepLinkNavigator.handleForegroundMessages(message);
       if (message.notification?.title.toString() != 'Incoming Call') {
@@ -203,7 +197,7 @@ class NotificationService {
         var _voipToken = await FlutterCallkitIncoming.getDevicePushTokenVoIP();
 
         voipToken = _voipToken ?? '';
-        FirestoreErrorLogService.logToken(token.toString());
+        FirestoreErrorLogService.logToken(voipToken.toString());
       }
 
       // final plainNotificationToken = PlainNotificationToken();
