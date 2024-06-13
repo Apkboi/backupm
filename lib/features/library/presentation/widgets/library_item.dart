@@ -38,7 +38,7 @@ class LibraryItem extends StatelessWidget {
                 text: category.name,
                 style: GoogleFonts.fraunces(
                     color: Pallets.white,
-                    fontSize: 23.sp,
+                    fontSize: 21.sp,
                     fontWeight: FontWeight.w600),
               ),
               TextButton(

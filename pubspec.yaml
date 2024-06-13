@@ -139,7 +139,7 @@ dependencies:
   pay: ^2.0.0
   pusher_channels_flutter: ^2.2.1
 #  socket_io_client: ^2.0.3+1
-  flutter_webrtc: ^0.9.48+hotfix.1
+  flutter_webrtc: ^0.10.8
   sdp_transform: ^0.3.2
   sentry_flutter: ^8.1.0
   flutter_callkit_incoming: ^2.0.4

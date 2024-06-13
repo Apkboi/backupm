@@ -247,6 +247,7 @@ class CallCubit extends Cubit<CallState> {
     isAudioOn = !isAudioOn;
     // enable or disable audio track
     _localStream?.getAudioTracks().forEach((track) {
+      track.enableSpeakerphone(true);
       track.enabled = isAudioOn;
     });
     _callAction("audioStateChanged", isAudioOn ? "enabled" : "disabled");
@@ -279,6 +280,7 @@ class CallCubit extends Cubit<CallState> {
   }
 
   void dispose() {
+
     localRTCVideoRenderer.dispose();
     remoteRTCVideoRenderer.dispose();
     _localStream?.dispose();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mentra/common/widgets/custom_appbar.dart';
-import 'package:mentra/common/widgets/custom_search_bar.dart';
 import 'package:mentra/common/widgets/neumorphic_button.dart';
 import 'package:mentra/common/widgets/text_view.dart';
 import 'package:mentra/core/constants/package_exports.dart';
@@ -31,14 +30,14 @@ class _LanguageSelectionSheetState extends State<LanguageSelectionSheet> {
           tittleText: 'App language',
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 8.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // const CustomSearchBar(
               //   tittle: 'Search',
               // ),
-              30.verticalSpace,
+              // 30.verticalSpace,
               HapticInkWell(
                   onTap: () {
                     context.pop();
