@@ -4,7 +4,7 @@ import AVFAudio
 import PushKit
 import Flutter
 import flutter_callkit_incoming
-import WebRTC
+// import WebRTC
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate, PKPushRegistryDelegate, CallkitIncomingAppDelegate {
@@ -23,7 +23,7 @@ import WebRTC
         voipRegistry.desiredPushTypes = [PKPushType.voIP]
 
         //Use if using WebRTC
-           RTCAudioSession.sharedInstance().useManualAudio = true
+//            RTCAudioSession.sharedInstance().useManualAudio = true
 //            RTCAudioSession.sharedInstance().isAudioEnabled = false
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
