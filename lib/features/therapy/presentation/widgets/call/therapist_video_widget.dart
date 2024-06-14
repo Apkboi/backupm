@@ -28,7 +28,7 @@ class TherapistVideoWidget extends StatefulWidget {
 }
 
 class _TherapistVideoWidgetState extends State<TherapistVideoWidget> {
-  bool remoteVideoEnabled = false;
+  bool remoteVideoEnabled = true;
   bool remoteAudioEnabled = true;
 
   @override
@@ -128,12 +128,12 @@ class _RemoteControllWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: !videoEnabled ? Colors.transparent : Pallets.black),
+          color: videoEnabled ? Colors.transparent : Pallets.black),
       height: 1.sh,
       width: 1.sw,
       child: Stack(
         children: [
-          if (videoEnabled)
+          if (!videoEnabled)
             Center(
               child: ImageWidget(
                 imageUrl: caller?.avatar ?? Assets.images.pngs.avatar3.path,
@@ -143,7 +143,7 @@ class _RemoteControllWidget extends StatelessWidget {
           Positioned(
               right: 16,
               top: 70,
-              child: !audioEnabled
+              child: audioEnabled
                   ? const Icon(
                       Icons.mic_rounded,
                       color: Pallets.grey,

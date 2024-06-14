@@ -431,12 +431,14 @@ class CallCubit extends Cubit<CallState> {
   }
 
   void _pushCandidate(int callerId, candidate) async {
+
     try {
       await _callRepository.pushCandidate(
           callerId, candidate, _calleeId.toString(), _sessionId.toString());
     } catch (e, stack) {
       logger.e(e.toString(), stackTrace: stack);
     }
+
   }
 
   void acceptCall(
