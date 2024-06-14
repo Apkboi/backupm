@@ -118,10 +118,10 @@ class CallCubit extends Cubit<CallState> {
             },
             {
               'urls': [
-                'turn:turn.rtc.yourmentra.com', // Your TURN server URL
+                'turn:freeturn.net:3478', // Your TURN server URL
               ],
-              'username': 'turn',
-              'credential': 'Turn09865', // Replace with your actual credentials
+              'username': 'free',
+              'credential': 'free', // Replace with your actual credentials
             }
           ]
         });
